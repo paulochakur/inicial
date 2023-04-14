@@ -309,7 +309,7 @@ function eventTrap() {
             // .... readonly
             if(evento=="keyup" || evento=="keydown"){
                 readO = eleFo.getAttribute('readO')
-                if (readO=='true')  { eleFo.value = iniValueInput }
+                if (readO=='true')  { eleFo.setAttribute('readonly', 'readonly') ; eleFo.value = iniValueInput }
             }    
             //
         
@@ -628,9 +628,7 @@ function charSpeci(strO){
     iEsp = 0
     while (iEsp>-1){
         if (iEsp==0){ iEsp = -1 }
-        iEsp = strO.indexOf("&#", iEsp+1)
-        iVir = strO.indexOf(";" , iEsp+1)
-        //nCars = 3 ; fim = ';'
+        iEsp = strO.indexOf("&#", iEsp+1)   ;   iVir = strO.indexOf(";" , iEsp+1)
         if (iVir-iEsp<7) { nCars = iVir-iEsp-2 }
         if (iEsp>-1){
             carOri      = strO.substr(iEsp+2, nCars)
