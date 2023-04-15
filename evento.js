@@ -202,7 +202,6 @@ function iniSys(){
                 xUlt = Cells[divSheetId][1][nColPla]['left'] + Cells[divSheetId][1][nColPla]['width']  + 17 + 3
                 yUlt = Cells[divSheetId][nLinPla][1]['top']  + Cells[divSheetId][nLinPla][1]['height'] + 17 + 20
                 if (autoSize=='autosize'){ 
-                    el(divSheetId).style.backgroundColor = 'red'
                     if (xUlt<wSheet) { el(divSheetId).style.width = xUlt+'px' }
                     if (yUlt<hSheet) { el(divSheetId).style.height= yUlt+'px' }
                 }
