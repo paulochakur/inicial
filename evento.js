@@ -208,7 +208,9 @@ function iniSys(){
             }
         }
         catch{}
+    
     }
+
     // ........[abre Planilhas]
 
     // ........ Inclui TEXTOS
@@ -234,6 +236,7 @@ function iniSys(){
     }
     // ........[Monta Menus]
 
+    window.scrollTo(0,0)
 }
 // ----- inicio Sys
 
