@@ -191,8 +191,22 @@ function iniSys(){
     for (iDiv = 0; iDiv <= nDivs-1; iDiv++){
         try  {
             divSheetId = Ldivs[iDiv]
-            auto = Cells[divSheetId][0][0]['autoload']
-            if (auto=='autoload'){ preencheSheet(lplanIni=0, cplanIni=0, divSheetId)}
+            auto        = Cells[divSheetId][0][0]['autoload']
+            autoSize    = Cells[divSheetId][0][0]['autosize']
+            nLinPla     = Cells[divSheetId][0][0]['nLinPla']
+            nColPla     = Cells[divSheetId][0][0]['nColPla']
+            hSheet      = el(divSheetId).offsetHeight
+            wSheet      = el(divSheetId).offsetWidth
+            if (auto=='autoload'){ 
+                preencheSheet(lplanIni=0, cplanIni=0, divSheetId)
+                xUlt = Cells[divSheetId][1][nColPla]['left'] + Cells[divSheetId][1][nColPla]['width']  + 17 + 3
+                yUlt = Cells[divSheetId][nLinPla][1]['top']  + Cells[divSheetId][nLinPla][1]['height'] + 17 + 20
+                if (autoSize=='autosize'){ 
+                    el(divSheetId).style.backgroundColor = 'red'
+                    if (xUlt<wSheet) { el(divSheetId).style.width = xUlt+'px' }
+                    if (yUlt<hSheet) { el(divSheetId).style.height= yUlt+'px' }
+                }
+            }
         }
         catch{}
     }
@@ -280,7 +294,13 @@ function eventTrap() {
     // .... inibe menu do browser em rightClick
     if(evento=='contextmenu'){ evento = 'rightclick' ; event.preventDefault() }
 
-
+    /*
+    if(evento=='keydown'){ 
+        cc = event.cancelable    
+        eventoAc = '<br> cc: '+cc     +eventoAc ;  el("geralDiv").innerHTML = eventoAc   
+        event.preventDefault()     
+    }
+    */
 
     rD = parseInt(window.getComputedStyle(el('canvas-412')).top)
 
@@ -293,25 +313,18 @@ function eventTrap() {
     // ----------- INPUT
     if (eleFoTy=='INPUT') {
         if ( (evento=="keyup" || evento=="keydown" || evento=="focusin" || evento=="click") && (eleFo.type=='text' || eleFo.type=='number') ) {    
-
+            readO = eleFo.getAttribute('readonly')
+            
             // ... apaga em primeiro toque
-            if(evento=="keydown" && (keyCode>40 || keyCode==8 || keyCode==46) && toques==0) { eleFo.value = '' }
+            if(evento=="keydown" && readO!='true' && (keyCode>40 || keyCode==8 || keyCode==46) && toques==0) { eleFo.value = '' }
             // ... escape
-            if(evento=="keydown" && keyCode==27) { eleFo.value = iniValueInput }
+            if(evento=="keydown" && readO!='true' && keyCode==27) { eleFo.value = iniValueInput }
 
             // . . . toques
             if(evento=="focusin") { 
                 toques = 0 ; habClic = 0 ; setTimeout( fhabClic, 300) ; iniValueInput = eleFo.value
             } 
-            readO = eleFo.getAttribute('readO')
             if( readO!='true' && ((evento=="keydown" && keyCode>40) || (evento=="click" && habClic==1))  )   { toques++ }
-
-            // .... readonly
-            if(evento=="keyup" || evento=="keydown"){
-                readO = eleFo.getAttribute('readO')
-                if (readO=='true')  { eleFo.setAttribute('readonly', 'readonly') ; eleFo.value = iniValueInput }
-            }    
-            //
         
             // .....
         }
@@ -428,15 +441,23 @@ function eventTrap() {
     
     // ---------------- Movimento em Sheet
     if (eleTaClass.includes("-Pla")) {
-        if ( blocTrap==0 && (evento=="keydown" || evento=="focusin" || evento=='input')  ){
+
+        if ( blocTrap==0 && (evento=="click" || evento=="keydown" || evento=="focusin" || evento=='input')  ){
+
             scro = 0 ; keyCodeF = 100
             // . . . índices de input focus em Sheet
             abrePar = eleTaId.indexOf("(") ; fechaPar  = eleTaId.indexOf(")") ; virg = eleTaId.indexOf(",")
             if (abrePar>0){
                 iSheet  = parseInt(eleTaId.slice(abrePar+1, virg)) ; jSheet   = parseInt(eleTaId.slice(virg+1, fechaPar))
-                if (evento=="focusin") { keyCodeF = 1 }
+                if (evento=="click" || evento=="focusin") { keyCodeF = 1 }
             }
-            // ....  parâmetros de Sheet
+
+            // .... inibe scroll com flechas
+            // https://stackoverflow.com/questions/10280250/getattribute-versus-element-object-properties
+            readO = eleFo.getAttribute('readonly')
+            if(evento=='keydown' && readO=='true' && keyCode<41){ event.preventDefault() }
+
+            // .... parâmetros de Sheet
             nomeSheet = eleFoClass ; divSheet = eleFo.parentElement ; divSheetId = divSheet.id
 
             nLinSh      = Number(divSheet.getAttribute('nLinSh'))   ; nColSh    = Number(divSheet.getAttribute('nColSh'))
@@ -451,6 +472,7 @@ function eventTrap() {
             cursor      = Cells[divSheetId][0][0]['cursor']         ; enterMove = Cells[divSheetId][0][0]['enterMove']   
             scrollBars  = Cells[divSheetId][0][0]['scrollBars'] 
             header      = Cells[divSheetId][0][0]['header']         ; LinMod    = Cells[divSheetId][0][0]['LinMod']
+
             // ------ mudança de foco em Sheet
             iEl     = iSheet + lplan0 - lFrz   ; jEl       = jSheet + cplan0 - cFrz
             if (iSheet<lFrz){ iEl = iSheet }
@@ -1145,13 +1167,14 @@ function icluiTxtemDiv(divSheetId) {
 // ---- Cria Sheet baseado em dictFormPla e MatrCellsPla
 function criaSheet(divSheetId){
 
-    nLinPla  = Cells[divSheetId][0][0]['nLinPla']       ; nColPla   = Cells[divSheetId][0][0]['nColPla']
-    lplan0   = Cells[divSheetId][0][0]['lplan0']        ; cplan0    = Cells[divSheetId][0][0]['cplan0']
-    lFrz     = Cells[divSheetId][0][0]['lFrz']          ; cFrz      = Cells[divSheetId][0][0]['cFrz']
-    iElC     = Cells[divSheetId][0][0]['iEl']           ; jElC      = Cells[divSheetId][0][0]['jEl']             // foco atual em Pla
-    cursor   = Cells[divSheetId][0][0]['cursor']        ; enterMove = Cells[divSheetId][0][0]['enterMove']   ;   scrollBars = Cells[divSheetId][0][0]['scrollBars'] 
-    header   = Cells[divSheetId][0][0]['header']        ; LinMod    = Cells[divSheetId][0][0]['LinMod']
-    
+    nLinPla     = Cells[divSheetId][0][0]['nLinPla']        ; nColPla   = Cells[divSheetId][0][0]['nColPla']
+    lplan0      = Cells[divSheetId][0][0]['lplan0']         ; cplan0    = Cells[divSheetId][0][0]['cplan0']
+    lFrz        = Cells[divSheetId][0][0]['lFrz']           ; cFrz      = Cells[divSheetId][0][0]['cFrz']
+    iElC        = Cells[divSheetId][0][0]['iEl']            ; jElC      = Cells[divSheetId][0][0]['jEl']             // foco atual em Pla
+    cursor      = Cells[divSheetId][0][0]['cursor']         ; enterMove = Cells[divSheetId][0][0]['enterMove']
+    header      = Cells[divSheetId][0][0]['header']         ; LinMod    = Cells[divSheetId][0][0]['LinMod']
+    scrollBars  = Cells[divSheetId][0][0]['scrollBars']     ; autoSize  = Cells[divSheetId][0][0]['autosize']
+
     Cells[divSheetId][0][0]['iEl']      = 0      ; Cells[divSheetId][0][0]['jEl']    = 0
     Cells[divSheetId][0][0]['lplan0']   = lFrz   ; Cells[divSheetId][0][0]['cplan0'] = cFrz
 
@@ -1214,7 +1237,7 @@ function criaSheet(divSheetId){
     // ... cria Inputs
     for (i = 1; i <= nLinInps; i++){
         for (j = 1; j <= nColInps; j++){
-            para = document.createElement("INPUT");
+            para = document.createElement("INPUT")
             divSheet.appendChild(para);
             para.id     = nomeSheet+":("+i+","+j+")"
             para.class  = nomeSheet
@@ -1325,6 +1348,15 @@ function criaSheet(divSheetId){
     }
     // ...[cria barras de scroll]
     
+    // ... ajusta autosize
+    if (autoSize=='autosize'){
+        // . . . 
+    
+
+
+    }
+    // ...ajusta autosize]
+
     // ...
 }           
 // ----[Cria Sheet baseado em dictFormPla e MatrCellsPla]
@@ -1492,6 +1524,7 @@ function printCell(i, j, divSheet){   // i, j  em Sheet
 
         planValorTrap(divSheetId, iC, jC)
         cell.value                      = valor
+        //cell.innerHTML                      = valor
         // ----[TRAP  DE VALOR]
 
         // format Cell
@@ -1503,7 +1536,7 @@ function printCell(i, j, divSheet){   // i, j  em Sheet
         cell.style.fontWeight           = fontWeight
         cell.style.fontStyle            = fontStyle
         cell.style.textDecorationLine   = textDecorationLine
-        cell.setAttribute('readO', readO)
+        if (readO=='true')  { cell.setAttribute('readonly', true)  }
 
         desBordas(iCf, jC, cell)
     }
