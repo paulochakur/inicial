@@ -1249,8 +1249,8 @@ function criaSheet(divSheetId){
 
     // ... cria header
     if (header=='header'){        
-        para = document.createElement("DIV");
-        divSheet.appendChild(para);
+        para = document.createElement("DIV")
+        divSheet.appendChild(para)
         para.id     = nomeSheet+"-fundoHeader"
         para.class  = nomeSheet
         para.style  = 'position: absolute; left: 0px; top: 0px; height: 20px; width:'+(wUtil)+'px; box-sizing: border-box; margin: 0px; pading: 0px; border-style: ridge; border-color: black; outline-width: 1;'
@@ -1535,6 +1535,7 @@ function printCell(i, j, divSheet){   // i, j  em Sheet
         cell.style.fontWeight           = fontWeight
         cell.style.fontStyle            = fontStyle
         cell.style.textDecorationLine   = textDecorationLine
+        cell.removeAttribute('readonly')
         if (readO=='true')  { cell.setAttribute('readonly', true)  }
 
         desBordas(iCf, jC, cell)
