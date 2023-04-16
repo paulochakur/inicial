@@ -665,7 +665,18 @@ Texts['textDiv'] = [
                     ]
                     // ... fim de texto
 
-Texts['divTxLi'] = [                    // ...                    '<span style="color: black;">' +                    '</span><span style="font-family:Bahnschrift;color:#CC0099;font-size: 40px; font-weight:bold;font-style:normal;text-decoration-line:none;">OUTRO<br>' +                     '</span><span style="font-family:Bahnschrift;color:#FFFF00;font-size: 40px; font-weight:bold;font-style:normal;text-decoration-line:none;">MAGNATA<br>' +                     '</span>',                    // ... format geral                    [0, 0, 0, 1, 3, '#FFD966', 0, 'center']                    ]                    // ... fim de texto
+Texts['divTxLi'] = [
+                    // ...
+                    '<span style="color: black;">' +
+                    '</span><span style="font-family:Bahnschrift;color:#CC0099;font-size: 40px; font-weight:bold;font-style:normal;text-decoration-line:none;">OUTRO<br>' + 
+                    '</span><span style="font-family:Bahnschrift;color:#FFFF00;font-size: 40px; font-weight:bold;font-style:normal;text-decoration-line:none;">MAGNATA<br>' + 
+                    '</span>',
+
+                    // ... format geral
+                    [0, 0, 0, 1, 3, '#FFD966', 0, 'center']
+
+                    ]
+                    // ... fim de texto
 
 // ------[TEXTOS]
 
@@ -690,29 +701,7 @@ Menus['pop1'] = [
 
                     ]
                     // ... fim de menu
-Menus['divMenu'] = [
-                    // ... format geral
-                    [16, 'autoload', 'horizontal', 'hover', 'autosize', , , ],
-                    // ...
-                    [0,  1,  'Cabelo',  '',  ['#0070C0', 20, 'B', 'I', 'U', 'Arial'] ,['#FFC000', 'left', 34, 166, [ 3, 3, 3, 3,]],  ['#0070C0', 20, 'B', 'I', 'U', 'Arial'] ,['#A9D08E', 'center', 34, 74, [ 3, 1, 1, 1,]], 0, 0 ], 
-                    [1,  2,  'Cabe&#231;a',  'bB',  ['#FFC000', 20, 'B', 'i', 'u', 'Arial'] ,['#FFE699', 'left', 34, 166, [ 0, 2, 2, 2,]],  ['#FF0000', 20, 'B', 'i', 'u', 'Arial'] ,['#D9D9D9', 'center', 34, 74, [ 1, 1, 2, 1,]], 0, 0 ], 
-                    [3,  2,  'c&#227;o',  'c&#227;o',  ['#000000', 26, 'B', 'i', 'u', 'Arial'] ,['#C6E0B4', 'left', 45, 166, [ 2, 2, 1, 2,]],  ['#000000', 26, 'B', 'i', 'u', 'Arial'] ,['#A9D08E', 'center', 45, 74, [ 2, 1, 0, 1,]], 0, 0 ], 
-                    [1,  2,  'Tronco',  '>',  ['#00B050', 20, 'B', 'i', 'u', 'Arial'] ,['#FEFE9A', 'left', 26, 166, [ 1, 2, 1, 2,]],  ['#00B050', 20, 'B', 'i', 'u', 'Arial'] ,['#A9D08E', 'center', 26, 74, [ 0, 1, 0, 1,]], 0, 0 ], 
-                    [21,  3,  'Corpo e bra&#231;os',  '>',  ['#D9D9D9', 14, 'b', 'i', 'u', 'Calibri'] ,['#808080', 'left', 26, 192, [ 1, 1, 0, 1,]],  ['#FFFFFF', 11, 'b', 'i', 'u', 'Calibri'] ,['#D9E1F2', 'center', 26, 74, [ 0, 0, 0, 1,]], 0, 0 ], 
-                    [22,  4,  'A',  '',  ['#000000', 11, 'b', 'i', 'u', 'Calibri'] ,['#FFFFFF', 'left', 26, 40, [ 1, 1, 0, 1,]],  ['#FF0000', 11, 'b', 'i', 'u', 'Calibri'] ,['#A9D08E', 'center', 26, 74, [ 0, 0, 0, 0,]], 0, 0 ], 
-                    [23,  4,  'i',  '',  ['#000000', 11, 'b', 'i', 'u', 'Calibri'] ,['#FFFFFF', 'left', 26, 40, [ 0, 1, 1, 1,]],  ['#FF0000', 11, 'b', 'i', 'u', 'Calibri'] ,['#A9D08E', 'center', 26, 74, [ 0, 0, 0, 0,]], 0, 0 ], 
-                    [24,  3,  'M&#227;o',  '',  ['#D9D9D9', 14, 'B', 'i', 'u', 'Calibri'] ,['#808080', 'left', 26, 192, [ 0, 1, 1, 1,]],  ['#FFFFFF', 11, 'b', 'i', 'u', 'Calibri'] ,['#8497B0', 'center', 26, 74, [ 0, 0, 1, 1,]], 0, 0 ], 
-                    [5,  3,  'unhas',  '',  ['#D9D9D9', 14, 'b', 'i', 'u', 'Calibri'] ,['#808080', 'left', 26, 192, [ 1, 1, 1, 1,]],  ['#FFFFFF', 11, 'b', 'i', 'u', 'Calibri'] ,['#8497B0', 'center', 26, 74, [ 1, 0, 0, 0,]], 0, 0 ], 
-                    [33,  3,  'dedos',  '>',  ['#D9D9D9', 14, 'b', 'i', 'u', 'Calibri'] ,['#808080', 'left', 18, 192, [ 1, 1, 1, 1,]],  ['#FFFFFF', 11, 'b', 'i', 'u', 'Calibri'] ,['#8497B0', 'center', 18, 74, [ 0, 0, 0, 1,]], 0, 0 ], 
-                    [34,  4,  'a',  '',  ['#000000', 11, 'b', 'i', 'u', 'Calibri'] ,['#FEFE9A', 'left', 15, 40, [ 1, 1, 0, 1,]],  ['#FFFFFF', 11, 'b', 'i', 'u', 'Calibri'] ,['#8497B0', 'center', 15, 74, [ 0, 0, 0, 1,]], 0, 0 ], 
-                    [35,  4,  'b',  '',  ['#000000', 11, 'b', 'i', 'u', 'Calibri'] ,['#FEFE9A', 'left', 19, 40, [ 0, 1, 1, 1,]],  ['#FFFFFF', 11, 'b', 'i', 'u', 'Calibri'] ,['#8497B0', 'center', 19, 74, [ 0, 0, 0, 1,]], 0, 0 ], 
-                    [36,  2,  'Pernas',  '',  ['#0070C0', 20, 'B', 'i', 'u', 'Arial'] ,['#F8CBAD', 'left', 27, 166, [ 1, 2, 2, 2,]],  ['#F2F2F2', 11, 'B', 'i', 'u', 'Calibri'] ,['#C65911', 'center', 27, 74, [ 0, 1, 3, 1,]], 0, 0 ], 
-                    [0,  1,  'OUTRO',  '',  ['#0070C0', 20, 'B', 'I', 'U', 'Arial'] ,['#FFC000', 'left', 27, 166, [ 3, 3, 3, 3,]],  ['#0070C0', 20, 'B', 'I', 'U', 'Arial'] ,['#A9D08E', 'center', 27, 74, [ 3, 1, 1, 1,]], 0, 0 ], 
-                    [45,  2,  'ourro 1',  '',  ['#000000', 11, 'b', 'i', 'u', 'Calibri'] ,['#FFFFFF', 'left', 30, 166, [ 3, 1, 0, 1,]],  ['#FFFFFF', 11, 'b', 'i', 'u', 'Calibri'] ,['#8497B0', 'center', 30, 74, [ 1, 0, 0, 1,]], 0, 0 ], 
-                    [46,  2,  'ourro 2',  '',  ['#000000', 11, 'b', 'i', 'u', 'Calibri'] ,['#FFFFFF', 'left', 19, 166, [ 0, 1, 1, 1,]],  ['#FFFFFF', 11, 'b', 'i', 'u', 'Calibri'] ,['#8497B0', 'center', 19, 74, [ 0, 0, 0, 1,]], 0, 0 ], 
-
-                    ]
-                    // ... fim de menu
+Menus['divMenu'] = [                    // ... format geral                    [16, 'autoload', 'horizontal', 'hover', 'autosize', , , ],                    // ...                    [0,  1,  'Cabelo',  '',  ['#0070C0', 20, 'B', 'I', 'U', 'Arial'] ,['#FFC000', 'left', 34, 166, [ 3, 3, 3, 3,]],  ['#CC0099', 20, 'B', 'I', 'U', 'Arial'] ,['#FFFF00', 'center', 34, 74, [ 3, 1, 1, 1,]], 0, 0 ],                     [1,  2,  'Cabe&#231;a',  'bB',  ['#FFC000', 20, 'B', 'i', 'u', 'Arial'] ,['#FFE699', 'left', 34, 166, [ 0, 2, 2, 2,]],  ['#FF0000', 20, 'B', 'i', 'u', 'Arial'] ,['#D9D9D9', 'center', 34, 74, [ 1, 1, 2, 1,]], 0, 0 ],                     [3,  2,  'c&#227;o',  'c&#227;o',  ['#000000', 26, 'B', 'i', 'u', 'Arial'] ,['#C6E0B4', 'left', 45, 166, [ 2, 2, 1, 2,]],  ['#000000', 26, 'B', 'i', 'u', 'Arial'] ,['#A9D08E', 'center', 45, 74, [ 2, 1, 0, 1,]], 0, 0 ],                     [1,  2,  'Tronco',  '>',  ['#00B050', 20, 'B', 'i', 'u', 'Arial'] ,['#FEFE9A', 'left', 26, 166, [ 1, 2, 1, 2,]],  ['#00B050', 20, 'B', 'i', 'u', 'Arial'] ,['#A9D08E', 'center', 26, 74, [ 0, 1, 0, 1,]], 0, 0 ],                     [21,  3,  'Corpo e bra&#231;os',  '>',  ['#D9D9D9', 14, 'b', 'i', 'u', 'Calibri'] ,['#808080', 'left', 26, 192, [ 1, 1, 0, 1,]],  ['#FFFFFF', 11, 'b', 'i', 'u', 'Calibri'] ,['#D9E1F2', 'center', 26, 74, [ 0, 0, 0, 1,]], 0, 0 ],                     [22,  4,  'A',  '',  ['#000000', 11, 'b', 'i', 'u', 'Calibri'] ,['#FFFFFF', 'left', 26, 40, [ 1, 1, 0, 1,]],  ['#FF0000', 11, 'b', 'i', 'u', 'Calibri'] ,['#A9D08E', 'center', 26, 74, [ 0, 0, 0, 0,]], 0, 0 ],                     [23,  4,  'i',  '',  ['#000000', 11, 'b', 'i', 'u', 'Calibri'] ,['#FFFFFF', 'left', 26, 40, [ 0, 1, 1, 1,]],  ['#FF0000', 11, 'b', 'i', 'u', 'Calibri'] ,['#A9D08E', 'center', 26, 74, [ 0, 0, 0, 0,]], 0, 0 ],                     [24,  3,  'M&#227;o',  '',  ['#D9D9D9', 14, 'B', 'i', 'u', 'Calibri'] ,['#808080', 'left', 26, 192, [ 0, 1, 1, 1,]],  ['#FFFFFF', 11, 'b', 'i', 'u', 'Calibri'] ,['#8497B0', 'center', 26, 74, [ 0, 0, 1, 1,]], 0, 0 ],                     [5,  3,  'unhas',  '',  ['#D9D9D9', 14, 'b', 'i', 'u', 'Calibri'] ,['#808080', 'left', 26, 192, [ 1, 1, 1, 1,]],  ['#FFFFFF', 11, 'b', 'i', 'u', 'Calibri'] ,['#8497B0', 'center', 26, 74, [ 1, 0, 0, 0,]], 0, 0 ],                     [33,  3,  'dedos',  '>',  ['#D9D9D9', 14, 'b', 'i', 'u', 'Calibri'] ,['#808080', 'left', 18, 192, [ 1, 1, 1, 1,]],  ['#FFFFFF', 11, 'b', 'i', 'u', 'Calibri'] ,['#8497B0', 'center', 18, 74, [ 0, 0, 0, 1,]], 0, 0 ],                     [34,  4,  'a',  '',  ['#000000', 11, 'b', 'i', 'u', 'Calibri'] ,['#FEFE9A', 'left', 15, 40, [ 1, 1, 0, 1,]],  ['#FFFFFF', 11, 'b', 'i', 'u', 'Calibri'] ,['#8497B0', 'center', 15, 74, [ 0, 0, 0, 1,]], 0, 0 ],                     [35,  4,  'b',  '',  ['#000000', 11, 'b', 'i', 'u', 'Calibri'] ,['#FEFE9A', 'left', 19, 40, [ 0, 1, 1, 1,]],  ['#FFFFFF', 11, 'b', 'i', 'u', 'Calibri'] ,['#8497B0', 'center', 19, 74, [ 0, 0, 0, 1,]], 0, 0 ],                     [36,  2,  'Pernas',  '',  ['#0070C0', 20, 'B', 'i', 'u', 'Arial'] ,['#F8CBAD', 'left', 27, 166, [ 1, 2, 2, 2,]],  ['#F2F2F2', 11, 'B', 'i', 'u', 'Calibri'] ,['#C65911', 'center', 27, 74, [ 0, 1, 3, 1,]], 0, 0 ],                     [0,  1,  'OUTRO',  '',  ['#0070C0', 20, 'B', 'I', 'U', 'Arial'] ,['#FFC000', 'left', 27, 166, [ 3, 3, 3, 3,]],  ['#0070C0', 20, 'B', 'I', 'U', 'Arial'] ,['#A9D08E', 'center', 27, 74, [ 3, 1, 1, 1,]], 0, 0 ],                     [45,  2,  'ourro 1',  '',  ['#000000', 11, 'b', 'i', 'u', 'Calibri'] ,['#FFFFFF', 'left', 30, 166, [ 3, 1, 0, 1,]],  ['#FFFFFF', 11, 'b', 'i', 'u', 'Calibri'] ,['#8497B0', 'center', 30, 74, [ 1, 0, 0, 1,]], 0, 0 ],                     [46,  2,  'ourro 2',  '',  ['#000000', 11, 'b', 'i', 'u', 'Calibri'] ,['#FFFFFF', 'left', 19, 166, [ 0, 1, 1, 1,]],  ['#FFFFFF', 11, 'b', 'i', 'u', 'Calibri'] ,['#8497B0', 'center', 19, 74, [ 0, 0, 0, 1,]], 0, 0 ],                     ]                    // ... fim de menu
 // ------[MENUS]
 
 
