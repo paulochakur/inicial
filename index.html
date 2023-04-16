@@ -224,6 +224,7 @@
         */
 
         var corrTam = 0
+        var togg    = 1
 
         // ---- Início Local
         function iniLoc(){
@@ -340,8 +341,10 @@
 
             // ..
             if(evento=='click' && eleTaId=="img-430"){
-
-                eleTa.src = 'Imagens/TIO - 6x9 - cor.jpg'
+                eventoAc = '<br> togg: '+togg+'  '+(togg==1)     +eventoAc ;  el("geralDiv").innerHTML = eventoAc
+                hab = 1
+                if (togg==1 && hab==1)    { eleTa.src = 'Imagens/TIO - 6x9 - cor.jpg' ; togg = -togg ; hab = 0}
+                if (togg==-1 && hab==1)   { eleTa.src = 'Imagens/SESO -6x9 - cor.jpg' ; togg = -togg}
 
             }
 
