@@ -230,6 +230,7 @@
 
         var corrTam = 0
         var togg    = -1
+        var topAbs  = 0 , leftAbs = 0
 
         // ---- Início Local
         function iniLoc(){
@@ -250,8 +251,18 @@
             para.id     = "mp3"
 
             // ... cria DIV de zoom
+            divOriId = 'div-429'    // div que abriga img
+            
+            LimId = el(divOriId).children ; nEls = LimId.length
+            for (iE = 0; iE <= nEls-1; iE++){
+                imId = LimId[iE].id ; imTy = LimId[iE].tagName
+                if (imTy=='IMG') {imgZoomIg = imId }
+            }
+            parentZomm = el(divOriId).parentElement.id
+            eventoAc = '<br> imgZoomIg: '+imgZoomIg+'  parentZomm: '+parentZomm     +eventoAc ;  el("geralDiv").innerHTML = eventoAc
+
             para = document.createElement("div")
-            el('canvas-412').appendChild(para)
+            el(parentZomm).appendChild(para)       // div de zoom é irmã de divZoom
             para.id     = "Zoom"
             el('Zoom').style.backgroundColor = 'red'
             el('Zoom').style.position = 'absolute'
@@ -274,6 +285,13 @@
             el('ZoomImg').style.height  = '3150px'
 
             //el("ZoomImg").style = 'position: absolute; left: 0.0px; top: 0.0px; width: 243.0px; height: 348.3px; box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: alias; border-color: black; border-radius: 0.0%; border-width: 0.0px; border-style: solid; background-color: transparent; box-shadow: -20.0px -20.0px   rgb(255, 128, 64) inset;'
+            // ... cria div cursor
+            para = document.createElement("div")
+            el(divOriId).appendChild(para)
+            para.id     = "ZoomDivCur"
+            el("ZoomDivCur").style = 'position: absolute; left: -3000px; top: -3000px; width: 40.0px; height: 40px; box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: none; border-color: black; border-radius: 0.0%; border-width: 0.0px; border-style: solid; background-color: gray; opacity: 0.4'
+            el("ZoomDivCur").style.zIndex  = '1'
+
             // ..........
             
 
@@ -368,30 +386,51 @@
             // ..
 
             // ..
-            if(evento=='click' && eleTaId=="img-430"){
+            if(evento=='click' && (eleTaId=="ZoomDivCur" || eleTaId=="img-430")){
                 eventoAc = '<br> togg: '+togg+'  '+(togg==1)     +eventoAc ;  el("geralDiv").innerHTML = eventoAc
                 hab = 1
-                if (togg==1 && hab==1)    { eleTa.src = 'Imagens/CSS/TIO - 6x9 - cor.jpg' ; togg = -togg ; hab = 0}
-                if (togg==-1 && hab==1)   { eleTa.src = 'Imagens/SESO -6x9 - cor.jpg' ; togg = -togg}
+                if (togg==1 && hab==1)    { el('img-430').src = 'Imagens/CSS/TIO - 6x9 - cor.jpg' ; togg = -togg ; hab = 0}
+                if (togg==-1 && hab==1)   { el('img-430').src = 'Imagens/SESO -6x9 - cor.jpg' ; togg = -togg}
+                el('ZoomImg').src = el('img-430').src
             }
             // ..
 
-            // ..
+            
+            // .. MENU Zoom
+
+            // ... sai de div menu
             if(evento=='mousemove' && eleTaId!="img-430"){
+                el('Zoom').style.top     = '-3000px'        ; el('Zoom').style.left    = '-3000px'
+                el('ZoomDivCur').style.top     = '-3000px'  ; el('ZoomDivCur').style.left    = '-3000px'
+            }
 
-                el('Zoom').style.top     = '-300px'
-                el('Zoom').style.left    = '-300px'
+            if((evento=='mousemove' || evento=='click') && eleTaId=="img-430"){
+                topAbs  = yMw - yMe
+                leftAbs = xMw - xMe
+                el('ZoomImg').src = el('img-430').src
+            }
+
+
+            // .. move cursor
+            if((evento=='mousemove' || evento=='click') && (eleTaId=="ZoomDivCur" || eleTaId=="img-430")){
+
+                el('ZoomDivCur').style.top  = (yMw - topAbs  - 10)+'px'
+                el('ZoomDivCur').style.left = (xMw - leftAbs - 10)+'px'
             }
 
 
             // ..
-            if((evento=='mousemove' || evento=='click') && eleTaId=="img-430"){
-
-                hImgOri    = eleTa.offsetHeight 
-                wImgOri    = eleTa.offsetWidth
+            if((evento=='mousemove' || evento=='click') && (eleTaId=="ZoomDivCur" || eleTaId=="ZoomDivCur")){
+                hImgOri    = el('img-430').offsetHeight 
+                wImgOri    = el('img-430').offsetWidth
                 
                 tDivOri    = parseInt(window.getComputedStyle(el('div-429')).top)
                 lDivOri    = el('div-429').offsetLeft
+
+                tDivCur    = el('ZoomDivCur').offsetTop
+                lDivCur    = el('ZoomDivCur').offsetLeft
+                hDivCur    = el('ZoomDivCur').offsetHeight
+                wDivCur    = el('ZoomDivCur').offsetWidth
                 
                 wZoom    = el('Zoom').offsetWidth
                 hZoom    = el('Zoom').offsetHeight
@@ -399,19 +438,19 @@
                 el('Zoom').style.top  = (tDivOri-wZoom)+'px'
                 el('Zoom').style.left = (lDivOri-hZoom)+'px'
 
-                el('ZoomImg').src = eleTa.src
                 
-                hImgOri    = eleTa.offsetHeight 
-                wImgOri    = eleTa.offsetWidth
+                
+                hImgOri    = el('img-430').offsetHeight 
+                wImgOri    = el('img-430').offsetWidth
                 fat = 7
+                // ...
                 el('ZoomImg').style.height  = (hImgOri*fat)+'px'
                 el('ZoomImg').style.width   = (wImgOri*fat)+'px'
-
-                
-                el('ZoomImg').style.top  = ((-yMe)*fat+hZoom/2)+'px'
-                el('ZoomImg').style.left = ((-xMe)*fat+wZoom/2)+'px'
-
+                el('ZoomImg').style.top  = ((-tDivCur-hDivCur/2)*fat+hZoom/2)+'px'
+                el('ZoomImg').style.left = ((-lDivCur-wDivCur/2)*fat+wZoom/2)+'px'
             }
+            // ..[MENU Zoom]
+
 
         // ......
         } // . . . [trapEvent()]

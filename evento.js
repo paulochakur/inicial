@@ -221,8 +221,8 @@ function iniSys(){
 
         divSheetId = Ldivs[iDiv]
         textForm   = Texts[divSheetId]
-        
         if (textForm!=undefined){ icluiTxtemDiv(divSheetId) }
+
     }
     // ........[Inclui TEXTOS]
 
