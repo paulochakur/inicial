@@ -474,196 +474,7 @@ Cells['ExcelP1'] = [
 
 
 // ------ TEXTOS
-Texts['textDiv'] = [
-                    // ...
-                    '<span style="color: black;">' +
-                    '</span><span style="font-family:Arial;color:#FF0000;font-size: 36px; font-weight:normal;font-style:normal;text-decoration-line:none;">.&#168;EX&#602;ERC&#205;CIOS GERAIS<br>' + 
-                    '</span><span style="font-family:Times New Roman;color:#000000;font-size: 28px; font-weight:bold;font-style:normal;text-decoration-line:none;">LI&#199;&#195;O 001 - CARREIRA CENTRAL&#168;<br>' + 
-                    '<br>' + 
-                    '</span><span style="font-family:Times New Roman;color:#000000;font-size: 24px; font-weight:normal;font-style:italic;text-decoration-line:underline;">asdfg &#231;lkjh gfdsa hkl&#231;<br>' + 
-                    '</span><span style="font-family:Times New Roman;color:#000000;font-size: 24px; font-weight:bold;font-style:italic;text-decoration-line:underline;">asdfg &#231;lkjh gfdsa hkl&#231;<br>' + 
-                    '<br>' + 
-                    '</span><span style="font-family:Calibri;color:#000000;font-size: 22px; font-weight:normal;font-style:normal;text-decoration-line:none;">asa fada fala asa fada fala<br>' + 
-                    '</span><span style="font-family:Times New Roman;color:#000000;font-size: 28px; font-weight:bold;font-style:normal;text-decoration-line:none;">asa fada fala asa fada fala<br>' + 
-                    '<br>' + 
-                    '</span><span style="font-family:Calibri;color:#000000;font-size: 22px; font-weight:normal;font-style:normal;text-decoration-line:none;">asdfg &#231;lkjh gfdsa hkl&#231;<br>' + 
-                    '</span><span style="font-family:Times New Roman;color:#000000;font-size: 24px; font-weight:normal;font-style:italic;text-decoration-line:underline;">asdfg &#231;lkjh gfdsa hkl&#231;<br>' + 
-                    '<br>' + 
-                    '</span><span style="font-family:Calibri;color:#000000;font-size: 22px; font-weight:normal;font-style:normal;text-decoration-line:none;">asa fada fala asa fada fala<br>' + 
-                    'asa fada fala asa fada fala&#8226;<br>' + 
-                    '<br>' + 
-                    '</span><span style="font-family:Times New Roman;color:#000000;font-size: 24px; font-weight:normal;font-style:normal;text-decoration-line:underline;">&#168;EXERC&#205;CIOS GERAIS<br>' + 
-                    '</span><span style="font-family:Calibri;color:#000000;font-size: 22px; font-weight:normal;font-style:normal;text-decoration-line:none;">LI&#199;&#195;O 002 - CARREIRA INFERIOR - V&#237;rgula e Ponto&#168;<br>' + 
-                    '<br>' + 
-                    'aza, sxs, dcd, fvf, gbg, &#231;;&#231;, l.l, k,k, jmj, hnh,<br>' + 
-                    'aza, sxs, dcd, fvf, gbg, &#231;;&#231;, l.l, k,k, jmj, hnh,<br>' + 
-                    '<br>' + 
-                    '</span><span style="font-family:Times New Roman;color:#000000;font-size: 24px; font-weight:bold;font-style:italic;text-decoration-line:underline;">aza, sxs, dcd, fvf, gbg, &#231;;&#231;, l.l, k,k, jmj, hnh,<br>' + 
-                    '</span><span style="font-family:Calibri;color:#000000;font-size: 22px; font-weight:normal;font-style:normal;text-decoration-line:none;">aza, sxs, dcd, fvf, gbg, &#231;;&#231;, l.l, k,k, jmj, hnh,<br>' + 
-                    '<br>' + 
-                    '</span><span style="font-family:Times New Roman;color:#000000;font-size: 24px; font-weight:normal;font-style:normal;text-decoration-line:underline;">asa, casa.<br>' + 
-                    '</span><span style="font-family:Times New Roman;color:#000000;font-size: 24px; font-weight:bold;font-style:italic;text-decoration-line:underline;">fada, cada, nada.<br>' + 
-                    '</span><span style="font-family:Calibri;color:#000000;font-size: 22px; font-weight:normal;font-style:normal;text-decoration-line:none;">vaca, jaca, maca, saca.<br>' + 
-                    'mala, sala, fala, vala, bala, gala.<br>' + 
-                    'chama, lama, fama, cama, dama, gama&#8226;<br>' + 
-                    '<br>' + 
-                    '&#168;EXERC&#205;CIOS GERAIS<br>' + 
-                    '</span><span style="font-family:Times New Roman;color:#FF0000;font-size: 24px; font-weight:bold;font-style:italic;text-decoration-line:underline;">LI&#199;&#195;O 003 - CARREIRA SUPERIOR&#168;<br>' + 
-                    '<br>' + 
-                    '</span><span style="font-family:Calibri;color:#000000;font-size: 22px; font-weight:normal;font-style:normal;text-decoration-line:none;">aqswdefrgt &#231;plokijuhy aqswdefrgt &#231;plokijuhy<br>' + 
-                    '<br>' + 
-                    '</span><span style="font-family:Times New Roman;color:#000000;font-size: 28px; font-weight:bold;font-style:normal;text-decoration-line:underline;">gtfrdeswaq hyjukilo&#231;p gtfrdeswaq hyjukilo&#231;p<br>' + 
-                    '<br>' + 
-                    '</span><span style="font-family:Calibri;color:#000000;font-size: 22px; font-weight:normal;font-style:normal;text-decoration-line:none;">azaqsxswdcdefvfrgbgt &#231;;&#231;pl.lok,kijmjuhnhy<br>' + 
-                    '<br>' + 
-                    'aqa, aza, sws, sxs, ded, dcd, frf, fvf, gbg, gtg,<br>' + 
-                    'aqa, aza, sws, sxs, ded, dcd, frf, fvf, gbg, gtg,<br>' + 
-                    '<br>' + 
-                    '&#231;p&#231;, &#231;p&#231;, lol, l.l, kik, k,k, juj, jmj, hyh, hnh,<br>' + 
-                    '&#231;p&#231;, &#231;p&#231;, lol, l.l, kik, k,k, juj, jmj, hyh, hnh,<br>' + 
-                    '<br>' + 
-                    'abcdefghijklmnopqrstuvwxyz,.;<br>' + 
-                    '<br>' + 
-                    'para pelo fato hoje esta fora este isto dedo essa isso<br>' + 
-                    'gado lido furo soda dose pago hora jogo suas seis sete traga, trigo, grupo, geral, fruta, podre, frade, gordo,<br>' + 
-                    'golpe. falso. frase, feita. ultra. hotel. resta. pagar.&#8226;<br>' + 
-                    '<br>' + 
-                    '</span><span style="font-family:Calibri;color:#ED7D31;font-size: 22px; font-weight:bold;font-style:normal;text-decoration-line:none;">&#168;EXERC&#205;CIOS GERAIS<br>' + 
-                    'LI&#199;&#195;O 004 - N&#218;MEROS&#168;<br>' + 
-                    '<br>' + 
-                    '</span><span style="font-family:Calibri;color:#000000;font-size: 22px; font-weight:normal;font-style:normal;text-decoration-line:none;">aq1aq2sw3de4fr5gt6 &#231;p0lo9ki8ju7 a1a2s3d4f5g6 &#231;0l9k8j7<br>' + 
-                    '<br>' + 
-                    'az1az2sx3dc4fv5gb6 &#231;;0l.9k,8jm7 <br>' + 
-                    'az1az2sx3dc4fv5gb6 &#231;;0l.9k,8jm7<br>' + 
-                    '<br>' + 
-                    '1&#231;2&#231;3l4k5j6h 0a9s8d7f6g 1&#231;2&#231;3l4k5j6h 0a9s8d7f6g<br>' + 
-                    '<br>' + 
-                    'abcdefghijklmnopqrstuvwxyz,.;1234567890<br>' + 
-                    'abcdefghijklmnopqrstuvwxyz,.;1234567890<br>' + 
-                    '<br>' + 
-                    '82 oitenta e dois, 49 quarenta e nove,74 setenta e quatro,<br>' + 
-                    '<br>' + 
-                    '12,98 31,76 17,26 67,21 72,16 98,89 84,95 45,78 90,45<br>' + 
-                    '<br>' + 
-                    '3-2=1 5-3=2 6-1=5 9-6=3 8-8=0 7-3=4  1-3=-2  6-9=-3<br>' + 
-                    'diga-me sente-se dir-lhe-ei sexta-feira cor-de-rosa<br>' + 
-                    '<br>' + 
-                    'a1 b2 c3 d4 e5 f6 g7 h8 i9 j10 k11 l12 m13<br>' + 
-                    'n14 o15 p16 q17 r18 s19 t20 u21 v22 w23 x24 y25 z26&#8226;<br>' + 
-                    '<br>' + 
-                    '&#168;EXERC&#205;CIOS GERAIS<br>' + 
-                    'LI&#199;&#195;O 005 - MAI&#218;SCULAS&#168;<br>' + 
-                    '<br>' + 
-                    'Aa Ss Dd Ff Gg Hh Jj Kk Ll &#199;&#231;<br>' + 
-                    'Za Xs Cd Vf Bg Nh Mj <k >l :&#231; ?&#231;<br>' + 
-                    'Qa Ws Ed Rf Tg P&#231; Ol Ik Uj Yh<br>' + 
-                    '!a @a #s $d %f )&#231; (l *k &j<br>' + 
-                    '<br>' + 
-                    'Aa Ss Dd Ff Gg Hh Jj Kk Ll &#199;&#231;<br>' + 
-                    'Za Xs Cd Vf BG Nh Mj <k >l :&#231; ?&#231;<br>' + 
-                    'Qa Ws Ed Rf Tg P&#231; Ol Ik Uj Yh<br>' + 
-                    '!a @a #s $d %f )&#231; (l *k &j<br>' + 
-                    '<br>' + 
-                    '1&#231;2&#231;3l4k5j6h 0a9s8d7f6g <br>' + 
-                    '1&#231;2&#231;3l4k5j6h 0a9s8d7f6g<br>' + 
-                    '<br>' + 
-                    'abcdefghijklmnopqrstuvwxyz,.;1234567890<br>' + 
-                    'AbCdEfGhIjKlMnOpQrStUvWxYz<.:<br>' + 
-                    '<br>' + 
-                    'aBcDeFgHiJkLmNoPqRsTuVwXyZ,>;<br>' + 
-                    'abcdefghijklmnopqrstuvwxyz,.;1234567890<br>' + 
-                    '<br>' + 
-                    'Paulo Chakur Jolita Juliana Ana Marco Danilo Pedro<br>' + 
-                    'Problema, Mendigo, Identidade, Cidade, Preto, Flagrante,<br>' + 
-                    'Quando?, Qual? Como?&#8226;<br>' + 
-                    '<br>' + 
-                    '&#168;EXERC&#205;CIOS GERAIS<br>' + 
-                    'LI&#199;&#195;O 006 - ACENTOS - agudo - til&#168;<br>' + 
-                    '<br>' + 
-                    'asdfg &#231;lkjh azsxdcfvgb &#231;;l.k,jmhn aqswdefrgt &#231;plokijuhy<br>' + 
-                    'a1a2s3d4f5g6 &#231;0l9k8j7 &#231;p0&#231;p-&#231;p= &#231;p0&#231;p-&#231;p= ;0;-;=<br>' + 
-                    '<br>' + 
-                    '1=2-1 2=3-1 3=4-1 4=5-1 5=6-1 6=7-1 7=8-1 8=9-1<br>' + 
-                    '<br>' + 
-                    '&#225; &#227; &#243; &#245; &#233; &#237; &#250; &#225; &#227; &#243; &#245; &#233; &#237; &#250; &#225; &#227; &#243; &#245; &#233; &#237; &#250; <br>' + 
-                    'p&#225; p&#233; p&#243; p&#227;o p&#245;em p&#225; p&#233; p&#243; p&#227;o p&#245;em<br>' + 
-                    '<br>' + 
-                    'M&#227;o, M&#227;o, M&#227;o, M&#227;o, M&#227;o, &#243;rg&#227;o, &#243;rg&#227;o, &#243;rg&#227;o,<br>' + 
-                    'Mam&#227;o, Mam&#227;o, Mam&#227;o, &#237;m&#227;, &#237;m&#227;, &#237;m&#227;, &#237;m&#227;, &#237;m&#227;,<br>' + 
-                    '<br>' + 
-                    'm&#227;e,m&#227;e,m&#227;e,m&#227;e,m&#227;e,m&#227;e,m&#227;e,<br>' + 
-                    'lim&#245;es, lim&#245;es, lim&#245;es, lim&#245;es, lim&#245;es, lim&#245;es,<br>' + 
-                    '<br>' + 
-                    'Sap&#233;, Sap&#233;, Sap&#233;, Sap&#233;, Sap&#233;, Sap&#233;, Sap&#233;, Sap&#233;,<br>' + 
-                    'Pop&#243;, Pop&#243;, Pop&#243;, Pop&#243;, Pop&#243;, Pop&#243;, Pop&#243;, Pop&#243;,<br>' + 
-                    '<br>' + 
-                    'super-homem super-homem super-homem super-homem<br>' + 
-                    'a-b=c a-b=c a-b=c a-b=c a-b=c a-b=c a-b=c a-b=c<br>' + 
-                    '<br>' + 
-                    'abcdefghijklmnopqrstuvwxyz,.;1234567890<br>' + 
-                    'aBcDeFgHiJkLmNoPqRsTuVwXyZ,>;-=&#8226;<br>' + 
-                    '<br>' + 
-                    '&#168;EXERC&#205;CIOS GERAIS<br>' + 
-                    'LI&#199;&#195;O 007 - ACENTOS - circunflexo - grave&#168;<br>' + 
-                    '<br>' + 
-                    '&#226; &#234; &#244; &#226; &#234; &#244; &#226; &#234; &#244; &#226; &#234; &#244; &#226; &#234; &#244; &#226; &#234; &#244; &#226; &#234; &#244;<br>' + 
-                    '&#194; &#202; &#212; &#194; &#202; &#212; &#194; &#202; &#212; &#194; &#202; &#212; &#194; &#202; &#212; &#194; &#202; &#212; &#194; &#202; &#212;<br>' + 
-                    '<br>' + 
-                    '&#168;    O ACENTO GRAVE S&#211; SE USA PARA INDICAR A CRASE&#168;<br>' + 
-                    '<br>' + 
-                    '&#224; &#224;quilo &#224;quele &#224;quela &#224; &#224;quilo &#224;quele &#224;quela<br>' + 
-                    '&#192; &#192;quilo &#192;quele &#192;quela &#192; &#192;quilo &#192;quele &#192;quela<br>' + 
-                    '<br>' + 
-                    '<br>' + 
-                    'P&#244;r, P&#227;o, Le&#245;es, &#224;quele, &#224;quilo, &#224;, &#224;s , &#192;, &#192;s,<br>' + 
-                    '&#212;nibus, &#194;mbar, &#202;mbolo, &#193;guia, &#201;rica, S&#227;o Paulo, &#192;quela<br>' + 
-                    'Sof&#225;, Rap&#233;, Cip&#243;, &#243;rg&#227;o, f&#237;bula,&#8226;<br>' + 
-                    '<br>' + 
-                    '&#168;EXERC&#205;CIOS GERAIS<br>' + 
-                    'LI&#199;&#195;O 008 - SEPARA&#199;&#195;O DE S&#205;LABAS<br>' + 
-                    '     MONOSS&#205;LABOS - PALAVRAS DE UMA S&#205;LABA&#168;<br>' + 
-                    'a o e p&#243; ti tu v&#243;s voz sim ser crer trio brios trens<br>' + 
-                    '<br>' + 
-                    '&#168;   DISS&#205;LABOS         - PALAVRAS DE DUAS S&#205;LABAS<br>' + 
-                    '     TRISS&#205;LABOS      - PALAVRAS DE TR&#202;S S&#205;LABAS<br>' + 
-                    '     POLISS&#205;LABOS - PALAVRAS DE QUATRO OU MAIS S&#205;LABAS&#168;<br>' + 
-                    'creio cre-io  sapato sa-pa-to  certo cer-to  censo cen-so<br>' + 
-                    'corda cor-da  antes an-tes  asco as-co  cansar can-sar<br>' + 
-                    'livro li-vro  calha ca-lha  manh&#227; ma-nh&#227;  compra com-pra<br>' + 
-                    'osso os-so  carro car-ro  isso is-so  erro er-ro<br>' + 
-                    'piscina pis-ci-na  consciente cons-ci-en-te  nasci nas-ci<br>' + 
-                    'advogado ad-vo-ga-do indigna&#231;&#227;o in-dig-na-&#231;&#227;o<br>' + 
-                    '<br>' + 
-                    '&#168;   HIATOS - DUAS VOGAIS PRONUNCIADAS SEPARADAMENTE&#168;<br>' + 
-                    'coerente  co-e-ren-te  sa&#250;va sa-&#250;-va  ocioso o-ci-o-so<br>' + 
-                    'serralheria  ser-ra-lhe-ri-a  coincidir co-in-ci-dir<br>' + 
-                    '<br>' + 
-                    '&#168;   DITONGOS - DUAS VOGAIS PRONUNCIADAS JUNTAMENTE&#168;<br>' + 
-                    'caixa cai-xa  saiu sa-iu  pinguim  pin-guim  &#225;gua &#225;-gua<br>' + 
-                    'conci&#234;ncia con-ci-&#234;n-cia  fam&#237;lia fa-m&#237;-lia<br>' + 
-                    'n&#233;scio n&#233;s-cio  fiasco fias-co<br>' + 
-                    '<br>' + 
-                    '&#168;   TRITONGOS - TR&#202;S VOGAIS PRONUNCIADAS JUNTAMENTE&#168;<br>' + 
-                    'Uruguai U-ru-guai  papagaio pa-pa-gaio&#8226;<br>' + 
-                    '<br>' + 
-                    '&#168;EXERC&#205;CIOS GERAIS<br>' + 
-                    'LI&#199;&#195;O 009&#168;<br>' + 
-                    '<br>' + 
-                    '<br>' + 
-                    '&#8226;<br>' + 
-                    '<br>' + 
-                    '&#168;EXERC&#205;CIOS GERAIS<br>' + 
-                    'LI&#199;&#195;O 010&#168;<br>' + 
-                    '<br>' + 
-                    '<br>' + 
-                    '&#8226;<br>' + 
-                    '</span>',
-
-                    // ... format geral
-                    [0, 0, 0, 1, 3, '#FFD966', 0, 'left']
-
-                    ]
-                    // ... fim de texto
+Texts['textDiv'] = [                    // ...                    '<span style="color: black;">' +                    '</span><span style="font-family:Arial;color:#000000;font-size: 20px; font-weight:bold;font-style:normal;text-decoration-line:underline;">T&#205;TULOS<br>' +                     '<br>' +                     '</span><span style="font-family:Arial;color:#00B050;font-size: 10px; font-weight:normal;font-style:normal;text-decoration-line:none;">                           </span><span style="font-family:Times New Roman;color:#00B050;font-size: 48px; font-weight:normal;font-style:normal;text-decoration-line:none;">&#1575;&#1604;&#1604;&#1607; &#1571;&#1603;&#1576;&#1585;<br>' +                     '<br>' +                     '</span><span style="font-family:Arial;color:#000000;font-size: 20px; font-weight:bold;font-style:normal;text-decoration-line:underline;">Subt&#237;tulo<br>' +                     '</span><span style="font-family:Arial;color:#000000;font-size: 10px; font-weight:normal;font-style:normal;text-decoration-line:none;">                           </span><span style="font-family:Calibri;color:#000000;font-size: 11px; font-weight:normal;font-style:normal;text-decoration-line:none;">Outras s&#227;o curtas.<br>' +                     '<br>' +                     '</span><span style="font-family:Arial;color:#2F5496;font-size: 10px; font-weight:normal;font-style:normal;text-decoration-line:none;">                           </span><span style="font-family:Algerian;color:#2F5496;font-size: 16px; font-weight:normal;font-style:normal;text-decoration-line:none;">Texto</span><span style="font-family:Calibri;color:#2F5496;font-size: 11px; font-weight:normal;font-style:normal;text-decoration-line:none;"> </span><span style="font-family:Calibri;color:#2F5496;font-size: 11px; font-weight:bold;font-style:italic;text-decoration-line:underline;">principal</span><span style="font-family:Calibri;color:#000000;font-size: 11px; font-weight:normal;font-style:normal;text-decoration-line:none;"> com varia&#231;&#245;es, muitas </span><span style="font-family:Calibri;color:#FF0000;font-size: 28px; font-weight:bold;font-style:italic;text-decoration-line:none;"><mark>varia&#231;&#245;es</span><span style="font-family:Calibri;color:#FF0000;font-size: 11px; font-weight:normal;font-style:normal;text-decoration-line:none;"></mark>  </span><span style="font-family:Calibri;color:#000000;font-size: 11px; font-weight:normal;font-style:normal;text-decoration-line:none;">de </span><span style="font-family:Calibri;color:#000000;font-size: 22px; font-weight:normal;font-style:italic;text-decoration-line:underline;">tamanhos</span><span style="font-family:Calibri;color:#000000;font-size: 11px; font-weight:normal;font-style:normal;text-decoration-line:none;">, </span><span style="font-family:Calibri;color:#00B050;font-size: 11px; font-weight:normal;font-style:italic;text-decoration-line:none;">cores</span><span style="font-family:Calibri;color:#00B050;font-size: 11px; font-weight:normal;font-style:normal;text-decoration-line:none;"> </span><span style="font-family:Calibri;color:#000000;font-size: 11px; font-weight:normal;font-style:normal;text-decoration-line:none;">e </span><span style="font-family:Calibri;color:#000000;font-size: 11px; font-weight:bold;font-style:normal;text-decoration-line:none;">estilos</span><span style="font-family:Calibri;color:#000000;font-size: 11px; font-weight:normal;font-style:normal;text-decoration-line:none;">.<br>' +                     '</span><span style="font-family:Arial;color:#000000;font-size: 10px; font-weight:normal;font-style:normal;text-decoration-line:none;">                           </span><span style="font-family:Calibri;color:#000000;font-size: 11px; font-weight:normal;font-style:normal;text-decoration-line:none;">Com subscritos </span><span style="font-family:Calibri;color:#0070C0;font-size: 24px; font-weight:bold;font-style:italic;text-decoration-line:underline;">H<sub>2</sub>O</span><span style="font-family:Calibri;color:#000000;font-size: 11px; font-weight:normal;font-style:normal;text-decoration-line:none;"> e sobrescritos </span><span style="font-family:Calibri;color:#FF0000;font-size: 24px; font-weight:bold;font-style:normal;text-decoration-line:none;"><mark>E = m.C<sup>2</span><span style="font-family:Calibri;color:#000000;font-size: 11px; font-weight:normal;font-style:normal;text-decoration-line:none;"></sup></mark> tamb&#233;m.<br>' +                     '</span><span style="font-family:Arial;color:#000000;font-size: 10px; font-weight:normal;font-style:normal;text-decoration-line:none;">                           </span><span style="font-family:Calibri;color:#000000;font-size: 11px; font-weight:normal;font-style:normal;text-decoration-line:none;">Em </span><span style="font-family:Calibri;color:#000000;font-size: 16px; font-weight:normal;font-style:normal;text-decoration-line:none;">diversas</span><span style="font-family:Calibri;color:#000000;font-size: 11px; font-weight:normal;font-style:normal;text-decoration-line:none;">                             linhas.<br>' +                     '</span><span style="font-family:Arial;color:#7030A0;font-size: 10px; font-weight:normal;font-style:normal;text-decoration-line:none;">                           </span><span style="font-family:Calibri;color:#7030A0;font-size: 28px; font-weight:normal;font-style:normal;text-decoration-line:none;">Algumas</span><span style="font-family:Calibri;color:#000000;font-size: 11px; font-weight:normal;font-style:normal;text-decoration-line:none;"> </span><span style="font-family:Calibri;color:#000000;font-size: 11px; font-weight:normal;font-style:normal;text-decoration-line:underline;">muito</span><span style="font-family:Calibri;color:#000000;font-size: 11px; font-weight:normal;font-style:normal;text-decoration-line:none;"> longas </span><span style="font-family:Calibri;color:#000000;font-size: 20px; font-weight:normal;font-style:normal;text-decoration-line:none;">1234567890</span><span style="font-family:Calibri;color:#000000;font-size: 11px; font-weight:normal;font-style:normal;text-decoration-line:none;"> abcdefghnopqrstuvxz aaa AAA bbb BBBB.<br>' +                     '</span><span style="font-family:Arial;color:#000000;font-size: 10px; font-weight:normal;font-style:normal;text-decoration-line:none;">                           </span><span style="font-family:Calibri;color:#000000;font-size: 11px; font-weight:normal;font-style:normal;text-decoration-line:none;">Outras s&#227;o curtas.<br>' +                     '1<br>' +                     '2<br>' +                     '3<br>' +                     '4<br>' +                     '5<br>' +                     '6<br>' +                     '<br>' +                     'FIM</span><span style="font-family:Calibri;color:#FF0000;font-size: 14px; font-weight:bold;font-style:italic;text-decoration-line:underline;">$<br>' +                     '<br>' +                     '</span><span style="font-family:Calibri;color:#000000;font-size: 11px; font-weight:normal;font-style:normal;text-decoration-line:none;"><mark>A<br>' +                     '</span>',                    // ... format geral                    [0, 0, 0, 1, 2, '#CC0099', 0, 'left']                    ]                    // ... fim de texto
 
 Texts['divTxLi'] = [
                     // ...
@@ -701,7 +512,29 @@ Menus['pop1'] = [
 
                     ]
                     // ... fim de menu
-Menus['divMenu'] = [                    // ... format geral                    [16, 'autoload', 'horizontal', 'hover', 'autosize', , , ],                    // ...                    [0,  1,  'Cabelo',  '',  ['#0070C0', 20, 'B', 'I', 'U', 'Arial'] ,['#FFC000', 'left', 34, 166, [ 3, 3, 3, 3,]],  ['#CC0099', 20, 'B', 'I', 'U', 'Arial'] ,['#FFFF00', 'center', 34, 74, [ 3, 1, 1, 1,]], 0, 0 ],                     [1,  2,  'Cabe&#231;a',  'bB',  ['#FFC000', 20, 'B', 'i', 'u', 'Arial'] ,['#FFE699', 'left', 34, 166, [ 0, 2, 2, 2,]],  ['#FF0000', 20, 'B', 'i', 'u', 'Arial'] ,['#D9D9D9', 'center', 34, 74, [ 1, 1, 2, 1,]], 0, 0 ],                     [3,  2,  'c&#227;o',  'c&#227;o',  ['#000000', 26, 'B', 'i', 'u', 'Arial'] ,['#C6E0B4', 'left', 45, 166, [ 2, 2, 1, 2,]],  ['#000000', 26, 'B', 'i', 'u', 'Arial'] ,['#A9D08E', 'center', 45, 74, [ 2, 1, 0, 1,]], 0, 0 ],                     [1,  2,  'Tronco',  '>',  ['#00B050', 20, 'B', 'i', 'u', 'Arial'] ,['#FEFE9A', 'left', 26, 166, [ 1, 2, 1, 2,]],  ['#00B050', 20, 'B', 'i', 'u', 'Arial'] ,['#A9D08E', 'center', 26, 74, [ 0, 1, 0, 1,]], 0, 0 ],                     [21,  3,  'Corpo e bra&#231;os',  '>',  ['#D9D9D9', 14, 'b', 'i', 'u', 'Calibri'] ,['#808080', 'left', 26, 192, [ 1, 1, 0, 1,]],  ['#FFFFFF', 11, 'b', 'i', 'u', 'Calibri'] ,['#D9E1F2', 'center', 26, 74, [ 0, 0, 0, 1,]], 0, 0 ],                     [22,  4,  'A',  '',  ['#000000', 11, 'b', 'i', 'u', 'Calibri'] ,['#FFFFFF', 'left', 26, 40, [ 1, 1, 0, 1,]],  ['#FF0000', 11, 'b', 'i', 'u', 'Calibri'] ,['#A9D08E', 'center', 26, 74, [ 0, 0, 0, 0,]], 0, 0 ],                     [23,  4,  'i',  '',  ['#000000', 11, 'b', 'i', 'u', 'Calibri'] ,['#FFFFFF', 'left', 26, 40, [ 0, 1, 1, 1,]],  ['#FF0000', 11, 'b', 'i', 'u', 'Calibri'] ,['#A9D08E', 'center', 26, 74, [ 0, 0, 0, 0,]], 0, 0 ],                     [24,  3,  'M&#227;o',  '',  ['#D9D9D9', 14, 'B', 'i', 'u', 'Calibri'] ,['#808080', 'left', 26, 192, [ 0, 1, 1, 1,]],  ['#FFFFFF', 11, 'b', 'i', 'u', 'Calibri'] ,['#8497B0', 'center', 26, 74, [ 0, 0, 1, 1,]], 0, 0 ],                     [5,  3,  'unhas',  '',  ['#D9D9D9', 14, 'b', 'i', 'u', 'Calibri'] ,['#808080', 'left', 26, 192, [ 1, 1, 1, 1,]],  ['#FFFFFF', 11, 'b', 'i', 'u', 'Calibri'] ,['#8497B0', 'center', 26, 74, [ 1, 0, 0, 0,]], 0, 0 ],                     [33,  3,  'dedos',  '>',  ['#D9D9D9', 14, 'b', 'i', 'u', 'Calibri'] ,['#808080', 'left', 18, 192, [ 1, 1, 1, 1,]],  ['#FFFFFF', 11, 'b', 'i', 'u', 'Calibri'] ,['#8497B0', 'center', 18, 74, [ 0, 0, 0, 1,]], 0, 0 ],                     [34,  4,  'a',  '',  ['#000000', 11, 'b', 'i', 'u', 'Calibri'] ,['#FEFE9A', 'left', 15, 40, [ 1, 1, 0, 1,]],  ['#FFFFFF', 11, 'b', 'i', 'u', 'Calibri'] ,['#8497B0', 'center', 15, 74, [ 0, 0, 0, 1,]], 0, 0 ],                     [35,  4,  'b',  '',  ['#000000', 11, 'b', 'i', 'u', 'Calibri'] ,['#FEFE9A', 'left', 19, 40, [ 0, 1, 1, 1,]],  ['#FFFFFF', 11, 'b', 'i', 'u', 'Calibri'] ,['#8497B0', 'center', 19, 74, [ 0, 0, 0, 1,]], 0, 0 ],                     [36,  2,  'Pernas',  '',  ['#0070C0', 20, 'B', 'i', 'u', 'Arial'] ,['#F8CBAD', 'left', 27, 166, [ 1, 2, 2, 2,]],  ['#F2F2F2', 11, 'B', 'i', 'u', 'Calibri'] ,['#C65911', 'center', 27, 74, [ 0, 1, 3, 1,]], 0, 0 ],                     [0,  1,  'OUTRO',  '',  ['#0070C0', 20, 'B', 'I', 'U', 'Arial'] ,['#FFC000', 'left', 27, 166, [ 3, 3, 3, 3,]],  ['#0070C0', 20, 'B', 'I', 'U', 'Arial'] ,['#A9D08E', 'center', 27, 74, [ 3, 1, 1, 1,]], 0, 0 ],                     [45,  2,  'ourro 1',  '',  ['#000000', 11, 'b', 'i', 'u', 'Calibri'] ,['#FFFFFF', 'left', 30, 166, [ 3, 1, 0, 1,]],  ['#FFFFFF', 11, 'b', 'i', 'u', 'Calibri'] ,['#8497B0', 'center', 30, 74, [ 1, 0, 0, 1,]], 0, 0 ],                     [46,  2,  'ourro 2',  '',  ['#000000', 11, 'b', 'i', 'u', 'Calibri'] ,['#FFFFFF', 'left', 19, 166, [ 0, 1, 1, 1,]],  ['#FFFFFF', 11, 'b', 'i', 'u', 'Calibri'] ,['#8497B0', 'center', 19, 74, [ 0, 0, 0, 1,]], 0, 0 ],                     ]                    // ... fim de menu
+Menus['divMenu'] = [
+                    // ... format geral
+                    [16, 'autoload', 'horizontal', 'hover', 'autosize', , , ],
+                    // ...
+                    [0,  1,  'Cabelo',  '',  ['#0070C0', 20, 'B', 'I', 'U', 'Arial'] ,['#FFC000', 'left', 34, 166, [ 3, 3, 3, 3,]],  ['#CC0099', 20, 'B', 'I', 'U', 'Arial'] ,['#FFFF00', 'center', 34, 74, [ 3, 1, 1, 1,]], 0, 0 ], 
+                    [1,  2,  'Cabe&#231;a',  'bB',  ['#FFC000', 20, 'B', 'i', 'u', 'Arial'] ,['#FFE699', 'left', 34, 166, [ 0, 2, 2, 2,]],  ['#FF0000', 20, 'B', 'i', 'u', 'Arial'] ,['#D9D9D9', 'center', 34, 74, [ 1, 1, 2, 1,]], 0, 0 ], 
+                    [3,  2,  'c&#227;o',  'c&#227;o',  ['#000000', 26, 'B', 'i', 'u', 'Arial'] ,['#C6E0B4', 'left', 45, 166, [ 2, 2, 1, 2,]],  ['#000000', 26, 'B', 'i', 'u', 'Arial'] ,['#A9D08E', 'center', 45, 74, [ 2, 1, 0, 1,]], 0, 0 ], 
+                    [1,  2,  'Tronco',  '>',  ['#00B050', 20, 'B', 'i', 'u', 'Arial'] ,['#FEFE9A', 'left', 26, 166, [ 1, 2, 1, 2,]],  ['#00B050', 20, 'B', 'i', 'u', 'Arial'] ,['#A9D08E', 'center', 26, 74, [ 0, 1, 0, 1,]], 0, 0 ], 
+                    [21,  3,  'Corpo e bra&#231;os',  '>',  ['#D9D9D9', 14, 'b', 'i', 'u', 'Calibri'] ,['#808080', 'left', 26, 192, [ 1, 1, 0, 1,]],  ['#FFFFFF', 11, 'b', 'i', 'u', 'Calibri'] ,['#D9E1F2', 'center', 26, 74, [ 0, 0, 0, 1,]], 0, 0 ], 
+                    [22,  4,  'A',  '',  ['#000000', 11, 'b', 'i', 'u', 'Calibri'] ,['#FFFFFF', 'left', 26, 40, [ 1, 1, 0, 1,]],  ['#FF0000', 11, 'b', 'i', 'u', 'Calibri'] ,['#A9D08E', 'center', 26, 74, [ 0, 0, 0, 0,]], 0, 0 ], 
+                    [23,  4,  'i',  '',  ['#000000', 11, 'b', 'i', 'u', 'Calibri'] ,['#FFFFFF', 'left', 26, 40, [ 0, 1, 1, 1,]],  ['#FF0000', 11, 'b', 'i', 'u', 'Calibri'] ,['#A9D08E', 'center', 26, 74, [ 0, 0, 0, 0,]], 0, 0 ], 
+                    [24,  3,  'M&#227;o',  '',  ['#D9D9D9', 14, 'B', 'i', 'u', 'Calibri'] ,['#808080', 'left', 26, 192, [ 0, 1, 1, 1,]],  ['#FFFFFF', 11, 'b', 'i', 'u', 'Calibri'] ,['#8497B0', 'center', 26, 74, [ 0, 0, 1, 1,]], 0, 0 ], 
+                    [5,  3,  'unhas',  '',  ['#D9D9D9', 14, 'b', 'i', 'u', 'Calibri'] ,['#808080', 'left', 26, 192, [ 1, 1, 1, 1,]],  ['#FFFFFF', 11, 'b', 'i', 'u', 'Calibri'] ,['#8497B0', 'center', 26, 74, [ 1, 0, 0, 0,]], 0, 0 ], 
+                    [33,  3,  'dedos',  '>',  ['#D9D9D9', 14, 'b', 'i', 'u', 'Calibri'] ,['#808080', 'left', 18, 192, [ 1, 1, 1, 1,]],  ['#FFFFFF', 11, 'b', 'i', 'u', 'Calibri'] ,['#8497B0', 'center', 18, 74, [ 0, 0, 0, 1,]], 0, 0 ], 
+                    [34,  4,  'a',  '',  ['#000000', 11, 'b', 'i', 'u', 'Calibri'] ,['#FEFE9A', 'left', 15, 40, [ 1, 1, 0, 1,]],  ['#FFFFFF', 11, 'b', 'i', 'u', 'Calibri'] ,['#8497B0', 'center', 15, 74, [ 0, 0, 0, 1,]], 0, 0 ], 
+                    [35,  4,  'b',  '',  ['#000000', 11, 'b', 'i', 'u', 'Calibri'] ,['#FEFE9A', 'left', 19, 40, [ 0, 1, 1, 1,]],  ['#FFFFFF', 11, 'b', 'i', 'u', 'Calibri'] ,['#8497B0', 'center', 19, 74, [ 0, 0, 0, 1,]], 0, 0 ], 
+                    [36,  2,  'Pernas',  '',  ['#0070C0', 20, 'B', 'i', 'u', 'Arial'] ,['#F8CBAD', 'left', 27, 166, [ 1, 2, 2, 2,]],  ['#F2F2F2', 11, 'B', 'i', 'u', 'Calibri'] ,['#C65911', 'center', 27, 74, [ 0, 1, 3, 1,]], 0, 0 ], 
+                    [0,  1,  'OUTRO',  '',  ['#0070C0', 20, 'B', 'I', 'U', 'Arial'] ,['#FFC000', 'left', 27, 166, [ 3, 3, 3, 3,]],  ['#0070C0', 20, 'B', 'I', 'U', 'Arial'] ,['#A9D08E', 'center', 27, 74, [ 3, 1, 1, 1,]], 0, 0 ], 
+                    [45,  2,  'ourro 1',  '',  ['#000000', 11, 'b', 'i', 'u', 'Calibri'] ,['#FFFFFF', 'left', 30, 166, [ 3, 1, 0, 1,]],  ['#FFFFFF', 11, 'b', 'i', 'u', 'Calibri'] ,['#8497B0', 'center', 30, 74, [ 1, 0, 0, 1,]], 0, 0 ], 
+                    [46,  2,  'ourro 2',  '',  ['#000000', 11, 'b', 'i', 'u', 'Calibri'] ,['#FFFFFF', 'left', 19, 166, [ 0, 1, 1, 1,]],  ['#FFFFFF', 11, 'b', 'i', 'u', 'Calibri'] ,['#8497B0', 'center', 19, 74, [ 0, 0, 0, 1,]], 0, 0 ], 
+
+                    ]
+                    // ... fim de menu
 // ------[MENUS]
 
 

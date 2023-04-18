@@ -34,6 +34,15 @@ var evento2 = '*****'
 
 var blocTrap = 0
 
+// ... Zoom
+var divOriId = ''       // div da img original
+var divZooId = ''       // div da amostra aumentada
+var parentZoomId = ''   // parent de divOriId
+var imgZoomId = ''      // img de divOriId a ser amostrada
+var fatZoom = 1         // fator de aumento
+var menuZoom = 0        // flag de zoom ativo
+
+
 // ... evento
 var evento  = '' ; var Leventos  = []
 
@@ -183,6 +192,52 @@ document.addEventListener('DOMMouseScroll', ev84) ; function ev85() { evento = '
 function iniSys(){
     iniLoc()
     evento = ''
+
+
+    // ........ Zoom
+    imgZoomId = 'img-430'
+    //divZooId  = 'div-429'
+    //divZooId  = 'ZoomAma'
+
+    divOriId     = el(imgZoomId).parentElement.id
+
+    // ... cria div cursor - "ZoomDivCur"
+    para = document.createElement("div")
+    el('Corpo').appendChild(para)
+    para.id     = "ZoomDivCur"
+    el("ZoomDivCur").style = 'position: absolute; left: -3000px; top: -3000px; width: 40.0px; height: 40px; box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: none; border-color: black; border-radius: 0.0%; border-width: 0.0px; border-style: solid; background-color: gray; opacity: 0.4'
+    el("ZoomDivCur").style.zIndex  = '1'
+    // ...[cria div cursor - "ZoomDivCur"]
+
+    // ... cria IMG de zoom  - "ZoomImg"
+    para = document.createElement("img")
+    para.id     = "ZoomImg"
+    el('Corpo').appendChild( para )
+    el('ZoomImg').style.position = 'absolute'
+    el('ZoomImg').style.top     = '-3000px'
+    el('ZoomImg').style.left    = '-3000px'
+    el('ZoomImg').style.width   = '150px'
+    el('ZoomImg').style.height  = '150px'
+    // ...[cria IMG de zoom  - "ZoomImg"]
+
+    // ... cria div para abrigar img de zoom, se não existente
+    if (divZooId=='') {
+        parentZoomId = el(divOriId).parentElement.id
+        divZooId = 'Zoom'
+        para = document.createElement("div")
+        el(parentZoomId).appendChild(para)       // div de zoom é irmã de divZoom
+        para.id     = divZooId
+        el(divZooId).style.backgroundColor  = 'red'
+        el(divZooId).style.position         = 'absolute'
+        el(divZooId).style.top              = '-300px'
+        el(divZooId).style.left             = '-300px'
+        el(divZooId).style.width            = '150px'
+        el(divZooId).style.height           = '150px'
+        el(divZooId).style.zIndex           = '1'
+        el(divZooId).style.overflow         = 'hidden'
+    }
+        
+    // ........[Zoom]
 
     // ........ abre Planilhas
     Ldivs = []
