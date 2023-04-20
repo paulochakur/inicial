@@ -30,7 +30,6 @@ var toques=0
 var iCa=0
 var List = [ 4 ]
 var eventoAc = '.......'
-var evento2 = '*****'
 
 var blocTrap = 0
 
@@ -42,6 +41,7 @@ var imgZoomId = ''      // img de divOriId a ser amostrada
 var fatZoom = 1         // fator de aumento
 var menuZoom = 0        // flag de zoom ativo
 
+var nIcis=0
 
 // ... evento
 var evento  = '' ; var Leventos  = []
@@ -190,16 +190,18 @@ document.addEventListener('DOMMouseScroll', ev84) ; function ev85() { evento = '
 
 // ----- inicio Sys
 function iniSys(){
-    iniLoc()
+
     evento = ''
 
-
-    // ........ Zoom
-    imgZoomId = 'img-430'
-    //divZooId  = 'div-429'
-    //divZooId  = 'ZoomAma'
-
-    divOriId     = el(imgZoomId).parentElement.id
+    
+    // ---------- cria elementos de sistema
+    // ... cria div - "console"
+    para = document.createElement("div")
+    el('Corpo').appendChild(para)
+    para.id     = "console"
+    el("console").style = 'position: fixed; left: 30px; top: 40px; width: 300px; height: 500px; box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: text; border-color: black; border-radius: 1.0%; border-width: 1.0px; border-style: solid; background-color: #d1cb47; opacity: 1; overflow: auto'
+    el("console").style.zIndex  = '1'
+    // ...[cria div cursor - "ZoomDivCur"]
 
     // ... cria div cursor - "ZoomDivCur"
     para = document.createElement("div")
@@ -213,36 +215,108 @@ function iniSys(){
     para = document.createElement("img")
     para.id     = "ZoomImg"
     el('Corpo').appendChild( para )
-    el('ZoomImg').style.position = 'absolute'
-    el('ZoomImg').style.top     = '-3000px'
-    el('ZoomImg').style.left    = '-3000px'
-    el('ZoomImg').style.width   = '150px'
-    el('ZoomImg').style.height  = '150px'
+    el("ZoomImg").style = 'position: absolute; left: -3000px; top: -3000px; width: 40.0px; height: 40px; box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: none; border-color: black; border-radius: 0.0%; border-width: 0.0px; border-style: solid; background-color: gray; opacity: 1'
     // ...[cria IMG de zoom  - "ZoomImg"]
+    
+    // ... cria div para abrigar img de zoom, se não existente
+    para = document.createElement("div")
+    el('Corpo').appendChild(para)       // div de zoom é irmã de divZoom
+    para.id     = 'Zoom'
+    el("Zoom").style = 'position: absolute; left: -3000px; top: -3000px; width: 150px; height: 150px; box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: none; border-color: black; border-radius: 0.0%; border-width: 0.0px; border-style: solid; background-color: gray; opacity: 1 ; overflow: hidden'
+    // ........[Zoom]
+    
+
+    // ---------- [cria elementos de sistema]
+
+
+
+
+
+    // --------- Atributos- ida: div-429 ; zoomMenuDiv: ZoomAma ; curLado: 50 ; zoomFat: 3 ;
+    
+    // ... set atributos definidos em TXT
+    allEles = document.getElementsByTagName("*") ; nEles = allEles.length
+    Lels = []  ; for (i = 0; i <= nEles-1; i++){ Lels.push(allEles[i].id) }
+    
+    nIcis = nIcis+1
+    print('WWWWWWWWWW nEles: '+nEles+'  nIcis: '+nIcis)
+
+    for (i=1; i < nEles-1; i++) {
+        innTex = '**' 
+        try{ 
+            ele     = el(Lels[i])
+            innTex  = ele.innerText
+            
+        } catch{}
+        //print('<br> 00000 i: '+i+' innTex: '+innTex)
+        try {
+            teste = innTex.includes('Atributos-')
+            if (innTex.includes('Atributos-')) {
+                
+                innTex = innTex.replace('Atributos-','')  ; innTex = innTex.trim()+';'
+                iniAtt = 0 ; iniVal = 1 ; valAtt = '*'; j=0 ; nomAtt = '' ; valAtt = '' ; idAtt = ''
+                //print('i: '+i+' ele: '+ele.id+'  |'+innTex+'|  ')
+                do {
+                    j++
+                    iniVal  = innTex.indexOf(":", iniAtt+1)   ; fimDiv  = innTex.indexOf(";", iniVal+1)
+                    if (iniVal>-1)  { 
+                        nomAtt  = innTex.slice(iniAtt,  iniVal)   ; nomAtt  = nomAtt.trim()
+                        valAtt  = innTex.slice(iniVal+1,  fimDiv) ; valAtt  = valAtt.trim()
+                        if (nomAtt=='ida') { idAtt = valAtt }
+                        if (idAtt==ele.id && nomAtt!='ida') { ele.setAttribute(nomAtt, valAtt) }
+                        //print('  j: '+j+' valAtt: '+valAtt)
+                    }        
+                    // ..
+                    iniAtt = fimDiv+1
+                } while (iniVal>0 && fimDiv>0 && j<30)
+        
+            }
+        } catch{}
+    }    
+    // ...[set atributos definidos em TXT]
+
+
+    
+    print('YYYYY')
+
+    // ........ Zoom
+    imgZoomId = 'img-430'
+    divOriId    = el(imgZoomId).parentElement.id
+
+    eleId = divOriId 
+    ele = el(divOriId)
+
+    print('++++++ Div: '+ele.getAttribute("zoomMenuDiv"))
+    print('++++++ Lado: '+ele.getAttribute("curLado"))
+    print('++++++ Fat: '+ele.getAttribute("zoomFat"))
+
+    divZooId  = ele.getAttribute("zoomMenuDiv")
+    cursLadoS = ele.getAttribute("curLado") ; cursLado = Number(cursLadoS)
+    fatZoomS  = ele.getAttribute("zoomFat") ; fatZoom  = Number(fatZoomS)
+
+    el('ZoomDivCur').style.width   = cursLado+'px'
+    el('ZoomDivCur').style.height  = cursLado+'px'
+
 
     // ... cria div para abrigar img de zoom, se não existente
-    if (divZooId=='') {
+    if (divZooId=='local') {
         parentZoomId = el(divOriId).parentElement.id
         divZooId = 'Zoom'
-        para = document.createElement("div")
         el(parentZoomId).appendChild(para)       // div de zoom é irmã de divZoom
         para.id     = divZooId
-        el(divZooId).style.backgroundColor  = 'red'
-        el(divZooId).style.position         = 'absolute'
-        el(divZooId).style.top              = '-300px'
-        el(divZooId).style.left             = '-300px'
-        el(divZooId).style.width            = '150px'
         el(divZooId).style.height           = '150px'
         el(divZooId).style.zIndex           = '1'
         el(divZooId).style.overflow         = 'hidden'
     }
-        
     // ........[Zoom]
+    
+
+
+
 
     // ........ abre Planilhas
-    Ldivs = []
     allEl = document.getElementsByTagName("div")  ;  nDivs = allEl.length
-    for (i = 0; i <= nDivs-1; i++){ Ldivs.push(allEl[i].id) }
+    Ldivs = []  ; for (i = 0; i <= nDivs-1; i++){ Ldivs.push(allEl[i].id) }
     for (iDiv = 0; iDiv <= nDivs-1; iDiv++){
         try  {
             divSheetId = Ldivs[iDiv]
@@ -291,7 +365,10 @@ function iniSys(){
     }
     // ........[Monta Menus]
 
+    // ....
+    // -------- finaliza rotina inicial
     window.scrollTo(0,0)
+    iniLoc()
 }
 // ----- inicio Sys
 
@@ -389,6 +466,8 @@ function eventTrap() {
     // -----------[IMPUT]
 
 
+
+
     // ---------------- Menus    
 
     // ....... abre e recolhe
@@ -411,7 +490,6 @@ function eventTrap() {
             if (yMw+hTot>Dh){ y = Dh-hTot-yMw + y }
             if (xMw+wTot>Dw){ x = Dw-wTot-xMw + x }
             popMenuAti.style.top  = y+'px' ; popMenuAti.style.left  = x+'px'
-            eventoAc = '<br> HeigRel[1]: '+(hTot+yMp) +' Dw: '+Dw   +eventoAc ;  el("geralDiv").innerHTML = eventoAc
 
             IsubOpen   = [1, 1, -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]
             Menus[menuDiv][0][20] = IsubOpen
@@ -698,6 +776,15 @@ function eventTrap() {
 
             
 // ************************* FUNCTIONS DE SISTEMA EM .js
+
+// ---- print em console
+function print(strPrint){ 
+    eventoAc = '<br>'+strPrint     +eventoAc ;  el("console").innerHTML = eventoAc
+    return 
+}
+// ---
+
+
 // ---- Get El by Id
 function el(idS){ return document.getElementById(idS) }
 // ---
@@ -940,7 +1027,6 @@ function criaMenu(divMenuId) {
     }
     formMenu[0][25] = HeigRel
     formMenu[0][26] = TopRel
-    eventoAc = '<br> HeigRel: '+HeigRel     +eventoAc ;  el("geralDiv").innerHTML = eventoAc
     // ---------------[cria subMenus]
 
     // ............................ width e left em 'horizontal'
