@@ -41,7 +41,7 @@ var imgZoomId = ''      // img de divOriId a ser amostrada
 var fatZoom = 1         // fator de aumento
 var menuZoom = 0        // flag de zoom ativo
 
-var nIcis=0
+var nIcis=0, proprHab = 0
 
 // ... evento
 var evento  = '' ; var Leventos  = []
@@ -199,16 +199,87 @@ function iniSys(){
     para = document.createElement("div")
     el('Corpo').appendChild(para)
     para.id     = "console"
-    el("console").style = 'position: fixed; left: 30px; top: 40px; width: 300px; height: 500px; box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: text; border-color: black; border-radius: 1.0%; border-width: 1.0px; border-style: solid; background-color: #d1cb47; opacity: 1; overflow: auto'
-    el("console").style.zIndex  = '1'
-    // ...[cria div cursor - "ZoomDivCur"]
+    el("console").style = 'position: fixed; left: 30px; top: 40px; width: 300px; height: 500px; box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: text; border-color: black; border-radius: 1.0%; border-width: 1.0px; border-style: solid; background-color: #d1cb47; opacity: 1; overflow: auto; z-index: 32 '
+    // ...[cria div - "console"]
+
+    // ... cria div - "proprBox"
+    para = document.createElement("div") ; el('Corpo').appendChild(para) ; para.id     = "proprBox"
+    el("proprBox").style = 'position: fixed; left: 10px; top: 135px; width: 320px; height: 420px; box-sizing: content-box; margin: 0.0px; padding: 20px; cursor: text; border-color: black; border-radius: 1.0%; border-width: 1.0px; border-style: solid; background-color: #fae8af; opacity: 1; overflow: hidden; z-index: 31 '
+
+    padY = 11
+    Llabls = ['Elem On :', 'Tipo EleOn   :', 'Parent ElOn :', 'Class EleOn :', 'Focus El       :', 'Elem Target  :', 'Evento :', 'Mouse Ele On  :', 'Mouse Window:', 'Mouse Screen :', 'Mouse Page    :', 'Scroll Page :', '', ]
+    LidPar = ['eleon2', 'tipoDiv2', 'parentDiv2', 'classDiv2', 'eleTarDiv2', 'focusDiv2', 'eventoDiv2', 'mouseEleDiv2', 'mouseWinDiv2', 'mouseCscDiv2', 'mousePageDiv2', 'scrollPageDiv2', '', '',]
+    for (i=0; i < 12; i++) {
+        if (i==1)  { padY = padY+25 }
+        if (i==4)  { padY = padY+5 }
+        if (i==6)  { padY = padY+15 }
+        if (i==11) { padY = padY+30 }
+        topL = padY + i*29
+
+        // . . . param
+        strStyL = 'position: absolute; left: 8px; top: 180px; width: 120px; height: 24.0px; box-sizing: border-box; margin: 0px; margin-top: 3.0px; padding: 0px; border-color: black; border-width: 0px; border-style: solid; background-color: transparent; white-space: pre-wrap; '
+        strFonL = 'font-family: Arial, sans-serif; font-size: 15.0px; text-align: right; color: #0000e6; '
+        pddL    = 'padding-top: 5px;'
+
+        strStyP = 'position: absolute; left: 130px; box-sizing: border-box; margin: 0px;  overflow: hidden; border-color: black; border-width: 1.0px; border-style: solid; text-indent: 10.0px; text-align: left;  white-space: pre-wrap; '        
+        strFonP = 'font-family: Arial, sans-serif; font-weight: bold; font-size: 12.0px; color: black; '
+        bcP     = 'background-color: #c1c1ff;'
+        pddP    = 'padding-top: 5px;'
+
+        heiL = 24 ; widL = 200
+        if (i==0)           { 
+            heiL = 40  ; widL = 220 ; bcP     = 'background-color: ;'     ; pddP = 'padding-top: 8px'      ; strFonP = 'font-family: Arial, sans-serif; font-weight: bold; font-size: 18.0px; '
+            strFonL = 'font-family: Arial, sans-serif; font-weight: bold; font-size: 20.0px; text-align: right;   color: rgb(0, 0, 230); '
+        }
+        
+        if (i==4 || i==5)   { 
+            widL = 220 ; bcP = 'background-color: #a4a4ff;'  ; strFonP = 'font-family: Arial, sans-serif; font-weight: ; font-size: 14.0px; color: black; '
+        }
+        
+        if (i==6)           { 
+            widL = 220 ; bcP = 'background-color: #b8efa0;'  ; strFonP = 'font-family: Arial, sans-serif; font-weight: bold; font-size: 14.0px; color: black; '
+            strFonL = 'font-family: Arial, sans-serif; font-weight: bold; font-size: 20.0px; text-align: right; color: #00b900; '
+            pddL    = 'padding-top: 0px;'
+        }
+        if (i>6 && i<11)    { 
+            widL = 220 ; bcP = 'background-color: #b8efa0;'  ; strFonP = 'font-family: Arial, sans-serif; font-weight: ; font-size: 12.0px; color: black; '
+            strFonL = 'font-family: Arial, sans-serif; font-weight: ; font-size: 15.0px; text-align: right; color: #00b900; '
+        }
+        if (i==11)          {  
+            widL = 220 ; bcP = 'background-color: #ff0fff;'  ; strFonP = 'font-family: Arial, sans-serif; font-weight: ; font-size: 14.0px; color: black; '
+            strFonL = 'font-family: Arial, sans-serif; font-weight: bold; font-size: 18.0px; text-align: right; color: #ff0fff; '
+            pddL    = 'padding-top: 0px;'
+        }
+        
+        strStyP = strStyP + strFonP + bcP + pddP
+        strStyL = strStyL + strFonL  + pddL
+        // . . .[param]
+
+
+        // ... labels
+        para = document.createElement("div")    ; el('proprBox').appendChild(para)
+        para.style          = strStyL
+        para.style.top      = topL+'px'
+        para.style.height   = heiL+'px'
+        para.style.width    = 120+'px'
+        para.innerHTML      = Llabls[i]
+
+        // ... param
+        para = document.createElement("div")    ; el('proprBox').appendChild(para)        
+        para.id             = LidPar[i]
+        para.style          = strStyP
+        para.style.top      = topL+'px'
+        para.style.height   = heiL+'px'
+        para.style.width    = widL+'px'
+    }
+    // ...[cria div - "proprBox"]
 
     // ... cria div cursor - "ZoomDivCur"
     para = document.createElement("div")
     el('Corpo').appendChild(para)
-    para.id     = "ZoomDivCur"
-    el("ZoomDivCur").style = 'position: absolute; left: -3000px; top: -3000px; width: 40.0px; height: 40px; box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: none; border-color: black; border-radius: 0.0%; border-width: 0.0px; border-style: solid; background-color: gray; opacity: 0.4'
-    el("ZoomDivCur").style.zIndex  = '1'
+    para.id = "ZoomDivCur"
+    strSty  = 'position: absolute; left: -3000px; top: -3000px; width: 40.0px; height: 40px; box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: none; border-color: black; border-radius: 0.0%; border-width: 0.0px; border-style: solid; background-color: gray; opacity: 0.4; z-index: 40'
+    el("ZoomDivCur").style          = strSty
     // ...[cria div cursor - "ZoomDivCur"]
 
     // ... cria IMG de zoom  - "ZoomImg"
@@ -248,14 +319,12 @@ function iniSys(){
             innTex  = ele.innerText
             
         } catch{}
-        //print('<br> 00000 i: '+i+' innTex: '+innTex)
         try {
             teste = innTex.includes('Atributos-')
             if (innTex.includes('Atributos-')) {
                 
                 innTex = innTex.replace('Atributos-','')  ; innTex = innTex.trim()+';'
                 iniAtt = 0 ; iniVal = 1 ; valAtt = '*'; j=0 ; nomAtt = '' ; valAtt = '' ; idAtt = ''
-                //print('i: '+i+' ele: '+ele.id+'  |'+innTex+'|  ')
                 do {
                     j++
                     iniVal  = innTex.indexOf(":", iniAtt+1)   ; fimDiv  = innTex.indexOf(";", iniVal+1)
@@ -264,7 +333,6 @@ function iniSys(){
                         valAtt  = innTex.slice(iniVal+1,  fimDiv) ; valAtt  = valAtt.trim()
                         if (nomAtt=='ida') { idAtt = valAtt }
                         if (idAtt==ele.id && nomAtt!='ida') { ele.setAttribute(nomAtt, valAtt) }
-                        //print('  j: '+j+' valAtt: '+valAtt)
                     }        
                     // ..
                     iniAtt = fimDiv+1
@@ -294,12 +362,13 @@ function iniSys(){
     cursLadoS = ele.getAttribute("curLado") ; cursLado = Number(cursLadoS)
     fatZoomS  = ele.getAttribute("zoomFat") ; fatZoom  = Number(fatZoomS)
 
+    if (divZooId=='self') { divZooId = divOriId }
+    
     el('ZoomDivCur').style.width   = cursLado+'px'
     el('ZoomDivCur').style.height  = cursLado+'px'
 
-
     // ... cria div para abrigar img de zoom, se não existente
-    if (divZooId=='local') {
+    if (divZooId=='local' || divZooId=='') {
         parentZoomId = el(divOriId).parentElement.id
         divZooId = 'Zoom'
         el(parentZoomId).appendChild(para)       // div de zoom é irmã de divZoom
@@ -428,21 +497,65 @@ function eventTrap() {
     // .... inibe menu do browser em rightClick
     if(evento=='contextmenu'){ evento = 'rightclick' ; event.preventDefault() }
 
+    //if (evento=='dblclick')  { event.preventDefault() ; event.stopPropagation()}
+    //event.stopPropagation()
     /*
-    if(evento=='keydown'){ 
+    if(evento=='dblclick'){ 
         cc = event.cancelable    
-        eventoAc = '<br> cc: '+cc     +eventoAc ;  el("geralDiv").innerHTML = eventoAc   
+        print('cc: '+cc)
         event.preventDefault()     
     }
     */
 
-    rD = parseInt(window.getComputedStyle(el('canvas-412')).top)
-
-
-
     // ----[Parâmetros de EVENTO]
 
     // **************************************
+
+    // -------- CONSOLE
+    //if (evento=='keydown') { print(' keyCode: '+keyCode) }
+
+    // ... copia id                 - ctr"i"
+    if (evento=='keydown' && keyCode==73) { navigator.clipboard.writeText(eleOnId) }
+
+    // ... toggle CONSOLE visível   - ctr"c"
+    if (evento=='keydown' && keyCode==67) { 
+        leftAtu = el('console').style.left
+        hab=1
+        if (leftAtu=='30px'     && hab==1){ el('console').style.left = '-3000px' ; el('proprBox').style.left = '-3000px' ;  hab=0 ; proprHab = 0}
+        if (leftAtu=='-3000px'  && hab==1){ el('console').style.left = '30px'    ; el('proprBox').style.left = '4px'     ;  hab=0 ; proprHab = 1}
+    }
+    // ... toggle CONSOLE front/bottom com Propriedades   - click
+    if (evento=='dblclick' && (eleTaId=='proprBox' || eleOn.parentElement.id=='proprBox')) { 
+        frontAtu = el('console').style.zIndex
+        hab=1
+        if (frontAtu==30 && hab==1){ el('console').style.zIndex = '32' ; hab=0; proprHab = 0}
+        if (frontAtu==32 && hab==1){ el('console').style.zIndex = '30' ; hab=0; proprHab = 1}
+    }
+
+    // . . . preenche quadro
+    if (eleOnId!='O' && eleOnId!=undefined && proprHab==1) {
+        onBg = onStyle.backgroundColor
+
+        el("eleon2").innerHTML                  = eleOnId                
+        el("eleon2").style.backgroundColor      = onBg
+        el("tipoDiv2").innerHTML                = eleOnTy                        //+" "+eleOn.scrollTop
+        el("parentDiv2").innerHTML              = eleOn.parentElement.id         //+" "+window.pageYOffset
+        el("classDiv2").innerHTML               = eleOn.class                    //+" "+window.screenY
+        el("eleTarDiv2").innerHTML              = eleTaId
+        el("focusDiv2").innerHTML               = eleFoId
+        
+        el("eventoDiv2").innerHTML              = evento
+        el("mouseEleDiv2").innerHTML            = "xMe:"+xMe+" yMe:"+yMe
+        el("mouseWinDiv2").innerHTML            = "xMw:"+xMw+" yMw:"+yMw+" Wh:"+Wh+" Ww:"+Ww
+        el("mouseCscDiv2").innerHTML            = "xMs:"+xMs+" yMs:"+yMs+" Sh:"+Sh+" Sw:"+Sw
+        el("mousePageDiv2").innerHTML           = "xMp:"+xMp+" yMp:"+yMp+" Ph:"+Ph+" Pw:"+Pw
+
+        el("scrollPageDiv2").innerHTML          = "xPs:"+xPs+" yPs:"+yPs+" Ah:"+Ah+" Aw:"+Aw
+    }
+    // . . .[preenche quadro]
+
+
+    // --------[CONSOLE]
 
     // ----------- INPUT
     if (eleFoTy=='INPUT') {
@@ -464,9 +577,6 @@ function eventTrap() {
         }
     }
     // -----------[IMPUT]
-
-
-
 
     // ---------------- Menus    
 
@@ -778,12 +888,8 @@ function eventTrap() {
 // ************************* FUNCTIONS DE SISTEMA EM .js
 
 // ---- print em console
-function print(strPrint){ 
-    eventoAc = '<br>'+strPrint     +eventoAc ;  el("console").innerHTML = eventoAc
-    return 
-}
+function print(strPrint){ eventoAc = '<br>'+strPrint +eventoAc ; el("console").innerHTML = eventoAc ; return }
 // ---
-
 
 // ---- Get El by Id
 function el(idS){ return document.getElementById(idS) }
@@ -827,7 +933,6 @@ function lenPxTxt (text, fontFam, fontSize){
     wD = parseInt(window.getComputedStyle(paraP).width)
     cW = paraP.clientWidth
     paraP.remove()
-
     // ....
     return cW
 }
