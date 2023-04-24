@@ -207,7 +207,7 @@ function iniSys(){
     el("proprBox").style = 'position: fixed; left: 10px; top: 135px; width: 320px; height: 420px; box-sizing: content-box; margin: 0.0px; padding: 20px; cursor: text; border-color: black; border-radius: 1.0%; border-width: 1.0px; border-style: solid; background-color: #fae8af; opacity: 1; overflow: hidden; z-index: 31 '
 
     padY = 11
-    Llabls = ['Elem On :', 'Tipo EleOn   :', 'Parent ElOn :', 'Class EleOn :', 'Focus El       :', 'Elem Target  :', 'Evento :', 'Mouse Ele On  :', 'Mouse Window:', 'Mouse Screen :', 'Mouse Page    :', 'Scroll Page :', '', ]
+    Llabls = ['Elem On :', 'Tipo     EleOn :', 'Parent EleOn :', 'Class   EleOn :', 'Focus Ele :', 'Target Ele :', 'Evento :', 'Mouse Ele On  :', 'Mouse Window:', 'Mouse Screen :', 'Mouse Page    :', 'Scroll Page :', '', ]
     LidPar = ['eleon2', 'tipoDiv2', 'parentDiv2', 'classDiv2', 'eleTarDiv2', 'focusDiv2', 'eventoDiv2', 'mouseEleDiv2', 'mouseWinDiv2', 'mouseCscDiv2', 'mousePageDiv2', 'scrollPageDiv2', '', '',]
     for (i=0; i < 12; i++) {
         if (i==1)  { padY = padY+25 }
@@ -317,12 +317,10 @@ function iniSys(){
         try{ 
             ele     = el(Lels[i])
             innTex  = ele.innerText
-            
         } catch{}
         try {
             teste = innTex.includes('Atributos-')
             if (innTex.includes('Atributos-')) {
-                
                 innTex = innTex.replace('Atributos-','')  ; innTex = innTex.trim()+';'
                 iniAtt = 0 ; iniVal = 1 ; valAtt = '*'; j=0 ; nomAtt = '' ; valAtt = '' ; idAtt = ''
                 do {
@@ -342,39 +340,6 @@ function iniSys(){
         } catch{}
     }    
     // ...[set atributos definidos em TXT]
-
-
-    
-    print('YYYYY')
-
-    // ........ Zoom
-    imgZoomId = 'img-430'
-    divOriId    = el(imgZoomId).parentElement.id
-
-    eleId = divOriId 
-    ele = el(divOriId)
-
-    print('++++++ Div: '+ele.getAttribute("zoomMenuDiv"))
-    print('++++++ Lado: '+ele.getAttribute("curLado"))
-    print('++++++ Fat: '+ele.getAttribute("zoomFat"))
-
-    //if (divZooId=='self') { divZooId = divOriId }
-    
-    // ... cria div para abrigar img de zoom, se não existente
-    if (divZooId=='local' || divZooId=='') {
-        parentZoomId = el(divOriId).parentElement.id
-        divZooId = 'Zoom'
-        el(parentZoomId).appendChild(para)       // div de zoom é irmã de divZoom
-        para.id     = divZooId
-        el(divZooId).style.height           = '150px'
-        el(divZooId).style.zIndex           = '1'
-        el(divZooId).style.overflow         = 'hidden'
-    }
-    // ........[Zoom]
-    
-
-
-
 
     // ........ abre Planilhas
     allEl = document.getElementsByTagName("div")  ;  nDivs = allEl.length
