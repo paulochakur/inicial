@@ -199,7 +199,7 @@ function iniSys(){
     para = document.createElement("div")
     el('Corpo').appendChild(para)
     para.id     = "console"
-    el("console").style = 'position: fixed; left: 30px; top: 40px; width: 300px; height: 500px; box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: text; border-color: black; border-radius: 1.0%; border-width: 1.0px; border-style: solid; background-color: #d1cb47; opacity: 1; overflow: auto; z-index: 32 '
+    el("console").style = 'position: fixed; left: 30px; top: 40px; width: 300px; height: 550px; box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: text; border-color: black; border-radius: 1.0%; border-width: 1.0px; border-style: solid; background-color: #d1cb47; opacity: 1; overflow: auto; z-index: 32 '
     // ...[cria div - "console"]
 
     // ... cria div - "proprBox"
@@ -358,15 +358,8 @@ function iniSys(){
     print('++++++ Lado: '+ele.getAttribute("curLado"))
     print('++++++ Fat: '+ele.getAttribute("zoomFat"))
 
-    divZooId  = ele.getAttribute("zoomMenuDiv")
-    cursLadoS = ele.getAttribute("curLado") ; cursLado = Number(cursLadoS)
-    fatZoomS  = ele.getAttribute("zoomFat") ; fatZoom  = Number(fatZoomS)
-
-    if (divZooId=='self') { divZooId = divOriId }
+    //if (divZooId=='self') { divZooId = divOriId }
     
-    el('ZoomDivCur').style.width   = cursLado+'px'
-    el('ZoomDivCur').style.height  = cursLado+'px'
-
     // ... cria div para abrigar img de zoom, se não existente
     if (divZooId=='local' || divZooId=='') {
         parentZoomId = el(divOriId).parentElement.id
@@ -523,9 +516,10 @@ function eventTrap() {
         hab=1
         if (leftAtu=='30px'     && hab==1){ el('console').style.left = '-3000px' ; el('proprBox').style.left = '-3000px' ;  hab=0 ; proprHab = 0}
         if (leftAtu=='-3000px'  && hab==1){ el('console').style.left = '30px'    ; el('proprBox').style.left = '4px'     ;  hab=0 ; proprHab = 1}
+        if(el('console').style.zIndex=='32') { proprHab = 0 }
     }
     // ... toggle CONSOLE front/bottom com Propriedades   - click
-    if (evento=='dblclick' && (eleTaId=='proprBox' || eleOn.parentElement.id=='proprBox')) { 
+    if (evento=='click' && (eleTaId=='proprBox' || eleOn.parentElement.id=='proprBox')) { 
         frontAtu = el('console').style.zIndex
         hab=1
         if (frontAtu==30 && hab==1){ el('console').style.zIndex = '32' ; hab=0; proprHab = 0}
