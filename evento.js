@@ -41,7 +41,7 @@ var imgZoomId = ''      // img de divOriId a ser amostrada
 var fatZoom = 1         // fator de aumento
 var menuZoom = 0        // flag de zoom ativo
 
-var nIcis=0, proprHab = 0
+var proprHab = 0
 
 // ... evento
 var evento  = '' ; var Leventos  = []
@@ -58,7 +58,7 @@ var xMw  = 1    , yMw   = 1 , Wh    = 1 , Ww    = 1                             
 var xMs  = 1    , yMs   = 1 , Sh    = 1 , Sw    = 1  , Ah    = 1 , Aw    = 1    // relativas a  screen
 var xMp  = 1    , yMp   = 1 , Ph    = 1 , Pw    = 1                             // relativas a  page
 var Dh   = 1    , Dw    = 1                                                     // relativas a  document
-var xPs  = 1    , xPs   = 1                                                     // scroll de page
+var xPs  = 1    , yPs   = 1                                                     // scroll de page
 
 
 var keyCode                         // keydown event
@@ -199,7 +199,7 @@ function iniSys(){
     para = document.createElement("div")
     el('Corpo').appendChild(para)
     para.id     = "console"
-    el("console").style = 'position: fixed; left: 30px; top: 40px; width: 300px; height: 550px; box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: text; border-color: black; border-radius: 1.0%; border-width: 1.0px; border-style: solid; background-color: #d1cb47; opacity: 1; overflow: auto; z-index: 32 '
+    el("console").style = 'position: fixed; left: 10px; top: 40px; width: 330px; height: 550px; box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: text; border-color: black; border-radius: 1.0%; border-width: 1.0px; border-style: solid; background-color: #d1cb47; opacity: 1; overflow: auto; z-index: 32; white-space: pre-wrap; font-family: Courier, sans-serif; font-weight: bold; font-size: 12.0px; '    
     // ...[cria div - "console"]
 
     // ... cria div - "proprBox"
@@ -255,7 +255,6 @@ function iniSys(){
         strStyL = strStyL + strFonL  + pddL
         // . . .[param]
 
-
         // ... labels
         para = document.createElement("div")    ; el('proprBox').appendChild(para)
         para.style          = strStyL
@@ -306,12 +305,10 @@ function iniSys(){
     // --------- Atributos- ida: div-429 ; zoomMenuDiv: ZoomAma ; curLado: 50 ; zoomFat: 3 ;
     
     // ... set atributos definidos em TXT
+    /*
     allEles = document.getElementsByTagName("*") ; nEles = allEles.length
     Lels = []  ; for (i = 0; i <= nEles-1; i++){ Lels.push(allEles[i].id) }
     
-    nIcis = nIcis+1
-    print('WWWWWWWWWW nEles: '+nEles+'  nIcis: '+nIcis)
-
     for (i=1; i < nEles-1; i++) {
         innTex = '**' 
         try{ 
@@ -319,7 +316,6 @@ function iniSys(){
             innTex  = ele.innerText
         } catch{}
         try {
-            teste = innTex.includes('Atributos-')
             if (innTex.includes('Atributos-')) {
                 innTex = innTex.replace('Atributos-','')  ; innTex = innTex.trim()+';'
                 iniAtt = 0 ; iniVal = 1 ; valAtt = '*'; j=0 ; nomAtt = '' ; valAtt = '' ; idAtt = ''
@@ -330,17 +326,21 @@ function iniSys(){
                         nomAtt  = innTex.slice(iniAtt,  iniVal)   ; nomAtt  = nomAtt.trim()
                         valAtt  = innTex.slice(iniVal+1,  fimDiv) ; valAtt  = valAtt.trim()
                         if (nomAtt=='ida') { idAtt = valAtt }
-                        if (idAtt==ele.id && nomAtt!='ida') { ele.setAttribute(nomAtt, valAtt) }
+                        if (idAtt==ele.id && nomAtt!='ida') { 
+                            ele.setAttribute(nomAtt, valAtt) 
+                            }
                     }        
                     // ..
                     iniAtt = fimDiv+1
                 } while (iniVal>0 && fimDiv>0 && j<30)
-        
             }
         } catch{}
     }    
+    */
     // ...[set atributos definidos em TXT]
 
+    
+    
     // ........ abre Planilhas
     allEl = document.getElementsByTagName("div")  ;  nDivs = allEl.length
     Ldivs = []  ; for (i = 0; i <= nDivs-1; i++){ Ldivs.push(allEl[i].id) }
@@ -411,11 +411,11 @@ function eventTrap() {
     // . .
 
     // On     Element
-    eleOnId    = eleOn.id      ;   eleOnClass  = eleOn.class   ;   eleOnTy     = eleOn.tagName ;   onStyle = getComputedStyle(eleOn)                
+    eleOnId    = eleOn.id      ;   eleOnClass  = eleOn.className   ;   eleOnTy     = eleOn.tagName ;   onStyle = getComputedStyle(eleOn)                
     // Target Element
-    eleTaId    = eleTa.id      ;   eleTaClass  = eleTa.class   ;   eleTaTy     = eleTa.tagName ;   taStyle = getComputedStyle(eleTa)
+    eleTaId    = eleTa.id      ;   eleTaClass  = eleTa.className   ;   eleTaTy     = eleTa.tagName ;   taStyle = getComputedStyle(eleTa)
     // Focus  Element
-    eleFoId    = eleFo.id      ;   eleFoClass  = eleFo.class   ;   eleFoTy     = eleFo.tagName ;   foStyle = getComputedStyle(eleFo)
+    eleFoId    = eleFo.id      ;   eleFoClass  = eleFo.className   ;   eleFoTy     = eleFo.tagName ;   foStyle = getComputedStyle(eleFo)
 
     if (eleOnClass==undefined){ eleOnClass = 'Und'}
     if (eleTaClass==undefined){ eleTaClass = 'Und'}
@@ -473,14 +473,47 @@ function eventTrap() {
     //if (evento=='keydown') { print(' keyCode: '+keyCode) }
 
     // ... copia id                 - ctr"i"
-    if (evento=='keydown' && keyCode==73) { navigator.clipboard.writeText(eleOnId) }
+    if (evento=='keydown' && (keyCode==73 || keyCode==89)) {
+        if (keyCode==73) { nome = eleOnId                   ; navigator.clipboard.writeText(nome) }
+        if (keyCode==89) { nome = eleOn.parentElement.id    ; navigator.clipboard.writeText(nome) }
+
+        // . . . CSS properties
+        print('')
+        print('...............')
+        LproprShow = ['top', 'left', 'width','height', 'color', 'backgroundColor', 'textOverflow', 'fontStyle', 'fontSize', 'fontFamily', 'fontWeight', ]
+        comp = getComputedStyle(el(nome))
+        for (i=LproprShow.length-1; i>=0 ; i--) {
+            kPropr  = LproprShow[i]
+            pro     = comp[kPropr]
+            po      = '                   '. slice(0, 15-kPropr.length) +  kPropr
+            print(' - '+po+' : '+pro)
+        }
+        print(' CSS Properties: ')
+        print('')
+        // . . . HTML atrributes
+        print('')
+        attrs = el(nome).getAttributeNames()
+        for (i=attrs.length-1; i>=0; i--) {
+            nomeAtt = attrs[i] ; no = '                   '. slice(0, 20-nomeAtt.length) +  nomeAtt
+            if (nomeAtt!='id' && nomeAtt!='style') { print(no+': '+el(nome).getAttribute(nomeAtt)) }
+        }
+        //if(el(nome).className!='') { print(' Class : '+ el(nome).className) }
+        print(' HTML atrributes: ')
+        print('')
+        print(' Parent : '+ el(nome).parentElement.id)
+        print(' Tipo   : '+ el(nome).tagName)
+        print(' Id     : '+ nome)
+        print('...............')
+        print('')
+    }
+
 
     // ... toggle CONSOLE visível   - ctr"c"
     if (evento=='keydown' && keyCode==67) { 
         leftAtu = el('console').style.left
         hab=1
-        if (leftAtu=='30px'     && hab==1){ el('console').style.left = '-3000px' ; el('proprBox').style.left = '-3000px' ;  hab=0 ; proprHab = 0}
-        if (leftAtu=='-3000px'  && hab==1){ el('console').style.left = '30px'    ; el('proprBox').style.left = '4px'     ;  hab=0 ; proprHab = 1}
+        if (leftAtu!='-3000px'  && hab==1){ el('console').style.left = '-3000px' ; el('proprBox').style.left = '-3000px' ;  hab=0 ; proprHab = 0}
+        if (leftAtu=='-3000px'  && hab==1){ el('console').style.left = '10px'    ; el('proprBox').style.left = '4px'     ;  hab=0 ; proprHab = 1}
         if(el('console').style.zIndex=='32') { proprHab = 0 }
     }
     // ... toggle CONSOLE front/bottom com Propriedades   - click
@@ -499,7 +532,7 @@ function eventTrap() {
         el("eleon2").style.backgroundColor      = onBg
         el("tipoDiv2").innerHTML                = eleOnTy                        //+" "+eleOn.scrollTop
         el("parentDiv2").innerHTML              = eleOn.parentElement.id         //+" "+window.pageYOffset
-        el("classDiv2").innerHTML               = eleOn.class                    //+" "+window.screenY
+        el("classDiv2").innerHTML               = eleOn.className + ' : '+ eleOn.getAttribute('class')                   //+" "+window.screenY
         el("eleTarDiv2").innerHTML              = eleTaId
         el("focusDiv2").innerHTML               = eleFoId
         
@@ -988,7 +1021,7 @@ function criaMenu(divMenuId) {
         para = document.createElement("div")
         el('Corpo').appendChild(para);
         para.id     = divMenuId
-        para.class  = divMenuId+'-Menu'
+        para.className  = divMenuId+'-Menu'
         para.style  = "position: absolute; box-sizing: border-box; border-width: 0px; border-color: black; outline-width: 0; background-color: red "
         popMenuAti      = para
 
@@ -1221,7 +1254,7 @@ function criaMenu(divMenuId) {
         para = document.createElement("div")
         divMenu.appendChild(para)
         para.id         = divMenuId+ "-Menu(" +i+ ")"
-        para.class      = divMenuId+'-Menu'
+        para.className  = divMenuId+'-Menu'
         para.innerHTML  = texto
 
         para.style  = "position: absolute; box-sizing: border-box; border-style: solid; border-color: black; outline-width: 0;"
@@ -1447,7 +1480,7 @@ function criaSheet(divSheetId){
             para = document.createElement("INPUT")
             divSheet.appendChild(para);
             para.id     = nomeSheet+":("+i+","+j+")"
-            para.class  = nomeSheet
+            para.className  = nomeSheet
             para.style  = "position: absolute; left:"+(j*100-90)+"px; top:"+(i*30+10)+"px; width: 99px; box-sizing: border-box; margin: 0px; pading: 0px; border-style: solid; border-color: black; outline-width: 0;"
             para.style.borderWidth      = "0px"                
             para.style.textDecorationThickness   = '1px'
