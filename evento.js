@@ -394,7 +394,8 @@ function iniSys(){
 
     // ....
     // -------- finaliza rotina inicial
-    el('console').style.left = '-3000px' ; el('proprBox').style.left = '-3000px' ; proprHab = 0
+    //el('console').style.left = '-3000px' ; el('proprBox').style.left = '-3000px' ; proprHab = 0
+    el('console').style.zIndex = '30' ; proprHab = 1
     window.scrollTo(0,0)
     iniLoc()
 }
