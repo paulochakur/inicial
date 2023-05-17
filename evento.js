@@ -377,7 +377,8 @@ function iniSys(){
 
         divSheetId = Ldivs[iDiv]
         textForm   = Texts[divSheetId]
-        if (textForm!=undefined){ icluiTxtemDiv(divSheetId) }
+        
+        if (textForm!=undefined){ icluiTxtemDivWord(divSheetId) }
 
     }
     // ........[Inclui TEXTOS]
@@ -482,7 +483,7 @@ function eventTrap() {
         // . . . CSS properties
         print('')
         print('...............')
-        LproprShow = ['top', 'left', 'width','height', 'color', 'backgroundColor', 'textOverflow', 'fontStyle', 'fontSize', 'fontFamily', 'fontWeight', ]
+        LproprShow = ['top', 'left', 'width','height', 'color', 'backgroundColor', 'textOverflow', 'fontStyle', 'fontSize', 'fontFamily', 'fontWeight', 'white-space', 'text-align', 'padding', 'padding-left']
         comp = getComputedStyle(el(nome))
         for (i=LproprShow.length-1; i>=0 ; i--) {
             kPropr  = LproprShow[i]
@@ -895,17 +896,22 @@ function charSpeci(strO){
     while (iEsp>-1){
         if (iEsp==0){ iEsp = -1 }
         iEsp = strO.indexOf("&#", iEsp+1)   ;   iVir = strO.indexOf(";" , iEsp+1)
+        iVir = iEsp+5
         if (iVir-iEsp<7) { nCars = iVir-iEsp-2 }
         if (iEsp>-1){
             carOri      = strO.substr(iEsp+2, nCars)
             carSubCod   = parseInt( carOri ) 
             carSub      = String.fromCharCode(carSubCod)
             strO        = strO.replace('&#'+carOri+';', carSub)
+            strO        = strO.replace('&#'+carOri, carSub)
         }
     }    
-
     // ....
     return strO
+
+
+
+
 }
 // ----[substitui caracteres especiais de strO]
 
@@ -1320,6 +1326,295 @@ function criaMenu(divMenuId) {
 }           
 // ----[Cria Menu]
 
+
+// ------ Inclui texto em div Word
+function icluiTxtemDivWord(divSheetId) {
+    divSheet = el(divSheetId)
+    var yIpar = []
+
+    // ... format geral 
+    textForm    = Texts[divSheetId]
+    formGeral   = textForm[0]
+    nParas      = formGeral.nParas  ; nShapes = formGeral.nShapes
+    escaTot     = formGeral.escDiv
+    margEsq     = formGeral.margEsq ; margDir = formGeral.margDir
+    margSup     = formGeral.margSup ; margInf = formGeral.margInf
+
+    margIntSup = formGeral.margIntS            ; margIntInf = formGeral.margIntI
+    margIntEsq = formGeral.margIntE            ; margIntDir = formGeral.margIntD
+    
+    espeBor     = formGeral.espBord ; corBor  = formGeral.corBord
+    
+    lPar0       = 0
+
+    // ... cria div de base '-texto '
+    divTextId       = divSheetId+"-texto"
+    divText         = document.createElement("div")
+    divSheet.appendChild(divText)
+    divText.id              = divTextId
+    divText.style.zIndex    = 30
+
+    divText.style = 'position: absolute; top: 0px; left: 0px; width: 50px; height: auto; box-sizing: content-box; margin: 0.0px; padding: 0px; padding-left: 0.0px; cursor: text; border-color: red;  border-width: 0.0px; border-style: solid; background-color: light blue; opacity: 1; z-index: 32; font-family: Courier New, sans-serif; font-weight: bold; font-size: 10.0px; text-indent: 0.0px; text-shadow: 0.0px 0.0px; text-align: center; overflow: hidden; white-space: pre-wrap; '
+    divText.style.marginTop     = margSup+'px'
+    divText.style.marginLeft    = margEsq+'px'
+    divText.style.paddingTop    = margIntSup+'px'
+    divText.style.paddinBottom  = margIntInf+'px'
+
+    divText.style.borderWidth = espeBor+'px'
+    divText.style.borderColor = corBor
+    // ...[cria div de base '-texto ']
+
+    // ... cria divs de cima para cada parágrafo
+    yAcu0 = 0 ; yAcu = yAcu0 ; iDpar = 1
+    for(ipar=1; ipar<nParas+nShapes ; ipar++){
+        // ... lê texto e formatação de parágrafo
+        textPar = textForm[ipar*2]
+        parVaz = 0  ;   if (textPar=='') { textPar = '.' ; parVaz = 1}
+
+        // ------- cria div de parágrafo
+        para = document.createElement("div")
+        divText.appendChild(para)
+        para.id     = "divCima"+ipar
+        para.style = 'position: absolute; top: 0px; left: 0px; height: auto; width: 200px; box-sizing: border-box; margin: 0.0px; padding: 0px; padding-left: 0.0px; cursor: text; border-color: black;  border-width: 0.0px; border-style: solid; background-color: transparent; opacity: 1; z-index: 32; font-family: Courier New, sans-serif; font-weight: bold; font-size: 10.0px; text-indent: 0.0px; text-shadow: 0.0px 0.0px; text-align: center; overflow: hidden; white-space: pre-wrap; word-break: break-word; '
+        para.style.zIndex = 35
+        para.style.borderWidth = '0px'
+        //para.style.lineHeight = '40px'
+        
+        
+        // ... format Para
+        formtPara = textForm[ipar*2-1]
+        tipoPara  = formtPara.tipoPar
+        alimPara  = formtPara.alignP            ;   para.style.textAlign    = alimPara
+        foSiPara  = formtPara.parFoS            ;   para.style.fontSize     = foSiPara+'px'
+        indePara  = formtPara.indentP           ;   //para.style.paddingLeft  = indePara+'px'
+        spacPara  = formtPara.lineSpaceP        ;   para.style.lineHeight   = spacPara*1.1
+        // -------[cria div de parágrafo]
+
+        // ... inclui texto em div de parágrafo
+        para.innerHTML = textPar
+        hTx = para.clientHeight
+
+        // . . . linha de parametrização
+        if (ipar==1){   
+            para.style.whiteSpace  = ''         ; para.style.wordBreak  = ''
+            para.style.height  = '100px'
+            para.style.width  = 'auto'
+            para.style.paddingLeft     = (margIntEsq + indePara)+'px'
+            para.style.paddingRight    = margIntDir+'px'
+
+            wDivTex = para.clientWidth
+            para.style.width    = wDivTex+'px'
+            yAcu = yAcu0
+            para.remove()
+        }   
+        
+        if  (i>1){
+
+            // ...... div de textBox
+            if (tipoPara=='txbox' || tipoPara=='pict') {
+
+                tRel    = formtPara.t     ; lRel  = formtPara.l ; wTx  = formtPara.w ; hTx  = formtPara.h 
+                lay     = formtPara.lay   ;  bc = formtPara.bc  ; op = formtPara.op  ; cB = formtPara.cB
+                wB      = formtPara.wB
+                iParO   = formtPara.iPar ; yPar = yIpar[iParO]
+
+                para.style.borderColor      = cB
+                para.style.borderWidth      = wB+'px'
+                para.style.paddingLeft     = (indePara)+'px'
+
+                // . . . cria div de fundo de textBox (para permitir opacity)
+                if (tipoPara=='txbox'){
+                    parFu = document.createElement("div")
+                    divText.appendChild(parFu)
+                    parFu.id     = "divFundo"+ipar
+                    parFu.style = 'position: absolute; top: 0px; left: 0px; height: auto; width: 200px; box-sizing: border-box; margin: 0.0px; padding: 0px; padding-left: 0.0px; cursor: text; border-color: black;  border-width: 0.0px; border-style: solid; background-color: tranparent; opacity: 1; z-index: 32; font-family: Courier New, sans-serif; font-weight: bold; font-size: 10.0px; text-indent: 0.0px; text-shadow: 0.0px 0.0px; text-align: center; overflow: visible; white-space: pre-wrap; word-break: break-all; '
+                    parFu.style.zIndex = 33 // na frente de divText e atrás de para de texBox                
+                    parFu.style.backgroundColor  = bc
+                    parFu.style.opacity          = 1-op
+
+                    parFu.style.top      = (yPar+tRel)+'px'
+                    parFu.style.left     = (lPar0+lRel+margIntEsq)+'px'
+
+                    parFu.style.width    = wTx+'px'
+                    parFu.style.height   = hTx+'px'
+                    // .... layOut                
+                    if (lay==5) { para.style.zIndex   = 34 ; parFu.style.zIndex = 33 }  // caixa de texto atrás de parágrafo base
+                    if (lay==3) { para.style.zIndex   = 37 ; parFu.style.zIndex = 36 }  // caixa de texto atrás de parágrafo base
+                }
+                // . . .[cria div de fundo de textBox (para permitir opacity)]
+
+                // . . . cria img dentro de shape
+                fN = formtPara.fN
+                if (tipoPara=='pict' && fN!=''){
+                    fR ='C:/Users/Paulo/Documents/CHAKUR/TÉCNICOS/Cianotipia/luis vaz de camoes.jpg'
+                    fN = charSpeci(fN)
+
+                    parIm = document.createElement("img")
+                    para.appendChild(parIm)
+                    parIm.id        = "imgShape"+ipar
+                    parIm.style = 'position: absolute; left: 0px; top: 0px;  box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: text; border-color: black; border-radius: 0.0%; border-width: 0.0px; border-style: solid; background-color: gray; opacity: 1'
+                    parIm.src = fN
+                    
+                    parIm.style.width    = wTx+'px'
+                    parIm.style.height   = hTx+'px'
+
+                    // .... layOut                
+                    if (lay==5) { parIm.style.zIndex   = 34 ; para.style.zIndex = 34}  // caixa de texto atrás de parágrafo base
+                    if (lay==3) { parIm.style.zIndex   = 37 ; para.style.zIndex = 37}  // caixa de texto atrás de parágrafo base
+                }
+                // . . .[cria img dentro de shape]
+
+                // . . .
+                para.style.width    = wTx+'px'
+                para.style.height   = hTx+'px'
+                para.style.top      = (yPar+tRel)+'px'
+                para.style.left     = (lPar0+lRel+margIntEsq)+'px'
+
+            }
+            // ......[div de textBox]
+
+            // ...... div de para
+            if (tipoPara=='para') { 
+                espP = formtPara.espPar
+
+                // . . .
+                para.style.width    = wDivTex+'px'
+                para.style.paddingLeft     = (margIntEsq + indePara)+'px'
+                para.style.paddingRight    = margIntDir+'px'
+
+                hTx = para.clientHeight
+                para.style.height   = hTx+'px'
+                para.style.top      = (yAcu)+'px'
+                para.style.left     = (lPar0)+'px'
+                
+                                    
+                // ...
+                yIpar[iDpar] = yAcu ; iDpar = iDpar+1
+                cH = para.clientHeight ; yAcu = yAcu + hTx + espP + 0
+            }
+            // ......[div de para]
+        }
+        // ...[format Para]  
+    
+        if (parVaz==1 && tipoPara!='pict') {  para.innerHTML = '' }
+    
+    
+    }
+    // ...[cria divs de cima para cada parágrafo]
+    
+    // .... ajusta tamanhos de Text e Fundo
+    divText.style.height = yAcu+'px'
+    divText.style.width  = wDivTex+'px'
+
+    // .... ajusta scale
+    wOri = divText.getBoundingClientRect().width  ;   hOri = divText.getBoundingClientRect().height // textBox Externo
+    wD = divSheet.clientWidth                     ;   hD = divSheet.clientHeight    // Div Int. desconta Scrolls
+
+    escX = escaTot  ; escY = escaTot    
+    if (escaTot=='fitw') { escX = (wD-margDir-margEsq)/(wOri) ; escY = 1}
+    if (escaTot=='fith') { escY = (hD-margSup-margInf)/(hOri) ; escX = 1 }
+    if (escaTot=='fit')  { 
+        escY = (hD-margSup-margInf)/(hOri) 
+        // . . . aplica escY e mede novamente wD
+        xDesl = (wOri/2)*(escX-1)                       ;   yDesl = (hOri/2)*(escY-1)
+        divText.style.left      =  xDesl+'px'           ;   divText.style.top      =  yDesl+'px'    
+        divText.style.transform = 'scaleX('+1+') scaleY('+escY+')'
+        wD = divSheet.clientWidth
+        escX = (wD-margDir-margEsq)/(wOri) 
+    }
+
+    // . . . aplica Scale
+    xDesl = (wOri/2)*(escX-1)                       ;   yDesl = (hOri/2)*(escY-1)
+    divText.style.left      =  xDesl+'px'           ;   divText.style.top      =  yDesl+'px'
+    divText.style.transform = 'scaleX('+escX+') scaleY('+escY+')'
+    // ....[ajusta tamanhos de Text e Fundo]
+
+
+
+    // . . . ajusta div de fundo (deve ser filha única de div de texto)
+    eleFc   = divSheet.firstElementChild  ;   tyFc    = eleFc.tagName
+    if (tyFc=='DIV') {
+        wD = divSheet.clientWidth           ;   hD = divSheet.clientHeight
+        wT = margEsq+wOri*escX+margDir   ;   hT = margSup+hOri*escY+margInf
+        wF = Math.max(wD, wT)               ;   hF = Math.max(hD, hT)
+        eleFc.style.width   = wF+'px'       ;   eleFc.style.height = hF+'px'
+        eleFc.style.left    = 0+'px'        ;   eleFc.style.top = 0+'px'
+        eleFc.zIndex        = 29 // atrás da div base divText
+    }
+    // . . .[ajusta div de fundo (deve ser filha única de div de texto)]
+
+
+    // . . . divs de margens
+    if (margDir>0){
+        marg = document.createElement("div")
+        divSheet.appendChild(marg)
+        marg.id     = "divMargS"+ipar
+        marg.style = 'position: absolute; top: 0px; left: 0px; height: auto; width: 200px; box-sizing: border-box; margin: 0.0px; padding: 0px; padding-left: 0.0px; cursor: ; border-color: black;  border-width: 0.0px; border-style: solid; background-color: transparent; opacity: 1; z-index: 32; font-family: Courier New, sans-serif; font-weight: bold; font-size: 10.0px; text-indent: 0.0px; text-shadow: 0.0px 0.0px; '
+        marg.style.zIndex = 35
+
+        marg.style.width    = margDir+'px'
+        marg.style.height   = margInf+'px'
+        marg.style.top      = 0+'px'
+        marg.style.left     = (margEsq+wOri*escX)+'px'
+    }
+    if (margInf>0){
+        marg = document.createElement("div")
+        divSheet.appendChild(marg)
+        marg.id     = "divMargI"+ipar
+        marg.style = 'position: absolute; top: 0px; left: 0px; height: auto; width: 200px; box-sizing: border-box; margin: 0.0px; padding: 0px; padding-left: 0.0px; cursor: ; border-color: black;  border-width: 0.0px; border-style: solid; background-color: transparent; opacity: 1; z-index: 32; font-family: Courier New, sans-serif; font-weight: bold; font-size: 10.0px; text-indent: 0.0px; text-shadow: 0.0px 0.0px; '
+        marg.style.zIndex = 35
+
+        marg.style.width    = margDir+'px'
+        marg.style.height   = margInf+'px'
+        marg.style.top      = (margSup+hOri*escY)+'px'
+        marg.style.left     = 0+'px'
+    }
+
+    // ... 
+}          
+// ------[Inclui texto em div Word]
+
+// ---- Calcula larguras de Scrolls
+function largSroll(ele){
+    // ********************* dimensões de ele
+    bE  = parseInt(window.getComputedStyle(ele).borderLeftWidth)
+    bD  = parseInt(window.getComputedStyle(ele).borderRightWidth)
+    bT  = parseInt(window.getComputedStyle(ele).borderTopWidth)
+    bB  = parseInt(window.getComputedStyle(ele).borderBottomWidth)
+    
+    wCss  = parseInt(window.getComputedStyle(ele).width)  // width  nominal
+    hCss  = parseInt(window.getComputedStyle(ele).height) // height nominal
+
+    hOver = ele.scrollHeight    //  includes padding, excludes borders, scrollbars and margins.
+    wOver = ele.scrollWidth     //  includes what is not viewable (because of overflow).
+                                //   This property will round the value to an integer. 
+
+    wExt  = Math.round(ele.getBoundingClientRect().width)       //  width  externa total, excludes margins
+    hExt  = Math.round(ele.getBoundingClientRect().height)   //  height externa total, excludes margins
+                                                    //  ele.getBoundingClientRect() = { x : 113.5 , y : 50 , width : 440 , height : 240 , top : 50 , right : 553.5 , bottom : 290 , left : 113.5 }
+                                                    //  https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect 
+    
+    wUtil = Math.round(ele.clientWidth)  // width  interna útil -includes padding, excludes borders, scrollbars and margins.
+    hUtil = Math.round(ele.clientHeight) // height interna útil -includes padding, excludes borders, scrollbars and margins.
+    
+    // ... Sroll é retirado da área útil, nunca aumenta retângulo externo
+    wScr = Math.round(wExt - wUtil - bE - bD)   // larg do scroll vert
+    hScr = Math.round(hExt - hUtil - bT - bB)   // larg do scroll hori
+
+    print('wCss: '+wCss+' wUtil: '+wUtil+' wExt: '+wExt+' wOver: '+wOver)
+    print('hCss: '+hCss+' hUtil: '+hUtil+' hExt: '+hExt+' hOver: '+hOver)
+    print(` scrVert: ${wScr}   scrHor: ${hScr}`)
+    // *********************[dimensões de ele]
+
+    // ............
+    var Scrll = [0,0]
+    Scrll[0] = wScr ; Scrll[1] = hScr
+    return Scrll
+}
+// ----[Calcula larguras de Scrolls]
+
+
+
 // ------ Inclui texto em div
 function icluiTxtemDiv(divSheetId) {
     // ...... 
@@ -1486,6 +1781,7 @@ function criaSheet(divSheetId){
             para.style  = "position: absolute; left:"+(j*100-90)+"px; top:"+(i*30+10)+"px; width: 99px; box-sizing: border-box; margin: 0px; pading: 0px; border-style: solid; border-color: black; outline-width: 0;"
             para.style.borderWidth      = "0px"                
             para.style.textDecorationThickness   = '1px'
+            para.setAttribute('spellcheck', false)
         }
     }
     // ...[cria Inputs]
