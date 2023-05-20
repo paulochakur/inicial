@@ -279,6 +279,9 @@ function iniSys(){
     para.id = "ZoomDivCur"
     strSty  = 'position: absolute; left: -3000px; top: -3000px; width: 40.0px; height: 40px; box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: none; border-color: black; border-radius: 0.0%; border-width: 0.0px; border-style: solid; background-color: gray; opacity: 0.4; z-index: 40'
     el("ZoomDivCur").style          = strSty
+    el("ZoomDivCur").style.overflow          = 'hidden'
+    el("ZoomDivCur").style.opacity  = 0.4
+    el("ZoomDivCur").style.zIndex   = 40
     // ...[cria div cursor - "ZoomDivCur"]
 
     // ... cria IMG de zoom  - "ZoomImg"
@@ -1520,6 +1523,7 @@ function icluiTxtemDivWord(divSheetId) {
         divText.style.left      =  xDesl+'px'           ;   divText.style.top      =  yDesl+'px'    
         divText.style.transform = 'scaleX('+1+') scaleY('+escY+')'
         wD = divSheet.clientWidth
+
         escX = (wD-margDir-margEsq)/(wOri) 
     }
 
@@ -1528,8 +1532,6 @@ function icluiTxtemDivWord(divSheetId) {
     divText.style.left      =  xDesl+'px'           ;   divText.style.top      =  yDesl+'px'
     divText.style.transform = 'scaleX('+escX+') scaleY('+escY+')'
     // ....[ajusta tamanhos de Text e Fundo]
-
-
 
     // . . . ajusta div de fundo (deve ser filha única de div de texto)
     eleFc   = divSheet.firstElementChild  ;   tyFc    = eleFc.tagName
@@ -1542,7 +1544,6 @@ function icluiTxtemDivWord(divSheetId) {
         eleFc.zIndex        = 29 // atrás da div base divText
     }
     // . . .[ajusta div de fundo (deve ser filha única de div de texto)]
-
 
     // . . . divs de margens
     if (margDir>0){
