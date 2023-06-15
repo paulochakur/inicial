@@ -1,5 +1,12 @@
 /*
     REFERÊNCIAS
+    *****
+    https://www.educative.io/answers/how-to-dynamically-load-a-js-file-in-javascript
+
+    *****
+    https://www.w3schools.com/html/html5_webstorage.asp
+
+
     https://www.javatpoint.com/javascript-special-characters
 
     https://html.spec.whatwg.org/multipage/syntax.html
@@ -34,14 +41,23 @@ var eventoAc = '.......'
 var blocTrap = 0
 
 // ... Zoom
-var divOriId = ''       // div da img original
-var divZooId = ''       // div da amostra aumentada
-var parentZoomId = ''   // parent de divOriId
-var imgZoomId = ''      // img de divOriId a ser amostrada
-var fatZoom = 1         // fator de aumento
-var menuZoom = 0        // flag de zoom ativo
+var divOriId        = '' , divOri       = 0     // div da img original
+var parentZoomId    = '' , parentZoom   = 0     // parent de divOri
+var imgZooOriId     = '' , imgZooOri    = 0     // imagem original de divOr a ser amostrada
 
-var proprHab = 0
+var divZooId        = '' , divZoo       = 0     // div display da amostra aumentada
+var imgZoom         = 0                         // image aumentada, dentro de divZoo - el('ZoomImg')
+var divCursor       = 0                         // div cursor                        - el("ZoomDivCur")
+
+var fatZoom         = 1     // fator de aumento
+var menuZoom        = 0     // flag de zoom ativo
+var topAbs  = 0 , leftAbs = 0 , leftImO   = 0 , topImO   = 0 , zooParam  = 0 , cursLado = 0
+var scaleOriX = 0 , scaleOriY = 0
+
+
+
+// ... flag de habilitação de janela de propriedades
+var proprHab = 0        
 
 // ... evento
 var evento  = '' ; var Leventos  = []
@@ -544,7 +560,7 @@ function eventTrap() {
         
         el("eventoDiv2").innerHTML              = evento
         el("mouseEleDiv2").innerHTML            = "xMe:"+xMe+" yMe:"+yMe
-        el("mouseWinDiv2").innerHTML            = "xMw:"+xMw+" yMw:"+yMw+" Wh:"+Wh+" Ww:"+Ww
+        el("mouseWinDiv2").innerHTML            =  "xMw:"+xMw+" yMw:"+yMw+" Wh:"+Wh+" Ww:"+Ww
         el("mouseCscDiv2").innerHTML            = "xMs:"+xMs+" yMs:"+yMs+" Sh:"+Sh+" Sw:"+Sw
         el("mousePageDiv2").innerHTML           = "xMp:"+xMp+" yMp:"+yMp+" Ph:"+Ph+" Pw:"+Pw
 
@@ -576,8 +592,130 @@ function eventTrap() {
     }
     // -----------[IMPUT]
 
-    // ---------------- Menus    
 
+    // --------- ZOOM    
+    // ... sai de Zoom
+    if(evento=='mousemove' && menuZoom==1){
+        if(eleTa.parentElement!=divOri && eleTaId!="ZoomDivCur" && eleTa.parentElement.id!="ZoomDivCur"){
+            if(divZooId=='Zoom'){ el(divZooId).style.top        = '-3000px'  ; el(divZooId).style.left      = '-3000px' }
+            el('Corpo').appendChild( el('ZoomImg') )
+        
+            divCursor.style.top  = '-3000px'   ; divCursor.style.left  = '-3000px'
+            imgZoom.style.top     = '-3000px'  ; imgZoom.style.left     = '-3000px'
+            imgZoom.style.width   = '10px '    ; imgZoom.style.height   = '10px'
+            imgZoom.style.zIndex  = '0'
+            menuZoom = 0
+        }
+    }
+    // ...[sai de Zoom]
+
+    // ... inicia Zoom
+    if((evento=='mousemove' || evento=='click') && eleTa.getAttribute('zoommenudiv')!=null && eleTaTy=='IMG' && menuZoom==0){
+        imgZooOri   = eleTa                     ;   imgZooOriId   = eleTaId
+        divOri      = imgZooOri.parentElement   ;   divOriId      = divOri.id
+        divCursor   = el("ZoomDivCur")
+        imgZoom     = el('ZoomImg')
+        // params de zoom em Img
+        zooParam    = imgZooOri.getAttribute('zoommenudiv')
+        cursLadoS   = imgZooOri.getAttribute("curlado")       ; cursLado = Number(cursLadoS)
+        fatZoomS    = imgZooOri.getAttribute("zoomfat")       ; fatZoom  = Number(fatZoomS)
+
+        divZooId = zooParam
+        divCursor.style.opacity = 0.4
+        divCursor.style.borderRadius = '0%'
+        divCursor.style.borderWidth  = '0px' 
+        divCursor.style.zIndex  = '60' 
+        divOri.style.cursor = 'none'
+
+        if(zooParam=='local')   { divZooId = 'Zoom' }
+        if(zooParam=='self')    { divZooId = divOriId }
+        if(zooParam=='cursor')  { divZooId = 'ZoomDivCur' ; divCursor.style.opacity = 1 }
+        if(zooParam=='lupa')    { 
+            divZooId = 'ZoomDivCur' 
+            divCursor.style.opacity      = 1
+            divCursor.style.borderRadius = '50%'
+            divCursor.style.borderWidth  = '2px' 
+        }
+
+        divCursor.style.width   = cursLado+'px'
+        divCursor.style.height  = cursLado+'px'
+        
+        // posição absoluta de divOri
+        leftAbs = divOri.getBoundingClientRect().left   ;   topAbs = divOri.getBoundingClientRect().top
+        // scale de divOri (transform)
+        wIni = divOri.offsetWidth     ;   wfin = divOri.getBoundingClientRect().width
+        scaleOriX = divOri.getBoundingClientRect().width / divOri.offsetWidth
+        scaleOriY = divOri.getBoundingClientRect().height / divOri.offsetHeight
+        print('  scaleOriX: '+scaleOriX+'  scaleOriY: '+scaleOriY)
+        // posição relativa de Img em divOri
+        leftImO = imgZooOri.offsetLeft                  ;   topImO = imgZooOri.offsetTop
+
+        divOri.appendChild(divCursor)
+        imgZoom.src = imgZooOri.src
+        el(divZooId).appendChild( imgZoom )
+        imgZoom.style.zIndex = '59'
+
+        // . . . posiciona div de zoom para 'local'
+        if(divZooId=='Zoom') {
+            divZooId = 'Zoom'
+            parentZoomId = el(divOriId).parentElement.id
+            el(parentZoomId).appendChild(el('Zoom'))       // div de zoom é irmã de divZoom
+            el(divZooId).style.height           = '150px'
+            el(divZooId).style.zIndex           = '2'
+            el(divZooId).style.overflow         = 'hidden'
+
+            tDivOri  = parseInt(window.getComputedStyle(el(divOriId)).top)
+            lDivOri  = divOri.offsetLeft
+            wZoom    = divOri.offsetWidth
+            hZoom    = divOri.offsetHeight
+            el(divZooId).style.top  = (tDivOri-wZoom)+'px'
+            el(divZooId).style.left = (lDivOri-hZoom)+'px'
+        }
+
+        // . . . formata imagem de zoom
+        hImgOri    = imgZooOri.offsetHeight 
+        wImgOri    = imgZooOri.offsetWidth
+        imgZoom.style.height  = (hImgOri*fatZoom)+'px'
+        imgZoom.style.width   = (wImgOri*fatZoom)+'px'
+
+        menuZoom = 1
+    }
+    // ...[inicia Zoom]
+
+    // ... move cursor Zoom
+    if((evento=='mousemove' || evento=='click') && menuZoom==1){
+        // . . . posicão do mouse sobre div Ori
+        xMdivZ = xMw - leftAbs      ; yMdivZ = yMw - topAbs
+        xMdivZ = xMdivZ/scaleOriX   ; yMdivZ = yMdivZ/scaleOriY // corrige pos com escala de Ori (transform)
+        // . . . posicão do mouse sobre imagem original
+        xMimg = xMdivZ - leftImO   ; yMimg = yMdivZ - topImO
+        
+        // . . . posiciona cursor
+        if (zooParam!='self2') { 
+            xCur = xMdivZ - cursLado/2 ; yCur = yMdivZ - cursLado/2 
+            divCursor.style.top  = yCur+'px'
+            divCursor.style.left = xCur+'px'
+        }
+        
+        // . . . posiciona Img em div de zoom (divOri, divLocal, divPort ou cursor)
+        // . zomm em cursor
+        if (zooParam=='cursor' || zooParam=='lupa'){
+            imgZoom.style.top  = (-yMimg*fatZoom + cursLado/2)+'px'
+            imgZoom.style.left = (-xMimg*fatZoom + cursLado/2)+'px'
+        }
+        // . zomm em self, local ou divPort
+        if (zooParam!='cursor' && zooParam!='lupa'){
+            imgZoom.style.top  = (-yMimg*fatZoom + yMdivZ)+'px'
+            imgZoom.style.left = (-xMimg*fatZoom + xMdivZ)+'px'
+        }
+        // . . .[posiciona Img em div de zoom (divOri, divLocal, divPort ou cursor)]
+    }
+    // ...[move cursor Zoom]
+    // ---------[ZOOM]
+
+
+
+    // ---------------- Menus    
     // ....... abre e recolhe
     
     // . . .  recolhe Menu Pop  e Horizontal com click
@@ -1420,7 +1558,7 @@ function icluiTxtemDivWord(divSheetId) {
                 lay     = formtPara.lay   ;  bc = formtPara.bc  ; op = formtPara.op  ; cB = formtPara.cB
                 wB      = formtPara.wB
                 iParO   = formtPara.iPar ; yPar = yIpar[iParO]
-
+                
                 para.style.borderColor      = cB
                 para.style.borderWidth      = wB+'px'
                 para.style.paddingLeft     = (indePara)+'px'
@@ -1441,8 +1579,8 @@ function icluiTxtemDivWord(divSheetId) {
                     parFu.style.width    = wTx+'px'
                     parFu.style.height   = hTx+'px'
                     // .... layOut                
-                    if (lay==5) { para.style.zIndex   = 34 ; parFu.style.zIndex = 33 }  // caixa de texto atrás de parágrafo base
-                    if (lay==3) { para.style.zIndex   = 37 ; parFu.style.zIndex = 36 }  // caixa de texto atrás de parágrafo base
+                    if (lay==5) { para.style.zIndex   = 34 ; parFu.style.zIndex = 33 }  // caixa de texto atrás     de parágrafo base
+                    if (lay==3) { para.style.zIndex   = 37 ; parFu.style.zIndex = 36 }  // caixa de texto na frente de parágrafo base
                 }
                 // . . .[cria div de fundo de textBox (para permitir opacity)]
 
@@ -1462,8 +1600,8 @@ function icluiTxtemDivWord(divSheetId) {
                     parIm.style.height   = hTx+'px'
 
                     // .... layOut                
-                    if (lay==5) { parIm.style.zIndex   = 34 ; para.style.zIndex = 34}  // caixa de texto atrás de parágrafo base
-                    if (lay==3) { parIm.style.zIndex   = 37 ; para.style.zIndex = 37}  // caixa de texto atrás de parágrafo base
+                    if (lay==5) { parIm.style.zIndex   = 34 ; para.style.zIndex = 34}  // imagem atrás     de parágrafo base
+                    if (lay==3) { parIm.style.zIndex   = 37 ; para.style.zIndex = 37}  // imagem na frente de parágrafo base
                 }
                 // . . .[cria img dentro de shape]
 
@@ -1590,8 +1728,8 @@ function largSroll(ele){
     wOver = ele.scrollWidth     //  includes what is not viewable (because of overflow).
                                 //   This property will round the value to an integer. 
 
-    wExt  = Math.round(ele.getBoundingClientRect().width)       //  width  externa total, excludes margins
-    hExt  = Math.round(ele.getBoundingClientRect().height)   //  height externa total, excludes margins
+    wExt  = Math.round(ele.getBoundingClientRect().width)   //  width  externa total, excludes margins - taking into account the transformation
+    hExt  = Math.round(ele.getBoundingClientRect().height)  //  height externa total, excludes margins - taking into account the transformation 
                                                     //  ele.getBoundingClientRect() = { x : 113.5 , y : 50 , width : 440 , height : 240 , top : 50 , right : 553.5 , bottom : 290 , left : 113.5 }
                                                     //  https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect 
     
