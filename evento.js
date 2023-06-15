@@ -414,7 +414,7 @@ function iniSys(){
 
     // ....
     // -------- finaliza rotina inicial
-    //el('console').style.left = '-3000px' ; el('proprBox').style.left = '-3000px' ; proprHab = 0
+    el('console').style.left = '-3000px' ; el('proprBox').style.left = '-3000px' ; proprHab = 0
     el('console').style.zIndex = '30' ; proprHab = 1
     window.scrollTo(0,0)
     iniLoc()
@@ -1751,94 +1751,6 @@ function largSroll(ele){
     return Scrll
 }
 // ----[Calcula larguras de Scrolls]
-
-
-
-// ------ Inclui texto em div
-function icluiTxtemDiv(divSheetId) {
-    // ...... 
-    textForm    = Texts[divSheetId]
-    texto       = textForm[0]
-    ConfGer     = textForm[1]
-
-    divSheet = el(divSheetId)
-    
-    para = document.createElement("div")
-    divSheet.appendChild(para)
-    para.id     = divSheetId+"-texto"
-    
-    // ... format Geral
-    margTop = ConfGer[0]    ;   margEsq = ConfGer[1]    ;   margDir = ConfGer[2]
-    escaTot = ConfGer[3]
-    bordWid = ConfGer[4]    ;   bordCor = ConfGer[5]    ;   paddDt  = ConfGer[6]    ;   anchorDt  = ConfGer[7]
-    // ... parâmetros de DIV
-    divSheet.style.margin              = '0px'
-    divSheet.style.padding             = '0px'
-    divSheet.style.textShadow          = '0px 0px 0px'
-
-    hDiv    = parseInt(window.getComputedStyle(divSheet).height)
-    scrDiv  = window.getComputedStyle(divSheet).overflow
-
-    // ... parâmetros de textDiv
-    para.style.position                 = 'absolute'
-    para.style.boxSizing                = 'border-box'  // 'content-box'  'border-box'
-    para.style.overflow                 = 'visible'
-
-    para.style.color                    = 'black'
-    para.style.backgroundColor          = 'transparent'
-    para.style.borderWidth              = bordWid+'px'
-    para.style.borderColor              = bordCor
-    para.style.borderStyle              = 'solid'
-    
-    para.style.margin                   = '0px'
-    para.style.marginTop                = '0px'
-    para.style.marginLeft               = '0px'
-    para.style.marginRight              = margDir+'px'
-    para.style.padding                  = paddDt+'px'
-
-    para.style.textIndent               = '0px'
-    para.style.width                    = (divSheet.clientWidth - (margEsq + margDir))  +'px'
-    para.style.height                   = 'auto'
-    para.style.fontSize                 = '20px'
-    para.style.textDecorationThickness  = 'from-font'
-    para.style.whiteSpace               = 'pre-wrap'
-    para.style.textAlign                = anchorDt 
-    para.style.textJustify              = 'inter-word'
-    para.style.opacity                  = 1
-    
-    para.innerHTML = texto
-    
-    // . . limites da caixa de texto
-    tD = 0  ;   lD = 0
-    
-    wD = parseInt(window.getComputedStyle(para).width)
-    hD = parseInt(window.getComputedStyle(para).height)
-
-    sH = parseInt(para.scrollHeight)        //  Returns the Height of an element, including padding, excluding borders, scrollbars or margins.
-    sW = parseInt(para.scrollWidth)         //  Both scrollWidth and scrollHeight return the entire height and width of an element, including what is not viewable (because of overflow).
-    
-    // ------  corrige x e y
-    // . . inclui scroll
-    cW = para.clientWidth +bordWid*2                        //  It includes padding but excludes borders, margins, and vertical   scrollbars (if present).
-    if (hD>hDiv && scrDiv!='hidden'){ cW  = cW  - 17}
-    leftN = lD - (cW*(1-escaTot))/2
-    para.style.left             = (leftN+margEsq)+'px'
-    para.style.width            = cW+'px'
-    
-    cH = parseInt(para.clientHeight)+bordWid*2              //  It includes padding but excludes borders, margins, and horizontal scrollbars (if present).
-    topN  = tD - (cH*(1-escaTot))/2    
-    para.style.top              = (topN+margTop)+'px'
-    para.style.height           = cH+'px'
-    // ------ [corrige x e y]
-
-    // ... aplica escala
-    para.style.transform        = 'scaleX('+escaTot+') scaleY('+escaTot+')'
-    corrTam = 2 ;   trapEvent()
-
-    // ...
-}
-// ------[Inclui texto em div]
-    
 
 // ---- Cria Sheet baseado em dictFormPla e MatrCellsPla
 function criaSheet(divSheetId){
