@@ -381,6 +381,7 @@ function iniSys(){
     
     
     // ........ abre Planilhas
+    print(' PLANILHAS')
     allEl = document.getElementsByTagName("div")  ;  nDivs = allEl.length
     Ldivs = []  ; for (i = 0; i <= nDivs-1; i++){ Ldivs.push(allEl[i].id) }
     for (iDiv = 0; iDiv <= nDivs-1; iDiv++){
@@ -409,6 +410,7 @@ function iniSys(){
     // ........[abre Planilhas]
 
     // ........ Inclui TEXTOS
+    print(' TEXTOS')
     Ldivs = []
     allEl = document.getElementsByTagName("div")  ;  nDivs = allEl.length
     for (i = 0; i <= nDivs-1; i++){ Ldivs.push(allEl[i].id) }
@@ -423,11 +425,13 @@ function iniSys(){
     // ........[Inclui TEXTOS]
 
     // ........ Monta Menus
+    print(' MENUS')
     for (me in Menus){
+        print(' me:'+me)
+        print(' el(me):'+el(me))
         formMenu    = Menus[me]
         auto        = formMenu[0][1]
         pop = me.includes("pop")
-        //if (auto=='autoload' && !pop){ criaMenu(me) }
         if (auto=='autoload'){ criaMenu(me) }
     }
     // ........[Monta Menus]
@@ -436,13 +440,13 @@ function iniSys(){
     // -------- finaliza rotina inicial
 
     // ... situação inicial de Console
+    print(' CONSOLES')
     el('console').style.left = '-3000px' ; el('proprBox').style.left = '-3000px' ; proprHab = 0
-    //el('console').style.left = '10px' ; el('proprBox').style.left = '4px' ; proprHab = 0
-    el('console').style.zIndex = '100' ; proprHab = 1
+    el('console').style.zIndex = '100' ; proprHab = 0
     
     deslX = el('Corpo').getAttribute("deslX") ; deslY = el('Corpo').getAttribute("deslY")
-    window.scrollTo(deslX,deslY)
-    
+    window.scrollTo(deslX,deslY+200)
+    print(' FIM')
     iniLoc()
 }
 // ----- inicio Sys
@@ -1213,6 +1217,8 @@ function criaMenu(divMenuId) {
     // ...[cria div para popMenu]
 
     divMenu         = el(divMenuId)
+    if (divMenu==null && orient!='pop' ) { return }
+
     // --------- prévio
     
     // --------------- cria subMenus
