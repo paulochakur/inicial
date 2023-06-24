@@ -89,7 +89,8 @@ var divMenuAti = '' ; var popMenuAti = ''
 var multH = { '1':[0] }
 
 
-var elAnt = ''   ; var zAnt = 0 ; var iElA = 0 ; var jElA = 0
+var elAnt = ''   ; var zAnt = 0
+var iEl = 0 , iElA = 0 , jEl = 0 , jElA = 0 , divPlanCurr = 0 , divPlanCurrId = ''
 var iMenAnt = 0  ; var linMeIdAnt = ''
 
 
@@ -211,16 +212,36 @@ function iniSys(){
 
     
     // ---------- cria elementos de sistema
+
+        
+    // ... cria divs - "transf1" e "transf2"
+    para = document.createElement("div")
+    el('Corpo').appendChild(para)
+    para.id     = "transf1"
+    el("transf1").style = 'position: fixed; left: 0px; top: 0px; width: 1px; height: 1px; box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: text; border-color: black; border-radius: 0%; border-width: 0.0px; border-style: solid; background-color: #ffff00; opacity: 1; overflow: auto; z-index: 100; white-space: pre-wrap; font-family: Courier, sans-serif; font-weight: bold; font-size: 12.0px; '
+    
+    para = document.createElement("div")
+    el('Corpo').appendChild(para)
+    para.id     = "transf2"
+    el("transf2").style = 'position: fixed; left: 0px; top: 1px; width: 1px; height: 1px; box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: text; border-color: black; border-radius: 0%; border-width: 0.0px; border-style: solid; background-color: #ff0000; opacity: 1; overflow: auto; z-index: 100; white-space: pre-wrap; font-family: Courier, sans-serif; font-weight: bold; font-size: 12.0px; '
+    
+    para = document.createElement("div")
+    el('Corpo').appendChild(para)
+    para.id     = "topJib"
+    el("topJib").style = 'position: fixed; left: 1px; top: 0px; width: 1px; height: 1px; box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: text; border-color: black; border-radius: 0%; border-width: 0.0px; border-style: solid; background-color: rgb(127,127,127); opacity: 1; overflow: auto; z-index: 100; white-space: pre-wrap; font-family: Courier, sans-serif; font-weight: bold; font-size: 12.0px; '
+    // ...[cria divs - "transf1" e "transf2"]
+
+
     // ... cria div - "console"
     para = document.createElement("div")
     el('Corpo').appendChild(para)
     para.id     = "console"
-    el("console").style = 'position: fixed; left: 10px; top: 40px; width: 330px; height: 550px; box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: text; border-color: black; border-radius: 1.0%; border-width: 1.0px; border-style: solid; background-color: #d1cb47; opacity: 1; overflow: auto; z-index: 32; white-space: pre-wrap; font-family: Courier, sans-serif; font-weight: bold; font-size: 12.0px; '    
+    el("console").style = 'position: fixed; left: 10px; top: 40px; width: 330px; height: 550px; box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: text; border-color: black; border-radius: 1.0%; border-width: 1.0px; border-style: solid; background-color: #d1cb47; opacity: 1; overflow: auto; z-index: 101; white-space: pre-wrap; font-family: Courier, sans-serif; font-weight: bold; font-size: 12.0px; '    
     // ...[cria div - "console"]
 
     // ... cria div - "proprBox"
     para = document.createElement("div") ; el('Corpo').appendChild(para) ; para.id     = "proprBox"
-    el("proprBox").style = 'position: fixed; left: 10px; top: 135px; width: 320px; height: 420px; box-sizing: content-box; margin: 0.0px; padding: 20px; cursor: text; border-color: black; border-radius: 1.0%; border-width: 1.0px; border-style: solid; background-color: #fae8af; opacity: 1; overflow: hidden; z-index: 31 '
+    el("proprBox").style = 'position: fixed; left: 10px; top: 135px; width: 320px; height: 420px; box-sizing: content-box; margin: 0.0px; padding: 20px; cursor: text; border-color: black; border-radius: 1.0%; border-width: 1.0px; border-style: solid; background-color: #fae8af; opacity: 1; overflow: hidden; z-index: 100 '
 
     padY = 11
     Llabls = ['Elem On :', 'Tipo     EleOn :', 'Parent EleOn :', 'Class   EleOn :', 'Focus Ele :', 'Target Ele :', 'Evento :', 'Mouse Ele On  :', 'Mouse Window:', 'Mouse Screen :', 'Mouse Page    :', 'Scroll Page :', '', ]
@@ -314,7 +335,6 @@ function iniSys(){
     el("Zoom").style = 'position: absolute; left: -3000px; top: -3000px; width: 150px; height: 150px; box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: none; border-color: black; border-radius: 0.0%; border-width: 0.0px; border-style: solid; background-color: gray; opacity: 1 ; overflow: hidden'
     // ........[Zoom]
     
-
     // ---------- [cria elementos de sistema]
 
 
@@ -415,8 +435,11 @@ function iniSys(){
     // ....
     // -------- finaliza rotina inicial
     el('console').style.left = '-3000px' ; el('proprBox').style.left = '-3000px' ; proprHab = 0
-    el('console').style.zIndex = '30' ; proprHab = 1
-    window.scrollTo(0,0)
+    el('console').style.zIndex = '100' ; proprHab = 1
+    
+    deslX = el('Corpo').getAttribute("deslX") ; deslY = el('Corpo').getAttribute("deslY")
+    window.scrollTo(deslX,deslY)
+    
     iniLoc()
 }
 // ----- inicio Sys
@@ -452,7 +475,7 @@ function eventTrap() {
         // relativo a  screen - inclui task bar
         xMs = event.screenX ; yMs = event.screenY   ; Sh = window.screen.height       ; Sw = window.screen.width
         // available  screen - exculi task bar
-                                                    Ah = window.screen.availHeight  ; Aw = window.screen.availWidth
+                                                      Ah = window.screen.availHeight  ; Aw = window.screen.availWidth
         // relativo a  page / body
         xMp = event.pageX   ; yMp = event.pageY     ; Ph = document.body.clientHeight ; Pw = document.body.clientWidth
     }
@@ -465,15 +488,25 @@ function eventTrap() {
     eleTaScrTop = eleTa.scrollTop   ;   eleTaScrLeft = eleTa.scrollLeft
     eleFoScrTop = eleFo.scrollTop   ;   eleFoScrLeft = eleFo.scrollLeft
     //  page
-    xPs = window.pageXOffset    ; yPs = window.pageYOffset
+    xPs = Math.round(window.pageXOffset)        ; yPs = Math.round(window.pageYOffset)
+    
 
     // Wheel
-    xWh = event.deltaX      ; yWh  = event.deltaY
-    xWi = window.screenX    ; yWi = window.screenY
+    xWh = event.deltaX              ; yWh  = event.deltaY
+    xWi = window.screenX            ; yWi = window.screenY
 
     // Keys
-    keyCode = event.keyCode ; ctrK = event.ctrlKey
-    
+    keyCode = event.keyCode         ; ctrK = event.ctrlKey
+
+
+    // ... desls para Jiboia
+    //if(evento=='click'){ navigator.clipboard.writeText("("+xPs+','+yPs+')') }
+    // . . xPs
+    x1 = parseInt(xPs/255) ; x2 = parseInt(xPs - x1*255) ; el("transf1").style.backgroundColor='rgb('+x1+','+x2+','+0+')'
+    y1 = parseInt(yPs/255) ; y2 = parseInt(yPs - y1*255) ; el("transf2").style.backgroundColor='rgb('+y1+','+y2+','+0+')'
+    el("topJib").style.backgroundColor='rgb(127,127,127)'
+
+
     // .... inibe menu do browser em rightClick
     if(evento=='contextmenu'){ evento = 'rightclick' ; event.preventDefault() }
 
@@ -536,14 +569,14 @@ function eventTrap() {
         hab=1
         if (leftAtu!='-3000px'  && hab==1){ el('console').style.left = '-3000px' ; el('proprBox').style.left = '-3000px' ;  hab=0 ; proprHab = 0}
         if (leftAtu=='-3000px'  && hab==1){ el('console').style.left = '10px'    ; el('proprBox').style.left = '4px'     ;  hab=0 ; proprHab = 1}
-        if(el('console').style.zIndex=='32') { proprHab = 0 }
+        if(el('console').style.zIndex=='101') { proprHab = 0 }
     }
     // ... toggle CONSOLE front/bottom com Propriedades   - click
     if (evento=='click' && (eleTaId=='proprBox' || eleOn.parentElement.id=='proprBox')) { 
         frontAtu = el('console').style.zIndex
         hab=1
-        if (frontAtu==30 && hab==1){ el('console').style.zIndex = '32' ; hab=0; proprHab = 0}
-        if (frontAtu==32 && hab==1){ el('console').style.zIndex = '30' ; hab=0; proprHab = 1}
+        if (frontAtu==100 && hab==1){ el('console').style.zIndex = '101' ; hab=0; proprHab = 0}
+        if (frontAtu==101 && hab==1){ el('console').style.zIndex = '100' ; hab=0; proprHab = 1}
     }
 
     // . . . preenche quadro
@@ -646,7 +679,7 @@ function eventTrap() {
         wIni = divOri.offsetWidth     ;   wfin = divOri.getBoundingClientRect().width
         scaleOriX = divOri.getBoundingClientRect().width / divOri.offsetWidth
         scaleOriY = divOri.getBoundingClientRect().height / divOri.offsetHeight
-        print('  scaleOriX: '+scaleOriX+'  scaleOriY: '+scaleOriY)
+
         // posição relativa de Img em divOri
         leftImO = imgZooOri.offsetLeft                  ;   topImO = imgZooOri.offsetTop
 
@@ -822,9 +855,7 @@ function eventTrap() {
     
     // ---------------- Movimento em Sheet
     if (eleTaClass.includes("-Pla")) {
-
         if ( blocTrap==0 && (evento=="click" || evento=="keydown" || evento=="focusin" || evento=='input')  ){
-
             scro = 0 ; keyCodeF = 100
             // . . . índices de input focus em Sheet
             abrePar = eleTaId.indexOf("(") ; fechaPar  = eleTaId.indexOf(")") ; virg = eleTaId.indexOf(",")
@@ -839,7 +870,8 @@ function eventTrap() {
             if(evento=='keydown' && readO=='true' && keyCode<41){ event.preventDefault() }
 
             // .... parâmetros de Sheet
-            nomeSheet = eleFoClass ; divSheet = eleFo.parentElement ; divSheetId = divSheet.id
+            nomeSheet   = eleFoClass ; divSheet      = eleFo.parentElement ; divSheetId = divSheet.id 
+            divPlanCurr = divSheet   ; divPlanCurrId = divSheetId
 
             nLinSh      = Number(divSheet.getAttribute('nLinSh'))   ; nColSh    = Number(divSheet.getAttribute('nColSh'))
             nLinInps    = Number(divSheet.getAttribute('nLinInps')) ; nColInps  = Number(divSheet.getAttribute('nColInps'))
@@ -1431,7 +1463,7 @@ function criaMenu(divMenuId) {
         paraD = document.createElement("div");
         divMenu.appendChild(paraD)
         paraD.id        = divMenuId+ "-Menu(" +i+ ")D"
-        paraD.class     = divMenuId+'-Menu'
+        paraD.className     = divMenuId+'-Menu'
         paraD.innerHTML = textoD
 
         rD = parseInt(window.getComputedStyle(para).right)
@@ -1466,7 +1498,6 @@ function criaMenu(divMenuId) {
 // ... 
 }           
 // ----[Cria Menu]
-
 
 // ------ Inclui texto em div Word
 function icluiTxtemDivWord(divSheetId) {
@@ -1842,7 +1873,7 @@ function criaSheet(divSheetId){
         para = document.createElement("DIV")
         divSheet.appendChild(para)
         para.id     = nomeSheet+"-fundoHeader"
-        para.class  = nomeSheet
+        para.className  = nomeSheet
         para.style  = 'position: absolute; left: 0px; top: 0px; height: 20px; width:'+(wUtil)+'px; box-sizing: border-box; margin: 0px; pading: 0px; border-style: ridge; border-color: black; outline-width: 1;'
         para.style.borderWidth      = "0px" ;   para.style.borderBottomWidth      = "1px"   
         para.style.backgroundColor  = '#E4E4E4'
@@ -1851,7 +1882,7 @@ function criaSheet(divSheetId){
         para = document.createElement("INPUT") ; para.setAttribute('readonly', 'readonly') ; para.value = 'Lin:'
         divSheet.appendChild(para);
         para.id     = nomeSheet+"-headerLinS"
-        para.class  = nomeSheet
+        para.className  = nomeSheet
         para.type="text"
         para.style  = 'position: absolute; left: 1px; top: 0px; height: 19px; width: 25px; box-sizing: border-box; margin: 0px; pading: 0px; border-style: solid; border-color: black;'
         para.style.borderWidth      = "0px"   
@@ -1861,7 +1892,7 @@ function criaSheet(divSheetId){
         para = document.createElement("INPUT")
         divSheet.appendChild(para);
         para.id     = nomeSheet+"-headerLinL"
-        para.class  = nomeSheet
+        para.className  = nomeSheet
         para.type="text"
         para.style  = 'position: absolute; left: 31px; top: 0px; height: 19px; width: 50px; box-sizing: border-box; margin: 0px; pading: 0px; border-style: solid; border-color: black;'
         para.style.borderWidth      = "0px"  
@@ -1871,7 +1902,7 @@ function criaSheet(divSheetId){
         para = document.createElement("INPUT") ; para.setAttribute('readonly', 'readonly')
         divSheet.appendChild(para);
         para.id     = nomeSheet+"-headerLinN"
-        para.class  = nomeSheet
+        para.className  = nomeSheet
         para.type="text"
         para.style  = 'position: absolute; left: 81px; top: 0px; height: 19px; width: 80px; box-sizing: border-box; margin: 0px; pading: 0px; border-style: solid; border-color: black;'
         para.style.borderWidth      = "0px"    ;   para.style.borderRightWidth      = "1px"    
@@ -1888,7 +1919,7 @@ function criaSheet(divSheetId){
         para = document.createElement("DIV");
         divSheet.appendChild(para);
         para.id     = nomeSheet+"-fundoHori"
-        para.class  = nomeSheet
+        para.className  = nomeSheet
         para.style  = 'position: absolute; left: '+(margL)+'px; bottom: 0px; height: 17px; width:'+(wUtil-17)+'px; box-sizing: border-box; margin: 0px; pading: 0px; border-style: solid; border-color: black;'
         para.style.borderWidth      = "1px"   
         para.style.backgroundColor  = '#eaeaea'
@@ -1898,7 +1929,7 @@ function criaSheet(divSheetId){
         para = document.createElement("INPUT");
         divSheet.appendChild(para);
         para.id     = nomeSheet+"-horizScroll"
-        para.class  = nomeSheet
+        para.className  = nomeSheet
         para.type="range"
         para.style  = 'position: absolute; left: 0px; bottom: 1px; height: 17px; width:'+(wUtil-17)+'px; box-sizing: border-box; margin: 0px; pading: 0px; border-style: solid; border-color: black;'
         para.style.borderWidth      = "0px"   
@@ -1909,7 +1940,7 @@ function criaSheet(divSheetId){
         para = document.createElement("DIV");
         divSheet.appendChild(para);
         para.id     = nomeSheet+"-fundoVert"
-        para.class  = nomeSheet
+        para.className  = nomeSheet
         para.style  = 'position: absolute; right: 0px; top:'+(margT)+'px; height: '+(hUtil-17)+'px; width: 17px; box-sizing: border-box; margin: 0px; pading: 0px; border-style: solid; border-color: black ; '
         para.style.borderWidth      = "1px"   
         para.style.backgroundColor  = '#eaeaea'
@@ -1919,7 +1950,7 @@ function criaSheet(divSheetId){
         para = document.createElement("INPUT");
         divSheet.appendChild(para);
         para.id     = nomeSheet+"-vertScroll"
-        para.class  = nomeSheet
+        para.className  = nomeSheet
         para.type="range"
         para.style  = 'position: absolute; top:'+( (hUtil-17)/2 - 16/2 + margT) +'px; right:'+( -(hUtil-17)/2 + 16/2 )+'px; height: 16px; width:'+(hUtil-17)+'px; box-sizing: border-box; margin: 0px; pading: 0px; border-style: solid; border-color: black; transform: rotateZ(90deg);'
         para.style.borderWidth      = "2px"   
@@ -1929,7 +1960,7 @@ function criaSheet(divSheetId){
         para = document.createElement("DIV");
         divSheet.appendChild(para);
         para.id     = nomeSheet+"-fundoCanto"
-        para.class  = nomeSheet
+        para.className  = nomeSheet
         para.style  = 'position: absolute; bottom: 0px; right: 0px; height: 17px; width: 17px; box-sizing: border-box; margin: 0px; pading: 0px; border-style: solid; border-color: black; transform: rotateZ(90deg);'
         para.style.borderWidth      = "1px"   
         para.style.backgroundColor  = '#eaeaea'
