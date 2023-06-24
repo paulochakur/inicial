@@ -440,13 +440,12 @@ function iniSys(){
     // -------- finaliza rotina inicial
 
     // ... situação inicial de Console
-    print(' CONSOLES')
     el('console').style.left = '-3000px' ; el('proprBox').style.left = '-3000px' ; proprHab = 0
     el('console').style.zIndex = '100' ; proprHab = 0
     
     deslX = el('Corpo').getAttribute("deslX") ; deslY = el('Corpo').getAttribute("deslY")
-    window.scrollTo(deslX,deslY+200)
-    print(' FIM')
+    window.scrollTo(deslX,deslY)
+    print(' FIM   '+deslY)
     iniLoc()
 }
 // ----- inicio Sys
