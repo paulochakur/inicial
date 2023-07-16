@@ -31,8 +31,9 @@
 
 
 //  -------------- Variáveis Globais -------------
+var ListPlan = {name: [3]}  ,  nLoad = 0 , N = 0 , valCellA = ''
 var fixTop = '0px'
-var habClic = 0 ; var iniValueInput
+var habClic = 0 ; var iniValueInput = 0 , iniValueInputA = 0 , finValueInputA = 0
 var toques=0
 var iCa=0
 var List = [ 4 ]
@@ -62,9 +63,15 @@ var proprHab = 0
 // ... evento
 var evento  = '' ; var Leventos  = []
 
-var eleTa = 1   ; var eleTaId  = 'T' ; var eleTaTy     = 1 ; var taStyle    = 1 ; var eleTaClass = 1
-var eleOn = 'O' ; var eleOnId  = 'O' ; var eleOnTy     = 1 ; var onStyle    = 1 ; var eleOnClass = 1
-var eleFo = '@' ; var eleFoId  = 'F' ; var eleFoTy     = 1 ; var foStyle    = 1 ; var eleFoClass = 1
+var eleTa  = 1   ; var eleTaId  = 'T' ; var eleTaTy     = 1 ; var taStyle    = 1 ; var eleTaClass   = 1
+var eleTaA = 1   ; var eleTaIdA = 'T' ; var eleTaTyA    = 1 ; var taStyleA   = 1 ; var eleTaClassA  = 1
+var inpCurId = '', inpAntId = '', inpCur = '', inpAnt = ''
+
+var eleOn = 'O' ; var eleOnId  = 'O' ; var eleOnTy     = 1 ; var onStyle    = 1 ; var eleOnClass    = 1
+
+var eleFo = '@' ; var eleFoId  = 'F' ; var eleFoTy     = 1 ; var foStyle    = 1 ; var eleFoClass  = 1
+var eleFoA = '@'; var eleFoIdA = 'F' ; var eleFoTyA    = 1 ; var foStyleA   = 1 ; var eleFoClassA = 1
+var foco = '' , entraInp = ''
 var eleTaIdAnt = 0
 var eleScrTop = 1
 
@@ -89,8 +96,9 @@ var divMenuAti = '' ; var popMenuAti = ''
 var multH = { '1':[0] }
 
 
-var elAnt = ''   ; var zAnt = 0
+var elAnt = ''
 var iEl = 0 , iElA = 0 , jEl = 0 , jElA = 0 , divPlanCurr = 0 , divPlanCurrId = ''
+var iSheetA = 0 , jSheetA = 0 , iSheetSel = 0 , jSheetSel = 0 , iSheetSelA = 0 , jSheetSelA = 0
 var iMenAnt = 0  ; var linMeIdAnt = ''
 
 
@@ -236,7 +244,7 @@ function iniSys(){
     para = document.createElement("div")
     el('Corpo').appendChild(para)
     para.id     = "console"
-    el("console").style = 'position: fixed; left: 10px; top: 40px; width: 330px; height: 550px; box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: text; border-color: black; border-radius: 1.0%; border-width: 1.0px; border-style: solid; background-color: #d1cb47; opacity: 1; overflow: auto; z-index: 101; white-space: pre-wrap; font-family: Courier, sans-serif; font-weight: bold; font-size: 12.0px; '    
+    el("console").style = 'position: fixed; left: 10px; top: 10px; width: 330px; height: 650px; box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: text; border-color: black; border-radius: 1.0%; border-width: 1.0px; border-style: solid; background-color: #d1cb47; opacity: 1; overflow: auto; z-index: 101; white-space: pre-wrap; font-family: Courier, sans-serif; font-weight: bold; font-size: 12.0px; '    
     // ...[cria div - "console"]
 
     // ... cria div - "proprBox"
@@ -245,7 +253,7 @@ function iniSys(){
 
     padY = 11
     Llabls = ['Elem On :', 'Tipo     EleOn :', 'Parent EleOn :', 'Class   EleOn :', 'Focus Ele :', 'Target Ele :', 'Evento :', 'Mouse Ele On  :', 'Mouse Window:', 'Mouse Screen :', 'Mouse Page    :', 'Scroll Page :', '', ]
-    LidPar = ['eleon2', 'tipoDiv2', 'parentDiv2', 'classDiv2', 'eleTarDiv2', 'focusDiv2', 'eventoDiv2', 'mouseEleDiv2', 'mouseWinDiv2', 'mouseCscDiv2', 'mousePageDiv2', 'scrollPageDiv2', '', '',]
+    LidPar = ['eleon2', 'tipoDiv2', 'parentDiv2', 'classDiv2', 'focusDiv2', 'eleTarDiv2', 'eventoDiv2', 'mouseEleDiv2', 'mouseWinDiv2', 'mouseCscDiv2', 'mousePageDiv2', 'scrollPageDiv2', '', '',]
     for (i=0; i < 12; i++) {
         if (i==1)  { padY = padY+25 }
         if (i==4)  { padY = padY+5 }
@@ -378,10 +386,8 @@ function iniSys(){
     */
     // ...[set atributos definidos em TXT]
 
-    
-    
+        
     // ........ abre Planilhas
-    print(' PLANILHAS')
     allEl = document.getElementsByTagName("div")  ;  nDivs = allEl.length
     Ldivs = []  ; for (i = 0; i <= nDivs-1; i++){ Ldivs.push(allEl[i].id) }
     for (iDiv = 0; iDiv <= nDivs-1; iDiv++){
@@ -391,16 +397,13 @@ function iniSys(){
             autoSize    = Cells[divSheetId][0][0]['autosize']
             nLinPla     = Cells[divSheetId][0][0]['nLinPla']
             nColPla     = Cells[divSheetId][0][0]['nColPla']
+            arqDados    = Cells[divSheetId][0][0]['arqDados']
             hSheet      = el(divSheetId).offsetHeight
             wSheet      = el(divSheetId).offsetWidth
             if (auto=='autoload'){ 
                 preencheSheet(lplanIni=0, cplanIni=0, divSheetId)
-                xUlt = Cells[divSheetId][1][nColPla]['left'] + Cells[divSheetId][1][nColPla]['width']  + 17 + 3
-                yUlt = Cells[divSheetId][nLinPla][1]['top']  + Cells[divSheetId][nLinPla][1]['height'] + 17 + 20
-                if (autoSize=='autosize'){ 
-                    if (xUlt<wSheet) { el(divSheetId).style.width = xUlt+'px' }
-                    if (yUlt<hSheet) { el(divSheetId).style.height= yUlt+'px' }
-                }
+                arqDados    = Cells[divSheetId][0][0]['arqDados']
+                if (arqDados!='' && arqDados!=undefined) { loadDadosJS(divSheetId) }
             }
         }
         catch{}
@@ -409,26 +412,20 @@ function iniSys(){
 
     // ........[abre Planilhas]
 
-    // ........ Inclui TEXTOS
-    print(' TEXTOS')
+    // ........ Inclui TEXTOS  $$$$ Criou divSheetId:
     Ldivs = []
     allEl = document.getElementsByTagName("div")  ;  nDivs = allEl.length
     for (i = 0; i <= nDivs-1; i++){ Ldivs.push(allEl[i].id) }
     for (iDiv = 0; iDiv <= nDivs-1; iDiv++){
-
         divSheetId = Ldivs[iDiv]
         textForm   = Texts[divSheetId]
         
         if (textForm!=undefined){ icluiTxtemDivWord(divSheetId) }
-
     }
     // ........[Inclui TEXTOS]
 
     // ........ Monta Menus
-    print(' MENUS')
     for (me in Menus){
-        print(' me:'+me)
-        print(' el(me):'+el(me))
         formMenu    = Menus[me]
         auto        = formMenu[0][1]
         pop = me.includes("pop")
@@ -445,7 +442,6 @@ function iniSys(){
     
     deslX = el('Corpo').getAttribute("deslX") ; deslY = el('Corpo').getAttribute("deslY")
     window.scrollTo(deslX,deslY)
-    print(' FIM   '+deslY)
     iniLoc()
 }
 // ----- inicio Sys
@@ -453,6 +449,8 @@ function iniSys(){
 //  -------------- Trap de Eventos  -------------
 function eventTrap() {
     
+    //window.scrollTo(0,0)
+
     // ---- Parâmetros de EVENTO
     // elementos de evento - On, Target, Foco
     eleTa  = event.target
@@ -460,6 +458,11 @@ function eventTrap() {
     if (eleOn=='O')          { eleOn  = eleFo }
     if (evento=="mousemove") { eleOn  = eleTa }
     // . .
+
+    // . . . anteriores
+    foco='' ; entraInp = ''
+    if (eleFoA!=eleFo) { eleFoA = eleFo  ;   eleFoIdA = eleFoId  ;  eleFoClassA = eleFoClass  ;   eleFoTyA = eleFoTy ; foco='MUDOUfoco'} // ; print(' .....    MUDA FOCO evento:'+evento+' eleFo.tagName:'+eleFo.tagName) }
+    if (eleTaA!=eleTa) { eleTaA = eleTa  ;   eleTaIdA = eleTaId  ;  eleTaClassA = eleTaClass  ;   eleTaTyA = eleTaTy }
 
     // On     Element
     eleOnId    = eleOn.id      ;   eleOnClass  = eleOn.className   ;   eleOnTy     = eleOn.tagName ;   onStyle = getComputedStyle(eleOn)                
@@ -471,6 +474,13 @@ function eventTrap() {
     if (eleOnClass==undefined){ eleOnClass = 'Und'}
     if (eleTaClass==undefined){ eleTaClass = 'Und'}
     if (eleFoClass==undefined){ eleFoClass = 'Und'}
+
+    // elementos de evento - On, Target, Foco
+    if (evento!="focusout"){ eleTa  = event.target} // ; print('$$$ evento'+evento) }
+    
+    // .  .  .[tipo INPUT]
+
+
 
     // --- Mouse Coords / Window  -  Não atuliza se evento=="keyup"
     if (evento!="keyup" && evento!="keydown" && evento!="keypress") {
@@ -570,7 +580,7 @@ function eventTrap() {
 
 
     // ... toggle CONSOLE visível   - ctr"c"
-    if (evento=='keydown' && keyCode==67) { 
+    if (evento=='keydown' && keyCode==67 && ctrK) { 
         leftAtu = el('console').style.left
         hab=1
         if (leftAtu!='-3000px'  && hab==1){ el('console').style.left = '-3000px' ; el('proprBox').style.left = '-3000px' ;  hab=0 ; proprHab = 0}
@@ -611,8 +621,10 @@ function eventTrap() {
     // --------[CONSOLE]
 
     // ----------- INPUT
-    if (eleFoTy=='INPUT') {
-        if ( (evento=="keyup" || evento=="keydown" || evento=="focusin" || evento=="click") && (eleFo.type=='text' || eleFo.type=='number') ) {    
+    if (eleTaTy=='INPUT' || eleTaTyA=='INPUT') {
+        
+        if ( (evento=="keyup" || evento=="keydown" || evento=="focusin" || evento=="focusout" || evento=="click") && (eleFo.type!='range' || eleFoA.type=='range') ) {    
+            
             readO = eleFo.getAttribute('readonly')
             
             // ... apaga em primeiro toque
@@ -620,16 +632,69 @@ function eventTrap() {
             // ... escape
             if(evento=="keydown" && readO!='true' && keyCode==27) { eleFo.value = iniValueInput }
 
-            // . . . toques
-            if(evento=="focusin") { 
-                toques = 0 ; habClic = 0 ; setTimeout( fhabClic, 300) ; iniValueInput = eleFo.value
+            // . . . Got Focus
+            if (eleTaTy== 'INPUT' && evento=="focusin")  { 
+                inpCur = eleTa  ; inpCurId = eleTaId                       
+                entraInp = 'Got'
+                iniValueInputA = iniValueInput
+                iniValueInput  = eleTa.value
+
+                // . . . toques    
+                toques = 0 ; habClic = 0 ; setTimeout( fhabClic, 300)
             } 
+            // . . .[Got Focus]
+
+            // . . . Lost Focus            
+            if (eleTaTy=='INPUT' && evento=="focusout") { 
+                inpAnt = inpCur ; inpAntId = inpCurId
+                inpCur = ''     ; inpCurId = '****'
+                
+                entraInp = 'Lost'
+                //iniValueInput   = '**'
+                iniValueInputA  = iniValueInput
+                finValueInputA  = inpAnt.value
+            }
+            // . . .[Lost Focus]
+
+
+            // . . . incrementa toques
             if( readO!='true' && ((evento=="keydown" && keyCode>40) || (evento=="click" && habClic==1))  )   { toques++ }
         
             // .....
         }
+
     }
-    // -----------[IMPUT]
+
+    // . . . Selection Change
+    if( inpCurId!=inpAntId ) {
+        inpAntClass='*'                        
+        try{ inpAntClass = inpAnt.className ; inpCurClass = inpCur.className } catch{}
+        if(inpAntClass==undefined){ inpAntClass='' }
+        if(inpCurClass==undefined){ inpCurClass='' }
+        lplan0      = Cells[divSheetId][0][0]['lplan0']         ; cplan0    = Cells[divSheetId][0][0]['cplan0']
+        lFrz        = Cells[divSheetId][0][0]['lFrz']           ; cFrz      = Cells[divSheetId][0][0]['cFrz']    
+    
+        if (inpCurClass.includes("-Pla") ) { 
+            abrePar = inpCurId.indexOf("(") ; fechaPar  = inpCurId.indexOf(")") ; virg = inpCurId.indexOf(",")
+            iSheetSel  = parseInt(inpCurId.slice(abrePar+1, virg)) ; jSheetSel   = parseInt(inpCurId.slice(virg+1, fechaPar))
+            iElSel     = iSheetSel          ; jElSel       = jSheetSel
+            if(iSheetSel>=lFrz){ iElSel     = iSheetSel + lplan0 - lFrz }
+            if(jSheetSel>=cFrz){ jElSel     = jSheetSel + cplan0 - cFrz }
+        }
+        if (inpAntClass.includes("-Pla")) { 
+            abrePar = inpAntId.indexOf("(") ; fechaPar  = inpAntId.indexOf(")") ; virg = inpAntId.indexOf(",")
+            iSheetSelA = parseInt(inpAntId.slice(abrePar+1, virg)) ; jSheetSelA  = parseInt(inpAntId.slice(virg+1, fechaPar))
+            iElSelA    = iSheetSelA       ; jElSelA      = jSheetSelA
+            if(iSheetSelA>=lFrz){ iElSelA    = iSheetSelA + lplan0 - lFrz }
+            if(jSheetSelA>=cFrz){ jElSelA    = jSheetSelA + cplan0 - cFrz }
+        }
+        SelectionChange()
+        inpAntId = inpCurId ; inpAnt = inpCur
+        
+    }
+    // . . .[Selection Change]
+    
+    // -----------[INPUT]
 
 
     // --------- ZOOM    
@@ -867,13 +932,14 @@ function eventTrap() {
             abrePar = eleTaId.indexOf("(") ; fechaPar  = eleTaId.indexOf(")") ; virg = eleTaId.indexOf(",")
             if (abrePar>0){
                 iSheet  = parseInt(eleTaId.slice(abrePar+1, virg)) ; jSheet   = parseInt(eleTaId.slice(virg+1, fechaPar))
-                if (evento=="click" || evento=="focusin") { keyCodeF = 1 }
+                //if (evento=="click" || evento=="focusin") { keyCodeF = 1 }
+                if (evento=="focusin") { keyCodeF = 1 }
             }
 
             // .... inibe scroll com flechas
             // https://stackoverflow.com/questions/10280250/getattribute-versus-element-object-properties
             readO = eleFo.getAttribute('readonly')
-            if(evento=='keydown' && readO=='true' && keyCode<41){ event.preventDefault() }
+            if(evento=='keydown' && (keyCode<41 && keyCode!=8 && keyCode!=32) || (readO=='true' && keyCode==32)){ event.preventDefault() }
 
             // .... parâmetros de Sheet
             nomeSheet   = eleFoClass ; divSheet      = eleFo.parentElement ; divSheetId = divSheet.id 
@@ -900,7 +966,9 @@ function eventTrap() {
             
             // ------ linha entrada em cabeçalho
             if (evento=="keydown" && keyCode==13 && eleFoId.includes("-headerLinL")){
-                iElN = parseInt( el(nomeSheet+"-headerLinL").value ) ; jElN = jElC ; keyCode = 0
+                linEntr = parseInt( el(nomeSheet+"-headerLinL").value ) + lFrz - 1
+                if (linEntr>nLinPla) { linEntr=nLinPla }
+                iElN = linEntr ; jElN = jElC ; keyCode = 0
             }
             // ------[linha entrada em cabeçalho]
 
@@ -918,7 +986,7 @@ function eventTrap() {
             // ------[movimento em Planilha - Scroll Bar]
 
             // ------ movimento em Planilha - Tecla - NOVO FOCO
-            if ( (evento=="keydown" && keyCode<41) || keyCodeF<5){
+            if ( (evento=="keydown" && keyCode<41 && keyCode!=8  && keyCode!=32 ) || keyCodeF<5){
                 // ------ movimento em Planilha - Tecla
                 iElNf = iElN
                 if (LinMod>0 && iElN>lFrz) { iElNf = lFrz }    
@@ -995,9 +1063,24 @@ function eventTrap() {
                 }            
                 // ----[define lplan0 e cplan0]
 
+
+                // ----- SelectionChange
+                try{ valCellA = el(elAnt).value } catch{ valCellA = '*' }                
+                valListAR   = ListPlan[divSheetId][iElA][jElA-1]        // valor de entrada da Cell anterior (lost focus)                
+                if(iElA!=iElN || jElA!=jElN){
+                    // . . . atualiza ListPlan da Cell anterior (lost focus)
+                    if (valListAR!=valCellA) { ListPlan[divSheetId][iElA][jElA-1] = valCellA }
+                }
+                // -----[SelectionChange]
+
                 //
-                if (scro>0){ preencheSheet(lplanIni=0, cplanIni=0, divSheetId) }
-                // .....[analisa posição de novo foco]
+                if (scro>0){ 
+                    iElSel = iElN ; jElSel = jElN ; iElSelA = iElA ; jElSelA = jElA
+                    iniValueInputA = valListAR ; finValueInputA = valCellA ; iniValueInput = ListPlan[divSheetId][iElN][jElN-1]
+                    preencheSheet(lplanIni=0, cplanIni=0, divSheetId) 
+                    entraInp = 'Got'
+                    SelectionChange()
+                }
 
                 // ----- foco em próximo
                 // ... 
@@ -1007,16 +1090,14 @@ function eventTrap() {
                 prox = nomeSheet+":(" + iSheet + "," + jSheet +")"
                 
                 if (elAnt!=''){
-                    iEl     = iElA + lplan0 - lFrz   ; jEl       = jElA + cplan0 - cFrz
                     mergedColsA  = Cells[divSheetId][iElNf][jElN]['mergedCols']
                     mergedLinsA  = Cells[divSheetId][iElNf][jElN]['mergedLins']
                     el(elAnt).style.zIndex = '2'
                     if(mergedColsA!=1 || mergedLinsA!=1){ el(elAnt).style.zIndex = '1' }
             
-                    if (cursor!='outline'){ desBordas(iEl, jEl, el(elAnt)) }
+                    if (cursor!='outline'){ desBordas(iSheetA, jSheetA, el(elAnt)) }
                 }
                 
-                elAnt = prox  ; zAnt = el(prox).style.zIndex  ; iElA = iSheet ; jElA = jSheet
                 el(prox).style.zIndex = '3'
                 
                 if (cursor!='outline')  { el(prox).style.borderColor = cursor ; el(prox).style.borderWidth = '2px'; el(prox).style.outlineWidth      = "0px" }
@@ -1025,12 +1106,14 @@ function eventTrap() {
                 blocTrap = 1
                 if (prox!=''){ 
                     if(header=='header'){ 
-                        head = el(nomeSheet+"-headerLinL")   ; head.value = iElN
-                        head = el(nomeSheet+"-headerLinN")   ; head.value = ' de '+nLinPla
+                        iLinH = iElN - lFrz + 1
+                        if (iLinH<0){ iLinH=0 }
+                        head = el(nomeSheet+"-headerLinL")   ; head.value = iLinH
+                        head = el(nomeSheet+"-headerLinN")   ; head.value = ' de '+(nLinPla-lFrz+1)
                     }
                     Cells[divSheetId][0][0]['iEl'] = iElN ; Cells[divSheetId][0][0]['jEl'] = jElN 
-                    el(prox).focus()   
-                    if (scro>0){ iniValueInput = el(prox).value }
+                    // . . . foco em novo
+                    el(prox).focus()
                     
                     if (scrollBars==1){
                         el(nomeSheet+"-vertScroll").value  = parseInt( ((iElN-0)/(nLinPla-0) )*100 )
@@ -1040,8 +1123,9 @@ function eventTrap() {
                 blocTrap = 0
                 // -----[foco em próximo]
                 
-                iSheetA = iSheet ;  jSheet = jSheet
-            
+                iSheetA = iSheet    ;   jSheetA = jSheet
+                iElA    = iElN      ;   jElA    = jElN
+                elAnt   = prox      ;   valCellA = el(prox).value
             }    
         }
         // ------ movimento em Planilha - Tecla - NOVO FOCO
@@ -1074,15 +1158,13 @@ function charSpeci(strO){
     iEsp = 0
     while (iEsp>-1){
         if (iEsp==0){ iEsp = -1 }
-        iEsp = strO.indexOf("&#", iEsp+1)   ;   iVir = strO.indexOf(";" , iEsp+1)
-        iVir = iEsp+5
+        iEsp = strO.indexOf("&#", iEsp+1) ; iVir = strO.indexOf(";" , iEsp+1)
         if (iVir-iEsp<7) { nCars = iVir-iEsp-2 }
         if (iEsp>-1){
             carOri      = strO.substr(iEsp+2, nCars)
             carSubCod   = parseInt( carOri ) 
             carSub      = String.fromCharCode(carSubCod)
             strO        = strO.replace('&#'+carOri+';', carSub)
-            strO        = strO.replace('&#'+carOri, carSub)
         }
     }    
     // ....
@@ -1791,47 +1873,90 @@ function largSroll(ele){
 }
 // ----[Calcula larguras de Scrolls]
 
+// ------ Carrega arquivo de dados
+function loadDadosJS(divSheetId, arqDados=''){
+    nLoad = nLoad + 1
+    if (arqDados=='') { arqDados = Cells[divSheetId][0][0]['arqDados'] }
+    // ........ Load arquivo de dados JS
+    scriptEle1 = document.createElement("script")        ; el('Corpo').appendChild(scriptEle1)
+    scriptEle1.setAttribute("type", "text/javascript")   ; scriptEle1.setAttribute("async", true)
+    scriptEle1.setAttribute("src", "ArquvosJs/"+arqDados)
+    
+    if (nLoad==1) { scriptEle1.addEventListener("load", loa1) ;  function loa1() { divLoad = divSheetId; loadListener(divLoad) } }
+    if (nLoad==2) { scriptEle1.addEventListener("load", loa2) ;  function loa2() { divLoad = divSheetId; loadListener(divLoad) } }
+    scriptEle1.remove()
+}
+function loadListener(divLoad){
+    listS = charSpeci( JSON.stringify(ListArq) )
+    Clone = JSON.parse(listS)
+    ListPlan[divLoad] = Clone
+    listS = '' ; Clone = [] ; ListArq = ''
+    Cells[divLoad][0][0]['nLinPla'] = ListPlan[divLoad][0][0]
+    preencheSheet(lplanIni=0, cplanIni=0, divLoad) 
+}
+// ------[Carrega arquivo de dados]
+
+
 // ---- Cria Sheet baseado em dictFormPla e MatrCellsPla
 function criaSheet(divSheetId){
 
     nLinPla     = Cells[divSheetId][0][0]['nLinPla']        ; nColPla   = Cells[divSheetId][0][0]['nColPla']
     lplan0      = Cells[divSheetId][0][0]['lplan0']         ; cplan0    = Cells[divSheetId][0][0]['cplan0']
     lFrz        = Cells[divSheetId][0][0]['lFrz']           ; cFrz      = Cells[divSheetId][0][0]['cFrz']
-    iElC        = Cells[divSheetId][0][0]['iEl']            ; jElC      = Cells[divSheetId][0][0]['jEl']             // foco atual em Pla
+    iElC        = Cells[divSheetId][0][0]['iEl']            ; jElC      = Cells[divSheetId][0][0]['jEl']      // foco atual em Pla
     cursor      = Cells[divSheetId][0][0]['cursor']         ; enterMove = Cells[divSheetId][0][0]['enterMove']
     header      = Cells[divSheetId][0][0]['header']         ; LinMod    = Cells[divSheetId][0][0]['LinMod']
     scrollBars  = Cells[divSheetId][0][0]['scrollBars']     ; autoSize  = Cells[divSheetId][0][0]['autosize']
+    arqDados    = Cells[divSheetId][0][0]['arqDados']
 
     Cells[divSheetId][0][0]['iEl']      = 0      ; Cells[divSheetId][0][0]['jEl']    = 0
     Cells[divSheetId][0][0]['lplan0']   = lFrz   ; Cells[divSheetId][0][0]['cplan0'] = cFrz
+    
+    ListPlan[divSheetId] = [ [nLinPla] ]
 
     lplan0  = lFrz  ; cplan0    = cFrz
 
-    // ... substitui caracteres especiais
+    // ... substitui caracteres especiais e Carrega ListPlan
     nLin = nLinPla
-    if(LinMod> 0) {nLin = lFrz}
+    if(LinMod>0) {nLin = lFrz}
     for (i = 1; i <= nLin; i++){
+        linList = []
         for (j = 1; j <= nColPla; j++){
-            try {
-                val     = Cells[divSheetId][i][j]['valor']
-                strO    = charSpeci(val)
-                Cells[divSheetId][i][j]['valor'] = strO                       
-            }
-            catch{}
-
+            val     = Cells[divSheetId][i][j]['valor']
+            strO    = charSpeci(val)
+            Cells[divSheetId][i][j]['valor']    = strO
+            linList.push(strO)
         }
+        //if (LinMod==0) { ListPlan[divSheetId].push(linList) }        
+        ListPlan[divSheetId].push(linList)
     }
-    // ... [substitui caracteres especiais]
-
+    // ... [substitui caracteres especiais e Carrega ListPlan]
    
     // ... Sheet de Inputs
     divSheet = el(divSheetId)   ;   nomeSheet = divSheetId+'-Pla'
 
-    // ... parâmetros de Sheets, definidos em Jiboia
-    // calculados
+    // . . . margens
     margT = 0 ; margL = 0 ; margD = 0 ; margB = 0
     if (scrollBars==1)      { margD = 18 ; margB = 18 }
     if (header=='header')   { margT = 20 ; margL = 0 }
+
+    // ... ajusta autosize e parâmetros de div 
+    el(divSheetId).style.boxSizing = 'content-box'
+    el(divSheetId).style.overflow  = 'hidden'
+    if (autoSize=='autosize'){   
+        hSheet      = el(divSheetId).offsetHeight       ;  wSheet      = el(divSheetId).offsetWidth
+        // . . . 
+        xUlt = Cells[divSheetId][1][nColPla]['left'] + Cells[divSheetId][1][nColPla]['width']  +1         + margD
+        if (xUlt<wSheet) { el(divSheetId).style.width = xUlt+'px' }
+        if(LinMod==0) {
+            yUlt = Cells[divSheetId][nLinPla][1]['top']  + Cells[divSheetId][nLinPla][1]['height'] +1 + margT + margB
+            if (yUlt<hSheet) { el(divSheetId).style.height= yUlt+'px' }
+        }
+    }
+    // ...ajusta autosize]
+    
+    // ... parâmetros de Sheets, definidos em Jiboia
+    // calculados
     yTbord    = parseInt(window.getComputedStyle(divSheet).borderTopWidth)  ; yBbord    = parseInt(window.getComputedStyle(divSheet).borderBottomWidth)
     xEbord    = parseInt(window.getComputedStyle(divSheet).borderLeftWidth) ; xDbEord   = parseInt(window.getComputedStyle(divSheet).borderRightWidth)
     hSheet    = divSheet.offsetHeight                                       ; wSheet    = divSheet.offsetWidth
@@ -1840,14 +1965,14 @@ function criaSheet(divSheetId){
 
     nLinSh  = 0 ; nColSh  = 0
     nLinInps = 70 ; nColInps = 30
-
+    
     if(LinMod>0){ 
         nLinSh = Math.floor( hWindow / Cells[divSheetId][lFrz][1]['height'] ) 
         Lmult = []
         for (i = 0; i <= 100; i++){  Lmult.push(i*Cells[divSheetId][lFrz][1]['height']) }
         multH[divSheetId] = Lmult
     }
-
+    
     // guarda
     divSheet.setAttribute('nomeSheet', nomeSheet)
     divSheet.setAttribute('nLinSh', nLinSh)             ; divSheet.setAttribute('nColSh'   , nColSh)
@@ -1860,6 +1985,7 @@ function criaSheet(divSheetId){
     nLinInps    = Number(divSheet.getAttribute('nLinInps')) ; nColInps  = Number(divSheet.getAttribute('nColInps'))
     hWindow     = Number(divSheet.getAttribute('hWindow'))  ; wWindow   = Number(divSheet.getAttribute('wWindow'))
     margL       = Number(divSheet.getAttribute('margL'))    ; margT     = Number(divSheet.getAttribute('margT'))
+    
 
     // ... cria Inputs
     for (i = 1; i <= nLinInps; i++){
@@ -1875,7 +2001,7 @@ function criaSheet(divSheetId){
         }
     }
     // ...[cria Inputs]
-
+    
     // ... cria header
     if (header=='header'){        
         para = document.createElement("DIV")
@@ -1919,7 +2045,7 @@ function criaSheet(divSheetId){
     }
     // ...[cria header]
 
-
+    
     // ... cria barras de scroll
     if (scrollBars==1){
         // . . . horizontal
@@ -1976,15 +2102,7 @@ function criaSheet(divSheetId){
     }
     // ...[cria barras de scroll]
     
-    // ... ajusta autosize
-    if (autoSize=='autosize'){
-        // . . . 
     
-
-
-    }
-    // ...ajusta autosize]
-
     // ...
 }           
 // ----[Cria Sheet baseado em dictFormPla e MatrCellsPla]
@@ -1992,12 +2110,11 @@ function criaSheet(divSheetId){
 // ---- Preenche Sheet a partir de Cells
 function preencheSheet(lplanIni=0, cplanIni=0, divSheetId){
     //  lplanIni, cplanIni - da célula de Cells a aparecer no Top-Left Most
-    // ... cria Sheet em Div, se inexistente
     divSheet = el(divSheetId)
-    if (divSheet.getAttribute('nLinSh')==null){
-        criaSheet(divSheetId)
-    }
-    // ...[cria Sheet em Div, se inexistente]
+
+    // ... cria Sheet em Div, se inexistente
+    if (divSheet.getAttribute('nLinSh')==null){ criaSheet(divSheetId) }
+
     // . . . parâmetros de Planilha
     nLinPla  = Cells[divSheetId][0][0]['nLinPla']       ; nColPla   = Cells[divSheetId][0][0]['nColPla']
     lplan0   = Cells[divSheetId][0][0]['lplan0']        ; cplan0    = Cells[divSheetId][0][0]['cplan0']
@@ -2028,6 +2145,7 @@ function preencheSheet(lplanIni=0, cplanIni=0, divSheetId){
         if(hPint>hWindow){ nLinSh-- ; break}    
     }
     divSheet.setAttribute('nLinSh', nLinSh)
+    
         
     // . . . define nColSh
     wPint = 0 ; nColSh = cFrz-1
@@ -2046,7 +2164,7 @@ function preencheSheet(lplanIni=0, cplanIni=0, divSheetId){
             printCell(i, j, divSheet)
         }
     }
-
+    
     // ... rodapé
     for (i = nLinSh+1; i <= nLinInps; i++){
         for (j = 1; j <= nColInps; j++){
@@ -2088,6 +2206,8 @@ function preencheSheet(lplanIni=0, cplanIni=0, divSheetId){
         }
     }
 
+    // . . . Atualiza header
+    if (header){ elId = divSheetId+'-Pla-headerLinN' ; el(elId).value = ' de '+(nLinPla-lFrz+1) }
 
     // . . . foco inicial
     if(iElC==0){
@@ -2096,7 +2216,7 @@ function preencheSheet(lplanIni=0, cplanIni=0, divSheetId){
         iSheet = iElC - lplan0 + lFrz       ;   jSheet = jElC - cplan0 + cFrz
         el(divSheetId+"-Pla:("+lFrz+","+cFrz+")").focus()
     }
-
+    
     // ....
 }    
 // ----[Preenche Sheet a partir de Cells]
@@ -2148,11 +2268,11 @@ function printCell(i, j, divSheet){   // i, j  em Sheet
 
         // ---- TRAP  DE VALOR
         valor = ''
-        if(iC<lFrz  || LinMod==0){ valor = Cells[divSheetId][iC][jC]['valor'] }
-
+        //if(iC<lFrz  || LinMod==0){ valor = Cells[divSheetId][iC][jC]['valor'] }
+        // ...  arquivo JS
+        try{ valor   = ListPlan[divSheetId][iC][jC-1]} catch{ print(' iC:'+iC)}
         planValorTrap(divSheetId, iC, jC)
         cell.value                      = valor
-        //cell.innerHTML                      = valor
         // ----[TRAP  DE VALOR]
 
         // format Cell
