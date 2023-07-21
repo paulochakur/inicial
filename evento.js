@@ -31,7 +31,7 @@
 
 
 //  -------------- Variáveis Globais -------------
-var ListPlan = {name: [3]}  ,  nLoad = 0 , N = 0 , valCellA = ''
+var ListPlan = {name: [3]}  ,  nLoad = 0 , N = 0
 var fixTop = '0px'
 var habClic = 0 ; var iniValueInput = 0 , iniValueInputA = 0 , finValueInputA = 0
 var toques=0
@@ -97,7 +97,7 @@ var multH = { '1':[0] }
 
 
 var elAnt = ''
-var iEl = 0 , iElA = 0 , jEl = 0 , jElA = 0 , divPlanCurr = 0 , divPlanCurrId = ''
+var iEl = 0 , jEl = 0 , divPlanCurr = 0 , divPlanCurrId = ''
 var iSheetA = 0 , jSheetA = 0 , iSheetSel = 0 , jSheetSel = 0 , iSheetSelA = 0 , jSheetSelA = 0
 var iMenAnt = 0  ; var linMeIdAnt = ''
 
@@ -244,7 +244,7 @@ function iniSys(){
     para = document.createElement("div")
     el('Corpo').appendChild(para)
     para.id     = "console"
-    el("console").style = 'position: fixed; left: 10px; top: 10px; width: 330px; height: 650px; box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: text; border-color: black; border-radius: 1.0%; border-width: 1.0px; border-style: solid; background-color: #d1cb47; opacity: 1; overflow: auto; z-index: 101; white-space: pre-wrap; font-family: Courier, sans-serif; font-weight: bold; font-size: 12.0px; '    
+    el("console").style = 'position: fixed; left: 10px; top: 10px; width: 330px; height: 590px; box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: text; border-color: black; border-radius: 1.0%; border-width: 1.0px; border-style: solid; background-color: #d1cb47; opacity: 1; overflow: auto; z-index: 101; white-space: pre-wrap; font-family: Courier, sans-serif; font-weight: bold; font-size: 12.0px; '    
     // ...[cria div - "console"]
 
     // ... cria div - "proprBox"
@@ -543,8 +543,13 @@ function eventTrap() {
     // -------- CONSOLE
     //if (evento=='keydown') { print(' keyCode: '+keyCode) }
 
+    // ... copia valor de input                 - ctr"insert" ctr"c" 
+    if (evento=='keydown' && (keyCode==67 || keyCode==45) && ctrK && eleTaid!='console') {
+        navigator.clipboard.writeText(eleTa.value)
+    }
+
     // ... copia id                 - ctr"i"
-    if (evento=='keydown' && (keyCode==73 || keyCode==89)) {
+    if (evento=='keydown' && (keyCode==73 || keyCode==89) && ctrK) {
         if (keyCode==73) { nome = eleOnId                   ; navigator.clipboard.writeText(nome) }
         if (keyCode==89) { nome = eleOn.parentElement.id    ; navigator.clipboard.writeText(nome) }
 
@@ -580,7 +585,7 @@ function eventTrap() {
 
 
     // ... toggle CONSOLE visível   - ctr"c"
-    if (evento=='keydown' && keyCode==67 && ctrK) { 
+    if (evento=='keydown' && keyCode==90 && ctrK) { 
         leftAtu = el('console').style.left
         hab=1
         if (leftAtu!='-3000px'  && hab==1){ el('console').style.left = '-3000px' ; el('proprBox').style.left = '-3000px' ;  hab=0 ; proprHab = 0}
@@ -636,7 +641,7 @@ function eventTrap() {
             if (eleTaTy== 'INPUT' && evento=="focusin")  { 
                 inpCur = eleTa  ; inpCurId = eleTaId                       
                 entraInp = 'Got'
-                iniValueInputA = iniValueInput
+                //iniValueInputA = iniValueInput
                 iniValueInput  = eleTa.value
 
                 // . . . toques    
@@ -650,7 +655,6 @@ function eventTrap() {
                 inpCur = ''     ; inpCurId = '****'
                 
                 entraInp = 'Lost'
-                //iniValueInput   = '**'
                 iniValueInputA  = iniValueInput
                 finValueInputA  = inpAnt.value
             }
@@ -667,28 +671,58 @@ function eventTrap() {
 
     // . . . Selection Change
     if( inpCurId!=inpAntId ) {
+        
+        // . . . input de Plan
         inpAntClass='*'                        
-        try{ inpAntClass = inpAnt.className ; inpCurClass = inpCur.className } catch{}
+        inpAntClass = inpAnt.className ; inpCurClass = inpCur.className
         if(inpAntClass==undefined){ inpAntClass='' }
         if(inpCurClass==undefined){ inpCurClass='' }
-        lplan0      = Cells[divSheetId][0][0]['lplan0']         ; cplan0    = Cells[divSheetId][0][0]['cplan0']
-        lFrz        = Cells[divSheetId][0][0]['lFrz']           ; cFrz      = Cells[divSheetId][0][0]['cFrz']    
+        divSheetId = ''
     
         if (inpCurClass.includes("-Pla") ) { 
-            abrePar = inpCurId.indexOf("(") ; fechaPar  = inpCurId.indexOf(")") ; virg = inpCurId.indexOf(",")
+            posPla = inpCurId.indexOf("-Pla") ; abrePar = inpCurId.indexOf("(") ; fechaPar  = inpCurId.indexOf(")") ; virg = inpCurId.indexOf(",")
             iSheetSel  = parseInt(inpCurId.slice(abrePar+1, virg)) ; jSheetSel   = parseInt(inpCurId.slice(virg+1, fechaPar))
+            divSheetId = inpCurId.slice(0, posPla)
+
+            lplan0      = Cells[divSheetId][0][0]['lplan0']         ; cplan0    = Cells[divSheetId][0][0]['cplan0']
+            lFrz        = Cells[divSheetId][0][0]['lFrz']           ; cFrz      = Cells[divSheetId][0][0]['cFrz']    
+    
             iElSel     = iSheetSel          ; jElSel       = jSheetSel
             if(iSheetSel>=lFrz){ iElSel     = iSheetSel + lplan0 - lFrz }
             if(jSheetSel>=cFrz){ jElSel     = jSheetSel + cplan0 - cFrz }
         }
         if (inpAntClass.includes("-Pla")) { 
-            abrePar = inpAntId.indexOf("(") ; fechaPar  = inpAntId.indexOf(")") ; virg = inpAntId.indexOf(",")
+            posPla = inpAntId.indexOf("-Pla") ;  ; abrePar = inpAntId.indexOf("(") ; fechaPar  = inpAntId.indexOf(")") ; virg = inpAntId.indexOf(",")
             iSheetSelA = parseInt(inpAntId.slice(abrePar+1, virg)) ; jSheetSelA  = parseInt(inpAntId.slice(virg+1, fechaPar))
+            divSheetId = inpAntId.slice(0, posPla)
+
+            lplan0      = Cells[divSheetId][0][0]['lplan0']         ; cplan0    = Cells[divSheetId][0][0]['cplan0']
+            lFrz        = Cells[divSheetId][0][0]['lFrz']           ; cFrz      = Cells[divSheetId][0][0]['cFrz']    
+    
             iElSelA    = iSheetSelA       ; jElSelA      = jSheetSelA
             if(iSheetSelA>=lFrz){ iElSelA    = iSheetSelA + lplan0 - lFrz }
             if(jSheetSelA>=cFrz){ jElSelA    = jSheetSelA + cplan0 - cFrz }
         }
+        // . . .[input de Plan]
+
+        valueInput = iniValueInput
         SelectionChange()
+        // -------- atualiza ListPlan - SYST
+        // .  . anterior (lost focus)
+        if(entraInp=='Lost'){ 
+            inpAnt.value                                = finValueInputA
+            try{ ListPlan[divSheetId][iElSelA][jElSelA] = finValueInputA } catch{}
+        }
+        // .  . current (got focus)
+        if(entraInp=='Got'){ 
+            inpCur.value                                = valueInput
+            try{ ListPlan[divSheetId][iElSel][jElSel]   = inpCur.value } catch{}
+        }
+        // --------[atualiza ListPlan - SYST]
+
+
+
+
         inpAntId = inpCurId ; inpAnt = inpCur
         
     }
@@ -932,7 +966,8 @@ function eventTrap() {
             abrePar = eleTaId.indexOf("(") ; fechaPar  = eleTaId.indexOf(")") ; virg = eleTaId.indexOf(",")
             if (abrePar>0){
                 iSheet  = parseInt(eleTaId.slice(abrePar+1, virg)) ; jSheet   = parseInt(eleTaId.slice(virg+1, fechaPar))
-                //if (evento=="click" || evento=="focusin") { keyCodeF = 1 }
+
+
                 if (evento=="focusin") { keyCodeF = 1 }
             }
 
@@ -992,6 +1027,7 @@ function eventTrap() {
                 if (LinMod>0 && iElN>lFrz) { iElNf = lFrz }    
                 mCols = Cells[divSheetId][iElNf][jElN]['mergedCols']
                 mLins = Cells[divSheetId][iElNf][jElN]['mergedLins']
+
                 if (keyCode==13 && enterMove=='')     { jElN = jElN+1                       }       // Enter Dir
                 if (keyCode==13 && enterMove=='baixo'){ iElN = iElN+1                       }       // Enter Baixo
                 if (keyCode==39 && toques==0)         { jElN = jElN+mCols                   }       // Dir
@@ -1065,21 +1101,29 @@ function eventTrap() {
 
 
                 // ----- SelectionChange
-                try{ valCellA = el(elAnt).value } catch{ valCellA = '*' }                
-                valListAR   = ListPlan[divSheetId][iElA][jElA-1]        // valor de entrada da Cell anterior (lost focus)                
-                if(iElA!=iElN || jElA!=jElN){
-                    // . . . atualiza ListPlan da Cell anterior (lost focus)
-                    if (valListAR!=valCellA) { ListPlan[divSheetId][iElA][jElA-1] = valCellA }
+                if (scro>0){ 
+                    iElSel = iElN ; jElSel = jElN ; iElSelA = iEl ; jElSelA = jEl ; inpAnt = elAnt
+                    finValueInputA = el(inpAnt).value
+                    iniValueInput  = ListPlan[divSheetId][iElN][jElN]                                        
+                    // -------- atualiza ListPlan - SYST
+                    // .  . anterior (lost focus)
+                    entraInp = 'Lost'   ; SelectionChange()
+                    inpAnt.value                           = finValueInputA
+                    ListPlan[divSheetId][iElSelA][jElSelA] = finValueInputA
+                    iniValueInputA  = iniValueInput
+                    // .  . current (got focus)
+                    valueInput = iniValueInput
+                    entraInp = 'Got'    ; SelectionChange()
+                    inpCur.value                           = valueInput
+                    ListPlan[divSheetId][iElSel][jElSel]   = inpCur.value
+                    // --------[atualiza ListPlan - SYST]
                 }
                 // -----[SelectionChange]
 
                 //
                 if (scro>0){ 
-                    iElSel = iElN ; jElSel = jElN ; iElSelA = iElA ; jElSelA = jElA
-                    iniValueInputA = valListAR ; finValueInputA = valCellA ; iniValueInput = ListPlan[divSheetId][iElN][jElN-1]
-                    preencheSheet(lplanIni=0, cplanIni=0, divSheetId) 
-                    entraInp = 'Got'
-                    SelectionChange()
+                    preencheSheet(lplanIni=0, cplanIni=0, divSheetId)
+                    toques = 0
                 }
 
                 // ----- foco em próximo
@@ -1124,8 +1168,7 @@ function eventTrap() {
                 // -----[foco em próximo]
                 
                 iSheetA = iSheet    ;   jSheetA = jSheet
-                iElA    = iElN      ;   jElA    = jElN
-                elAnt   = prox      ;   valCellA = el(prox).value
+                elAnt   = prox
             }    
         }
         // ------ movimento em Planilha - Tecla - NOVO FOCO
@@ -1482,7 +1525,7 @@ function criaMenu(divMenuId) {
 
     //divMenu.style.height   = (hTot)+"px"
     //divMenu.style.width    = (wTot)+"px"
-    divMenu.style.zIndex   = (1)
+    divMenu.style.zIndex   = 90
 
     // ---------[prévio]
 
@@ -1539,7 +1582,7 @@ function criaMenu(divMenuId) {
         para.style.width                    = (widthL)+"px"
         para.style.height                   = (hl)+"px"
 
-        para.style.zIndex                   = (1+nivel)
+        para.style.zIndex                   = (90+nivel)
         para.style.padding                  = "0px"
         para.style.paddingTop               = padT+"px"
         para.style.paddingLeft              = padL+"px"
@@ -1553,7 +1596,7 @@ function criaMenu(divMenuId) {
         paraD = document.createElement("div");
         divMenu.appendChild(paraD)
         paraD.id        = divMenuId+ "-Menu(" +i+ ")D"
-        paraD.className     = divMenuId+'-Menu'
+        paraD.className = divMenuId+'-Menu'
         paraD.innerHTML = textoD
 
         rD = parseInt(window.getComputedStyle(para).right)
@@ -1569,7 +1612,7 @@ function criaMenu(divMenuId) {
         paraD.style.width                   = 'auto'
         paraD.style.height                  = (hl)+"px"
 
-        paraD.style.zIndex                  = (1+nivel)
+        paraD.style.zIndex                  = (90+nivel)
         paraD.style.padding                 = "0px"
         paraD.style.paddingTop              = padT+"px"
         paraD.style.paddingRight            = "10px"
@@ -1881,7 +1924,6 @@ function loadDadosJS(divSheetId, arqDados=''){
     scriptEle1 = document.createElement("script")        ; el('Corpo').appendChild(scriptEle1)
     scriptEle1.setAttribute("type", "text/javascript")   ; scriptEle1.setAttribute("async", true)
     scriptEle1.setAttribute("src", "ArquvosJs/"+arqDados)
-    
     if (nLoad==1) { scriptEle1.addEventListener("load", loa1) ;  function loa1() { divLoad = divSheetId; loadListener(divLoad) } }
     if (nLoad==2) { scriptEle1.addEventListener("load", loa2) ;  function loa2() { divLoad = divSheetId; loadListener(divLoad) } }
     scriptEle1.remove()
@@ -1892,6 +1934,7 @@ function loadListener(divLoad){
     ListPlan[divLoad] = Clone
     listS = '' ; Clone = [] ; ListArq = ''
     Cells[divLoad][0][0]['nLinPla'] = ListPlan[divLoad][0][0]
+    
     preencheSheet(lplanIni=0, cplanIni=0, divLoad) 
 }
 // ------[Carrega arquivo de dados]
@@ -1920,14 +1963,13 @@ function criaSheet(divSheetId){
     nLin = nLinPla
     if(LinMod>0) {nLin = lFrz}
     for (i = 1; i <= nLin; i++){
-        linList = []
+        linList = [""]
         for (j = 1; j <= nColPla; j++){
             val     = Cells[divSheetId][i][j]['valor']
             strO    = charSpeci(val)
             Cells[divSheetId][i][j]['valor']    = strO
             linList.push(strO)
         }
-        //if (LinMod==0) { ListPlan[divSheetId].push(linList) }        
         ListPlan[divSheetId].push(linList)
     }
     // ... [substitui caracteres especiais e Carrega ListPlan]
@@ -2270,7 +2312,7 @@ function printCell(i, j, divSheet){   // i, j  em Sheet
         valor = ''
         //if(iC<lFrz  || LinMod==0){ valor = Cells[divSheetId][iC][jC]['valor'] }
         // ...  arquivo JS
-        try{ valor   = ListPlan[divSheetId][iC][jC-1]} catch{ print(' iC:'+iC)}
+        try{ valor   = ListPlan[divSheetId][iC][jC]} catch{}
         planValorTrap(divSheetId, iC, jC)
         cell.value                      = valor
         // ----[TRAP  DE VALOR]
