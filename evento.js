@@ -31,13 +31,12 @@
 
 
 //  -------------- Variáveis Globais -------------
-var ListPlan = {name: [3]}  ,  nLoad = 0 , N = 0
-var fixTop = '0px'
+var nomeProjS = ''  ;   ListPlan = {name: [3]}  ,  nLoad = 0 , N = 0
 var habClic = 0 ; var iniValueInput = 0 , iniValueInputA = 0 , finValueInputA = 0
 var toques=0
 var iCa=0
 var List = [ 4 ]
-var eventoAc = '.......'
+var eventoAc = '<br> .......'
 
 var blocTrap = 0
 
@@ -113,7 +112,6 @@ dictJs[chT] = 456
 
 dictMt["primeira"] = dictJs
 
-eventoAc = '<br> RODA INI  '     +eventoAc ;  el("geralDiv").innerHTML = eventoAc
 */
 
 //  --------------[Variáveis Globais] -------------
@@ -221,24 +219,6 @@ function iniSys(){
     
     // ---------- cria elementos de sistema
 
-        
-    // ... cria divs - "transf1" e "transf2"
-    para = document.createElement("div")
-    el('Corpo').appendChild(para)
-    para.id     = "transf1"
-    el("transf1").style = 'position: fixed; left: 0px; top: 0px; width: 1px; height: 1px; box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: text; border-color: black; border-radius: 0%; border-width: 0.0px; border-style: solid; background-color: #ffff00; opacity: 1; overflow: auto; z-index: 100; white-space: pre-wrap; font-family: Courier, sans-serif; font-weight: bold; font-size: 12.0px; '
-    
-    para = document.createElement("div")
-    el('Corpo').appendChild(para)
-    para.id     = "transf2"
-    el("transf2").style = 'position: fixed; left: 0px; top: 1px; width: 1px; height: 1px; box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: text; border-color: black; border-radius: 0%; border-width: 0.0px; border-style: solid; background-color: #ff0000; opacity: 1; overflow: auto; z-index: 100; white-space: pre-wrap; font-family: Courier, sans-serif; font-weight: bold; font-size: 12.0px; '
-    
-    para = document.createElement("div")
-    el('Corpo').appendChild(para)
-    para.id     = "topJib"
-    el("topJib").style = 'position: fixed; left: 1px; top: 0px; width: 1px; height: 1px; box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: text; border-color: black; border-radius: 0%; border-width: 0.0px; border-style: solid; background-color: rgb(127,127,127); opacity: 1; overflow: auto; z-index: 100; white-space: pre-wrap; font-family: Courier, sans-serif; font-weight: bold; font-size: 12.0px; '
-    // ...[cria divs - "transf1" e "transf2"]
-
 
     // ... cria div - "console"
     para = document.createElement("div")
@@ -318,6 +298,49 @@ function iniSys(){
     }
     // ...[cria div - "proprBox"]
 
+            
+    // ... cria divs - "transf1" e "transf2"
+    para = document.createElement("div")
+    el('Corpo').appendChild(para)
+    para.id     = "transf1"
+    el("transf1").style = 'position: fixed; left: 0px; top: 0px; width: 1px; height: 1px; box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: text; border-color: black; border-radius: 0%; border-width: 0.0px; border-style: solid; background-color: #ffff00; opacity: 1; overflow: auto; z-index: 100; white-space: pre-wrap; font-family: Courier, sans-serif; font-weight: bold; font-size: 12.0px; '
+    
+    para = document.createElement("div")
+    el('Corpo').appendChild(para)
+    para.id     = "transf2"
+    el("transf2").style = 'position: fixed; left: 0px; top: 1px; width: 1px; height: 1px; box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: text; border-color: black; border-radius: 0%; border-width: 0.0px; border-style: solid; background-color: #ff0000; opacity: 1; overflow: auto; z-index: 100; white-space: pre-wrap; font-family: Courier, sans-serif; font-weight: bold; font-size: 12.0px; '
+    
+    para = document.createElement("div")
+    el('Corpo').appendChild(para)
+    para.id     = "topJib"
+    el("topJib").style = 'position: fixed; left: 1px; top: 0px; width: 1px; height: 1px; box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: text; border-color: black; border-radius: 0%; border-width: 0.0px; border-style: solid; background-color: rgb(127,127,127); opacity: 1; overflow: auto; z-index: 100; white-space: pre-wrap; font-family: Courier, sans-serif; font-weight: bold; font-size: 12.0px; '
+  
+    // .  .  . 
+    nomeProjS = el("Corpo").getAttribute('nomeProj')
+    tamNom = nomeProjS.length - 1
+    for (i=0; i<=tamNom+1 ; i++) {
+        
+        para = document.createElement("div")
+        el('Corpo').appendChild(para)
+        para.id             = 'divPoj'+i
+        para.style          = 'position: fixed; left: 0px; top: 0px; width: 1px; height: 1px; box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: text; border-color: black; border-radius: 0%; border-width: 0.0px; border-style: solid; background-color: #ff0000; opacity: 1; overflow: auto; z-index: 100; white-space: pre-wrap; font-family: Courier, sans-serif; font-weight: bold; font-size: 12.0px; '    
+        para.style.left     = (2+i)+'px'
+        para.style.zIndex   = 140
+
+        if (i==0)  { corS    = 'rgb('+61+','+58+','+tamNom+')'}
+        if (i>0)   { carI = nomeProjS.substr(i-1, 1) ; asc = carI.charCodeAt() ; corS    = 'rgb('+asc+',10,0)'}
+       
+        // .
+        
+        para.style.backgroundColor = corS
+    }
+    // .  .  .[]
+
+    // ...[cria divs - "transf1" e "transf2"]
+
+
+
+
     // ... cria div cursor - "ZoomDivCur"
     para = document.createElement("div")
     el('Corpo').appendChild(para)
@@ -385,7 +408,7 @@ function iniSys(){
     }    
     */
     // ...[set atributos definidos em TXT]
-
+    
         
     // ........ abre Planilhas
     allEl = document.getElementsByTagName("div")  ;  nDivs = allEl.length
@@ -515,12 +538,14 @@ function eventTrap() {
     keyCode = event.keyCode         ; ctrK = event.ctrlKey
 
 
-    // ... desls para Jiboia
+    // ... escreve para Jiboia
     //if(evento=='click'){ navigator.clipboard.writeText("("+xPs+','+yPs+')') }
+    
     // . . xPs
     x1 = parseInt(xPs/255) ; x2 = parseInt(xPs - x1*255) ; el("transf1").style.backgroundColor='rgb('+x1+','+x2+','+0+')'
     y1 = parseInt(yPs/255) ; y2 = parseInt(yPs - y1*255) ; el("transf2").style.backgroundColor='rgb('+y1+','+y2+','+0+')'
     el("topJib").style.backgroundColor='rgb(127,127,127)'
+    // ...[escreve para Jiboia]
 
 
     // .... inibe menu do browser em rightClick
@@ -1642,11 +1667,12 @@ function icluiTxtemDivWord(divSheetId) {
     formGeral   = textForm[0]
     nParas      = formGeral.nParas  ; nShapes = formGeral.nShapes
     escaTot     = formGeral.escDiv
-    margEsq     = formGeral.margEsq ; margDir = formGeral.margDir
-    margSup     = formGeral.margSup ; margInf = formGeral.margInf
 
-    margIntSup = formGeral.margIntS            ; margIntInf = formGeral.margIntI
-    margIntEsq = formGeral.margIntE            ; margIntDir = formGeral.margIntD
+    margEsq     = formGeral.margEsq     ; margDir       = formGeral.margDir
+    margSup     = formGeral.margSup     ; margInf       = formGeral.margInf
+
+    margIntSup  = formGeral.margIntS    ; margIntInf    = formGeral.margIntI
+    margIntEsq  = formGeral.margIntE    ; margIntDir    = formGeral.margIntD
     
     espeBor     = formGeral.espBord ; corBor  = formGeral.corBord
     
@@ -1660,17 +1686,19 @@ function icluiTxtemDivWord(divSheetId) {
     divText.style.zIndex    = 30
 
     divText.style = 'position: absolute; top: 0px; left: 0px; width: 50px; height: auto; box-sizing: content-box; margin: 0.0px; padding: 0px; padding-left: 0.0px; cursor: text; border-color: red;  border-width: 0.0px; border-style: solid; background-color: light blue; opacity: 1; z-index: 32; font-family: Courier New, sans-serif; font-weight: bold; font-size: 10.0px; text-indent: 0.0px; text-shadow: 0.0px 0.0px; text-align: center; overflow: hidden; white-space: pre-wrap; '
+    
     divText.style.marginTop     = margSup+'px'
     divText.style.marginLeft    = margEsq+'px'
-    divText.style.paddingTop    = margIntSup+'px'
-    divText.style.paddinBottom  = margIntInf+'px'
+
+    //divText.style.paddingTop    = margIntSup+'px'
+    divText.style.paddingBottom = margIntInf+'px'
 
     divText.style.borderWidth = espeBor+'px'
     divText.style.borderColor = corBor
     // ...[cria div de base '-texto ']
 
     // ... cria divs de cima para cada parágrafo
-    yAcu0 = 0 ; yAcu = yAcu0 ; iDpar = 1
+    yAcu0 = margIntSup ; yAcu = yAcu0 ; iDpar = 1
     for(ipar=1; ipar<nParas+nShapes ; ipar++){
         // ... lê texto e formatação de parágrafo
         textPar = textForm[ipar*2]
@@ -1812,12 +1840,12 @@ function icluiTxtemDivWord(divSheetId) {
     divText.style.width  = wDivTex+'px'
 
     // .... ajusta scale
-    wOri = divText.getBoundingClientRect().width  ;   hOri = divText.getBoundingClientRect().height // textBox Externo
-    wD = divSheet.clientWidth                     ;   hD = divSheet.clientHeight    // Div Int. desconta Scrolls
+    wOri = divText.getBoundingClientRect().width  ;  hOri = divText.getBoundingClientRect().height // textBox Externo
+    wD   = divSheet.clientWidth                   ;  hD   = divSheet.clientHeight    // Div Int. desconta Scrolls
 
     escX = escaTot  ; escY = escaTot    
-    if (escaTot=='fitw') { escX = (wD-margDir-margEsq)/(wOri) ; escY = 1}
-    if (escaTot=='fith') { escY = (hD-margSup-margInf)/(hOri) ; escX = 1 }
+    if (escaTot=='fitw') { escX = (wD-margDir-margEsq)/(wOri) ; escY = escX}
+    if (escaTot=='fith') { escY = (hD-margSup-margInf)/(hOri) ; escX = escY }
     if (escaTot=='fit')  { 
         escY = (hD-margSup-margInf)/(hOri) 
         // . . . aplica escY e mede novamente wD
@@ -1918,12 +1946,13 @@ function largSroll(ele){
 
 // ------ Carrega arquivo de dados
 function loadDadosJS(divSheetId, arqDados=''){
+    nomeProjS = el("Corpo").getAttribute('nomeProj')
     nLoad = nLoad + 1
     if (arqDados=='') { arqDados = Cells[divSheetId][0][0]['arqDados'] }
     // ........ Load arquivo de dados JS
     scriptEle1 = document.createElement("script")        ; el('Corpo').appendChild(scriptEle1)
     scriptEle1.setAttribute("type", "text/javascript")   ; scriptEle1.setAttribute("async", true)
-    scriptEle1.setAttribute("src", "ArquvosJs/"+arqDados)
+    scriptEle1.setAttribute("src", nomeProjS+"/ArquvosJs/"+arqDados)
     if (nLoad==1) { scriptEle1.addEventListener("load", loa1) ;  function loa1() { divLoad = divSheetId; loadListener(divLoad) } }
     if (nLoad==2) { scriptEle1.addEventListener("load", loa2) ;  function loa2() { divLoad = divSheetId; loadListener(divLoad) } }
     scriptEle1.remove()
