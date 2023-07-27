@@ -31,6 +31,7 @@
 
 
 //  -------------- Variáveis Globais -------------
+//var module = require('fs')
 var nomeProjS = ''  ;   ListPlan = {name: [3]}  ,  nLoad = 0 , N = 0
 var habClic = 0 ; var iniValueInput = 0 , iniValueInputA = 0 , finValueInputA = 0
 var toques=0
