@@ -1164,12 +1164,10 @@ function eventTrap() {
                     mergedLinsA  = Cells[divSheetId][iElNf][jElN]['mergedLins']
                     el(elAnt).style.zIndex = '2'
                     if(mergedColsA!=1 || mergedLinsA!=1){ el(elAnt).style.zIndex = '1' }
-            
                     if (cursor!='outline'){ desBordas(iSheetA, jSheetA, el(elAnt)) }
                 }
                 
                 el(prox).style.zIndex = '3'
-                
                 if (cursor!='outline')  { el(prox).style.borderColor = cursor ; el(prox).style.borderWidth = '2px'; el(prox).style.outlineWidth      = "0px" }
                 if (cursor=='outline')  { el(prox).style.outlineWidth      = "1px" }
 
@@ -2369,7 +2367,11 @@ function printCell(i, j, divSheet){   // i, j  em Sheet
 // ----- Desenha Bordas
 function desBordas(iCf, jC, eleBord, fomBord=''){
     // bordas
-    if (iCf>0)  { bordas      = Cells[divSheetId][iCf][jC]['bordas'] }
+    if (iCf>0)  {
+        lFrz        = Cells[divSheetId][0][0]['lFrz'] ; LinMod    = Cells[divSheetId][0][0]['LinMod']
+        if(iCf>=lFrz && LinMod>0)   { iCf = lFrz }        
+        bordas      = Cells[divSheetId][iCf][jC]['bordas'] 
+    }
     if (iCf==0) { bordas      = fomBord }
 
     // .... corrige bordas
