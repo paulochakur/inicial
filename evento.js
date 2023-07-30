@@ -2010,20 +2010,9 @@ function criaSheet(divSheetId){
     if (scrollBars==1)      { margD = 18 ; margB = 18 }
     if (header=='header')   { margT = 20 ; margL = 0 }
 
-    // ... ajusta autosize e parâmetros de div 
+    // ... ajusta parâmetros de div 
     el(divSheetId).style.boxSizing = 'content-box'
     el(divSheetId).style.overflow  = 'hidden'
-    if (autoSize=='autosize'){   
-        hSheet      = el(divSheetId).offsetHeight       ;  wSheet      = el(divSheetId).offsetWidth
-        // . . . 
-        xUlt = Cells[divSheetId][1][nColPla]['left'] + Cells[divSheetId][1][nColPla]['width']  +1         + margD
-        if (xUlt<wSheet) { el(divSheetId).style.width = xUlt+'px' }
-        if(LinMod==0) {
-            yUlt = Cells[divSheetId][nLinPla][1]['top']  + Cells[divSheetId][nLinPla][1]['height'] +1 + margT + margB
-            if (yUlt<hSheet) { el(divSheetId).style.height= yUlt+'px' }
-        }
-    }
-    // ...ajusta autosize]
     
     // ... parâmetros de Sheets, definidos em Jiboia
     // calculados
@@ -2192,6 +2181,7 @@ function preencheSheet(lplanIni=0, cplanIni=0, divSheetId){
     iElC     = Cells[divSheetId][0][0]['iEl']           ; jElC      = Cells[divSheetId][0][0]['jEl']             // foco atual em Pla
     cursor   = Cells[divSheetId][0][0]['cursor']        ; enterMove = Cells[divSheetId][0][0]['enterMove']   ;   scrollBars = Cells[divSheetId][0][0]['scrollBars'] 
     header   = Cells[divSheetId][0][0]['header']        ; LinMod    = Cells[divSheetId][0][0]['LinMod']
+    autoSize = Cells[divSheetId][0][0]['autosize']
 
     if (lplanIni>=lFrz){ lplan0 = lplanIni}
     if (cplanIni>=cFrz){ cplan0 = cplanIni}
@@ -2224,6 +2214,18 @@ function preencheSheet(lplanIni=0, cplanIni=0, divSheetId){
         if(wPint>wWindow){ nColSh-- ; break}    
     }
     divSheet.setAttribute('nColSh', nColSh)
+
+    // . . . ajusta autosize
+    if(autoSize=='autosize'){
+        xUlt = Cells[divSheetId][1][nColPla]['left'] + Cells[divSheetId][1][nColPla]['width']  +1         + margD
+        if(LinMod==0) { yUlt = Cells[divSheetId][nLinPla][1]['top']  + Cells[divSheetId][nLinPla][1]['height'] +1 + margT + margB }
+        if(LinMod!=0) { yUlt = Cells[divSheetId][lFrz][1]['top']  + Cells[divSheetId][lFrz][1]['height']*(nLinSh-1) +1 + margT + margB }
+
+        if (xUlt<wSheet) { el(divSheetId).style.width = xUlt+'px' }
+        if (yUlt<hSheet) { el(divSheetId).style.height= yUlt+'px' }
+    }
+    // . . .[ajusta autosize]
+
 
     // ----
 
