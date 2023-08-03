@@ -1623,8 +1623,8 @@ function criaMenu(divMenuId) {
         desBordas(0, 0, para, brd)
         // . . menu tipo "aba"    border-bottom-left-radius
         if(orient=='aba'){ 
-            para.style.borderTopLeftRadius      = (hl/1.3)+"px"
-            para.style.borderTopRightRadius     = (hl/1.3)+"px"
+            para.style.borderTopLeftRadius      = (hl/1.5)+"px"
+            para.style.borderTopRightRadius     = (hl/1.5)+"px"
         }
 
 
