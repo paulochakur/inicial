@@ -962,7 +962,7 @@ function eventTrap() {
                     // ... marca submenu Open / Closed
                     habShow = 0 ; IsubOpen = Menus[divMenuId][0][20]
                     if (orient=='vertical'   && subF>0) { IsubOpen[subF] = -IsubOpen[subF] ; habShow = 1 }            
-                    if (orient=='horizontal' || orient=='pop') { 
+                    if (orient=='horizontal' || orient=='pop' || orient=='aba') { 
                         habShow = 1
                         jaAber = IsubOpen[subF]
                         // ... fecha sub 
@@ -1292,10 +1292,10 @@ function showMenu(divMenuId, recolhe=0){
         retorna   = 0
         divMenuId = divMenuAti.id
         formMenu  = Menus[divMenuId] ; orient   = formMenu[0][2]   ; IsubOpen = formMenu[0][20] ; nLins    = formMenu[0][0]
-        if (orient=='horizontal')   { IsubOpen   = [1, 1, -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]}
-        if (orient=='pop')          { IsubOpen   = [1,-1, -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]}
+        if (orient=='horizontal' || orient=='aba')  { IsubOpen   = [1, 1, -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]}
+        if (orient=='pop')                          { IsubOpen   = [1,-1, -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]}
         formMenu[0][20] = IsubOpen ; divMenuAti=''
-        if (orient=='vertical')     { retorna   = 1}
+        if (orient=='vertical')                     { retorna   = 1}
     }
 
     if(retorna==1){ return }
@@ -1318,7 +1318,7 @@ function showMenu(divMenuId, recolhe=0){
         if ( (subOpen>0 && paiOpen>0 && avoOpen>0)  ) { showVan =  1 }
         if ( (subOpen<0 || paiOpen<0 || avoOpen<0)  ) { showVan = -1 }
         
-        if (orient=='horizontal' || orient=='pop') {
+        if (orient=='horizontal' || orient=='pop' || orient=='aba') {
             // . . vanish
             if (showVan==-1 && topAtu>=0) { lin.style.top  = (topAtu-10000)+'px' ; linD.style.top  = (topAtu-10000)+'px'}
             // . . show
@@ -1349,18 +1349,17 @@ function criaMenu(divMenuId) {
     widthL1 = 250
 
     formMenu        = Menus[divMenuId]
-    formGer         = formMenu[0]        ; nLins = formGer[0] ; orient = formGer[2] ; autosize = formGer[4]
+    formGer         = formMenu[0]
+    nLins = formGer[0] ; orient = formGer[2] ; autosize = formGer[5] ; fitDiv = formGer[4]
   
     // ... cria div para popMenu
     if (orient=='pop') {
-        
         para = document.createElement("div")
         el('Corpo').appendChild(para);
         para.id     = divMenuId
         para.className  = divMenuId+'-Menu'
         para.style  = "position: absolute; box-sizing: border-box; border-width: 0px; border-color: black; outline-width: 0; background-color: red "
         popMenuAti      = para
-
     }
     // ...[cria div para popMenu]
 
@@ -1374,6 +1373,10 @@ function criaMenu(divMenuId) {
     nivel = 0 ; nivelA = -1 ; iSub = -1 ; iSubLa = -1 ; topRel = 0 ; iSubN = 0 ; topAcu = 0 ; popMenu = 1
     formMenu[0][9]  = 0   // iSub da linha 0
     formMenu[0][11] = 0   // pai da linha 0
+
+    
+    if ((orient=='horizontal'|| orient=='aba') && fitDiv=='fitDiv') { formMenu[1][5][2] = el(divMenuId).offsetHeight }
+
     for (i = 1; i <= nLins; i++){
         nivel   = formMenu[i][1] ;   opLin  = formMenu[i][0] ;   opLinA  = formMenu[i-1][0]
         if(nivel==1){ popMenu = 0 }
@@ -1405,8 +1408,9 @@ function criaMenu(divMenuId) {
         formMenu[i][11]  = paiIsub[iSub]                // número da linha pai do submenu a que pertence a linha
 
         // ...... Geometria
+    
         // . . horizontal
-        if (orient=='horizontal' || orient=='pop' ) {
+        if (orient=='horizontal' || orient=='pop' || orient=='aba' ) {
             
             heighLi = hl
             if (nivel==1 && i>1) { heighLi = formMenu[1][16] }  // height de cabeçalho horizontal = primeiro
@@ -1465,7 +1469,8 @@ function criaMenu(divMenuId) {
     // ---------------[cria subMenus]
 
     // ............................ width e left em 'horizontal'
-    if(orient=='horizontal' || orient=='pop'){
+    if(orient=='horizontal' || orient=='pop' || orient=='aba'){
+
        // .... width máxima de cada Sub
         WidtRel = [0,0,0,0,0,0,0,0,0,0,0,0,0]
         iSub   = -1
@@ -1585,7 +1590,7 @@ function criaMenu(divMenuId) {
         // ... form lin
         formT   = formMenu[i][4]    ; cF = formT[0] ; sF     = formT[1] ; nF = formT[5]
         formD   = formMenu[i][5]    ; bc = formD[0] ; anchor = formD[1] 
-        padT    = (hl-sF)/2
+        padT    = (hl/2-(sF*1.2)/2)
 
         // . . . formata divs de menu
         // .. Esq
@@ -1614,7 +1619,14 @@ function criaMenu(divMenuId) {
         para.style.textIndent               = '0px'
         para.style.textDecorationThickness  = '1px'
         para.style.backgroundColor          = bc
+        
         desBordas(0, 0, para, brd)
+        // . . menu tipo "aba"    border-bottom-left-radius
+        if(orient=='aba'){ 
+            para.style.borderTopLeftRadius      = (hl/1.3)+"px"
+            para.style.borderTopRightRadius     = (hl/1.3)+"px"
+        }
+
 
         // .. Dir
         paraD = document.createElement("div");
