@@ -580,33 +580,35 @@ function eventTrap() {
         if (keyCode==89) { nome = eleOn.parentElement.id    ; navigator.clipboard.writeText(nome) }
 
         // . . . CSS properties
-        print('')
-        print('...............')
-        LproprShow = ['top', 'left', 'width','height', 'color', 'backgroundColor', 'textOverflow', 'fontStyle', 'fontSize', 'fontFamily', 'fontWeight', 'white-space', 'text-align', 'padding', 'padding-left']
-        comp = getComputedStyle(el(nome))
-        for (i=LproprShow.length-1; i>=0 ; i--) {
-            kPropr  = LproprShow[i]
-            pro     = comp[kPropr]
-            po      = '                   '. slice(0, 15-kPropr.length) +  kPropr
-            print(' - '+po+' : '+pro)
-        }
-        print(' CSS Properties: ')
-        print('')
-        // . . . HTML atrributes
-        print('')
-        attrs = el(nome).getAttributeNames()
-        for (i=attrs.length-1; i>=0; i--) {
-            nomeAtt = attrs[i] ; no = '                   '. slice(0, 20-nomeAtt.length) +  nomeAtt
-            if (nomeAtt!='id' && nomeAtt!='style') { print(no+': '+el(nome).getAttribute(nomeAtt)) }
-        }
-        //if(el(nome).className!='') { print(' Class : '+ el(nome).className) }
-        print(' HTML atrributes: ')
-        print('')
-        print(' Parent : '+ el(nome).parentElement.id)
-        print(' Tipo   : '+ el(nome).tagName)
-        print(' Id     : '+ nome)
-        print('...............')
-        print('')
+        try{
+            print('')
+            print('...............')
+            LproprShow = ['top', 'left', 'width','height', 'color', 'backgroundColor', 'textOverflow', 'fontStyle', 'fontSize', 'fontFamily', 'fontWeight', 'white-space', 'text-align', 'padding', 'padding-left']
+            comp = getComputedStyle(el(nome))
+            for (i=LproprShow.length-1; i>=0 ; i--) {
+                kPropr  = LproprShow[i]
+                pro     = comp[kPropr]
+                po      = '                   '. slice(0, 15-kPropr.length) +  kPropr
+                print(' - '+po+' : '+pro)
+            }
+            print(' CSS Properties: ')
+            print('')
+            // . . . HTML atrributes
+            print('')
+            attrs = el(nome).getAttributeNames()
+            for (i=attrs.length-1; i>=0; i--) {
+                nomeAtt = attrs[i] ; no = '                   '. slice(0, 20-nomeAtt.length) +  nomeAtt
+                if (nomeAtt!='id' && nomeAtt!='style') { print(no+': '+el(nome).getAttribute(nomeAtt)) }
+            }
+            //if(el(nome).className!='') { print(' Class : '+ el(nome).className) }
+            print(' HTML atrributes: ')
+            print('')
+            print(' Parent : '+ el(nome).parentElement.id)
+            print(' Tipo   : '+ el(nome).tagName)
+            print(' Id     : '+ nome)
+            print('...............')
+            print('')
+        } catch{}
     }
 
 
