@@ -556,7 +556,7 @@ function eventTrap() {
     //event.stopPropagation()
     /*
     if(evento=='dblclick'){ 
-        cc = event.cancelable    
+        cc = event.cancelable
         print('cc: '+cc)
         event.preventDefault()     
     }
@@ -2199,6 +2199,18 @@ function preencheSheet(lplanIni=0, cplanIni=0, divSheetId){
 
     if (lplanIni>=lFrz){ lplan0 = lplanIni}
     if (cplanIni>=cFrz){ cplan0 = cplanIni}
+    
+    try{ 
+        lplan0Max = nLinPla-nLinSh+lFrz ; cplan0Max = nColPla-nColSh+cFrz
+        if (lplan0>lplan0Max && lplan0Max>0){ lplan0 = lplan0Max}
+        if (cplan0>cplan0Max && cplan0Max>0){ cplan0 = cplan0Max}
+        
+        Cells[divSheetId][0][0]['lplan0'] = lplan0  ; Cells[divSheetId][0][0]['cplan0'] = cplan0
+        el('div-452').innerHTML = ' -- lplan0:'+lplan0+' nLinSh:'+nLinSh+' lFrz:'+lFrz+'   nLinPla:'+nLinPla +' -- lplan0N:'+lplan0N 
+
+    } catch{}
+
+   
     Cells[divSheetId][0][0]['lplan0'] = lplan0  ; Cells[divSheetId][0][0]['cplan0'] = cplan0
     lplanIni = lplan0                           ; cplanIni = cplan0
 
@@ -2219,8 +2231,7 @@ function preencheSheet(lplanIni=0, cplanIni=0, divSheetId){
         if(hPint>hWindow){ nLinSh-- ; break}    
     }
     divSheet.setAttribute('nLinSh', nLinSh)
-    
-        
+            
     // . . . define nColSh
     wPint = 0 ; nColSh = cFrz-1
     for (i = cplan0; i <= nColPla; i++){
@@ -2228,6 +2239,7 @@ function preencheSheet(lplanIni=0, cplanIni=0, divSheetId){
         if(wPint>wWindow){ nColSh-- ; break}    
     }
     divSheet.setAttribute('nColSh', nColSh)
+
 
     // . . . ajusta autosize
     if(autoSize=='autosize'){
@@ -2356,7 +2368,8 @@ function printCell(i, j, divSheet){   // i, j  em Sheet
         valor = ''
         //if(iC<lFrz  || LinMod==0){ valor = Cells[divSheetId][iC][jC]['valor'] }
         // ...  arquivo JS
-        try{ valor   = ListPlan[divSheetId][iC][jC]} catch{}
+        try{ valor   = ListPlan[divSheetId][iC][jC] } 
+        catch{}
         planValorTrap(divSheetId, iC, jC)
         cell.value                      = valor
         // ----[TRAP  DE VALOR]
