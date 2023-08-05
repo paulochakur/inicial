@@ -387,19 +387,20 @@
 
             // . . . Scroll           
             if(evento=='touchstart'){ lastX = event.touches[0].clientX  ; lastY = event.touches[0].clientY  ;   }
-            if (evento=='wheel')        { delX = event.deltaX                     ; delY = event.deltaY }
-
+            if (evento=='wheel')    { delX = event.deltaX                     ; delY = event.deltaY }
             if (evento=='touchmove')    { 
-                try{   
+                // try{   
                     delX = -event.touches[0].clientX + lastX ; delY = -event.touches[0].clientY + lastY 
-                }
-                catch{ delX = 0 ; delY = 0 }
+                //}
+                //catch{ delX = 0 ; delY = 0 }
             }
 
-
-            // . . . scroll de Pla
+            // . . . scroll de page fundo
             if (eleOnId.includes("-Pla")){ el('divPage').style.overflow= 'hidden' }
             if (!eleOnId.includes("-Pla")){ el('divPage').style.overflow= 'scroll' }
+            // . . .[scroll de page fundo]
+
+            // . . . scroll de Pla
             if(evento=='wheel' && eleFoId.includes("-Pla") && eleOnId.includes("-Pla")){
                 
                 nomeSheet   = eleFoClass
@@ -412,14 +413,12 @@
             
             if(evento=='wheel' && !(eleFoId.includes("-Pla") && eleOnId.includes("-Pla")) ){
                 
-                if(evento=='touchmove'){ event.preventDefault() }
+                //if(evento=='touchmove'){ event.preventDefault() }
                 //eleScr = eleTa
                 eleScr = el('divSelecionados')
                 eleScrPar = eleScr.parentElement
                 limT = parseInt(window.getComputedStyle(eleScrPar).height) - parseInt(window.getComputedStyle(eleScr).height)
 
-                
-                
                 novoY = parseInt(window.getComputedStyle(eleScr).top)   -delY
                 novoX = parseInt(window.getComputedStyle(eleScr).left)  -delX
 
