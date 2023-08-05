@@ -382,23 +382,24 @@
             */
            
 
-            try{ el('div-452').innerHTML = (' evento:'+evento+'   yMw:'+event.touches[0].clientX) } catch{}
+            //try{ el('div-452').innerHTML = (' evento:'+evento+'   yMw:'+event.touches[0].clientX) } catch{}
 
 
             // . . . Scroll
-            if(evento=='wheel'){
+            if(evento=='tochstart'){ lastX = event.touches[0].clientX  ; lastY = event.touches[0].clientY  ;   }
                 
                 
-            }
-
-            if(evento=='wheel' && eleTaId=="divSelecionados"){
-                eleScr = eleTa ; eleScrPar = eleScr.parentElement
+            if(evento=='wheel' || evento=='touchmove'){
+                //eleScr = eleTa
+                eleScr = el('divSelecionados')
+                eleScrPar = eleScr.parentElement
                 limT = parseInt(window.getComputedStyle(eleScrPar).height) - parseInt(window.getComputedStyle(eleScr).height)
 
-                delY = event.deltaY   ;  delX = event.deltaX
-                print('  delY:'+delY)
-                novoY = parseInt(window.getComputedStyle(eleScr).top)-delY
-                novoX = parseInt(window.getComputedStyle(eleScr).left)-delX
+                if (evento=='wheel')        { delX = event.deltaX                     ; delY = event.deltaY }
+                if (evento=='touchmove')    { delX = event.touches[0].clientX - lastX ; delY = event.touches[0].clientY - lastY }
+                
+                novoY = parseInt(window.getComputedStyle(eleScr).top)   -delY
+                novoX = parseInt(window.getComputedStyle(eleScr).left)  -delX
 
                 if (novoY>0){ novoY = 0} ; if (novoX>0){ novoX = 0}
                 if (novoY<limT){ novoY = limT}
@@ -406,8 +407,6 @@
                 eleScr.style.top = (novoY)+'px'  ;  eleScr.style.left = (novoX)+'px'
 
                 el('inputTop').focus()
-
-                print('------- ')
 
             }
 
