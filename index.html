@@ -382,7 +382,7 @@
             */
            
 
-            if (event.clientY!=undefined) { el('div-452').innerHTML = (' evento:'+evento+'   yMw:'+event.clientY) }
+            try{ el('div-452').innerHTML = (' evento:'+evento+'   yMw:'+event.touches[0].clientX) } catch{}
 
 
             // . . . Scroll
