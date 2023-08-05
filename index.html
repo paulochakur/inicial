@@ -397,12 +397,14 @@
 
                 if (evento=='wheel')        { delX = event.deltaX                     ; delY = event.deltaY }
                 if (evento=='touchmove')    { 
-                    try{   delX = -event.touches[0].clientX + lastX ; delY = -event.touches[0].clientY + lastY 
-                        el('div-452').innerHTML = (' evento:'+evento+'   delY:'+delY)
+                    try{   
+                        delX = -event.touches[0].clientX + lastX ; delY = -event.touches[0].clientY + lastY 
+                        
                     }
                     catch{ delX = 0 ; delY = 0 }
                 }
                 
+                el('div-452').innerHTML = (' evento:'+evento+'   delY:'+delY)
                 novoY = parseInt(window.getComputedStyle(eleScr).top)   -delY
                 novoX = parseInt(window.getComputedStyle(eleScr).left)  -delX
 
