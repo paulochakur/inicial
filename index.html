@@ -396,7 +396,10 @@
                 limT = parseInt(window.getComputedStyle(eleScrPar).height) - parseInt(window.getComputedStyle(eleScr).height)
 
                 if (evento=='wheel')        { delX = event.deltaX                     ; delY = event.deltaY }
-                if (evento=='touchmove')    { delX = event.touches[0].clientX - lastX ; delY = event.touches[0].clientY - lastY }
+                if (evento=='touchmove')    { 
+                    try{   delX = event.touches[0].clientX - lastX ; delY = event.touches[0].clientY - lastY }
+                    catch{ delX = 0 ; delY = 0 }
+                }
                 
                 novoY = parseInt(window.getComputedStyle(eleScr).top)   -delY
                 novoX = parseInt(window.getComputedStyle(eleScr).left)  -delX
