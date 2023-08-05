@@ -390,6 +390,7 @@
                 
                 
             if(evento=='wheel' || evento=='touchmove'){
+                if(evento=='touchmove'){ event.preventDefault() }
                 //eleScr = eleTa
                 eleScr = el('divSelecionados')
                 eleScrPar = eleScr.parentElement
