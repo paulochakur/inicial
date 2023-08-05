@@ -403,9 +403,11 @@
                         
                     }
                     catch{ delX = 0 ; delY = 0 }
+                    cc = event.cancelable
+                    el('div-452').innerHTML = (' evento:'+evento+'   delY:'+delY+' cc:'+cc)
                 }
                 
-                el('div-452').innerHTML = (' evento:'+evento+'   delY:'+delY)
+                
                 novoY = parseInt(window.getComputedStyle(eleScr).top)   -delY
                 novoX = parseInt(window.getComputedStyle(eleScr).left)  -delX
 
