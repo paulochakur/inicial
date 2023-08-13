@@ -401,7 +401,7 @@ function iniSys(){
     Wh = window.innerHeight         ; Ww = window.innerWidth
     if(Ww<1000){mobFlag = 1 }
 
-    // . . . monta dictCoods - originais e aplica xl e yt
+    // . . . monta dictCoods - originais e aplica xl e yt e corrige overflow para mob
     allEl = document.getElementsByTagName("div")  ;  nDivs = allEl.length
     Ldivs = []  ; for (i = 0; i <= nDivs-1; i++){ Ldivs.push(allEl[i].id) }
     // . . . "iw"
@@ -417,6 +417,9 @@ function iniSys(){
                 xl = el(divId).getAttribute("xl")   ; yt = el(divId).getAttribute("yt")
                 if (yt!=null){ el(divId).style.top  = (tDiv-yt)+'px' }
                 if (xl!=null){ el(divId).style.left = (lDiv-xl)+'px' }
+
+                scr = el(divId).getAttribute("scroll")
+                if (scr=='roll' && mobFlag==1){ el(divId).style.overflow = 'scroll'  }
 
             }
         }catch{}
