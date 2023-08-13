@@ -415,7 +415,7 @@
 
             // . . . scroll de page fundo            
             //if(evento=='wheel' && !(eleFoId.includes("-Pla") && eleOnId.includes("-Pla") && eleTa.getAttribute('scroll')=='roll') ){
-            if(evento=='wheel' && !(eleFoId.includes("-Pla"))  && eleTa.parentElement.getAttribute('scroll')=='roll' ){
+            if((evento=='wheel' || evento=='touchstart') && !(eleFoId.includes("-Pla"))  && eleTa.parentElement.getAttribute('scroll')=='roll' ){
                 
                 eleScr = eleTa
                 //eleScr = el('divSelecionados')
