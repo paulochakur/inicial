@@ -414,10 +414,12 @@ function iniSys(){
                 lDiv    = parseInt(window.getComputedStyle(el(divId)).left)
                 dictCoods[iw] = [tDiv, lDiv]
 
+                // . . . aplica xl e yt - somente deskTop, em desenvovimento
                 xl = el(divId).getAttribute("xl")   ; yt = el(divId).getAttribute("yt")
-                if (yt!=null){ el(divId).style.top  = (tDiv-yt)+'px' }
-                if (xl!=null){ el(divId).style.left = (lDiv-xl)+'px' }
+                if (yt!=null && mobFlag==0){ el(divId).style.top  = (tDiv-yt)+'px' }
+                if (xl!=null && mobFlag==0){ el(divId).style.left = (lDiv-xl)+'px' }
 
+                // . . . somente mob
                 scr = el(divId).getAttribute("scroll")
                 if (scr=='roll' && mobFlag==1){ el(divId).style.overflow = 'scroll'  }
             }
