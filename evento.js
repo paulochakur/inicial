@@ -397,7 +397,7 @@ function iniSys(){
     // ...[set atributos definidos em TXT]
 
 
-    // . . . monta dictCoods - originais
+    // . . . monta dictCoods - originais e aplica xl e yt
     allEl = document.getElementsByTagName("div")  ;  nDivs = allEl.length
     Ldivs = []  ; for (i = 0; i <= nDivs-1; i++){ Ldivs.push(allEl[i].id) }
     // . . . "iw"
@@ -409,7 +409,12 @@ function iniSys(){
                 tDiv    = parseInt(window.getComputedStyle(el(divId)).top)
                 lDiv    = parseInt(window.getComputedStyle(el(divId)).left)
                 dictCoods[iw] = [tDiv, lDiv]
-                print('  dictCoods[iw]:'+dictCoods[iw])
+
+                xl = el(divId).getAttribute("xl")   ; yt = el(divId).getAttribute("yt")
+                print('xl:'+xl)
+                if (yt!=null){ el(divId).style.top  = (tDiv-yt)+'px' }
+                if (xl!=null){ el(divId).style.left = (lDiv-xl)+'px' }
+
             }
         }catch{}
     }
@@ -444,7 +449,7 @@ function iniSys(){
             el(divId).style.left    = (paraAba[divAbaId][1] - 10000)+'px'
             el(divId).style.width   = (paraAba[divAbaId][2])+'px'
             el(divId).style.height  = (paraAba[divAbaId][3])+'px'
-            nAbas += 1 ;     paraAba[divAbaId][4] = nAbas
+            nAbas = nAbas + 1 ;     paraAba[divAbaId][4] = nAbas
         }
     }
     // . . .[parâmetros de Aba n]
@@ -507,8 +512,8 @@ function iniSys(){
     deslX = el('Corpo').getAttribute("deslX") ; deslY = el('Corpo').getAttribute("deslY")
     window.scrollTo(deslX,deslY)
 
-    atuJib()
     iniLoc()
+    atuJib()
 }
 // ----- inicio Sys
 
@@ -1269,7 +1274,7 @@ function atuJib(){
     Ldivs = []  ; for (i = 0; i <= nDivs-1; i++){ Ldivs.push(allEl[i].id) }
     
     // . . . desl de Scroll e parâmetros de Aba
-    nS = 0 ; verScr += 1
+    nS = 0 ; verScr = verScr + 1
     corC='rgb('+verScr+','+0+','+0+')' ; ctx.fillStyle = corC ; ctx.fillRect(49       , 0, 1, 1)  // verScr
     corC='rgb('+0     +','+0+','+0+')' ; ctx.fillStyle = corC ; ctx.fillRect(50       , 0, 1, 1)  // nS
     for (iD=0; iD<=nDivs-1; iD++){
@@ -1282,14 +1287,13 @@ function atuJib(){
             novoX = parseInt(window.getComputedStyle(div).left) ; novoY = parseInt(window.getComputedStyle(div).top)
             delX = lOri - novoX + scrX ; delY = tOri - novoY + scrY
             if (delX!=0 || delY!=0){
-                nS += 1
+                nS = nS + 1
                 corC='rgb('+nS+','+0+','+0+')' ; ctx.fillStyle = corC ; ctx.fillRect(50       , 0, 1, 1)  // nS
                 
                 x1 = parseInt(iw/255)   ; x2 = parseInt(iw   - x1*255)    ; corC='rgb('+x1+','+x2+','+0+')'
                     ctx.fillStyle = corC                ; ctx.fillRect(nS*3+48  , 0, 1, 1)  // iw            
                 x1 = parseInt(delX/255) ; x2 = parseInt(delX - x1*255)    ; corC='rgb('+x1+','+x2+','+0+')'
                     ctx.fillStyle = corC                ; ctx.fillRect(nS*3+48+1, 0, 1, 1)  // delX
-                    print(' delX:'+delX+'  corC:'+corC+'  lOri:'+lOri+' novoX:' + novoX+' scrX:'+scrX+' iw:'+iw)
                 x1 = parseInt(delY/255) ; x2 = parseInt(delY - x1*255)    ; corC='rgb('+x1+','+x2+','+0+')'
                     ctx.fillStyle = corC                ; ctx.fillRect(nS*3+48+2, 0, 1, 1)  // delY
             }
