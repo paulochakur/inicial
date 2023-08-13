@@ -420,7 +420,6 @@ function iniSys(){
 
                 scr = el(divId).getAttribute("scroll")
                 if (scr=='roll' && mobFlag==1){ el(divId).style.overflow = 'scroll'  }
-
             }
         }catch{}
     }
