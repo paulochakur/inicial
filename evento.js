@@ -32,6 +32,7 @@
 
 //  -------------- Variáveis Globais -------------
 //var module = require('fs')
+var mobFlag = 0
 var ctx = 0, dictCoods = {}, verScr = 0
 var nomeProjS = ''  ;   ListPlan = {name: [3]}  ,  nLoad = 0 , N = 0 ; iAbaAti = 1
 var habClic = 0 ; var iniValueInput = 0 , iniValueInputA = 0 , finValueInputA = 0
@@ -397,6 +398,9 @@ function iniSys(){
     // ...[set atributos definidos em TXT]
 
 
+    Wh = window.innerHeight         ; Ww = window.innerWidth
+    if(Ww<1000){mobFlag = 1 }
+
     // . . . monta dictCoods - originais e aplica xl e yt
     allEl = document.getElementsByTagName("div")  ;  nDivs = allEl.length
     Ldivs = []  ; for (i = 0; i <= nDivs-1; i++){ Ldivs.push(allEl[i].id) }
@@ -411,7 +415,6 @@ function iniSys(){
                 dictCoods[iw] = [tDiv, lDiv]
 
                 xl = el(divId).getAttribute("xl")   ; yt = el(divId).getAttribute("yt")
-                print('xl:'+xl)
                 if (yt!=null){ el(divId).style.top  = (tDiv-yt)+'px' }
                 if (xl!=null){ el(divId).style.left = (lDiv-xl)+'px' }
 
