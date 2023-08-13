@@ -32,7 +32,8 @@
 
 //  -------------- Variáveis Globais -------------
 //var module = require('fs')
-var nomeProjS = ''  ;   ListPlan = {name: [3]}  ,  nLoad = 0 , N = 0
+var ctx = 0, dictCoods = {}, verScr = 0
+var nomeProjS = ''  ;   ListPlan = {name: [3]}  ,  nLoad = 0 , N = 0 ; iAbaAti = 1
 var habClic = 0 ; var iniValueInput = 0 , iniValueInputA = 0 , finValueInputA = 0
 var toques=0
 var iCa=0
@@ -87,6 +88,9 @@ var xPs  = 1    , yPs   = 1                                                     
 var keyCode                         // keydown event
 var ctrK                            // keydown event
 // ...[evento]
+
+// ... abas
+var paraAba = {}
 
 // ... menu
 var IsubOpen   = [1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]
@@ -300,44 +304,26 @@ function iniSys(){
     // ...[cria div - "proprBox"]
 
             
-    // ... cria divs - "transf1" e "transf2"
-    para = document.createElement("div")
+    // ... cria canvas - "atuJib"
+    para = document.createElement("canvas")
     el('Corpo').appendChild(para)
-    para.id     = "transf1"
-    el("transf1").style = 'position: fixed; left: 0px; top: 0px; width: 1px; height: 1px; box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: text; border-color: black; border-radius: 0%; border-width: 0.0px; border-style: solid; background-color: #ffff00; opacity: 1; overflow: auto; z-index: 100; white-space: pre-wrap; font-family: Courier, sans-serif; font-weight: bold; font-size: 12.0px; '
-    
-    para = document.createElement("div")
-    el('Corpo').appendChild(para)
-    para.id     = "transf2"
-    el("transf2").style = 'position: fixed; left: 0px; top: 1px; width: 1px; height: 1px; box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: text; border-color: black; border-radius: 0%; border-width: 0.0px; border-style: solid; background-color: #ff0000; opacity: 1; overflow: auto; z-index: 100; white-space: pre-wrap; font-family: Courier, sans-serif; font-weight: bold; font-size: 12.0px; '
-    
-    para = document.createElement("div")
-    el('Corpo').appendChild(para)
-    para.id     = "topJib"
-    el("topJib").style = 'position: fixed; left: 1px; top: 0px; width: 1px; height: 1px; box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: text; border-color: black; border-radius: 0%; border-width: 0.0px; border-style: solid; background-color: rgb(127,127,127); opacity: 1; overflow: auto; z-index: 100; white-space: pre-wrap; font-family: Courier, sans-serif; font-weight: bold; font-size: 12.0px; '
-  
-    // .  .  . 
-    nomeProjS = el("Corpo").getAttribute('nomeProj')
-    tamNom = nomeProjS.length - 1
-    for (i=0; i<=tamNom+1 ; i++) {
-        
-        para = document.createElement("div")
-        el('Corpo').appendChild(para)
-        para.id             = 'divPoj'+i
-        para.style          = 'position: fixed; left: 0px; top: 0px; width: 1px; height: 1px; box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: text; border-color: black; border-radius: 0%; border-width: 0.0px; border-style: solid; background-color: #ff0000; opacity: 1; overflow: auto; z-index: 100; white-space: pre-wrap; font-family: Courier, sans-serif; font-weight: bold; font-size: 12.0px; '    
-        para.style.left     = (2+i)+'px'
-        para.style.zIndex   = 140
+    para.id     = "canTrans"
+    el("canTrans").style = 'position: fixed; left: 0px; top: 0px; box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: text; border-color: black; border-radius: 0%; border-width: 0.0px; border-style: solid; background-color: transparent; opacity: 1; overflow: auto; z-index: 100'
+    para.width  = 400 ; para.height = 1
+    ctx  = el("canTrans").getContext("2d")
 
+    // .  .  .  nome do Proj
+    nomeProjS = el("Corpo").getAttribute('nomeProj')
+    tamNom = nomeProjS.length - 1 ; if (tamNom>30) { tamNom = 30 }
+    for (i=0; i<=tamNom+1 ; i++) {
         if (i==0)  { corS    = 'rgb('+61+','+58+','+tamNom+')'}
         if (i>0)   { carI = nomeProjS.substr(i-1, 1) ; asc = carI.charCodeAt() ; corS    = 'rgb('+asc+',10,0)'}
-       
-        // .
-        
-        para.style.backgroundColor = corS
+        ctx.fillStyle = corS ; ctx.fillRect(i+10, 0, 1, 1)
+        // .....
     }
-    // .  .  .[]
+    // .  .  . [nome do Proj]
 
-    // ...[cria divs - "transf1" e "transf2"]
+    // ...[cria canvas - "atuJib"]
 
 
 
@@ -409,7 +395,61 @@ function iniSys(){
     }    
     */
     // ...[set atributos definidos em TXT]
-    
+
+
+    // . . . monta dictCoods - originais
+    allEl = document.getElementsByTagName("div")  ;  nDivs = allEl.length
+    Ldivs = []  ; for (i = 0; i <= nDivs-1; i++){ Ldivs.push(allEl[i].id) }
+    // . . . "iw"
+    for (iDiv = 0; iDiv <= nDivs-1; iDiv++){
+        divId = Ldivs[iDiv]
+        try{
+            iw      = el(divId).getAttribute("iw")
+            if (iw>0){
+                tDiv    = parseInt(window.getComputedStyle(el(divId)).top)
+                lDiv    = parseInt(window.getComputedStyle(el(divId)).left)
+                dictCoods[iw] = [tDiv, lDiv]
+                print('  dictCoods[iw]:'+dictCoods[iw])
+            }
+        }catch{}
+    }
+    // . . .[monta dictCoods - originais]
+
+    // ....... Inicial abas
+    allEl = document.getElementsByTagName("div")  ;  nDivs = allEl.length
+    Ldivs = []  ; for (i = 0; i <= nDivs-1; i++){ Ldivs.push(allEl[i].id) }
+    // . . . parâmetros de Aba 1
+    for (iDiv = 0; iDiv <= nDivs-1; iDiv++){
+        divId = Ldivs[iDiv]
+        iAba = 0 ; eAba1 = divId.includes('-Aba-1')
+        if (eAba1){ iA = divId.indexOf("-Aba-") ; iAba  = parseInt(divId.slice(iA+5)) ; divAbaId = divId.slice(0, iA)}
+        if (iAba==1){
+            wAba    = parseInt(window.getComputedStyle(el(divId)).width)
+            hAba    = parseInt(window.getComputedStyle(el(divId)).height)
+            tAba    = parseInt(window.getComputedStyle(el(divId)).top)
+            lAba    = parseInt(window.getComputedStyle(el(divId)).top)
+            paraAba[divAbaId] = [ tAba, lAba, wAba, hAba, 1]
+        }
+    }
+    // . . .[parâmetros de Aba 1]
+
+    // . . . parâmetros de Aba n
+    nAbas = 1
+    for (iDiv = 0; iDiv <= nDivs-1; iDiv++){
+        divId = Ldivs[iDiv]
+        iAba = 0 ; eAba = divId.includes('-Aba-')
+        if (eAba){ iA = divId.indexOf("-Aba-") ; iAba  = parseInt(divId.slice(iA+5)) ; divAbaId = divId.slice(0, iA)}
+        if (iAba>1){
+            el(divId).style.top     = (paraAba[divAbaId][0])+'px'
+            el(divId).style.left    = (paraAba[divAbaId][1] - 10000)+'px'
+            el(divId).style.width   = (paraAba[divAbaId][2])+'px'
+            el(divId).style.height  = (paraAba[divAbaId][3])+'px'
+            nAbas += 1 ;     paraAba[divAbaId][4] = nAbas
+        }
+    }
+    // . . .[parâmetros de Aba n]
+
+    // .......[Inicial abas]
         
     // ........ abre Planilhas
     allEl = document.getElementsByTagName("div")  ;  nDivs = allEl.length
@@ -422,6 +462,7 @@ function iniSys(){
             nLinPla     = Cells[divSheetId][0][0]['nLinPla']
             nColPla     = Cells[divSheetId][0][0]['nColPla']
             arqDados    = Cells[divSheetId][0][0]['arqDados']
+            sincrArq    = Cells[divSheetId][0][0]['sincr']
             hSheet      = el(divSheetId).offsetHeight
             wSheet      = el(divSheetId).offsetWidth
             if (auto=='autoload'){ 
@@ -433,7 +474,6 @@ function iniSys(){
         catch{}
     
     }
-
     // ........[abre Planilhas]
 
     // ........ Inclui TEXTOS  $$$$ Criou divSheetId:
@@ -466,6 +506,8 @@ function iniSys(){
     
     deslX = el('Corpo').getAttribute("deslX") ; deslY = el('Corpo').getAttribute("deslY")
     window.scrollTo(deslX,deslY)
+
+    atuJib()
     iniLoc()
 }
 // ----- inicio Sys
@@ -538,16 +580,8 @@ function eventTrap() {
     // Keys
     keyCode = event.keyCode         ; ctrK = event.ctrlKey
 
-
-    // ... escreve para Jiboia
-    //if(evento=='click'){ navigator.clipboard.writeText("("+xPs+','+yPs+')') }
-    
-    // . . xPs
-    x1 = parseInt(xPs/255) ; x2 = parseInt(xPs - x1*255) ; el("transf1").style.backgroundColor='rgb('+x1+','+x2+','+0+')'
-    y1 = parseInt(yPs/255) ; y2 = parseInt(yPs - y1*255) ; el("transf2").style.backgroundColor='rgb('+y1+','+y2+','+0+')'
-    el("topJib").style.backgroundColor='rgb(127,127,127)'
-    // ...[escreve para Jiboia]
-
+    // ..... atualiza Jiboia
+    if(ctrK){ atuJib() }
 
     // .... inibe menu do browser em rightClick
     if(evento=='contextmenu'){ evento = 'rightclick' ; event.preventDefault() }
@@ -739,17 +773,20 @@ function eventTrap() {
         // .  . anterior (lost focus)
         if(entraInp=='Lost'){ 
             inpAnt.value                                = finValueInputA
-            try{ ListPlan[divSheetId][iElSelA][jElSelA] = finValueInputA } catch{}
+            try{ 
+                sincr    = Cells[divSheetId][0][0]['sincr']    
+                if (sincr!='*') { ListPlan[divSheetId][iElSelA][jElSelA] = finValueInputA }
+            } catch{}
         }
         // .  . current (got focus)
         if(entraInp=='Got'){ 
             inpCur.value                                = valueInput
-            try{ ListPlan[divSheetId][iElSel][jElSel]   = inpCur.value } catch{}
+            try{ 
+                sincr    = Cells[divSheetId][0][0]['sincr']    
+                if (sincr!='*') { ListPlan[divSheetId][iElSel][jElSel]   = inpCur.value }
+            } catch{}
         }
         // --------[atualiza ListPlan - SYST]
-
-
-
 
         inpAntId = inpCurId ; inpAnt = inpCur
         
@@ -1213,6 +1250,67 @@ function eventTrap() {
 
             
 // ************************* FUNCTIONS DE SISTEMA EM .js
+function atuJib(){
+    // ... escreve para Jiboia
+    // . . . canvas
+    ctx.fillStyle = 'rgb(127,127,127)'  ; ctx.fillRect(0, 0, 1, 1)  // topJib
+
+    x1 = parseInt(xPs/255) ; x2 = parseInt(xPs - x1*255)    ; corC='rgb('+x1+','+x2+','+0+')'
+    ctx.fillStyle = corC                ; ctx.fillRect(1, 0, 1, 1)  // xPs
+    
+    y1 = parseInt(yPs/255) ; y2 = parseInt(yPs - y1*255)    ; corC='rgb('+y1+','+y2+','+0+')'
+    ctx.fillStyle = corC                ; ctx.fillRect(2, 0, 1, 1)  // yPs
+
+    x1 = parseInt(iAbaAti)                                  ; corC='rgb('+x1+','+0+','+0+')'
+    ctx.fillStyle = corC                ; ctx.fillRect(3, 0, 1, 1)  // aba ativa
+
+    // ....... Inicial abas
+    allEl = document.getElementsByTagName("div")  ;  nDivs = allEl.length
+    Ldivs = []  ; for (i = 0; i <= nDivs-1; i++){ Ldivs.push(allEl[i].id) }
+    
+    // . . . desl de Scroll e parâmetros de Aba
+    nS = 0 ; verScr += 1
+    corC='rgb('+verScr+','+0+','+0+')' ; ctx.fillStyle = corC ; ctx.fillRect(49       , 0, 1, 1)  // verScr
+    corC='rgb('+0     +','+0+','+0+')' ; ctx.fillStyle = corC ; ctx.fillRect(50       , 0, 1, 1)  // nS
+    for (iD=0; iD<=nDivs-1; iD++){
+        scr = '*' ; iw = 0 ; divId = Ldivs[iD] ; div = el(divId)
+        try{ scr = div.getAttribute("scroll") ; iw = div.getAttribute("iw") } catch{}
+        if (iw>0) { 
+            // Element.scrollTop and Element.scrollLeft  scrX = div.scrollLeft
+            try{ scrX = div.scrollLeft ; scrY = div.scrollTop } catch{ scrX = 0 ; scrY = 0 }
+            tOri = dictCoods[iw][0] ; lOri = dictCoods[iw][1]
+            novoX = parseInt(window.getComputedStyle(div).left) ; novoY = parseInt(window.getComputedStyle(div).top)
+            delX = lOri - novoX + scrX ; delY = tOri - novoY + scrY
+            if (delX!=0 || delY!=0){
+                nS += 1
+                corC='rgb('+nS+','+0+','+0+')' ; ctx.fillStyle = corC ; ctx.fillRect(50       , 0, 1, 1)  // nS
+                
+                x1 = parseInt(iw/255)   ; x2 = parseInt(iw   - x1*255)    ; corC='rgb('+x1+','+x2+','+0+')'
+                    ctx.fillStyle = corC                ; ctx.fillRect(nS*3+48  , 0, 1, 1)  // iw            
+                x1 = parseInt(delX/255) ; x2 = parseInt(delX - x1*255)    ; corC='rgb('+x1+','+x2+','+0+')'
+                    ctx.fillStyle = corC                ; ctx.fillRect(nS*3+48+1, 0, 1, 1)  // delX
+                    print(' delX:'+delX+'  corC:'+corC+'  lOri:'+lOri+' novoX:' + novoX+' scrX:'+scrX+' iw:'+iw)
+                x1 = parseInt(delY/255) ; x2 = parseInt(delY - x1*255)    ; corC='rgb('+x1+','+x2+','+0+')'
+                    ctx.fillStyle = corC                ; ctx.fillRect(nS*3+48+2, 0, 1, 1)  // delY
+            }
+        }
+    }
+    // . . .[desl de Scroll e parâmetros de Aba]
+    
+
+
+    // . . . deltX e deltY
+    for(iTr=1; iTr<=30 ; iTr++){
+        xPs = iTr*10
+        x1 = parseInt(xPs/255) ; x2 = parseInt(xPs - x1*255); corTr = 'rgb('+x1+','+x2+','+0+')'
+        //ctx.fillStyle = corTr ; ctx.fillRect(iTr+100, 0, 1, 1)
+    }
+
+        // ....
+        return
+}
+// ...[escreve para Jiboia]
+
 
 // ---- print em console
 function print(strPrint){ eventoAc = '<br>'+strPrint +eventoAc ; el("console").innerHTML = eventoAc ; return }
@@ -1271,6 +1369,22 @@ function lenPxTxt (text, fontFam, fontSize){
 // .... INPUT
 function fhabClic(){ habClic = 1 ; eleFo.setSelectionRange( 0, 0)}   //forward, backward and None
 
+
+// ... show Aba
+function showAba(divId, iAba=1){ 
+    //iA = divId.indexOf("-Aba-") ; iAba  = parseInt(divId.slice(iA+5)) ; divAbaId = divId.slice(0, iA)
+    
+    divM = divId+'-Aba-'+iAba
+    el(divM).style.left    = (paraAba[divId][1])+'px'
+    nAbas = paraAba[divId][4]
+    for (iAb = 1; iAb <= nAbas; iAb++){
+        divF = divId+'-Aba-'+iAb
+        if (iAb!=iAba) { el(divF).style.left    = '-10000px' }
+    }
+    iAbaAti = iAba
+    // ...
+}
+// ...[show Aba]
 
 // ... show/vanish Menu Completo
 function showMenu(divMenuId, recolhe=0){ 
@@ -2206,8 +2320,6 @@ function preencheSheet(lplanIni=0, cplanIni=0, divSheetId){
         if (cplan0>cplan0Max && cplan0Max>0){ cplan0 = cplan0Max}
         
         Cells[divSheetId][0][0]['lplan0'] = lplan0  ; Cells[divSheetId][0][0]['cplan0'] = cplan0
-        el('div-452').innerHTML = ' -- lplan0:'+lplan0+' nLinSh:'+nLinSh+' lFrz:'+lFrz+'   nLinPla:'+nLinPla +' -- lplan0N:'+lplan0N 
-
     } catch{}
 
    
@@ -2368,8 +2480,7 @@ function printCell(i, j, divSheet){   // i, j  em Sheet
         valor = ''
         //if(iC<lFrz  || LinMod==0){ valor = Cells[divSheetId][iC][jC]['valor'] }
         // ...  arquivo JS
-        try{ valor   = ListPlan[divSheetId][iC][jC] } 
-        catch{}
+        try{ if(iC>=lFrz) { valor   = ListPlan[divSheetId][iC][jC] }    } catch{}
         planValorTrap(divSheetId, iC, jC)
         cell.value                      = valor
         // ----[TRAP  DE VALOR]
