@@ -401,6 +401,12 @@ function iniSys(){
     Wh = window.innerHeight         ; Ww = window.innerWidth
     if(Ww<1000){mobFlag = 1 }
 
+    try{
+
+        if (mobFlag==1){ el('Fundo').style.transformt = "rotateZ(-90deg)"  }
+    
+    }catch{}
+
     // . . . monta dictCoods - originais e aplica xl e yt e corrige overflow para mob
     allEl = document.getElementsByTagName("div")  ;  nDivs = allEl.length
     Ldivs = []  ; for (i = 0; i <= nDivs-1; i++){ Ldivs.push(allEl[i].id) }
