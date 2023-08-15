@@ -521,20 +521,20 @@ function iniSys(){
     atuJib()
 
     // ...... ajusta mob
-    Wh = window.innerHeight         ; Ww = window.innerWidth
+    Wh = window.innerHeight             ; Ww = window.innerWidth
     Ah = window.screen.availHeight-100  ; Aw = window.screen.availWidth
     if(Aw<1000){mobFlag = 1 }
 
 
     hF = parseInt(window.getComputedStyle(el('Fundo')).height) ; wF = parseInt(window.getComputedStyle(el('Fundo')).width)
-    fat     =  Ah/wF
+    fatX     =  Ah/wF ; fatY     =  Aw/hF
     delV    = (wF-hF)/2 + (hF/2)*(1-fat)
     
     print(' mobFlag:'+mobFlag+'  Ah:')
 
     if (mobFlag==1){ 
         
-        el('Fundo').style.WebkitTransform = "rotateZ(-90deg)"+" scale("+fat+")"
+        el('Fundo').style.WebkitTransform = "rotateZ(-90deg)"+" scaleX("+fatX+")"+" scaleY("+fatY+")"
         el('Fundo').style.left = (-delV)+'px'
     
     }
