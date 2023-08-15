@@ -522,19 +522,19 @@ function iniSys(){
 
     // ...... ajusta mob
     Wh = window.innerHeight         ; Ww = window.innerWidth
-    Ah = window.screen.availHeight-50  ; Aw = window.screen.availWidth
+    Ah = window.screen.availHeight  ; Aw = window.screen.availWidth
     if(Aw<1000){mobFlag = 1 }
 
 
     hF = parseInt(window.getComputedStyle(el('Fundo')).height) ; wF = parseInt(window.getComputedStyle(el('Fundo')).width)
     fat     =  hF/Ww
-    delV    = (wF-hF)/2- (hF/2)*(1-fat)
+    delV    = (wF-hF)/2 + (hF/2)*(1-fat)
     
     print(' mobFlag:'+mobFlag+'  Ah:')
 
-    if (mobFlag==1){ 
+    if (mobFlag==0){ 
         
-        el('Fundo').style.WebkitTransform = "rotateZ(-90deg)"//+" scale("+fat+")"
+        el('Fundo').style.WebkitTransform = "rotateZ(-90deg)"+" scale("+fat+")"
         el('Fundo').style.left = (-delV)+'px'
     
     }
