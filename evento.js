@@ -535,7 +535,7 @@ function iniSys(){
         
         el('Fundo').style.WebkitTransform = "rotateZ(-90deg)"+" scaleX("+fatX+")"+" scaleY("+fatY+")"
         el('Fundo').style.left = (-delV)+'px'
-        el('Fundo').style.top = (20)+'px'
+        //el('Fundo').style.top = (20)+'px'
     
     }
 // ......[ajusta mob]        
