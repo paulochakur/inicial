@@ -528,7 +528,7 @@ function iniSys(){
 
     hF = parseInt(window.getComputedStyle(el('Fundo')).height) ; wF = parseInt(window.getComputedStyle(el('Fundo')).width)
     fatX     =  Ah/wF ; fatY     =  Aw/hF
-    delV    = (wF-hF)/2 + (hF/2)*(1-fat)
+    delV    = (wF-hF)/2 + (hF/2)*(1-fatY)
     
     print(' mobFlag:'+mobFlag+'  Ah:')
 
