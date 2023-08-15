@@ -531,15 +531,14 @@ function iniSys(){
     
     print(' mobFlag:'+mobFlag+'  Ah:')
     deX = 0
-    if (mobFlag==1){ 
+    if (mobFlag!=2){ 
 
         el('Fundo').style.WebkitTransform = "rotateZ(-90deg)"+" scaleX("+fatX+")"+" scaleY("+fatY+")"
         el('Fundo').style.left = (-delV)+'px'
 
 
-        deX = 15
+        deX = 50
         el('Fundo').style.top = (deX)+'px'
-        el('divMassa-Txt').style.left = (deX*10)+'px'
 
     }
     el('divMassa-Txt').style.left = (deX*10)+'px'
