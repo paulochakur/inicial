@@ -224,7 +224,8 @@ function iniSys(){
 
     
     // ---------- cria elementos de sistema
-
+    Wh = window.innerHeight         ; Ww = window.innerWidth
+    if(Ww<1000){mobFlag = 1 }
 
     // ... cria div - "console"
     para = document.createElement("div")
