@@ -225,7 +225,8 @@ function iniSys(){
     
     // ---------- cria elementos de sistema
     Wh = window.innerHeight         ; Ww = window.innerWidth
-    if(Ww<1000){mobFlag = 1 }
+    Ah = window.screen.availHeight  ; Aw = window.screen.availWidth
+    if(Aw<1000){mobFlag = 1 }
 
     // ... cria div - "console"
     para = document.createElement("div")
@@ -521,12 +522,12 @@ function iniSys(){
 
     // ...... ajusta mob
     Wh = window.innerHeight         ; Ww = window.innerWidth
-    if(Ww<1000){mobFlag = 1 }
+    Ah = window.screen.availHeight  ; Aw = window.screen.availWidth
+    if(Aw<1000){mobFlag = 1 }
 
 
     hF = parseInt(window.getComputedStyle(el('Fundo')).height) ; wF = parseInt(window.getComputedStyle(el('Fundo')).width)
-    delV = (wF-hF)/2
-    fat =  hF/Ww
+    delV = (wF-hF)/2 ; fat =  hF/Ww
 
     if (mobFlag==1){ 
         
