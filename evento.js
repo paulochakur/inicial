@@ -537,7 +537,7 @@ function iniSys(){
         el('Fundo').style.left = (-delV)+'px'
 
 
-        deX = 20
+        deX = 15
         el('Fundo').style.top = (deX)+'px'
         el('divMassa-Txt').style.left = (deX*10)+'px'
 
