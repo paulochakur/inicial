@@ -537,7 +537,7 @@ function iniSys(){
         el('Fundo').style.left = (-delV)+'px'
 
 
-        deX = 50
+        deX = 10
         el('Fundo').style.top = (deX)+'px'
 
     }
