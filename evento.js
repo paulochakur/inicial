@@ -518,26 +518,23 @@ function iniSys(){
     iniLoc()
     atuJib()
 
+    // ...... ajusta mob
     Wh = window.innerHeight         ; Ww = window.innerWidth
     if(Ww<1000){mobFlag = 1 }
 
-    try{
-        hF = parseInt(window.getComputedStyle(el('Fundo')).height) ; wF = parseInt(window.getComputedStyle(el('Fundo')).width)
-        delV = (wF-hF)/2
-        fat =  hF/Ww
 
-        if (mobFlag==0){ 
-            //el('Fundo').style.WebkitTransform = "scaleX("+0.1+")"  
-            
-            el('Fundo').style.WebkitTransform = "rotateZ(-90deg)"+" scaleX("+fat+")"
+    hF = parseInt(window.getComputedStyle(el('Fundo')).height) ; wF = parseInt(window.getComputedStyle(el('Fundo')).width)
+    delV = (wF-hF)/2
+    fat =  hF/Ww
 
-            //el('Fundo').style.top = (delV)+"px"  
-            
-            print('   ***** fat:'+fat+' hF:'+hF+' Wh:'+Wh) 
+    if (mobFlag==1){ 
         
-        }
-           
-    }catch{print(' falhou ')}
+        el('Fundo').style.WebkitTransform = "rotateZ(-90deg)"+" scaleX("+fat+")"
+
+    
+    }
+// ......[ajusta mob]        
+
 
 }
 
