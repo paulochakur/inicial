@@ -528,14 +528,14 @@ function iniSys(){
 
     hF = parseInt(window.getComputedStyle(el('Fundo')).height) ; wF = parseInt(window.getComputedStyle(el('Fundo')).width)
     fat     =  hF/Ww
-    delV    = -(Wh-Ww)/2 - (hF/2)*(1-fat)
+    delV    = (Wh-Ww)/2 - (hF/2)*(1-fat)
     
     print(' mobFlag:'+mobFlag)
 
     if (mobFlag==1){ 
         
         el('Fundo').style.WebkitTransform = "rotateZ(-90deg)"+" scale("+fat+")"
-        el('Fundo').style.left = (delV)+'px'
+        el('Fundo').style.left = (-delV)+'px'
     
     }
 // ......[ajusta mob]        
