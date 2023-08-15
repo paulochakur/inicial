@@ -397,16 +397,6 @@ function iniSys(){
     */
     // ...[set atributos definidos em TXT]
 
-
-    Wh = window.innerHeight         ; Ww = window.innerWidth
-    if(Ww<1000){mobFlag = 1 }
-
-    try{
-
-        if (mobFlag==1){ el('Fundo').style.transformt = "rotateZ(-90deg)"  }
-    
-    }catch{}
-
     // . . . monta dictCoods - originais e aplica xl e yt e corrige overflow para mob
     allEl = document.getElementsByTagName("div")  ;  nDivs = allEl.length
     Ldivs = []  ; for (i = 0; i <= nDivs-1; i++){ Ldivs.push(allEl[i].id) }
@@ -527,7 +517,30 @@ function iniSys(){
 
     iniLoc()
     atuJib()
+
+    Wh = window.innerHeight         ; Ww = window.innerWidth
+    if(Ww<1000){mobFlag = 1 }
+
+    try{
+        hF = parseInt(window.getComputedStyle(el('Fundo')).height) ; wF = parseInt(window.getComputedStyle(el('Fundo')).width)
+        delV = (wF-hF)/2
+        fat =  hF/Ww
+
+        if (mobFlag==0){ 
+            //el('Fundo').style.WebkitTransform = "scaleX("+0.1+")"  
+            
+            el('Fundo').style.WebkitTransform = "rotateZ(-90deg)"+" scaleX("+fat+")"
+
+            //el('Fundo').style.top = (delV)+"px"  
+            
+            print('   ***** fat:'+fat+' hF:'+hF+' Wh:'+Wh) 
+        
+        }
+           
+    }catch{print(' falhou ')}
+
 }
+
 // ----- inicio Sys
 
 //  -------------- Trap de Eventos  -------------
