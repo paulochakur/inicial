@@ -522,7 +522,7 @@ function iniSys(){
 
     // ...... ajusta mob
     Wh = window.innerHeight             ; Ww = window.innerWidth
-    Ah = window.screen.availHeight-120  ; Aw = window.screen.availWidth
+    Ah = window.screen.availHeight-110  ; Aw = window.screen.availWidth
     if(Aw<1000){mobFlag = 1 }
 
     hF = parseInt(window.getComputedStyle(el('Fundo')).height) ; wF = parseInt(window.getComputedStyle(el('Fundo')).width)
@@ -540,7 +540,7 @@ function iniSys(){
         el('Fundo').style.top = (deX)+'px'
 
     }
-    el('divMassa-Txt').style.left = (deX*20+300)+'px'
+    el('divMassa-Txt').style.left = (deX*20+700)+'px'
 // ......[ajusta mob]        
 
 
