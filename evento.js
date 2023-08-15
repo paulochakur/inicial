@@ -522,7 +522,7 @@ function iniSys(){
 
     // ...... ajusta mob
     Wh = window.innerHeight             ; Ww = window.innerWidth
-    Ah = window.screen.availHeight-130  ; Aw = window.screen.availWidth
+    Ah = window.screen.availHeight-120  ; Aw = window.screen.availWidth
     if(Aw<1000){mobFlag = 1 }
 
 
