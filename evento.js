@@ -532,7 +532,7 @@ function iniSys(){
     
     print(' mobFlag:'+mobFlag+'  Ah:')
 
-    if (mobFlag==0){ 
+    if (mobFlag==1){ 
         
         el('Fundo').style.WebkitTransform = "rotateZ(-90deg)"+" scaleX("+fatX+")"+" scaleY("+fatY+")"
         el('Fundo').style.left = (-delV)+'px'
