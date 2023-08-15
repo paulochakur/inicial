@@ -532,9 +532,15 @@ function iniSys(){
     print(' mobFlag:'+mobFlag+'  Ah:')
 
     if (mobFlag==1){ 
+
         el('Fundo').style.WebkitTransform = "rotateZ(-90deg)"+" scaleX("+fatX+")"+" scaleY("+fatY+")"
         el('Fundo').style.left = (-delV)+'px'
-        //el('Fundo').style.top = (10)+'px'
+
+
+        deX = 20
+        el('Fundo').style.top = (deX)+'px'
+        el('divMassa-Txt').style.left = (deX*10)+'px'
+
     }
 // ......[ajusta mob]        
 
