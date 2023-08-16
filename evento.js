@@ -520,7 +520,7 @@ function iniSys(){
     iniLoc()
     atuJib()
 
-    /*
+    
     // ...... ajusta mob
     Wh = window.innerHeight             ; Ww = window.innerWidth
     Ah = window.screen.availHeight-100  ; Aw = window.screen.availWidth
@@ -536,7 +536,7 @@ function iniSys(){
         scrTurn = 1
     }
     // ......[ajusta mob]        
-    */
+    
 
 }
 
