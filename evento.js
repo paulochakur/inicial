@@ -419,7 +419,7 @@ function iniSys(){
 
                 // . . . somente mob
                 scr = el(divId).getAttribute("scroll")
-                if (scr=='roll' && mobFlag==1){ el(divId).style.overflow = 'scroll'  }
+                if (scr=='roll' && mobFlag==0){ print('  iw:'+iw+' divId:'+divId) ; el(divId).style.overflow = 'scroll'  }
             }
         }catch{}
     }
