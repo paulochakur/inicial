@@ -411,7 +411,7 @@ function iniSys(){
                 tDiv    = parseInt(window.getComputedStyle(el(divId)).top)
                 lDiv    = parseInt(window.getComputedStyle(el(divId)).left)
                 dictCoods[iw] = [tDiv, lDiv]
-
+                print(' +++ '+window.getComputedStyle(el('divPage')).top)
                 // . . . aplica xl e yt - somente deskTop, em desenvovimento
                 xl = el(divId).getAttribute("xl")   ; yt = el(divId).getAttribute("yt")
                 if (yt!=null && mobFlag==0){ el(divId).style.top  = (tDiv-yt)+'px' }
@@ -419,12 +419,13 @@ function iniSys(){
 
                 // . . . somente mob
                 scr = el(divId).getAttribute("scroll")
-                if (scr=='roll' && mobFlag==0){ print('  iw:'+iw+' divId:'+divId) ; el(divId).style.overflow = 'scroll'  }
+                if (scr=='roll' && mobFlag==1){ el(divId).style.overflow = 'scroll'  }
             }
         }catch{}
     }
     // . . .[monta dictCoods - originais]
 
+    
     // ....... Inicial abas
     allEl = document.getElementsByTagName("div")  ;  nDivs = allEl.length
     Ldivs = []  ; for (i = 0; i <= nDivs-1; i++){ Ldivs.push(allEl[i].id) }
@@ -460,7 +461,7 @@ function iniSys(){
     // . . .[parâmetros de Aba n]
 
     // .......[Inicial abas]
-        
+
     // ........ abre Planilhas
     allEl = document.getElementsByTagName("div")  ;  nDivs = allEl.length
     Ldivs = []  ; for (i = 0; i <= nDivs-1; i++){ Ldivs.push(allEl[i].id) }
@@ -485,7 +486,7 @@ function iniSys(){
     
     }
     // ........[abre Planilhas]
-
+    
     // ........ Inclui TEXTOS  $$$$ Criou divSheetId:
     Ldivs = []
     allEl = document.getElementsByTagName("div")  ;  nDivs = allEl.length
@@ -1306,12 +1307,14 @@ function atuJib(){
         scr = '*' ; iw = 0 ; divId = Ldivs[iD] ; div = el(divId)
         try{ scr = div.getAttribute("scroll") ; iw = div.getAttribute("iw") } catch{}
         if (iw>0) { 
-            // Element.scrollTop and Element.scrollLeft  scrX = div.scrollLeft
-            try{ scrX = div.scrollLeft ; scrY = div.scrollTop } catch{ scrX = 0 ; scrY = 0 }
+            scrX = 0 ; scrY = 0
+            divPar = div.parentElement
+            try{ scrX = divPar.scrollLeft ; scrY = divPar.scrollTop } catch{ scrX = 0 ; scrY = 0 ; print(' $$$ iw:'+iw)}
             tOri = dictCoods[iw][0] ; lOri = dictCoods[iw][1]
             novoX = parseInt(window.getComputedStyle(div).left) ; novoY = parseInt(window.getComputedStyle(div).top)
             delX = lOri - novoX + scrX ; delY = tOri - novoY + scrY
             if (delX!=0 || delY!=0){
+                print(' iw:'+iw+'  delY:'+delY+'  tOri:'+tOri+'   novoY:'+novoY+'  scrY:'+scrY+' * '+div.scrollTop+' #:'+div.getAttribute("scroll")+' - '+el('Rosa').style.top)
                 nS = nS + 1
                 corC='rgb('+nS+','+0+','+0+')' ; ctx.fillStyle = corC ; ctx.fillRect(50       , 0, 1, 1)  // nS
                 
