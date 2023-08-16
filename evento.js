@@ -540,7 +540,7 @@ function iniSys(){
         el('Fundo').style.top = (deX)+'px'
 
     }
-    el('divMassa-Txt').style.left = (deX*20+700)+'px'
+    el('divMassa-Txt').style.left = (deX*20+100)+'px'
 // ......[ajusta mob]        
 
 
