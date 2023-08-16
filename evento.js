@@ -32,7 +32,7 @@
 
 //  -------------- Variáveis Globais -------------
 //var module = require('fs')
-var mobFlag = 0
+var mobFlag = 0 , scrTurn = 0
 var ctx = 0, dictCoods = {}, verScr = 0
 var nomeProjS = ''  ;   ListPlan = {name: [3]}  ,  nLoad = 0 , N = 0 ; iAbaAti = 1
 var habClic = 0 ; var iniValueInput = 0 , iniValueInputA = 0 , finValueInputA = 0
@@ -526,21 +526,17 @@ function iniSys(){
     if(Aw<1000){mobFlag = 1 }
 
     hF = parseInt(window.getComputedStyle(el('Fundo')).height) ; wF = parseInt(window.getComputedStyle(el('Fundo')).width)
-    fatX     =  Ah/wF ; fatY     =  Aw/hF
+    fatX    =  Ah/wF ; fatY     =  Aw/hF
     delV    = (wF-hF)/2 + (hF/2)*(1-fatY)
     
     print(' mobFlag:'+mobFlag+'  Ah:')
-    deX = 0
-    if (mobFlag!=2){ 
-
-        el('Fundo').style.WebkitTransform = "rotateZ(-90deg)"+" scaleX("+fatX+")"+" scaleY("+fatY+")"
+    
+    if (mobFlag!=1 && wF>400){ 
+        el('Fundo').style.transform = "rotateZ(-90deg)"+" scaleX("+fatX+")"+" scaleY("+fatY+")"
         el('Fundo').style.left = (-delV)+'px'
-
-        deX = 0
-        el('Fundo').style.top = (deX)+'px'
-
+        scrTurn = 1
     }
-    el('divMassa-Txt').style.left = (deX*20+100)+'px'
+    //el('divMassa-Txt').style.left = (deX*20+100)+'px'
 // ......[ajusta mob]        
 
 
