@@ -534,8 +534,7 @@ function iniSys(){
         el('Fundo').style.left = (-delV)+'px'
         scrTurn = 1
     }
-    //el('divMassa-Txt').style.left = (deX*20+100)+'px'
-// ......[ajusta mob]        
+    // ......[ajusta mob]        
 
 
 }
