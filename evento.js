@@ -529,9 +529,7 @@ function iniSys(){
     fatX    =  Ah/wF ; fatY     =  Aw/hF
     delV    = (wF-hF)/2 + (hF/2)*(1-fatY)
     
-    print(' mobFlag:'+mobFlag+'  Ah:')
-    
-    if (mobFlag!=1 && wF>400){ 
+    if (mobFlag==1 && wF>400){ 
         el('Fundo').style.transform = "rotateZ(-90deg)"+" scaleX("+fatX+")"+" scaleY("+fatY+")"
         el('Fundo').style.left = (-delV)+'px'
         scrTurn = 1
