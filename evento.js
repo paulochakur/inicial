@@ -32,7 +32,7 @@
 
 //  -------------- Variáveis Globais -------------
 //var module = require('fs')
-var mobFlag = 0 , scrTurn = 0
+var mobFlag = 0 , scrTurn = 0, lastX = 0, lastY = 0, delX = 0, delY = 0
 var ctx = 0, dictCoods = {}, verScr = 0
 var nomeProjS = ''  ;   ListPlan = {name: [3]}  ,  nLoad = 0 , N = 0 ; iAbaAti = 1
 var habClic = 0 ; var iniValueInput = 0 , iniValueInputA = 0 , finValueInputA = 0
@@ -566,6 +566,10 @@ function eventTrap() {
     eleTaId    = eleTa.id      ;   eleTaClass  = eleTa.className   ;   eleTaTy     = eleTa.tagName ;   taStyle = getComputedStyle(eleTa)
     // Focus  Element
     eleFoId    = eleFo.id      ;   eleFoClass  = eleFo.className   ;   eleFoTy     = eleFo.tagName ;   foStyle = getComputedStyle(eleFo)
+    // Movimento - deltas
+    if (evento=='touchstart') { lastX = event.touches[0].clientX            ; lastY = event.touches[0].clientY }
+    if (evento=='touchmove')  { delX  = -event.touches[0].clientX + lastX   ; delY  = -event.touches[0].clientY + lastY }
+    if (evento=='wheel')      { delX  = event.deltaX                        ; delY  = event.deltaY }
 
     if (eleOnClass==undefined){ eleOnClass = 'Und'}
     if (eleTaClass==undefined){ eleTaClass = 'Und'}
@@ -1228,17 +1232,21 @@ function eventTrap() {
                 if (jElN<cFrz){ jSheet = jElN }
                 prox = nomeSheet+":(" + iSheet + "," + jSheet +")"
                 
+                // .... põe e tira cursor de Pla
+                // fuction curPla(divSheetId, elAnt, prox) {  //   elAnt, prox são Ids
+                    cursor      = Cells[divSheetId][0][0]['cursor']
                 if (elAnt!=''){
+                    if (LinMod>0 && iElN>lFrz) { iElNf = lFrz }
                     mergedColsA  = Cells[divSheetId][iElNf][jElN]['mergedCols']
                     mergedLinsA  = Cells[divSheetId][iElNf][jElN]['mergedLins']
                     el(elAnt).style.zIndex = '2'
                     if(mergedColsA!=1 || mergedLinsA!=1){ el(elAnt).style.zIndex = '1' }
                     if (cursor!='outline'){ desBordas(iSheetA, jSheetA, el(elAnt)) }
                 }
-                
                 el(prox).style.zIndex = '3'
                 if (cursor!='outline')  { el(prox).style.borderColor = cursor ; el(prox).style.borderWidth = '2px'; el(prox).style.outlineWidth      = "0px" }
                 if (cursor=='outline')  { el(prox).style.outlineWidth      = "1px" }
+                // ....[põe e tira cursor de Pla]
 
                 blocTrap = 1
                 if (prox!=''){ 
@@ -2455,7 +2463,8 @@ function preencheSheet(lplanIni=0, cplanIni=0, divSheetId){
         iElC = lplan0 ; jElC = cplan0 
         Cells[divSheetId][0][0]['iEl'] = iElC ; Cells[divSheetId][0][0]['jEl'] = jElC
         iSheet = iElC - lplan0 + lFrz       ;   jSheet = jElC - cplan0 + cFrz
-        el(divSheetId+"-Pla:("+lFrz+","+cFrz+")").focus()
+        prox = divSheetId+"-Pla:("+lFrz+","+cFrz+")"
+        el(prox).focus()
     }
     
     // ....
@@ -2517,6 +2526,7 @@ function printCell(i, j, divSheet){   // i, j  em Sheet
         // ----[TRAP  DE VALOR]
 
         // format Cell
+        cell.style.zIndex               = 2
         cell.style.backgroundColor      = backgroundColor
         cell.style.color                = color
         cell.style.textAlign            = textAlign
