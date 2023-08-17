@@ -425,7 +425,7 @@
                 if (el('divPage').style.overflow=='scroll' && eleFoId.includes("-Pla"))  { el('divPage').style.overflow = 'hidden' }
                 if (el('divPage').style.overflow=='hidden' && !eleFoId.includes("-Pla")) { el('divPage').style.overflow = 'scroll' }
             }
-            try{ el('Rosa').innerHTML = (' eleTaId'+eleTaId+'  ascScrId:'+ascScrId+' elMovel:'+elMovel.id) } catch{}
+            try{ el('Rosa').innerHTML = (' evento'+evento+'  delY:'+delY+' delX:'+delX) } catch{}
 
             // . . . scroll de Pla
             if( (evento=='wheel' || evento=='touchmove') && eleFoId.includes("-Pla") && eleOnId.includes("-Pla")){
