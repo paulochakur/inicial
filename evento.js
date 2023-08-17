@@ -568,7 +568,7 @@ function eventTrap() {
     eleFoId    = eleFo.id      ;   eleFoClass  = eleFo.className   ;   eleFoTy     = eleFo.tagName ;   foStyle = getComputedStyle(eleFo)
     // Movimento - deltas
     if (evento=='touchstart') { lastX = event.touches[0].clientX            ; lastY = event.touches[0].clientY }
-    if (evento=='touchmove')  { delX  = -event.touches[0].clientX + lastX   ; delY  = -event.touches[0].clientY + lastY }
+    if (evento=='touchmove')  { delX  = parseInt(-event.touches[0].clientX) + lastX   ; delY  = parseInt(-event.touches[0].clientY + lastY) }
     if (evento=='wheel')      { delX  = event.deltaX                        ; delY  = event.deltaY }
 
     if (eleOnClass==undefined){ eleOnClass = 'Und'}
