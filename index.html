@@ -425,19 +425,22 @@
                 if (el('divPage').style.overflow=='scroll' && eleFoId.includes("-Pla"))  { el('divPage').style.overflow = 'hidden' }
                 if (el('divPage').style.overflow=='hidden' && !eleFoId.includes("-Pla")) { el('divPage').style.overflow = 'scroll' }
             }
-            try{ el('Rosa').innerHTML = (' evento'+evento+'  delY:'+delY+' delX:'+delX) } catch{}
+            
 
             // . . . scroll de Pla
             if( (evento=='wheel' || evento=='touchmove') && eleFoId.includes("-Pla") && eleOnId.includes("-Pla")){
                 nomeSheet   = eleFoClass
                 lplan0      = Cells[divSheetId][0][0]['lplan0'] ; cplan0    = Cells[divSheetId][0][0]['cplan0']
-                delLin = (Math.abs(delY)/delY) ; delCol = (Math.abs(delX)/delX)
+                delLin = 0 ; delCol = 0
+                if (delY!=0){ delLin = (Math.abs(delY)/delY) }
+                if (delX!=0){ delCol = (Math.abs(delX)/delX) }
                 lplan0N = lplan0 + delLin ; cplan0N = cplan0 + delCol
                 preencheSheet(lplanIni=lplan0N, cplanIni=cplan0N, divSheetId)
                 elId    = divSheetId+'-Pla:('+iSheet+','+jSheet+')'
                 el(elId).style.zIndex = 3
             }
             // . . .[scroll de Pla]
+            try{ el('Rosa').innerHTML = (' evento'+evento+'  delY:'+delY+' delX:'+delX+' delLin:'+delLin+' delCol:'+delCol ) } catch{}
 
             // . . . scroll de page fundo            
             if(evento=='wheel' && eleScrFix.getAttribute('scroll')=='roll'  && !(eleFoId.includes("-Pla") && eleOnId.includes("-Pla")) ){
