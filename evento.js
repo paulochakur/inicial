@@ -567,9 +567,9 @@ function eventTrap() {
     // Focus  Element
     eleFoId    = eleFo.id      ;   eleFoClass  = eleFo.className   ;   eleFoTy     = eleFo.tagName ;   foStyle = getComputedStyle(eleFo)
     // Movimento - deltas
-    if (evento=='touchstart') { lastX = event.touches[0].clientX            ; lastY = event.touches[0].clientY }
-    if (evento=='touchmove')  { delX  = parseInt(-event.touches[0].clientX) + lastX   ; delY  = parseInt(-event.touches[0].clientY + lastY) }
-    if (evento=='wheel')      { delX  = event.deltaX                        ; delY  = event.deltaY }
+    if (evento=='touchstart') { lastX = event.touches[0].clientX                     ; lastY = event.touches[0].clientY }
+    if (evento=='touchmove')  { delX  = parseInt(-event.touches[0].clientX + lastX ) ; delY  = parseInt(-event.touches[0].clientY + lastY) }
+    if (evento=='wheel')      { delX  = event.deltaX                                 ; delY  = event.deltaY }
 
     if (eleOnClass==undefined){ eleOnClass = 'Und'}
     if (eleTaClass==undefined){ eleTaClass = 'Und'}
@@ -685,7 +685,7 @@ function eventTrap() {
         leftAtu = el('console').style.left
         hab=1
         if (leftAtu!='-3000px'  && hab==1){ el('console').style.left = '-3000px' ; el('proprBox').style.left = '-3000px' ;  hab=0 ; proprHab = 0}
-        if (leftAtu=='-3000px'  && hab==1){ el('console').style.left = '10px'    ; el('proprBox').style.left = '4px'     ;  hab=0 ; proprHab = 1}
+        if (leftAtu=='-3000px'  && hab==1){ el('console').style.left = '510px'    ; el('proprBox').style.left = '504px'     ;  hab=0 ; proprHab = 1}
         if(el('console').style.zIndex=='101') { proprHab = 0 }
     }
     // ... toggle CONSOLE front/bottom com Propriedades   - click
@@ -2253,7 +2253,7 @@ function criaSheet(divSheetId){
         divSheet.appendChild(para);
         para.id     = nomeSheet+"-headerLinL"
         para.className  = nomeSheet
-        para.type="text"
+        para.type="number"
         para.style  = 'position: absolute; left: 31px; top: 0px; height: 19px; width: 50px; box-sizing: border-box; margin: 0px; pading: 0px; border-style: solid; border-color: black;'
         para.style.borderWidth      = "0px"  
         para.style.backgroundColor  = '#E4E4E4'
