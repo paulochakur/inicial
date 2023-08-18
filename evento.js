@@ -450,8 +450,9 @@ function iniSys(){
         iAba = 0 ; eAba = divId.includes('-Aba-')
         if (eAba){ iA = divId.indexOf("-Aba-") ; iAba  = parseInt(divId.slice(iA+5)) ; divAbaId = divId.slice(0, iA)}
         if (iAba>1){
+            el(divId).style.zIndex  = 0
             el(divId).style.top     = (paraAba[divAbaId][0])+'px'
-            el(divId).style.left    = (paraAba[divAbaId][1] - 10000)+'px'
+            el(divId).style.left    = (paraAba[divAbaId][1])+'px'
             el(divId).style.width   = (paraAba[divAbaId][2])+'px'
             el(divId).style.height  = (paraAba[divAbaId][3])+'px'
             nAbas = nAbas + 1 ;     paraAba[divAbaId][4] = nAbas
@@ -807,7 +808,7 @@ function eventTrap() {
             inpAnt.value                                                 = finValueInputA
             try{ 
                 sincr    = Cells[divSheetId][0][0]['sincr']    
-                if (sincr!='*') { ListPlan[divSheetId][iElSelA][jElSelA] = finValueInputA }
+                if (sincr!='*') { ListPlan[divSheetId][iElSelA][jElSelA] = finValueInputA ; print('  finValueInputA:'+finValueInputA)}
             } catch{}
         }
         // .  . current (got focus)
@@ -1412,11 +1413,14 @@ function showAba(divId, iAba=1){
     //iA = divId.indexOf("-Aba-") ; iAba  = parseInt(divId.slice(iA+5)) ; divAbaId = divId.slice(0, iA)
     
     divM = divId+'-Aba-'+iAba
-    el(divM).style.left    = (paraAba[divId][1])+'px'
+    //el(divM).style.left    = (paraAba[divId][1])+'px'
+    el(divM).style.zIndex  = 10
     nAbas = paraAba[divId][4]
     for (iAb = 1; iAb <= nAbas; iAb++){
         divF = divId+'-Aba-'+iAb
-        if (iAb!=iAba) { el(divF).style.left    = '-10000px' }
+        //if (iAb!=iAba) { el(divF).style.left    = '-10000px' }
+        if (iAb!=iAba) { el(divF).style.zIndex  = 0 }
+        
     }
     iAbaAti = iAba
     // ...
@@ -2516,9 +2520,11 @@ function printCell(i, j, divSheet){   // i, j  em Sheet
 
         // ---- TRAP  DE VALOR
         valor = ''
-        //if(iC<lFrz  || LinMod==0){ valor = Cells[divSheetId][iC][jC]['valor'] }
         // ...  arquivo JS
-        try{ if(iC>=lFrz) { valor   = ListPlan[divSheetId][iC][jC] }    } catch{}
+        sincr = Cells[divSheetId][0][0]['sincr']
+        try{ if (sincr!='*') { valor   = ListPlan[divSheetId][iC][jC]          }   } catch{}
+        try{ if (sincr=='*') { valor   = Cells[divSheetId][iCf][jC]['valor']   }   } catch{}
+
         planValorTrap(divSheetId, iC, jC)
         cell.value                      = valor
         // ----[TRAP  DE VALOR]

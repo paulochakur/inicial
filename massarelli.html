@@ -291,14 +291,12 @@
         }         
         // . . .[SelectionChange]
 
-
         // . . . valor em printCell
         function planValorTrap(divSheetId, iC, jC) {    // coordenadas de Planilha = coords de ListPlan
             lFrz     = Cells[divSheetId][0][0]['lFrz'] ; cFrz      = Cells[divSheetId][0][0]['cFrz']
             // . . . 
             if(divSheetId=='LicitPubi' && iC>0){ 
                 try{
-                    
                     if(jC==1) { valor  = ListPlan[divSheetId][iC][2] }     // Órgão
                     if(jC==2) { valor  = ListPlan[divSheetId][iC][3] }     // Cidade
                     if(jC==3) { valor  = ListPlan[divSheetId][iC][4] }     // Estado

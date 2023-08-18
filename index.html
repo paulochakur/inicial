@@ -252,7 +252,7 @@
             // .... Lost Focus
             if(entraInp=='Lost'){
                 // ..
-                if (parseInt(finValueInputA)==25){ finValueInputA = 'WWW' }
+                if (iEl==25){ finValueInputA = 'WWW' }
                 //if (iElSelA==30){ el(elId).value = finValueInputA ; ListPlan[divSheetId][2][3] = finValueInputA}
                 
                 // ...
@@ -408,9 +408,6 @@
             }
             */
            
-            tS = window.getComputedStyle(el('divSelecionados')).top ; scrY = el('divPage').scrollTop
-            //try{ el('Rosa').innerHTML = (' evento:'+evento+':'+'  Wh:'+Wh+'Ww:'+Ww+' mobFlag:'+mobFlag+'  tS:'+tS+'   scrY:'+scrY) } catch{}
-
 
             // ------ Scroll           
             ascScrId    = eleTa.getAttribute('ascScr') ; ascScrParId = eleTa.parentElement.getAttribute('ascScr')
@@ -445,7 +442,7 @@
                 el(elId).style.zIndex = 3
             }
             // . . .[scroll de Pla]
-            try{ el('Rosa').innerHTML = (' evento'+evento+'  delY:'+delY+' delX:'+delX+' delLin:'+delLin+' delCol:'+delCol ) } catch{}
+            //try{ el('Rosa').innerHTML = (' evento'+evento+'  delY:'+delY+' delX:'+delX+' delLin:'+delLin+' delCol:'+delCol ) } catch{}
 
             // . . . scroll de page fundo            
             if(evento=='wheel' && eleScrFix.getAttribute('scroll')=='roll'  && !(eleFoId.includes("-Pla") && eleOnId.includes("-Pla")) ){
