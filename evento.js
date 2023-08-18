@@ -737,7 +737,6 @@ function eventTrap() {
             if (eleTaTy== 'INPUT' && evento=="focusin")  { 
                 inpCur = eleTa  ; inpCurId = eleTaId                       
                 entraInp = 'Got'
-                //iniValueInputA = iniValueInput
                 iniValueInput  = eleTa.value
 
                 // . . . toques    
@@ -801,12 +800,11 @@ function eventTrap() {
         }
         // . . .[input de Plan]
 
-        valueInput = iniValueInput
         SelectionChange()
         // -------- atualiza ListPlan - SYST
         // .  . anterior (lost focus)
         if(entraInp=='Lost'){ 
-            inpAnt.value                                = finValueInputA
+            inpAnt.value                                                 = finValueInputA
             try{ 
                 sincr    = Cells[divSheetId][0][0]['sincr']    
                 if (sincr!='*') { ListPlan[divSheetId][iElSelA][jElSelA] = finValueInputA }
@@ -814,10 +812,10 @@ function eventTrap() {
         }
         // .  . current (got focus)
         if(entraInp=='Got'){ 
-            inpCur.value                                = valueInput
+            inpCur.value                                                 = iniValueInput
             try{ 
                 sincr    = Cells[divSheetId][0][0]['sincr']    
-                if (sincr!='*') { ListPlan[divSheetId][iElSel][jElSel]   = inpCur.value }
+                if (sincr!='*') { ListPlan[divSheetId][iElSel][jElSel]   = iniValueInput }
             } catch{}
         }
         // --------[atualiza ListPlan - SYST]
@@ -1201,20 +1199,20 @@ function eventTrap() {
 
                 // ----- SelectionChange
                 if (scro>0){ 
-                    iElSel = iElN ; jElSel = jElN ; iElSelA = iEl ; jElSelA = jEl ; inpAnt = elAnt
+                    inpAnt = elAnt
                     finValueInputA = el(inpAnt).value
                     iniValueInput  = ListPlan[divSheetId][iElN][jElN]                                        
+                    
                     // -------- atualiza ListPlan - SYST
                     // .  . anterior (lost focus)
                     entraInp = 'Lost'   ; SelectionChange()
-                    inpAnt.value                           = finValueInputA
-                    ListPlan[divSheetId][iElSelA][jElSelA] = finValueInputA
+                    inpAnt.value                       = finValueInputA
+                    ListPlan[divSheetId][iEl][jEl]     = finValueInputA
                     iniValueInputA  = iniValueInput
                     // .  . current (got focus)
-                    valueInput = iniValueInput
                     entraInp = 'Got'    ; SelectionChange()
-                    inpCur.value                           = valueInput
-                    ListPlan[divSheetId][iElSel][jElSel]   = inpCur.value
+                    inpCur.value                       = iniValueInput
+                    ListPlan[divSheetId][iElN][iElN]   = iniValueInput  
                     // --------[atualiza ListPlan - SYST]
                 }
                 // -----[SelectionChange]
