@@ -526,7 +526,6 @@ function iniSys(){
 
     iniLoc()
     atuJib()
-
     
     // ...... ajusta mob
     Wh = window.innerHeight             ; Ww = window.innerWidth
@@ -1318,11 +1317,10 @@ function atuJib(){
     corC='rgb('+0     +','+0+','+0+')' ; ctx.fillStyle = corC ; ctx.fillRect(150      , 0, 1, 1)  // nS
     
     for (iD=0; iD<=nDivs-1; iD++){
+        
         divId = Ldivs[iD] ; div = el(divId)
-        iw = div.getAttribute("iw")
-        tipoScrAsc = "*"
-        ascScrId    = div.getAttribute('ascScr')
-        try{ tipoScrAsc = el(ascScrId).getAttribute('scroll') } catch{}
+        try{ iw = div.getAttribute("iw") }catch{ iw = 0 }
+        if (iw==null){ iw = 0 }
         if (iw>0) { 
             divPar      = div.parentElement
             
@@ -1348,7 +1346,6 @@ function atuJib(){
             if (scrX!=0 || scrY!=0){
                 nS = nS + 1
                 corC='rgb('+nS+','+0+','+0+')' ; ctx.fillStyle = corC ; ctx.fillRect(150       , 0, 1, 1)  // nS
-                print('  ***** nS:'+nS+' divId:'+divId+'  scrY:'+scrY)
                 x1 = parseInt(iw/255)   ; x2 = parseInt(iw   - x1*255)    ; corC='rgb('+x1+','+x2+','+0+')'
                     ctx.fillStyle = corC                ; ctx.fillRect(nS*3+148  , 0, 1, 1)  // iw            
                 x1 = parseInt(scrX/255) ; x2 = parseInt(scrX - x1*255)    ; corC='rgb('+x1+','+x2+','+0+')'
@@ -1357,7 +1354,7 @@ function atuJib(){
                     ctx.fillStyle = corC                ; ctx.fillRect(nS*3+148+2, 0, 1, 1)  // delY
             }
             // . . .[deslocamentos de scroll de ele]
-
+            
         }
     }
     // . . .[desl de Scroll e parâmetros de Aba]
