@@ -312,7 +312,7 @@ function iniSys(){
     el('Corpo').appendChild(para)
     para.id     = "canTrans"
     el("canTrans").style = 'position: fixed; left: 0px; top: 0px; box-sizing: content-box; margin: 0.0px; padding: 0px; cursor: text; border-color: black; border-radius: 0%; border-width: 0.0px; border-style: solid; background-color: transparent; opacity: 1; overflow: auto; z-index: 100'
-    para.width  = 400 ; para.height = 1
+    para.width  = 500 ; para.height = 1
     ctx  = el("canTrans").getContext("2d")
 
     // .  .  .  nome do Proj
@@ -406,25 +406,30 @@ function iniSys(){
     for (iDiv = 0; iDiv <= nDivs-1; iDiv++){
         divId = Ldivs[iDiv]
         try{
-            iw      = el(divId).getAttribute("iw")
+            iw = el(divId).getAttribute("iw")
             if (iw>0){
                 tDiv    = parseInt(window.getComputedStyle(el(divId)).top)
                 lDiv    = parseInt(window.getComputedStyle(el(divId)).left)
+                scrDiv  = el(divId).getAttribute("scroll")
+                yt      = el(divId).getAttribute("yt")
+                xl      = el(divId).getAttribute("xl")
+                scY     = el(divId).getAttribute("scY")
+                scX     = el(divId).getAttribute("scX")
+
                 dictCoods[iw] = [tDiv, lDiv]
                 // . . . aplica xl e yt - somente deskTop, em desenvovimento
-                xl = el(divId).getAttribute("xl")   ; yt = el(divId).getAttribute("yt")
-                if (yt!=null && mobFlag==0){ el(divId).style.top  = (tDiv-yt)+'px' }
-                if (xl!=null && mobFlag==0){ el(divId).style.left = (lDiv-xl)+'px' }
+                if (yt!=null  && mobFlag==0){ el(divId).style.top  = (tDiv-yt)+'px' }
+                if (xl!=null  && mobFlag==0){ el(divId).style.left = (lDiv-xl)+'px' }
+                if (scY!=null && mobFlag==0){ el(divId).scrollTop  = scY }
+                if (scX!=null && mobFlag==0){ el(divId).scrollLeft = scX }
 
                 // . . . somente mob
-                scr = el(divId).getAttribute("scroll")
-                if (scr=='roll' && mobFlag==1){ el(divId).style.overflow = 'scroll' }
+                if (scrDiv=='roll' && mobFlag==1){ el(divId).style.overflow = 'scroll' }
             }
         }catch{}
     }
     // . . .[monta dictCoods - originais]
 
-    
     // ....... Inicial abas
     allEl = document.getElementsByTagName("div")  ;  nDivs = allEl.length
     Ldivs = []  ; for (i = 0; i <= nDivs-1; i++){ Ldivs.push(allEl[i].id) }
@@ -437,7 +442,7 @@ function iniSys(){
             wAba    = parseInt(window.getComputedStyle(el(divId)).width)
             hAba    = parseInt(window.getComputedStyle(el(divId)).height)
             tAba    = parseInt(window.getComputedStyle(el(divId)).top)
-            lAba    = parseInt(window.getComputedStyle(el(divId)).top)
+            lAba    = parseInt(window.getComputedStyle(el(divId)).left)
             paraAba[divAbaId] = [ tAba, lAba, wAba, hAba, 1]
         }
     }
@@ -450,9 +455,10 @@ function iniSys(){
         iAba = 0 ; eAba = divId.includes('-Aba-')
         if (eAba){ iA = divId.indexOf("-Aba-") ; iAba  = parseInt(divId.slice(iA+5)) ; divAbaId = divId.slice(0, iA)}
         if (iAba>1){
+            iw = el(divId).getAttribute('iw')
             el(divId).style.zIndex  = 0
-            el(divId).style.top     = (paraAba[divAbaId][0])+'px'
-            el(divId).style.left    = (paraAba[divAbaId][1])+'px'
+            el(divId).style.top     = (paraAba[divAbaId][0])+'px' ; dictCoods[iw][0] = paraAba[divAbaId][0]
+            el(divId).style.left    = (paraAba[divAbaId][1])+'px' ; dictCoods[iw][1] = paraAba[divAbaId][1]
             el(divId).style.width   = (paraAba[divAbaId][2])+'px'
             el(divId).style.height  = (paraAba[divAbaId][3])+'px'
             nAbas = nAbas + 1 ;     paraAba[divAbaId][4] = nAbas
@@ -487,7 +493,7 @@ function iniSys(){
     }
     // ........[abre Planilhas]
     
-    // ........ Inclui TEXTOS  $$$$ Criou divSheetId:
+    // ........ Inclui TEXTOS
     Ldivs = []
     allEl = document.getElementsByTagName("div")  ;  nDivs = allEl.length
     for (i = 0; i <= nDivs-1; i++){ Ldivs.push(allEl[i].id) }
@@ -577,7 +583,7 @@ function eventTrap() {
     if (eleFoClass==undefined){ eleFoClass = 'Und'}
 
     // elementos de evento - On, Target, Foco
-    if (evento!="focusout"){ eleTa  = event.target} // ; print('$$$ evento'+evento) }
+    if (evento!="focusout"){ eleTa  = event.target}
     
     // .  .  .[tipo INPUT]
 
@@ -616,7 +622,8 @@ function eventTrap() {
     keyCode = event.keyCode         ; ctrK = event.ctrlKey
 
     // ..... atualiza Jiboia
-    if(ctrK){ atuJib() }
+    
+    if(keyCode==88){ atuJib() }  // ctr X
 
     // .... inibe menu do browser em rightClick
     if(evento=='contextmenu'){ evento = 'rightclick' ; event.preventDefault() }
@@ -1289,12 +1296,11 @@ function eventTrap() {
 // ************************* FUNCTIONS DE SISTEMA EM .js
 function atuJib(){
     // ... escreve para Jiboia
-    // . . . canvas
+    // . . . 
     ctx.fillStyle = 'rgb(127,127,127)'  ; ctx.fillRect(0, 0, 1, 1)  // topJib
 
     x1 = parseInt(xPs/255) ; x2 = parseInt(xPs - x1*255)    ; corC='rgb('+x1+','+x2+','+0+')'
     ctx.fillStyle = corC                ; ctx.fillRect(1, 0, 1, 1)  // xPs
-    
     y1 = parseInt(yPs/255) ; y2 = parseInt(yPs - y1*255)    ; corC='rgb('+y1+','+y2+','+0+')'
     ctx.fillStyle = corC                ; ctx.fillRect(2, 0, 1, 1)  // yPs
 
@@ -1306,43 +1312,56 @@ function atuJib(){
     Ldivs = []  ; for (i = 0; i <= nDivs-1; i++){ Ldivs.push(allEl[i].id) }
     
     // . . . desl de Scroll e parâmetros de Aba
-    nS = 0 ; verScr = verScr + 1
+    nD = 0 ; nS = 0 ; verScr = verScr + 1
     corC='rgb('+verScr+','+0+','+0+')' ; ctx.fillStyle = corC ; ctx.fillRect(49       , 0, 1, 1)  // verScr
-    corC='rgb('+0     +','+0+','+0+')' ; ctx.fillStyle = corC ; ctx.fillRect(50       , 0, 1, 1)  // nS
+    corC='rgb('+0     +','+0+','+0+')' ; ctx.fillStyle = corC ; ctx.fillRect(50       , 0, 1, 1)  // nD
+    corC='rgb('+0     +','+0+','+0+')' ; ctx.fillStyle = corC ; ctx.fillRect(150      , 0, 1, 1)  // nS
+    
     for (iD=0; iD<=nDivs-1; iD++){
-        scr = '*' ; iw = 0 ; divId = Ldivs[iD] ; div = el(divId)
-        try{ scr = div.getAttribute("scroll") ; iw = div.getAttribute("iw") } catch{}
+        divId = Ldivs[iD] ; div = el(divId)
+        iw = div.getAttribute("iw")
+        tipoScrAsc = "*"
+        ascScrId    = div.getAttribute('ascScr')
+        try{ tipoScrAsc = el(ascScrId).getAttribute('scroll') } catch{}
         if (iw>0) { 
-            scrX = 0 ; scrY = 0
-            divPar = div.parentElement
-            try{ scrX = divPar.scrollLeft ; scrY = divPar.scrollTop } catch{ scrX = 0 ; scrY = 0 ; print(' $$$ iw:'+iw)}
-            tOri = dictCoods[iw][0] ; lOri = dictCoods[iw][1]
+            divPar      = div.parentElement
+            
+            // . . . deslocamentos de top e left de 50 a 111 ( 20 elementos )
+            tOri = dictCoods[iw][0]     ; lOri = dictCoods[iw][1]
             novoX = parseInt(window.getComputedStyle(div).left) ; novoY = parseInt(window.getComputedStyle(div).top)
-            delX = lOri - novoX + scrX ; delY = tOri - novoY + scrY
+            delX = lOri - novoX ; delY = tOri - novoY
             if (delX!=0 || delY!=0){
-                //print(' iw:'+iw+'  delY:'+delY+'  tOri:'+tOri+'   novoY:'+novoY+'  scrY:'+scrY+' * '+div.scrollTop+' #:'+div.getAttribute("scroll")+' - '+el('Rosa').style.top)
-                nS = nS + 1
-                corC='rgb('+nS+','+0+','+0+')' ; ctx.fillStyle = corC ; ctx.fillRect(50       , 0, 1, 1)  // nS
-                
+                nD = nD + 1
+                corC='rgb('+nD+','+0+','+0+')' ; ctx.fillStyle = corC ; ctx.fillRect(50       , 0, 1, 1)  // nD
                 x1 = parseInt(iw/255)   ; x2 = parseInt(iw   - x1*255)    ; corC='rgb('+x1+','+x2+','+0+')'
-                    ctx.fillStyle = corC                ; ctx.fillRect(nS*3+48  , 0, 1, 1)  // iw            
+                    ctx.fillStyle = corC                ; ctx.fillRect(nD*3+48  , 0, 1, 1)  // iw            
                 x1 = parseInt(delX/255) ; x2 = parseInt(delX - x1*255)    ; corC='rgb('+x1+','+x2+','+0+')'
-                    ctx.fillStyle = corC                ; ctx.fillRect(nS*3+48+1, 0, 1, 1)  // delX
+                    ctx.fillStyle = corC                ; ctx.fillRect(nD*3+48+1, 0, 1, 1)  // delX
                 x1 = parseInt(delY/255) ; x2 = parseInt(delY - x1*255)    ; corC='rgb('+x1+','+x2+','+0+')'
-                    ctx.fillStyle = corC                ; ctx.fillRect(nS*3+48+2, 0, 1, 1)  // delY
+                    ctx.fillStyle = corC                ; ctx.fillRect(nD*3+48+2, 0, 1, 1)  // delY
             }
+            // . . .[deslocamentos de top e left de 50 a 111 ( 20 elementos )]
+
+            // . . . deslocamentos de scroll de ele            
+            scr = div.getAttribute("scroll")
+            scrX = div.scrollLeft    ; scrY = div.scrollTop
+            if (scrX!=0 || scrY!=0){
+                nS = nS + 1
+                corC='rgb('+nS+','+0+','+0+')' ; ctx.fillStyle = corC ; ctx.fillRect(150       , 0, 1, 1)  // nS
+                print('  ***** nS:'+nS+' divId:'+divId+'  scrY:'+scrY)
+                x1 = parseInt(iw/255)   ; x2 = parseInt(iw   - x1*255)    ; corC='rgb('+x1+','+x2+','+0+')'
+                    ctx.fillStyle = corC                ; ctx.fillRect(nS*3+148  , 0, 1, 1)  // iw            
+                x1 = parseInt(scrX/255) ; x2 = parseInt(scrX - x1*255)    ; corC='rgb('+x1+','+x2+','+0+')'
+                    ctx.fillStyle = corC                ; ctx.fillRect(nS*3+148+1, 0, 1, 1)  // delX
+                x1 = parseInt(scrY/255) ; x2 = parseInt(scrY - x1*255)    ; corC='rgb('+x1+','+x2+','+0+')'
+                    ctx.fillStyle = corC                ; ctx.fillRect(nS*3+148+2, 0, 1, 1)  // delY
+            }
+            // . . .[deslocamentos de scroll de ele]
+
         }
     }
     // . . .[desl de Scroll e parâmetros de Aba]
     
-
-
-    // . . . deltX e deltY
-    for(iTr=1; iTr<=30 ; iTr++){
-        xPs = iTr*10
-        x1 = parseInt(xPs/255) ; x2 = parseInt(xPs - x1*255); corTr = 'rgb('+x1+','+x2+','+0+')'
-        //ctx.fillStyle = corTr ; ctx.fillRect(iTr+100, 0, 1, 1)
-    }
 
         // ....
         return
