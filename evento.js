@@ -529,7 +529,7 @@ function iniSys(){
     
     // ...... ajusta mob
     Wh = window.innerHeight             ; Ww = window.innerWidth
-    Ah = window.screen.availHeight-130  ; Aw = window.screen.availWidth
+    Ah = window.screen.availHeight-120  ; Aw = window.screen.availWidth
     if(Aw<1000){mobFlag = 1 }
 
     hF = parseInt(window.getComputedStyle(el('Fundo')).height) ; wF = parseInt(window.getComputedStyle(el('Fundo')).width)
@@ -810,15 +810,15 @@ function eventTrap() {
         SelectionChange()
         // -------- atualiza ListPlan - SYST
         // .  . anterior (lost focus)
-        if(entraInp=='Lost'){ 
+        if(entraInp=='Lost' && inpAnt.className.includes("-Pla")){ 
             inpAnt.value                                                 = finValueInputA
             try{ 
                 sincr    = Cells[divSheetId][0][0]['sincr']    
-                if (sincr!='*') { ListPlan[divSheetId][iElSelA][jElSelA] = finValueInputA ; print('  finValueInputA:'+finValueInputA)}
+                if (sincr!='*') { ListPlan[divSheetId][iElSelA][jElSelA] = finValueInputA}
             } catch{}
         }
         // .  . current (got focus)
-        if(entraInp=='Got'){ 
+        if(entraInp=='Got' && inpCur.className.includes("-Pla")){ 
             inpCur.value                                                 = iniValueInput
             try{ 
                 sincr    = Cells[divSheetId][0][0]['sincr']    
@@ -1070,8 +1070,6 @@ function eventTrap() {
             abrePar = eleTaId.indexOf("(") ; fechaPar  = eleTaId.indexOf(")") ; virg = eleTaId.indexOf(",")
             if (abrePar>0){
                 iSheet  = parseInt(eleTaId.slice(abrePar+1, virg)) ; jSheet   = parseInt(eleTaId.slice(virg+1, fechaPar))
-
-
                 if (evento=="focusin") { keyCodeF = 1 }
             }
 
@@ -1146,135 +1144,18 @@ function eventTrap() {
                 if (keyCode==38 && ctrK)              { iElN = lFrz                         }       // Cima
                 if (keyCode==40 && ctrK)              { iElN = nLinPla                      }       // Baixo
                 // ------[movimento em Planilha - Tecla]
-            
-                // . . . limites
-                if (iElN<=1)       { iElN = 1       }
-                if (jElN<=1)       { jElN = 1       }
-                if (iElN>nLinPla)  { iElN = nLinPla }
-                if (jElN>nColPla)  { jElN = nColPla }
-
-                iElNf = iElN
-                if (LinMod>0 && iElN>lFrz) { iElNf = lFrz }
-                mergedCols          = Cells[divSheetId][iElNf][jElN]['mergedCols']
-                mergedLins          = Cells[divSheetId][iElNf][jElN]['mergedLins']
-                if (mergedCols<0) { jElN = jElN + mergedCols }
-                if (mergedLins<0) { iElN = iElN + mergedLins }
 
                 if (iElN==lFrz && iEl<lFrz)  { iElN = lplan0 }    // transição cabeçalho-corpo
                 if (jElN==cFrz && jEl<cFrz)  { jElN = cplan0 }    // transição cabeçalho-corpo
-
-                // ------------- analisa posição de novo foco - iElN , jElN
-                hei = Cells[divSheetId][lFrz][1]['height']
-                if(iElN<lFrz)  {bF = 0}        
-                if(iElN>=lFrz && LinMod==0)  { bF = Cells[divSheetId][iElN][jElN]['top'] - Cells[divSheetId][lplan0][jElN]['top'] + Cells[divSheetId][iElN][jElN]['height'] }
-                if(iElN>=lFrz && LinMod>0)   { bF = (iElN - lplan0 + 1)*hei}
-
-                xF = Cells[divSheetId][iElNf][jElN]['left'] - Cells[divSheetId][1][cplan0]['left']    
-                wF = Cells[divSheetId][iElNf][jElN]['width']
-                dF = xF + wF
-                // -------------[analisa posição de novo foco - iElN , jElN]
-                // ---- define lplan0 e cplan0
-                // . . . estouro ACIMA
-                if (iElN<lplan0 && iElN>=lFrz) { lplan0 = iElN  ;  Cells[divSheetId][0][0]['lplan0'] = lplan0 ;     scro = 1 }
-                // . . . estouro ESQUERDA
-                if (jElN<cplan0 && jElN>=cFrz) { cplan0 = jElN  ;  Cells[divSheetId][0][0]['cplan0'] = cplan0 ;     scro = 2 }
-                // . . . estouro ABAIXO
-                if (bF>hWindow)         {                       scro = 3    ; hPint = 0
-                    if(LinMod==0){
-                        for (i = iElN; i >= lFrz; i--){
-                            jj = 1
-                            if (i==iElN) { jj = jElN }    
-                            hPint = hPint + Cells[divSheetId][i][jj]['height']
-                            if(hPint>hWindow){ lplan0 = i + 1; i = 0}
-                        }
-                    }
-                    if(LinMod>0){lplan0 = iElN - nLinSh + lFrz}
-                    Cells[divSheetId][0][0]['lplan0'] = lplan0
-                }
-                // . . . estouro DIREITA
-                if (dF>wWindow)         {                       scro = 4    ; wPint = 0
-                    for (j = jElN; j >= cFrz; j--){
-                        ii = 1
-                        if (j==jElN) { ii = iElNf }
-                        wPint = wPint + Cells[divSheetId][ii][j]['width']
-                        if(wPint>wWindow){ cplan0 = j + 1; j = 0}
-                    }
-                    Cells[divSheetId][0][0]['cplan0'] = cplan0
-                }            
-                // ----[define lplan0 e cplan0]
+            
 
 
-                // ----- SelectionChange
-                if (scro>0){ 
-                    inpAnt = elAnt
-                    finValueInputA = el(inpAnt).value
-                    iniValueInput  = ListPlan[divSheetId][iElN][jElN]                                        
-                    
-                    // -------- atualiza ListPlan - SYST
-                    // .  . anterior (lost focus)
-                    entraInp = 'Lost'   ; SelectionChange()
-                    inpAnt.value                       = finValueInputA
-                    ListPlan[divSheetId][iEl][jEl]     = finValueInputA
-                    iniValueInputA  = iniValueInput
-                    // .  . current (got focus)
-                    entraInp = 'Got'    ; SelectionChange()
-                    inpCur.value                       = iniValueInput
-                    ListPlan[divSheetId][iElN][iElN]   = iniValueInput  
-                    // --------[atualiza ListPlan - SYST]
-                }
-                // -----[SelectionChange]
+                // ----------------------------------------------------------------
+                focoCell(divSheetId,  iElN, jElN, iSheetA, jSheetA, iEl, jEl)
+                // ----------------------------------------------------------------
 
-                //
-                if (scro>0){ 
-                    preencheSheet(lplanIni=0, cplanIni=0, divSheetId)
-                    toques = 0
-                }
 
-                // ----- foco em próximo
-                // ... 
-                iSheet = iElN - lplan0 + lFrz       ;   jSheet = jElN - cplan0 + cFrz
-                if (iElN<lFrz){ iSheet = iElN }
-                if (jElN<cFrz){ jSheet = jElN }
-                prox = nomeSheet+":(" + iSheet + "," + jSheet +")"
-                
-                // .... põe e tira cursor de Pla
-                // fuction curPla(divSheetId, elAnt, prox) {  //   elAnt, prox são Ids
-                    cursor      = Cells[divSheetId][0][0]['cursor']
-                if (elAnt!=''){
-                    if (LinMod>0 && iElN>lFrz) { iElNf = lFrz }
-                    mergedColsA  = Cells[divSheetId][iElNf][jElN]['mergedCols']
-                    mergedLinsA  = Cells[divSheetId][iElNf][jElN]['mergedLins']
-                    el(elAnt).style.zIndex = '2'
-                    if(mergedColsA!=1 || mergedLinsA!=1){ el(elAnt).style.zIndex = '1' }
-                    if (cursor!='outline'){ desBordas(iSheetA, jSheetA, el(elAnt)) }
-                }
-                el(prox).style.zIndex = '3'
-                if (cursor!='outline')  { el(prox).style.borderColor = cursor ; el(prox).style.borderWidth = '2px'; el(prox).style.outlineWidth      = "0px" }
-                if (cursor=='outline')  { el(prox).style.outlineWidth      = "1px" }
-                // ....[põe e tira cursor de Pla]
-
-                blocTrap = 1
-                if (prox!=''){ 
-                    if(header=='header'){ 
-                        iLinH = iElN - lFrz + 1
-                        if (iLinH<0){ iLinH=0 }
-                        head = el(nomeSheet+"-headerLinL")   ; head.value = iLinH
-                        head = el(nomeSheet+"-headerLinN")   ; head.value = ' de '+(nLinPla-lFrz+1)
-                    }
-                    Cells[divSheetId][0][0]['iEl'] = iElN ; Cells[divSheetId][0][0]['jEl'] = jElN 
-                    // . . . foco em novo
-                    el(prox).focus()
-                    
-                    if (scrollBars==1){
-                        el(nomeSheet+"-vertScroll").value  = parseInt( ((iElN-0)/(nLinPla-0) )*100 )
-                        el(nomeSheet+"-horizScroll").value = parseInt( ((jElN-0)/(nColPla-0) )*100 )
-                    }
-                }
-                blocTrap = 0
-                // -----[foco em próximo]
-                
                 iSheetA = iSheet    ;   jSheetA = jSheet
-                elAnt   = prox
             }    
         }
         // ------ movimento em Planilha - Tecla - NOVO FOCO
@@ -2351,10 +2232,163 @@ function criaSheet(divSheetId){
 }           
 // ----[Cria Sheet baseado em dictFormPla e MatrCellsPla]
 
+// ----- Põe foco em Cell de Plan
+function focoCell(divSheetId,  iElN, jElN, iSheetA, jSheetA, iEl, jEl){
+    // ------- foco em cell 
+    scro = 0
+    lplan0      = Cells[divSheetId][0][0]['lplan0']         ; cplan0    = Cells[divSheetId][0][0]['cplan0']
+    nLinPla     = Cells[divSheetId][0][0]['nLinPla']        ; nColPla   = Cells[divSheetId][0][0]['nColPla']
+    lFrz        = Cells[divSheetId][0][0]['lFrz']           ; cFrz      = Cells[divSheetId][0][0]['cFrz']
+    scrollBars  = Cells[divSheetId][0][0]['scrollBars'] 
+    header      = Cells[divSheetId][0][0]['header']         ; LinMod    = Cells[divSheetId][0][0]['LinMod']
+    cursor      = Cells[divSheetId][0][0]['cursor']
+
+    // . . . limites
+    if (iElN<=1)       { iElN = 1       }
+    if (jElN<=1)       { jElN = 1       }
+    if (iElN>nLinPla)  { iElN = nLinPla }
+    if (jElN>nColPla)  { jElN = nColPla }
+
+    iElNf = iElN
+    if (LinMod>0 && iElN>lFrz) { iElNf = lFrz }
+    mergedCols          = Cells[divSheetId][iElNf][jElN]['mergedCols']
+    mergedLins          = Cells[divSheetId][iElNf][jElN]['mergedLins']
+    if (mergedCols<0) { jElN = jElN + mergedCols }
+    if (mergedLins<0) { iElN = iElN + mergedLins }
+
+    // ------------- analisa posição de novo foco - iElN , jElN
+    hei = Cells[divSheetId][lFrz][1]['height']
+    if(iElN<lFrz)  {bF = 0}        
+    if(iElN>=lFrz && LinMod==0)  { bF = Cells[divSheetId][iElN][jElN]['top'] - Cells[divSheetId][lplan0][jElN]['top'] + Cells[divSheetId][iElN][jElN]['height'] }
+    if(iElN>=lFrz && LinMod>0)   { bF = (iElN - lplan0 + 1)*hei}
+
+    xF = Cells[divSheetId][iElNf][jElN]['left'] - Cells[divSheetId][1][cplan0]['left']    
+    wF = Cells[divSheetId][iElNf][jElN]['width']
+    dF = xF + wF
+    // -------------[analisa posição de novo foco - iElN , jElN]
+
+    // ---------- define lplan0 e cplan0
+    // . . . estouro ACIMA
+    if (iElN<lplan0 && iElN>=lFrz) { lplan0 = iElN  ;  Cells[divSheetId][0][0]['lplan0'] = lplan0 ;     scro = 1 }
+    // . . . estouro ESQUERDA
+    if (jElN<cplan0 && jElN>=cFrz) { cplan0 = jElN  ;  Cells[divSheetId][0][0]['cplan0'] = cplan0 ;     scro = 2 }
+    // . . . estouro ABAIXO
+    if (bF>hWindow)         {                       scro = 3    ; hPint = 0
+        if(LinMod==0){
+            for (i = iElN; i >= lFrz; i--){
+                jj = 1
+                if (i==iElN) { jj = jElN }    
+                hPint = hPint + Cells[divSheetId][i][jj]['height']
+                if(hPint>hWindow){ lplan0 = i + 1; i = 0}
+            }
+        }
+        if(LinMod>0){lplan0 = iElN - nLinSh + lFrz}
+        Cells[divSheetId][0][0]['lplan0'] = lplan0
+    }
+    // . . . estouro DIREITA
+    if (dF>wWindow)         {                       scro = 4    ; wPint = 0
+        for (j = jElN; j >= cFrz; j--){
+            ii = 1
+            if (j==jElN) { ii = iElNf }
+            wPint = wPint + Cells[divSheetId][ii][j]['width']
+            if(wPint>wWindow){ cplan0 = j + 1; j = 0}
+        }
+        Cells[divSheetId][0][0]['cplan0'] = cplan0
+    }            
+    // -----------[define lplan0 e cplan0]
+
+    // ... prox
+    iSheet = iElN - lplan0 + lFrz       ;   jSheet = jElN - cplan0 + cFrz
+    if (iElN<lFrz){ iSheet = iElN }
+    if (jElN<cFrz){ jSheet = jElN }
+    prox = nomeSheet+":(" + iSheet + "," + jSheet +")"
+    // ... ant
+    elAnt = ''
+    if (iSheetA>0){ elAnt = nomeSheet+":(" + iSheetA + "," + jSheetA +")" }
+
+    // ------------  Scroll de plan
+    if (scro>0){ 
+        
+        // ....... SelectionChange de Scroll
+        iniValueInput  = ListPlan[divSheetId][iElN][jElN]                                        
+        
+        // -------- atualiza ListPlan - SYST
+        // .  . anterior (lost focus)
+        if (elAnt!='' && iEl>0){
+            inpAnt = el(elAnt)
+            finValueInputA = inpAnt.value
+            entraInp = 'Lost'   ; SelectionChange()
+            inpAnt.value                       = finValueInputA
+            ListPlan[divSheetId][iEl][jEl]     = finValueInputA
+            iniValueInputA  = iniValueInput
+        }
+        // .  . current (got focus)
+        entraInp = 'Got'    ; SelectionChange()
+        el(prox).value                     = iniValueInput
+        ListPlan[divSheetId][iElN][iElN]   = iniValueInput  
+        // --------[atualiza ListPlan - SYST]
+        // .......[SelectionChange de Scroll]
+        
+        preencheSheet(lplanIni=0, cplanIni=0, divSheetId) ; toques = 0
+    }
+    // ------------ [Scroll de plan]
+
+    // ----- foco em próximo
+
+    // .... põe e tira cursor de Pla
+    // fuction curPla(divSheetId, elAnt, prox) {  //   elAnt, prox são Ids
+
+    // . . . retira Cursor anterior
+    if (elAnt!=''){
+        if (LinMod>0 && iElN>lFrz) { iElNf = lFrz }
+        mergedColsA  = Cells[divSheetId][iElNf][jElN]['mergedCols']
+        mergedLinsA  = Cells[divSheetId][iElNf][jElN]['mergedLins']
+        el(elAnt).style.zIndex = '2'
+        if(mergedColsA!=1 || mergedLinsA!=1){ el(elAnt).style.zIndex = '1' }
+        if (cursor!='outline'){ desBordas(iSheetA, jSheetA, el(elAnt)) }
+    }
+    // . . .[retira Cursor anterior]
+
+    el(prox).style.zIndex = '3'
+    if (cursor!='outline')  { el(prox).style.borderColor = cursor ; el(prox).style.borderWidth = '2px'; el(prox).style.outlineWidth      = "0px" }
+    if (cursor=='outline')  { el(prox).style.outlineWidth      = "1px" }
+    // ....[põe e tira cursor de Pla]
+
+    // . . . foco em novo
+    blocTrap = 1
+    if (prox!=''){ 
+        // .  .
+        if(header=='header'){ 
+            iLinH = iElN - lFrz + 1
+            if (iLinH<0){ iLinH=0 }
+            head = el(nomeSheet+"-headerLinL")   ; head.value = iLinH
+            head = el(nomeSheet+"-headerLinN")   ; head.value = ' de '+(nLinPla-lFrz+1)
+        }
+        // .  .
+        Cells[divSheetId][0][0]['iEl'] = iElN ; Cells[divSheetId][0][0]['jEl'] = jElN 
+        // .  .
+        if (scrollBars==1){
+            el(nomeSheet+"-vertScroll").value  = parseInt( ((iElN-0)/(nLinPla-0) )*100 )
+            el(nomeSheet+"-horizScroll").value = parseInt( ((jElN-0)/(nColPla-0) )*100 )
+        }
+
+        el(prox).focus()
+    }
+    blocTrap = 0
+    // . . .[foco em novo]
+    // -----[foco em próximo]
+
+    // -------[foco em cell -  divSheetId,  iElN, jElN     iEl, jEl]
+
+    // ...
+}
+// -----[Põe foco em Cell de Plan]
+
 // ---- Preenche Sheet a partir de Cells
 function preencheSheet(lplanIni=0, cplanIni=0, divSheetId){
     //  lplanIni, cplanIni - da célula de Cells a aparecer no Top-Left Most
     divSheet = el(divSheetId)
+    print('******')
 
     // ... cria Sheet em Div, se inexistente
     if (divSheet.getAttribute('nLinSh')==null){ criaSheet(divSheetId) }
