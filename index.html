@@ -252,7 +252,7 @@
             // .... Lost Focus
             if(entraInp=='Lost'){
                 // ..
-                if (iEl==25){ finValueInputA = 'WWW' }
+                if (iElC==25){ finValueInputA = 'WWW' }
                 //if (iElSelA==30){ el(elId).value = finValueInputA ; ListPlan[divSheetId][2][3] = finValueInputA}
                 
                 // ...
@@ -464,11 +464,14 @@
             // ------[Scroll]
 
 
-            if(evento=='click' && eleTaId=='inpMudaLIn'){
-                divSheetId = 'ExcelP1' ; iElN += 1 ; iEl = 0
-                focoCell(divSheetId,  iElN, jElN, iSheetA, jSheetA, iEl, jEl)
-
+            if(evento=='click' && (eleTaId=='inpMudaLIn' || eleTaId=='formUp') && divSheetAtiId=='ExcelP1') {
+                if (eleTaId=='inpMudaLIn')    { iElN = iElN + 1 }
+                if (eleTaId=='formUp')        { iElN = iElN - 1 }
+                divSheetId = 'ExcelP1'
+                
+                focoCell(divSheetId)  // iElN, jElN,  iSheetA, jSheetA, iEl, jEl
             }
+
 
 
 
