@@ -2464,8 +2464,8 @@ function preencheSheet(lplanIni=0, cplanIni=0, divSheetId){
     // . . . ajusta autosize
     if(autoSize=='autosize'){
         xUlt = Cells[divSheetId][1][nColPla]['left'] + Cells[divSheetId][1][nColPla]['width']  +1         + margD
-        if(LinMod==0) { yUlt = Cells[divSheetId][nLinPla][1]['top']  + Cells[divSheetId][nLinPla][1]['height'] +1 + margT + margB }
-        if(LinMod!=0) { yUlt = Cells[divSheetId][lFrz][1]['top']  + Cells[divSheetId][lFrz][1]['height']*(nLinSh-1) +1 + margT + margB }
+        if(LinMod==0) { yUlt = Cells[divSheetId][nLinPla][1]['top']  + Cells[divSheetId][nLinPla][1]['height']        +1 + margT + margB }
+        if(LinMod!=0) { yUlt = Cells[divSheetId][lFrz][1]['top']     + Cells[divSheetId][lFrz][1]['height']*(nLinSh-1) +1 + margT + margB }
 
         if (xUlt<wSheet) { el(divSheetId).style.width = xUlt+'px' }
         if (yUlt<hSheet) { el(divSheetId).style.height= yUlt+'px' }

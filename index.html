@@ -361,8 +361,8 @@
             // ------[ativa e desativa Zoom de Img de texto]
 
             // .. Toca mp3 da planilha
-            if(evento=='click' && eleTaClass=="ExcelP1-Pla" && jEl==3 && iEl>2){
-                word = charSpeci( ListPlan[divPlanCurrId][iEl][2] )
+            if(evento=='click' && eleTaClass=="ExcelP1-Pla" && jElN==3 && iElN>2){
+                word = charSpeci( ListPlan[divPlanCurrId][iElN][2] )
                 wordMp3 = "index/Audios mp3/"+word+'.mp3'
                 el('mp3').src = wordMp3
                 el('mp3').play()
