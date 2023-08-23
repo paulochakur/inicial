@@ -435,6 +435,8 @@ function iniSys(){
     for (iDiv = 0; iDiv <= nDivs-1; iDiv++){
         divId = Ldivs[iDiv]
         iAba = 0 ; eAba1 = divId.includes('-Aba-1')
+        
+
         if (eAba1){ iA = divId.indexOf("-Aba-") ; iAba  = parseInt(divId.slice(iA+5)) ; divAbaId = divId.slice(0, iA)}
         if (iAba==1){
             wAba    = parseInt(window.getComputedStyle(el(divId)).width)
@@ -453,7 +455,7 @@ function iniSys(){
         iAba = 0 ; eAba = divId.includes('-Aba-')
         if (eAba){ iA = divId.indexOf("-Aba-") ; iAba  = parseInt(divId.slice(iA+5)) ; divAbaId = divId.slice(0, iA)}
         if (iAba>1){
-            iw = el(divId).getAttribute('iw')
+            iw = el(divId).getAttribute("iw")
             el(divId).style.zIndex  = 0
             el(divId).style.top     = (paraAba[divAbaId][0])+'px' ; dictCoods[iw][0] = paraAba[divAbaId][0]
             el(divId).style.left    = (paraAba[divAbaId][1])+'px' ; dictCoods[iw][1] = paraAba[divAbaId][1]
@@ -1180,9 +1182,6 @@ function atuJib(){
     y1 = parseInt(yPs/255) ; y2 = parseInt(yPs - y1*255)    ; corC='rgb('+y1+','+y2+','+0+')'
     ctx.fillStyle = corC                ; ctx.fillRect(2, 0, 1, 1)  // yPs
 
-    x1 = parseInt(iAbaAti)                                  ; corC='rgb('+x1+','+0+','+0+')'
-    ctx.fillStyle = corC                ; ctx.fillRect(3, 0, 1, 1)  // aba ativa
-
     // ....... Inicial abas
     allEl = document.getElementsByTagName("div")  ;  nDivs = allEl.length
     Ldivs = []  ; for (i = 0; i <= nDivs-1; i++){ Ldivs.push(allEl[i].id) }
@@ -1199,8 +1198,21 @@ function atuJib(){
         try{ iw = div.getAttribute("iw") }catch{ iw = 0 }
         if (iw==null){ iw = 0 }
         if (iw>0) { 
-            divPar      = div.parentElement
-            
+
+            // . . . iWAba; iAbaAti
+            if (divId.includes('-Aba-1')){ 
+                divAbaId = divId.slice(0, iA)
+                try{ naba = paraAba[divAbaId][4]  ;  print('divId:'+divId+'   naba:'+naba)}catch{ naba = 0 }
+                if(naba>0){
+                    iwAba = el(divId).getAttribute('iw')
+                    x1 = parseInt(iwAba/255) ; x2 = parseInt(iwAba - x1*255)    ; corC='rgb('+x1+','+x2+','+0+')'
+                    ctx.fillStyle = corC                ; ctx.fillRect(3, 0, 1, 1)  // iwAba
+                    x1 = parseInt(iAbaAti)                                  ; corC='rgb('+x1+','+0+','+0+')'
+                    ctx.fillStyle = corC                ; ctx.fillRect(4, 0, 1, 1)  // aba ativa
+                }
+            }
+            // . . .[iWAba; iAbaAti]
+
             // . . . deslocamentos de top e left de 50 a 111 ( 20 elementos )
             tOri = dictCoods[iw][0]     ; lOri = dictCoods[iw][1]
             novoX = parseInt(window.getComputedStyle(div).left) ; novoY = parseInt(window.getComputedStyle(div).top)
@@ -1313,7 +1325,6 @@ function showAba(divId, iAba=1){
         divF = divId+'-Aba-'+iAb
         //if (iAb!=iAba) { el(divF).style.left    = '-10000px' }
         if (iAb!=iAba) { el(divF).style.zIndex  = 0 }
-        
     }
     iAbaAti = iAba
     // ...
@@ -2242,7 +2253,7 @@ function focoCell(divSheetId){    // iElN, jElN,  iSheetA, jSheetA, iEl, jEl
     cursor      = Cells[divSheetId][0][0]['cursor']
 
     iElC = Cells[divSheetId][0][0]['iElC']                  ; jElC = Cells[divSheetId][0][0]['jElC']
-    print('  iElN:'+iElN+'  iElC:'+iElC)
+
     // . . . limites
     if (iElN<=1)       { iElN = 1       }
     if (jElN<=1)       { jElN = 1       }
