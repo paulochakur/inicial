@@ -667,6 +667,8 @@ function eventTrap() {
             if(evento=='touchmove' && Math.abs(delY)<20) { delLin = 0 }
             if(evento=='touchmove' && Math.abs(delX)<20) { delCol = 0 }
 
+            if(scrTurn==1){ dR = delLin ; delLin = delCol ; delCol = dR }
+
             lplan0N = lplan0 + delLin ; cplan0N = cplan0 + delCol
             preencheSheet(lplanIni=lplan0N, cplanIni=cplan0N, divSheetId)
             elId    = divSheetId+'-Pla:('+iSheet+','+jSheet+')'
