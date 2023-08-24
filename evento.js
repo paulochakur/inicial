@@ -668,6 +668,7 @@ function eventTrap() {
             if(evento=='touchmove' && Math.abs(delX)<20) { delCol = 0 }
 
             if(scrTurn==1){ dR = delLin ; delLin = delCol ; delCol = dR } // [a, b] = [b, a]
+            el('divFollow-Aba-2-Txt').innerHTML = ' scrTurn:'+scrTurn
 
             lplan0N = lplan0 + delLin ; cplan0N = cplan0 + delCol
             preencheSheet(lplanIni=lplan0N, cplanIni=cplan0N, divSheetId)

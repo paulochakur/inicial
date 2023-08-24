@@ -62,7 +62,7 @@
                     #divMenuHori{position: absolute; left: 72px; top: 0px; right: 0px; bottom: 0px; box-sizing: content-box; margin: 0px; padding: 0px; padding-left: 5.0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); border-color: black; border-width: 0px; border-style: solid; background-color: rgb(160, 160, 160);  }
                 #divMenuLat{position: absolute; left: -2.0px; top: 104px; right: 1294px; bottom: 0px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); border-color: black; border-width: 0px; border-style: solid; background-color: rgb(239, 135, 248);  }
                 #divSelecionados{position: absolute; left: 72px; top: 104px; right: 0px; bottom: 0px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); overflow: hidden; border-color: black; border-width: 0px; border-style: solid; background-color: rgb(218, 218, 218); background-image: linear-gradient(0deg , rgb(79, 79, 79) , rgb(238, 238, 238) 100.0% 60.0%);  }
-                    #divFollow-Aba-2{position: absolute; left: 10.0px; top: 11.0px; width: 1204.0px; height: 477.0px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); overflow: auto; border-color: black; border-width: 0px; border-style: solid; background-color: rgb(225, 225, 255);  }
+                    #divFollow-Aba-2{position: absolute; left: 10.0px; top: 11.0px; width: 1204.0px; height: 477.0px; box-sizing: content-box; margin: 0px; padding: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); overflow: auto; scroll-padding: 0px; scroll-padding-block: 0px; scroll-padding-inline: 0px; border-color: black; border-width: 0px; border-style: solid; background-color: rgb(225, 225, 255);  }
                         #divEmAnd{position: absolute; left: 303.0px; top: 120.0px; width: 566.0px; height: 200.0px; box-sizing: content-box; margin: 0px; padding: 0px; border-color: rgb(0, 0, 255); border-radius: 5.0px; border-width: 1.0px; border-style: solid; background-color: rgb(255, 0, 128); transform: scaleX(2) scaleY(2);  }
                     #divFooter{position: absolute; left: 0px; top: 1000.0px; height: 189.0px; right: 0px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); border-color: black; border-width: 0px; border-style: solid; background-color: rgb(73, 13, 111); z-index: 40;  }
                         #divFooterDir{position: absolute; left: 0px; top: 0px; width: 373px; height: 189px; bottom: 0px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); overflow: hidden; border-color: black; border-width: 0px; border-style: solid; background-color: rgb(50, 151, 205); z-index: 30;  }
@@ -105,13 +105,14 @@
         <div id="Fundo" iw=416     >
             <div id="divMenuCabe" iw=441     >
                 <div id="divCantoMenu" iw=424     ></div>
-                <div id="divMenuHori" iw=423     ></div>
+                <div id="divMenuHori" iw=423     aba=1></div>
             </div> <!-- [divMenuCabe]   -->
 
             <div id="divMenuLat" iw=425     ></div>
             <div id="divSelecionados" iw=422      scroll="hidden">
                 <div id="divFollow-Aba-2" iw=447      scroll="auto">
-                    <div id="divEmAnd" iw=448     ></div>
+                    <p id="divFollow-Aba-2-Txt" style="position: absolute; left: 0px; top: -16px; width:1204px ">texto</p>
+                    <div id="divEmAnd" iw=448   scX=7 scY=84 ></div>
                 </div> <!-- [divFollow-Aba-2]   -->
 
                 <div id="divFooter" iw=446     >
