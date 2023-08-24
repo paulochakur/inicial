@@ -462,8 +462,21 @@ function iniSys(){
             el(divId).style.width   = (paraAba[divAbaId][2])+'px'
             el(divId).style.height  = (paraAba[divAbaId][3])+'px'
             nAbas = nAbas + 1 ;     paraAba[divAbaId][4] = nAbas
+            
         }
     }
+    // . . . ativa aba de cada div
+    for (iDiv = 0; iDiv <= nDivs-1; iDiv++){
+        divId = Ldivs[iDiv]
+        iAba = 0 ; eAba = divId.includes('-Aba-')
+        if (eAba){ iA = divId.indexOf("-Aba-") ; iAba  = parseInt(divId.slice(iA+5)) ; divAbaId = divId.slice(0, iA)}
+        if(iAba==1){
+            try{ abaAti    = el(divId).getAttribute("aba") }catch{ abaAti = 0 }
+            if (abaAti>0) { showAba(divAbaId, iAba=abaAti)  }
+        }
+    }
+    // . . .[ativa aba de cada div]
+    
     // . . .[parâmetros de Aba n]
 
     // .......[Inicial abas]
@@ -641,6 +654,41 @@ function eventTrap() {
 
     // **************************************
 
+    // ---------- Scroll de página e panilha  preencheSheet(
+
+        // . . . scroll de Pla
+        if( (evento=='wheel' || evento=='touchmove') && eleFoId.includes("-Pla") && eleOnId.includes("-Pla")){
+            nomeSheet   = eleFoClass
+            lplan0      = Cells[divSheetId][0][0]['lplan0'] ; cplan0    = Cells[divSheetId][0][0]['cplan0']
+            delLin = 0 ; delCol = 0
+            if (delY!=0){ delLin = (Math.abs(delY)/delY) }
+            if (delX!=0){ delCol = (Math.abs(delX)/delX) }
+
+            if(evento=='touchmove' && Math.abs(delY)<20) { delLin = 0 }
+            if(evento=='touchmove' && Math.abs(delX)<20) { delCol = 0 }
+
+            lplan0N = lplan0 + delLin ; cplan0N = cplan0 + delCol
+            preencheSheet(lplanIni=lplan0N, cplanIni=cplan0N, divSheetId)
+            elId    = divSheetId+'-Pla:('+iSheet+','+jSheet+')'
+            el(elId).style.zIndex = 3
+        }
+        // . . .[scroll de Pla]
+
+
+
+
+
+
+
+
+    // ----------[Scroll de página e panilha]
+
+
+
+
+
+
+
     // -------- CONSOLE
     //if (evento=='keydown') { print(' keyCode: '+keyCode) }
 
@@ -812,18 +860,12 @@ function eventTrap() {
         // .  . anterior (lost focus)
         if(entraInp=='Lost' && inpAnt.className.includes("-Pla")){ 
             inpAnt.value                                                 = finValueInputA
-            try{ 
-                sincr    = Cells[divSheetId][0][0]['sincr']    
-                if (sincr!='*') { ListPlan[divSheetId][iElSelA][jElSelA] = finValueInputA}
-            } catch{}
+            try{ ListPlan[divSheetId][iElSelA][jElSelA]       = finValueInputA } catch{}
         }
         // .  . current (got focus)
         if(entraInp=='Got' && inpCur.className.includes("-Pla")){ 
             inpCur.value                                                 = iniValueInput
-            try{ 
-                sincr    = Cells[divSheetId][0][0]['sincr']    
-                if (sincr!='*') { ListPlan[divSheetId][iElSel][jElSel]   = iniValueInput }
-            } catch{}
+            try{ ListPlan[divSheetId][iElSel][jElSel]         = iniValueInput } catch{}
         }
         // --------[atualiza ListPlan - SYST]
 
@@ -1148,7 +1190,7 @@ function eventTrap() {
                 if (jElN==cFrz && jElC<cFrz)  { jElN = cplan0 }    // transição cabeçalho-corpo
             
 
-
+                
                 // ----------------------------------------------------------------
                 focoCell(divSheetId)   // iElN, jElN,  iSheetA, jSheetA, iEl, jEl
                 // ----------------------------------------------------------------
@@ -2241,9 +2283,8 @@ function criaSheet(divSheetId){
 // ----[Cria Sheet baseado em dictFormPla e MatrCellsPla]
 
 // ----- Põe foco em Cell de Plan
-function focoCell(divSheetId){    // iElN, jElN,  iSheetA, jSheetA, iEl, jEl
+function focoCell(divSheetId){    // iElN, jElN,  iSheetA, jSheetA
     
-    // ------- foco em cell 
     scro = 0
     lplan0      = Cells[divSheetId][0][0]['lplan0']         ; cplan0    = Cells[divSheetId][0][0]['cplan0']
     nLinPla     = Cells[divSheetId][0][0]['nLinPla']        ; nColPla   = Cells[divSheetId][0][0]['nColPla']
@@ -2294,7 +2335,7 @@ function focoCell(divSheetId){    // iElN, jElN,  iSheetA, jSheetA, iEl, jEl
             }
         }
         if(LinMod>0){lplan0 = iElN - nLinSh + lFrz}
-        Cells[divSheetId][0][0]['lplan0'] = lplan0
+        Cells[divSheetId][0][0]['lplan0'] = lplan0 ; print(' **** lplan0:'+lplan0)
     }
     // . . . estouro DIREITA
     if (dF>wWindow)         {                       scro = 4    ; wPint = 0
@@ -2321,7 +2362,7 @@ function focoCell(divSheetId){    // iElN, jElN,  iSheetA, jSheetA, iEl, jEl
     if (scro>0){ 
         
         // ....... SelectionChange de Scroll
-        iniValueInput  = ListPlan[divSheetId][iElN][jElN]                                        
+        iniValueInput  = ListPlan[divSheetId][iElN][jElN]
         
         // -------- atualiza ListPlan - SYST
         // .  . anterior (lost focus)
@@ -2336,10 +2377,11 @@ function focoCell(divSheetId){    // iElN, jElN,  iSheetA, jSheetA, iEl, jEl
         // .  . current (got focus)
         entraInp = 'Got'    ; SelectionChange()
         el(prox).value                         = iniValueInput
-        ListPlan[divSheetId][iElN][iElN]       = iniValueInput  
+        ListPlan[divSheetId][iElN][jElN]       = iniValueInput  
         // --------[atualiza ListPlan - SYST]
         // .......[SelectionChange de Scroll]
         
+        print('   lplan0:'+lplan0+'  iElN:'+iElN)
         preencheSheet(lplanIni=0, cplanIni=0, divSheetId) ; toques = 0
                
     }
@@ -2348,7 +2390,6 @@ function focoCell(divSheetId){    // iElN, jElN,  iSheetA, jSheetA, iEl, jEl
     // ----- foco em próximo
 
     // .... põe e tira cursor de Pla
-    // fuction curPla(divSheetId, elAnt, prox) {  //   elAnt, prox são Ids
 
     // . . . retira Cursor anterior
     if (curAnt!=''){
@@ -2394,10 +2435,8 @@ function focoCell(divSheetId){    // iElN, jElN,  iSheetA, jSheetA, iEl, jEl
     // . . .[foco em novo]
     // -----[foco em próximo]
 
-    // -------[foco em cell -  divSheetId,  iElN, jElN     iEl, jEl]
-
     // ...
-    //iEl = iElN ; jEl = jElN
+
     return
 }
 // -----[Põe foco em Cell de Plan]
@@ -2419,20 +2458,10 @@ function preencheSheet(lplanIni=0, cplanIni=0, divSheetId){
     header   = Cells[divSheetId][0][0]['header']        ; LinMod    = Cells[divSheetId][0][0]['LinMod']
     autoSize = Cells[divSheetId][0][0]['autosize']
 
-    if (lplanIni>=lFrz){ lplan0 = lplanIni}
-    if (cplanIni>=cFrz){ cplan0 = cplanIni}
     
-    try{ 
-        lplan0Max = nLinPla-nLinSh+lFrz ; cplan0Max = nColPla-nColSh+cFrz
-        if (lplan0>lplan0Max && lplan0Max>0){ lplan0 = lplan0Max}
-        if (cplan0>cplan0Max && cplan0Max>0){ cplan0 = cplan0Max}
-        
-        Cells[divSheetId][0][0]['lplan0'] = lplan0  ; Cells[divSheetId][0][0]['cplan0'] = cplan0
-    } catch{}
+    
 
-   
     Cells[divSheetId][0][0]['lplan0'] = lplan0  ; Cells[divSheetId][0][0]['cplan0'] = cplan0
-    lplanIni = lplan0                           ; cplanIni = cplan0
 
     // ....  parâmetros de Sheet
     nLinSh      = Number(divSheet.getAttribute('nLinSh'))   ; nColSh    = Number(divSheet.getAttribute('nColSh'))
@@ -2440,8 +2469,12 @@ function preencheSheet(lplanIni=0, cplanIni=0, divSheetId){
     hWindow     = Number(divSheet.getAttribute('hWindow'))  ; wWindow   = Number(divSheet.getAttribute('wWindow'))
     margT       = Number(divSheet.getAttribute('margT'))    ; margL     = Number(divSheet.getAttribute('margL'))
 
+    if (lplanIni>=lFrz){ lplan0 = lplanIni}
+    if (cplanIni>=cFrz){ cplan0 = cplanIni}
+
     // . . . define nLinSh
-    yTop = 0 ; xTop = Cells[divSheetId][1][cFrz]['left']  - Cells[divSheetId][1][cplan0]['left'] + 1
+    xTop = Cells[divSheetId][1][cFrz]['left']  - Cells[divSheetId][1][cplan0]['left'] + 1
+    yTop = 0 
     if(LinMod==0){ yTop = Cells[divSheetId][lFrz][1]['top']   - Cells[divSheetId][lplan0][1]['top']  + 1 }
     hPint = 0 ; nLinSh = lFrz-1
     for (i = lplan0; i <= nLinPla; i++){
@@ -2451,6 +2484,7 @@ function preencheSheet(lplanIni=0, cplanIni=0, divSheetId){
         if(hPint>hWindow){ nLinSh-- ; break}    
     }
     divSheet.setAttribute('nLinSh', nLinSh)
+    // . . .[define nLinSh]
             
     // . . . define nColSh
     wPint = 0 ; nColSh = cFrz-1
@@ -2459,7 +2493,17 @@ function preencheSheet(lplanIni=0, cplanIni=0, divSheetId){
         if(wPint>wWindow){ nColSh-- ; break}    
     }
     divSheet.setAttribute('nColSh', nColSh)
+    // . . .[define nColSh]
 
+    // . . .   recalcula lplan0 e cplan0    
+    try{ 
+        lplan0Max = nLinPla-nLinSh+lFrz ; cplan0Max = nColPla-nColSh+cFrz
+        if (lplan0>lplan0Max && lplan0Max>0){ lplan0 = lplan0Max}
+        if (cplan0>cplan0Max && cplan0Max>0){ cplan0 = cplan0Max}
+        
+        Cells[divSheetId][0][0]['lplan0'] = lplan0  ; Cells[divSheetId][0][0]['cplan0'] = cplan0
+    } catch{print(' Catch ')}
+    // . . .  [recalcula lplan0 e cplan0]
 
     // . . . ajusta autosize
     if(autoSize=='autosize'){
@@ -2487,7 +2531,7 @@ function preencheSheet(lplanIni=0, cplanIni=0, divSheetId){
     for (i = nLinSh+1; i <= nLinInps; i++){
         for (j = 1; j <= nColInps; j++){
             cell = el(divSheetId+"-Pla:("+i+","+j+")")
-            iC = i + lplanIni - lFrz ; jC = j + cplanIni - cFrz
+            iC = i + lplan0 - lFrz ; jC = j + cplan0 - cFrz
             if(iC<=nLinPla) { printCell(i, j, divSheet) }
             if(iC> nLinPla) { cell.style.top = '-3000px'   }
         }
@@ -2497,7 +2541,7 @@ function preencheSheet(lplanIni=0, cplanIni=0, divSheetId){
     for (i = 1; i <= nLinInps; i++){
         for (j = nColSh+1; j <= nColInps; j++){
             cell = el(divSheetId+"-Pla:("+i+","+j+")")
-            iC = i + lplanIni - lFrz ; jC = j + cplanIni - cFrz
+            iC = i + lplan0 - lFrz ; jC = j + cplan0 - cFrz
             if(jC<=nColPla) { printCell(i, j, divSheet) }
             if(jC> nColPla) { cell.style.left = '-3000px' }
         }
@@ -2506,7 +2550,7 @@ function preencheSheet(lplanIni=0, cplanIni=0, divSheetId){
     //  ... células mescladas
     for (i = 1; i <= nLinSh+1; i++){
         for (j = 1; j <= nColSh+1; j++){
-            iC = i + lplanIni - lFrz ; jC = j + cplanIni - cFrz
+            iC = i + lplan0 - lFrz ; jC = j + cplan0 - cFrz
             if(i<lFrz)  { iC = i}
             if(j<cFrz)  { jC = j}        
             if( jC<=nColPla && iC<=nLinPla){
@@ -2591,9 +2635,7 @@ function printCell(i, j, divSheet){   // i, j  em Sheet
         // ---- TRAP  DE VALOR
         valor = ''
         // ...  arquivo JS
-        sincr = Cells[divSheetId][0][0]['sincr']
-        try{ if (sincr!='*') { valor   = ListPlan[divSheetId][iC][jC]          }   } catch{}
-        try{ if (sincr=='*') { valor   = Cells[divSheetId][iCf][jC]['valor']   }   } catch{}
+        try{ valor   = ListPlan[divSheetId][iC][jC] } catch{}
 
         planValorTrap(divSheetId, iC, jC)
         cell.value                      = valor
