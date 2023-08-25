@@ -99,7 +99,7 @@ var divMenuAti = '' ; var popMenuAti = ''
 var multH = { '1':[0] }
 
 
-var elAnt = '' , curAnt = ''
+var elAnt = '' , curAnt = '', downPla = 0
 var iEl = 0 , jEl = 0 , divPlanCurr = 0 , divPlanCurrId = ''
 var iSheetA = 0 , jSheetA = 0 , iSheetSel = 0 , jSheetSel = 0 , iSheetSelA = 0 , jSheetSelA = 0
 var iMenAnt = 0  ; var linMeIdAnt = ''
@@ -640,6 +640,7 @@ function eventTrap() {
     // .... inibe menu do browser em rightClick
     if(evento=='contextmenu'){ evento = 'rightclick' ; event.preventDefault() }
 
+
     //if (evento=='dblclick')  { event.preventDefault() ; event.stopPropagation()}
     //event.stopPropagation()
     /*
@@ -657,7 +658,7 @@ function eventTrap() {
     // ---------- Scroll de página e panilha  preencheSheet(
 
         // . . . scroll de Pla
-        if( (evento=='wheel' || evento=='touchmove') && eleFoId.includes("-Pla") && eleOnId.includes("-Pla")){
+        if( (evento=='wheel' || evento=='touchmove') && eleFoId.includes("-Pla")){
             nomeSheet   = eleFoClass
             lplan0      = Cells[divSheetId][0][0]['lplan0'] ; cplan0    = Cells[divSheetId][0][0]['cplan0']
             delLin = 0 ; delCol = 0
@@ -667,7 +668,7 @@ function eventTrap() {
             if(evento=='touchmove' && Math.abs(delY)<20) { delLin = 0 }
             if(evento=='touchmove' && Math.abs(delX)<20) { delCol = 0 }
 
-            if(scrTurn==1){ dR = delLin ; delLin = delCol ; delCol = dR } // [a, b] = [b, a]
+            if(scrTurn==1){ dR = delLin ; delLin = delCol ; delCol = -dR } // [a, b] = [b, a]
             el('divFollow-Aba-2-Txt').innerHTML = ' scrTurn:'+scrTurn
 
             lplan0N = lplan0 + delLin ; cplan0N = cplan0 + delCol
@@ -1109,7 +1110,7 @@ function eventTrap() {
     
     // ---------------- Movimento em Sheet
     if (eleTaClass.includes("-Pla")) {
-        if ( blocTrap==0 && (evento=="click" || evento=="keydown" || evento=="focusin" || evento=='input')  ){
+        if ( blocTrap==0 && (evento=="keydown" || evento=="focusin" || evento=='input')  ){
             scro = 0 ; keyCodeF = 100
             // . . . índices de input focus em Sheet
             abrePar = eleTaId.indexOf("(") ; fechaPar  = eleTaId.indexOf(")") ; virg = eleTaId.indexOf(",")

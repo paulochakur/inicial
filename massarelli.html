@@ -18,6 +18,25 @@
         user-scalable=no, target-densitydpi=device-dpi">
 
         <style>
+            /* width */
+            ::-webkit-scrollbar {
+            width: 1px; height: 1px; 
+            }
+
+            /* Track */
+            ::-webkit-scrollbar-track {
+            background: #d9d9d9; 
+            }
+
+            /* Handle */
+            ::-webkit-scrollbar-thumb {
+            background: #898989; 
+            }
+
+            /* Handle on hover */
+            ::-webkit-scrollbar-thumb:hover {
+            background: #000000; 
+            }
 
             :root {
                 --xPos: 300px;
@@ -63,7 +82,9 @@
                 #divMenuLat{position: absolute; left: -2.0px; top: 104px; right: 1294px; bottom: 0px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); border-color: black; border-width: 0px; border-style: solid; background-color: rgb(239, 135, 248);  }
                 #divSelecionados{position: absolute; left: 72px; top: 104px; right: 0px; bottom: 0px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); overflow: hidden; border-color: black; border-width: 0px; border-style: solid; background-color: rgb(218, 218, 218); background-image: linear-gradient(0deg , rgb(79, 79, 79) , rgb(238, 238, 238) 100.0% 60.0%);  }
                     #divFollow-Aba-2{position: absolute; left: 10.0px; top: 11.0px; width: 1204.0px; height: 477.0px; box-sizing: content-box; margin: 0px; padding: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); overflow: auto; scroll-padding: 0px; scroll-padding-block: 0px; scroll-padding-inline: 0px; border-color: black; border-width: 0px; border-style: solid; background-color: rgb(225, 225, 255);  }
-                        #divEmAnd{position: absolute; left: 303.0px; top: 120.0px; width: 566.0px; height: 200.0px; box-sizing: content-box; margin: 0px; padding: 0px; border-color: rgb(0, 0, 255); border-radius: 5.0px; border-width: 1.0px; border-style: solid; background-color: rgb(255, 0, 128); transform: scaleX(2) scaleY(2);  }
+                        #div-452{position: absolute; left: 9.0px; top: 75.0px; width: 705.0px; height: 157.0px; box-sizing: content-box; margin: 0px; padding: 0px; overflow: scroll; border-color: black; border-width: 0.0px; border-style: solid; z-index: 80;  }
+                            #div-453{position: absolute; left: 0.0px; top: 0.0px; width: 10000.0px; height: 10000.0px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); border-color: black; border-width: 0px; border-style: solid;  }
+                        #divEmAnd{position: absolute; left: 303.25px; top: 91.25px; width: 566.5px; height: 142.5px; box-sizing: content-box; margin: 0px; padding: 0px; border-color: rgb(0, 0, 255); border-radius: 5.0px; border-width: 1.0px; border-style: solid; background-color: rgb(255, 0, 128); transform: scaleX(2) scaleY(2);  }
                     #divFooter{position: absolute; left: 0px; top: 1000.0px; height: 189.0px; right: 0px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); border-color: black; border-width: 0px; border-style: solid; background-color: rgb(73, 13, 111); z-index: 40;  }
                         #divFooterDir{position: absolute; left: 0px; top: 0px; width: 373px; height: 189px; bottom: 0px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); overflow: hidden; border-color: black; border-width: 0px; border-style: solid; background-color: rgb(50, 151, 205); z-index: 30;  }
                             #img-443-Map{position: absolute; left: 0.0px; top: 0.0px; width: 373.0px; height: 189.0px; box-sizing: content-box; margin: 0px; padding: 0px; border-color: black; border-width: 0px; border-style: solid; background-color: rgb(255, 255, 0);  }
@@ -112,7 +133,11 @@
             <div id="divSelecionados" iw=422      scroll="hidden">
                 <div id="divFollow-Aba-2" iw=447      scroll="auto">
                     <p id="divFollow-Aba-2-Txt" style="position: absolute; left: 0px; top: -16px; width:1204px ">texto</p>
-                    <div id="divEmAnd" iw=448   scX=7 scY=84 ></div>
+                    <div id="div-452" iw=452   scX=1305 scY=1853  scroll="scroll">
+                        <div id="div-453" iw=453       ascScr="div-452"></div>
+                    </div> <!-- [div-452]   -->
+
+                    <div id="divEmAnd" iw=448     ></div>
                 </div> <!-- [divFollow-Aba-2]   -->
 
                 <div id="divFooter" iw=446     >
@@ -350,6 +375,8 @@
 
             // . . . [página principal]
 
+            el('div-452').scrollTop  = 50000
+            el('div-452').scrollLeft = 50000
 
 
             // ..........
@@ -383,6 +410,21 @@
 
             // ******** GERAL DE EVENTOS
             //             if(evento=='click' && eleTaClass=="ExcelP1-Pla" && jEl==3 && iEl>2){}
+
+            el('div-452').scrollTop  = 1000
+            el('div-452').scrollLeft = 1000
+
+            // ..... prevent default de scroll
+            if(evento=='mouseup' && downPla==1) { 
+                eleTa.focus()
+                el('div-452').style.pointerEvents="auto" 
+                downPla = 0
+            }
+            if(evento=='mousedown' && eleTaId=="div-453") {
+                el('div-452').style.pointerEvents="none"
+                downPla = 1
+            }
+            // .....[prevent default de scroll]
 
             // .... muda aba
             if(evento=='click' && eleTaId=="divMenuHori-Menu(2)") {
