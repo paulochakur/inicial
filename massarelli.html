@@ -19,9 +19,7 @@
 
         <style>
             /* width */
-            ::-webkit-scrollbar {
-            width: 1px; height: 1px; 
-            }
+            ::-webkit-scrollbar { width: 0px; height: 0px }
 
             /* Track */
             ::-webkit-scrollbar-track {
@@ -82,8 +80,12 @@
                 #divMenuLat{position: absolute; left: -2.0px; top: 104px; right: 1294px; bottom: 0px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); border-color: black; border-width: 0px; border-style: solid; background-color: rgb(239, 135, 248);  }
                 #divSelecionados{position: absolute; left: 72px; top: 104px; right: 0px; bottom: 0px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); overflow: hidden; border-color: black; border-width: 0px; border-style: solid; background-color: rgb(218, 218, 218); background-image: linear-gradient(0deg , rgb(79, 79, 79) , rgb(238, 238, 238) 100.0% 60.0%);  }
                     #divFollow-Aba-2{position: absolute; left: 10.0px; top: 11.0px; width: 1204.0px; height: 477.0px; box-sizing: content-box; margin: 0px; padding: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); overflow: auto; scroll-padding: 0px; scroll-padding-block: 0px; scroll-padding-inline: 0px; border-color: black; border-width: 0px; border-style: solid; background-color: rgb(225, 225, 255);  }
-                        #div-452{position: absolute; left: 9.0px; top: 75.0px; width: 705.0px; height: 157.0px; box-sizing: content-box; margin: 0px; padding: 0px; overflow: scroll; border-color: black; border-width: 0.0px; border-style: solid; z-index: 80;  }
-                            #div-453{position: absolute; left: 0.0px; top: 0.0px; width: 10000.0px; height: 10000.0px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); border-color: black; border-width: 0px; border-style: solid;  }
+                        #div-454{position: absolute; left: 287.0px; top: 333.0px; width: 273.0px; height: 109.0px; box-sizing: content-box; margin: 0px; padding: 0px; overflow: scroll; border-color: black; border-width: 0px; border-style: solid; background-color: rgb(255, 128, 0);  }
+#div-454::-webkit-scrollbar { width: 10.0px; height: 20.0px }  
+                            #div-455{position: absolute; left: 200.0px; top: 69.0px; width: 385.0px; height: 57.0px; box-sizing: content-box; margin: 0px; padding: 0px; border-color: black; border-width: 0px; border-style: solid; background-color: rgb(255, 255, 0);  }
+                        #div-452{position: absolute; left: 11.0px; top: 74.0px; width: 914.0px; height: 164.0px; box-sizing: content-box; margin: 0px; padding: 0px; overflow: scroll; border-color: black; border-width: 3.0px; border-style: solid; z-index: 80;  }
+#div-452::-webkit-scrollbar { width: 1.0px; height: 1.0px }  
+                            #div-453{position: absolute; left: -2000.0px; top: -2000.0px; width: 10000.0px; height: 10000.0px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); border-color: black; border-width: 0px; border-style: solid;  }
                         #divEmAnd{position: absolute; left: 303.25px; top: 91.25px; width: 566.5px; height: 142.5px; box-sizing: content-box; margin: 0px; padding: 0px; border-color: rgb(0, 0, 255); border-radius: 5.0px; border-width: 1.0px; border-style: solid; background-color: rgb(255, 0, 128); transform: scaleX(2) scaleY(2);  }
                     #divFooter{position: absolute; left: 0px; top: 1000.0px; height: 189.0px; right: 0px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); border-color: black; border-width: 0px; border-style: solid; background-color: rgb(73, 13, 111); z-index: 40;  }
                         #divFooterDir{position: absolute; left: 0px; top: 0px; width: 373px; height: 189px; bottom: 0px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); overflow: hidden; border-color: black; border-width: 0px; border-style: solid; background-color: rgb(50, 151, 205); z-index: 30;  }
@@ -126,14 +128,18 @@
         <div id="Fundo" iw=416     >
             <div id="divMenuCabe" iw=441     >
                 <div id="divCantoMenu" iw=424     ></div>
-                <div id="divMenuHori" iw=423     aba=1></div>
+                <div id="divMenuHori" iw=423     ></div>
             </div> <!-- [divMenuCabe]   -->
 
             <div id="divMenuLat" iw=425     ></div>
             <div id="divSelecionados" iw=422      scroll="hidden">
                 <div id="divFollow-Aba-2" iw=447      scroll="auto">
                     <p id="divFollow-Aba-2-Txt" style="position: absolute; left: 0px; top: -16px; width:1204px ">texto</p>
-                    <div id="div-452" iw=452   scX=1305 scY=1853  scroll="scroll">
+                    <div id="div-454" iw=454      scroll="scroll">
+                        <div id="div-455" iw=455       ascScr="div-454"></div>
+                    </div> <!-- [div-454]   -->
+
+                    <div id="div-452" iw=452   scX=7087 scY=7837  scroll="scroll">
                         <div id="div-453" iw=453       ascScr="div-452"></div>
                     </div> <!-- [div-452]   -->
 
@@ -221,7 +227,7 @@
 
                 <div id="divLogoMC" iw=419      scroll="hidden">
                     <map id="imgLogoMC-Map" iw=421      name="imgLogoMC-Map"></map>
-                    <img id="imgLogoMC" iw=420      src="massarelli/Imagens/CSS/MASSARELLI LOGO 1.jpeg" usemap="#imgLogoMC-Map">
+                    <img id="imgLogoMC" iw=420     aba=2 src="massarelli/Imagens/CSS/MASSARELLI LOGO 1.jpeg" usemap="#imgLogoMC-Map">
                 </div> <!-- [divLogoMC]   -->
 
                 <div id="divLogoMAS" iw=418      scroll="visible"></div>
@@ -374,9 +380,21 @@
 
 
             // . . . [página principal]
-
+            // #div-452::-webkit-scrollbar { width: 3px; height: 3px }
             el('div-452').scrollTop  = 50000
             el('div-452').scrollLeft = 50000
+            //el('div-452').style.cssText = '::-webkit-scrollbar{width:15px;}';
+            print(' --------- ')
+            el('div-452').style['-webkit-scrollbar'] = "width: 30px"
+            print(' +++++++++ ')
+
+            /*
+            styleElement = document.createElement("style");
+            styleElement.appendChild(document.createTextNode("div ::-webkit-scrollbar {-webkit-appearance: none;width: 7px;}div ::-webkit-scrollbar-thumb {border-radius: 4px;background-color: rgba(250,0,0,.5);-webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);}"));
+            document.getElementsByTagName("div-452").appendChild(styleElement);
+            */
+
+
 
 
             // ..........
