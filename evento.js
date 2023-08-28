@@ -226,6 +226,22 @@ function iniSys(){
     Ah = window.screen.availHeight  ; Aw = window.screen.availWidth
     if(Aw<1000){mobFlag = 1 }
 
+    // ... cria divs de Prevent Scroll
+    para = document.createElement("div")
+    el('Corpo').appendChild(para)
+    para.id     = "divPrevScr"
+    el("divPrevScr").style = 'position: absolute; left: 11.0px; top: 74.0px; width: 1162.0px; height: 300.0px; box-sizing: content-box; margin: 0px; padding: 0px; overflow: scroll; border-color: black; border-width: 3.0px; border-style: solid; z-index: 1000;   '    
+    
+    para = document.createElement("div")
+    el('divPrevScr').appendChild(para)
+    para.id     = "divPrevMov"
+    el("divPrevMov").style = 'position: absolute; left: -2000.0px; top: -2000.0px; width: 10000.0px; height: 10000.0px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); border-color: black; border-width: 0px; border-style: solid;   '    
+    el('divPrevScr').scrollTop  = 50000
+    el('divPrevScr').scrollLeft = 50000
+
+    // ...[cria divs de Prevent Scroll]
+    
+    
     // ... cria div - "console"
     para = document.createElement("div")
     el('Corpo').appendChild(para)
@@ -640,6 +656,43 @@ function eventTrap() {
     // .... inibe menu do browser em rightClick
     if(evento=='contextmenu'){ evento = 'rightclick' ; event.preventDefault() }
 
+    // ..... prevent default de scroll Pla
+    if( !eleFoId.includes("-Pla")){
+        el('divPrevScr').style.top      = '-10000px'
+        el('divPrevScr').style.left     = '-10000px'
+    }
+    if( eleFoId.includes("-Pla")){
+        divSheet      = eleFo.parentElement ; divSheetId = divSheet.id ; parDiv = divSheet.parentElement
+        tDivPla  = divSheet.getBoundingClientRect().top
+        lDivPla  = divSheet.getBoundingClientRect().left
+        wDivPla  = divSheet.getBoundingClientRect().width
+        hDivPla  = divSheet.getBoundingClientRect().height
+
+        el('divPrevScr').style.top      = tDivPla+'px'
+        el('divPrevScr').style.left     = lDivPla+'px'
+        el('divPrevScr').style.width    = wDivPla+'px'
+        el('divPrevScr').style.height   = hDivPla+'px'
+    }
+        // ..... recoloca Prevent Scroll
+        el('divPrevScr').scrollTop  = 5000
+        el('divPrevScr').scrollLeft = 5000
+
+    if (eleOnId=="divPrevMov"){
+
+        if(evento=='mouseup' && downPla==1) { 
+            eleTa.focus()
+            el('divPrevScr').style.pointerEvents="auto" 
+            downPla = 0
+        }
+        if(evento=='mousedown' && eleTaId=="divPrevMov") {
+            el('divPrevScr').style.pointerEvents="none"
+            downPla = 1
+        }
+    }
+    // .....[prevent default de scroll Pla]
+
+
+
 
     //if (evento=='dblclick')  { event.preventDefault() ; event.stopPropagation()}
     //event.stopPropagation()
@@ -668,8 +721,8 @@ function eventTrap() {
             if(evento=='touchmove' && Math.abs(delY)<20) { delLin = 0 }
             if(evento=='touchmove' && Math.abs(delX)<20) { delCol = 0 }
 
-            if(scrTurn==1){ dR = delLin ; delLin = delCol ; delCol = -dR } // [a, b] = [b, a]
-            el('divFollow-Aba-2-Txt').innerHTML = ' scrTurn:'+scrTurn
+            if(scrTurn==1){ dR = delLin ; delLin = delCol ; delCol = -dR }
+            //if(scrTurn==1){ [delLin, delCol] = [delCol, -delLin] }
 
             lplan0N = lplan0 + delLin ; cplan0N = cplan0 + delCol
             preencheSheet(lplanIni=lplan0N, cplanIni=cplan0N, divSheetId)
@@ -680,18 +733,7 @@ function eventTrap() {
 
 
 
-
-
-
-
-
     // ----------[Scroll de página e panilha]
-
-
-
-
-
-
 
     // -------- CONSOLE
     //if (evento=='keydown') { print(' keyCode: '+keyCode) }
@@ -928,7 +970,7 @@ function eventTrap() {
         divCursor.style.width   = cursLado+'px'
         divCursor.style.height  = cursLado+'px'
         
-        // posição absoluta de divOri
+        // posição absoluta de divOri em relação à Window
         leftAbs = divOri.getBoundingClientRect().left   ;   topAbs = divOri.getBoundingClientRect().top
         // scale de divOri (transform)
         wIni = divOri.offsetWidth     ;   wfin = divOri.getBoundingClientRect().width
@@ -1248,7 +1290,7 @@ function atuJib(){
             // . . . iWAba; iAbaAti
             if (divId.includes('-Aba-1')){ 
                 divAbaId = divId.slice(0, iA)
-                try{ naba = paraAba[divAbaId][4]  ;  print('divId:'+divId+'   naba:'+naba)}catch{ naba = 0 }
+                try{ naba = paraAba[divAbaId][4]  }catch{ naba = 0 }
                 if(naba>0){
                     iwAba = el(divId).getAttribute('iw')
                     x1 = parseInt(iwAba/255) ; x2 = parseInt(iwAba - x1*255)    ; corC='rgb('+x1+','+x2+','+0+')'
@@ -2071,22 +2113,28 @@ function loadDadosJS(divSheetId, arqDados=''){
     scriptEle1 = document.createElement("script")        ; el('Corpo').appendChild(scriptEle1)
     scriptEle1.setAttribute("type", "text/javascript")   ; scriptEle1.setAttribute("async", true)
     scriptEle1.setAttribute("src", nomeProjS+"/ArquvosJs/"+arqDados)
-    if (nLoad==1) { scriptEle1.addEventListener("load", loa1) ;  function loa1() { divLoad = divSheetId; loadListener(divLoad) } }
-    if (nLoad==2) { scriptEle1.addEventListener("load", loa2) ;  function loa2() { divLoad = divSheetId; loadListener(divLoad) } }
+    if (nLoad==1) { scriptEle1.addEventListener("load", loa1) ;  function loa1() { divLoadId = divSheetId; loadListener(divLoadId) } }
+    if (nLoad==2) { scriptEle1.addEventListener("load", loa2) ;  function loa2() { divLoadId = divSheetId; loadListener(divLoadId) } }
     scriptEle1.remove()
 }
-function loadListener(divLoad){
+function loadListener(divLoadId){
+    divLoad = el(divLoadId)
     listS = charSpeci( JSON.stringify(ListArq) )
     Clone = JSON.parse(listS)
-    ListPlan[divLoad] = Clone
+    ListPlan[divLoadId] = Clone
     listS = '' ; Clone = [] ; ListArq = ''
-    Cells[divLoad][0][0]['nLinPla'] = ListPlan[divLoad][0][0]
+    nLinPla = ListPlan[divLoadId][0][0]
+    Cells[divLoadId][0][0]['nLinPla'] = nLinPla
 
+    // . . . recalcula lplan0Max
+    lFrz        = Cells[divLoadId][0][0]['lFrz']           ; hei       = Cells[divLoadId][lFrz][1]['height']
+    hWindow     = Number(divLoad.getAttribute('hWindow'))  ; LinMod    = Cells[divLoadId][0][0]['LinMod']
+    if(LinMod>0) { lplan0Max = nLinPla - parseInt(hWindow/hei) + 1  ; divLoad.setAttribute('lplan0Max', lplan0Max) }
     // ... calcula
 
 
     
-    preencheSheet(lplanIni=0, cplanIni=0, divLoad) 
+    preencheSheet(lplanIni=0, cplanIni=0, divLoadId) 
 }
 // ------[Carrega arquivo de dados]
 
@@ -2107,7 +2155,7 @@ function criaSheet(divSheetId){
     Cells[divSheetId][0][0]['lplan0']   = lFrz   ; Cells[divSheetId][0][0]['cplan0'] = cFrz
     
     ListPlan[divSheetId] = [ [nLinPla] ]
-
+    
     lplan0  = lFrz  ; cplan0    = cFrz
 
     // ... substitui caracteres especiais e Carrega ListPlan
@@ -2155,22 +2203,29 @@ function criaSheet(divSheetId){
         multH[divSheetId] = Lmult
     }
     
-    // calcula lplan0Max cplan0Max
-    hei = Cells[divSheetId][lFrz][1]['height']
-    //if(iElN>=lFrz && LinMod==0)  { bF = Cells[divSheetId][iElN][jElN]['top'] - Cells[divSheetId][lplan0][jElN]['top'] + Cells[divSheetId][iElN][jElN]['height'] }
+    // ---------- calcula lplan0Max cplan0Max
     
     lplan0Max = 0 ; cplan0Max = 0
-    if(LinMod>0)   { lplan0Max = parseInt(hWindow/hei)-lFrz-1}
     
+    // ... cplan0Max
     wPint = 0
     for (j = nColPla; j >= cFrz; j--){
         wPint = wPint + Cells[divSheetId][1][j]['width']
         if(wPint>wWindow){ cplan0Max = j + 1; j = 0}
     }
-    
+    // ... lplan0Max
+    if(LinMod==0){ 
+        hPint = 0
+        for (i = nLinPla; i >= lFrz; i--){
+            hPint = hPint + Cells[divSheetId][1][j]['height']
+            if(wPint>hWindow){ lplan0Max = i + 1; i = 0}
+        }
+    }
 
+    lFrz        = Cells[divSheetId][0][0]['lFrz'] ; hei = Cells[divSheetId][lFrz][1]['height']
+    if(LinMod>0)   { lplan0Max = nLinPla - parseInt(hWindow/hei) + 1}
 
-    // [calcula lplan0Max cplan0Max]
+    // ---------- [calcula lplan0Max cplan0Max]
 
     // guarda
     divSheet.setAttribute('nomeSheet', nomeSheet)
