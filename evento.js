@@ -58,7 +58,7 @@ var topAbs  = 0 , leftAbs = 0 , leftImO   = 0 , topImO   = 0 , zooParam  = 0 , c
 var scaleOriX = 0 , scaleOriY = 0
 
 // ... flag de habilitação de janela de propriedades
-var proprHab = 0        
+var proprHab = 0 ; leftCon = 500
 
 // ... evento
 var evento  = '' ; var Leventos  = []
@@ -230,7 +230,7 @@ function iniSys(){
     para = document.createElement("div")
     el('Corpo').appendChild(para)
     para.id     = "divPrevScr"
-    el("divPrevScr").style = 'position: absolute; left: 11.0px; top: 74.0px; width: 1162.0px; height: 300.0px; box-sizing: content-box; margin: 0px; padding: 0px; overflow: scroll; border-color: black; border-width: 3.0px; border-style: solid; z-index: 1000;   '    
+    el("divPrevScr").style = 'position: absolute; left: -10000px; top: 74.0px; width: 1162.0px; height: 300.0px; box-sizing: content-box; margin: 0px; padding: 0px; overflow: scroll; border-color: black; border-width: 3.0px; border-style: solid; z-index: 1000;   '    
     
     para = document.createElement("div")
     el('divPrevScr').appendChild(para)
@@ -571,8 +571,7 @@ function iniSys(){
         scrTurn = 1
     }
     // ......[ajusta mob]        
-    
-
+    document.activeElement.blur()
 }
 
 // ----- inicio Sys
@@ -786,7 +785,7 @@ function eventTrap() {
         leftAtu = el('console').style.left
         hab=1
         if (leftAtu!='-3000px'  && hab==1){ el('console').style.left = '-3000px' ; el('proprBox').style.left = '-3000px' ;  hab=0 ; proprHab = 0}
-        if (leftAtu=='-3000px'  && hab==1){ el('console').style.left = '510px'    ; el('proprBox').style.left = '504px'     ;  hab=0 ; proprHab = 1}
+        if (leftAtu=='-3000px'  && hab==1){ el('console').style.left = leftCon+'px'    ; el('proprBox').style.left = (leftCon+4)+'px'     ;  hab=0 ; proprHab = 1}
         if(el('console').style.zIndex=='101') { proprHab = 0 }
     }
     // ... toggle CONSOLE front/bottom com Propriedades   - click
@@ -1406,12 +1405,11 @@ function showAba(divId, iAba=1){
     //iA = divId.indexOf("-Aba-") ; iAba  = parseInt(divId.slice(iA+5)) ; divAbaId = divId.slice(0, iA)
     
     divM = divId+'-Aba-'+iAba
-    //el(divM).style.left    = (paraAba[divId][1])+'px'
     el(divM).style.zIndex  = 10
+    
     nAbas = paraAba[divId][4]
     for (iAb = 1; iAb <= nAbas; iAb++){
         divF = divId+'-Aba-'+iAb
-        //if (iAb!=iAba) { el(divF).style.left    = '-10000px' }
         if (iAb!=iAba) { el(divF).style.zIndex  = 0 }
     }
     iAbaAti = iAba
@@ -2129,15 +2127,16 @@ function loadListener(divLoadId){
     // . . . recalcula lplan0Max
     lFrz        = Cells[divLoadId][0][0]['lFrz']           ; hei       = Cells[divLoadId][lFrz][1]['height']
     hWindow     = Number(divLoad.getAttribute('hWindow'))  ; LinMod    = Cells[divLoadId][0][0]['LinMod']
-    if(LinMod>0) { lplan0Max = nLinPla - parseInt(hWindow/hei) + 1  ; divLoad.setAttribute('lplan0Max', lplan0Max) }
+    if(LinMod>0) { 
+        lplan0Max = nLinPla - parseInt(hWindow/hei) + 1
+        if(lplan0Max<2){ lplan0Max = 2 }
+        divLoad.setAttribute('lplan0Max', lplan0Max) 
+    }
+    print(' nLinPla:'+nLinPla+' lplan0Max:'+lplan0Max+' divLoadId:'+divLoadId)
     // ... calcula
-
-
-    
     preencheSheet(lplanIni=0, cplanIni=0, divLoadId) 
-}
+    }
 // ------[Carrega arquivo de dados]
-
 
 // ---- Cria Sheet baseado em dictFormPla e MatrCellsPla
 function criaSheet(divSheetId){
@@ -2553,11 +2552,12 @@ function preencheSheet(lplanIni=0, cplanIni=0, divSheetId){
     if (lplanIni>=lFrz){ lplan0 = lplanIni}
     if (cplanIni>=cFrz){ cplan0 = cplanIni}
 
-    // . . .   recalcula lplan0 e cplan0    
+    // . . .   recalcula lplan0 e cplan0
+    print(' ------- preeSheet lplan0:'+lplan0)
     lplan0Max   = Number(divSheet.getAttribute('lplan0Max')) ; cplan0Max   = Number(divSheet.getAttribute('cplan0Max'))
     if (lplan0>lplan0Max && lplan0Max>0){ lplan0 = lplan0Max}
     if (cplan0>cplan0Max && cplan0Max>0){ cplan0 = cplan0Max}
-    
+    print(' ++++++++ preeSheet lplan0:'+lplan0+'  lplan0Max:'+lplan0Max)
     Cells[divSheetId][0][0]['lplan0'] = lplan0  ; Cells[divSheetId][0][0]['cplan0'] = cplan0
     // . . .  [recalcula lplan0 e cplan0]
 
