@@ -562,7 +562,7 @@ function iniSys(){
     if(Aw<1000){mobFlag = 1 }
 
     hF = parseInt(window.getComputedStyle(el('Fundo')).height) ; wF = parseInt(window.getComputedStyle(el('Fundo')).width)
-    fatX    =  Ah/wF ;    fatY     =  Aw/hF  //;  fatX = fatY
+    fatX    =  Ah/wF ;    fatY     =  Aw/hF  ;  fatY = fatX
     delV    = (wF-hF)/2 + (hF/2)*(1-fatY)
     
     if (mobFlag==1 && wF>400){ 
@@ -571,7 +571,7 @@ function iniSys(){
         scrTurn = 1
     }
     // ......[ajusta mob]
-    
+
     document.activeElement.blur()
 }
 
