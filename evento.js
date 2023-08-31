@@ -570,7 +570,8 @@ function iniSys(){
         el('Fundo').style.left = (-delV)+'px'
         scrTurn = 1
     }
-    // ......[ajusta mob]        
+    // ......[ajusta mob]
+    
     document.activeElement.blur()
 }
 
