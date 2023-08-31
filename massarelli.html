@@ -77,7 +77,7 @@
                 #divMenuCabe{position: absolute; left: 0px; top: 79px; height: 25.0px; right: 0px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); border-color: black; border-width: 0px; border-style: solid; background-color: rgb(255, 255, 0); z-index: 30;  }
                     #divCantoMenu{position: absolute; left: 0.0px; top: 0px; width: 72.0px; bottom: 0px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); border-color: black; border-width: 0px; border-style: solid; background-color: rgb(210, 210, 255);  }
                     #divMenuHori{position: absolute; left: 72px; top: 0px; right: 0px; bottom: 0px; box-sizing: content-box; margin: 0px; padding: 0px; padding-left: 5.0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); border-color: black; border-width: 0px; border-style: solid; background-color: rgb(160, 160, 160);  }
-                #divMenuLat{position: absolute; left: -3.0px; top: 104px; right: 1294px; bottom: 0px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); border-color: black; border-width: 0px; border-style: solid; background-color: rgb(151, 147, 236);  }
+                #divMenuLat{position: absolute; left: -3.0px; top: 104px; right: 1294px; bottom: 0px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); border-color: black; border-width: 0px; border-style: solid; background-color: rgb(228, 228, 228);  }
                 #divSelecionados{position: absolute; left: 72px; top: 104px; right: 0px; bottom: 0px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); overflow: hidden; border-color: black; border-width: 0px; border-style: solid; background-color: rgb(218, 218, 218); background-image: linear-gradient(0deg , rgb(79, 79, 79) , rgb(238, 238, 238) 100.0% 60.0%);  }
                     #divFollow-Aba-2{position: absolute; left: 10.0px; top: 11.0px; width: 1228.0px; height: 492.0px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); overflow: auto; border-color: black; border-width: 0px; border-style: solid; background-color: rgb(225, 225, 255);  }
                         #divEmAnd{position: absolute; left: 319.5px; top: 134.0px; width: 599.0px; height: 228.0px; box-sizing: content-box; margin: 0px; padding: 0px; border-color: rgb(0, 0, 255); border-radius: 5.0px; border-width: 1.0px; border-style: solid; background-color: rgb(255, 0, 128); transform: scaleX(2) scaleY(2);  }
@@ -255,7 +255,7 @@
 
         */
 
-        var corrTam = 2
+        var corrTam = 2 ; iniEmAnd = 0
         // . toggles
         var togg    = -1 , togMar = -1
 
@@ -333,16 +333,32 @@
         // . . . valor em printCell
         function planValorTrap(divSheetId, iC, jC) {    // coordenadas de Planilha = coords de ListPlan
             lFrz     = Cells[divSheetId][0][0]['lFrz'] ; cFrz      = Cells[divSheetId][0][0]['cFrz']
+            try{ arqCarr = ListPlan[divSheetId][0][1] }catch{ arqCarr = 0}
+
             // . . . 
+            
+            // . . . LicitPubi (Aba 1)
             if(divSheetId=='LicitPubi' && iC>0){ 
-                try{
+
+                if(arqCarr==1){
                     if(jC==1) { valor  = ListPlan[divSheetId][iC][2] }     // Órgão
                     if(jC==2) { valor  = ListPlan[divSheetId][iC][3] }     // Cidade
                     if(jC==3) { valor  = ListPlan[divSheetId][iC][4] }     // Estado
                     if(jC==4) { valor  = ListPlan[divSheetId][iC][5] }     // Abertura
                     if(jC==5) { valor  = ListPlan[divSheetId][iC][8] }     // Site
-                }catch{}
-            }            
+                }
+            }
+            // . . .[LicitPubi (Aba 1)]
+
+            // . . . divEmAnd
+            if(divSheetId=='divEmAnd' && iC>0){
+                //  - marca linha eliminada
+                if(ListPlan[divSheetId][iC][11]==1){ backgroundColor = '#e4e4e4' }
+                //  - marca pregão PRESENCIAL
+                if(ListPlan[divSheetId][iC][jC]=='PRESENCIAL'){ color = 'red' }
+   
+            }
+            // . . .[divEmAnd]
 
             // ........
             return valor
@@ -360,6 +376,7 @@
 
 
 
+
             // ..........
 
         }
@@ -368,6 +385,27 @@
         //  --------------------------------------------
         //  -------------- Trap de Eventos -------------
         function trapEvent() {
+
+            // .... marca linhas eliminadas
+            if (iniEmAnd==0){
+                divSheetId = 'divEmAnd'
+                nLins = ListPlan[divSheetId][0][0]
+                arqCarr = ListPlan[divSheetId][0][1]
+                if(arqCarr==1){
+                    for (iC=1; iC<=nLins; iC++) { 
+                        linEli = 0
+                        for (jC=4; jC<=10; jC++) { 
+                            cel = ListPlan[divSheetId][iC][jC]
+                            if(cel=='*') { linEli = 1 }
+                        }
+                        ListPlan[divSheetId][iC][11] = linEli
+                        iniEmAnd = 1
+                    }
+                }
+                if(iniEmAnd==1){ preencheSheet(lplanIni=0, cplanIni=0, divSheetId) }
+            }
+            // ....[marca linhas eliminadas]
+
 
             // ... segunda rodada
             if (corrTam==1){

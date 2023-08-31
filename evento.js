@@ -2123,6 +2123,7 @@ function loadListener(divLoadId){
     listS = '' ; Clone = [] ; ListArq = ''
     nLinPla = ListPlan[divLoadId][0][0]
     Cells[divLoadId][0][0]['nLinPla'] = nLinPla
+    Cells[divLoadId][0][1]['nLinPla'] = 1       ;  ListPlan[divLoadId][0][1] = 1 // flag de arquivo carregado
 
     // . . . recalcula lplan0Max
     lFrz        = Cells[divLoadId][0][0]['lFrz']           ; hei       = Cells[divLoadId][lFrz][1]['height']
@@ -2132,8 +2133,8 @@ function loadListener(divLoadId){
         if(lplan0Max<2){ lplan0Max = 2 }
         divLoad.setAttribute('lplan0Max', lplan0Max) 
     }
-    print(' nLinPla:'+nLinPla+' lplan0Max:'+lplan0Max+' divLoadId:'+divLoadId)
-    // ... calcula
+    // ...
+    
     preencheSheet(lplanIni=0, cplanIni=0, divLoadId) 
     }
 // ------[Carrega arquivo de dados]
@@ -2553,11 +2554,9 @@ function preencheSheet(lplanIni=0, cplanIni=0, divSheetId){
     if (cplanIni>=cFrz){ cplan0 = cplanIni}
 
     // . . .   recalcula lplan0 e cplan0
-    print(' ------- preeSheet lplan0:'+lplan0)
     lplan0Max   = Number(divSheet.getAttribute('lplan0Max')) ; cplan0Max   = Number(divSheet.getAttribute('cplan0Max'))
     if (lplan0>lplan0Max && lplan0Max>0){ lplan0 = lplan0Max}
     if (cplan0>cplan0Max && cplan0Max>0){ cplan0 = cplan0Max}
-    print(' ++++++++ preeSheet lplan0:'+lplan0+'  lplan0Max:'+lplan0Max)
     Cells[divSheetId][0][0]['lplan0'] = lplan0  ; Cells[divSheetId][0][0]['cplan0'] = cplan0
     // . . .  [recalcula lplan0 e cplan0]
 
