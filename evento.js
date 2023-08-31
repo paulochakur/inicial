@@ -2134,7 +2134,7 @@ function loadListener(divLoadId){
         divLoad.setAttribute('lplan0Max', lplan0Max) 
     }
     // ...
-    
+    print(' divLoadId:'+divLoadId)
     preencheSheet(lplanIni=0, cplanIni=0, divLoadId) 
     }
 // ------[Carrega arquivo de dados]

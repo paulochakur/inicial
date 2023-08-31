@@ -351,7 +351,7 @@
             // . . .[LicitPubi (Aba 1)]
 
             // . . . divEmAnd
-            if(divSheetId=='divEmAnd' && iC>0){
+            if(divSheetId=='divEmAnd' && ListPlan[divSheetId][0][1]==1){
                 //  - marca linha eliminada
                 if(ListPlan[divSheetId][iC][11]==1){ backgroundColor = '#e4e4e4' }
                 //  - marca pregão PRESENCIAL
@@ -388,24 +388,23 @@
 
             // .... marca linhas eliminadas
             if (iniEmAnd==0){
-                divSheetId = 'divEmAnd'
-                nLins = ListPlan[divSheetId][0][0]
-                arqCarr = ListPlan[divSheetId][0][1]
+                divSheetLId = 'divEmAnd'
+                nLins   = ListPlan[divSheetLId][0][0]
+                arqCarr = ListPlan[divSheetLId][0][1]
                 if(arqCarr==1){
                     for (iC=1; iC<=nLins; iC++) { 
                         linEli = 0
                         for (jC=4; jC<=10; jC++) { 
-                            cel = ListPlan[divSheetId][iC][jC]
+                            cel = ListPlan[divSheetLId][iC][jC]
                             if(cel=='*') { linEli = 1 }
                         }
-                        ListPlan[divSheetId][iC][11] = linEli
+                        ListPlan[divSheetLId][iC][11] = linEli
                         iniEmAnd = 1
                     }
                 }
-                if(iniEmAnd==1){ preencheSheet(lplanIni=0, cplanIni=0, divSheetId) }
+                if(iniEmAnd==1){ preencheSheet(lplanIni=0, cplanIni=0, divSheetLId) }
             }
             // ....[marca linhas eliminadas]
-
 
             // ... segunda rodada
             if (corrTam==1){
