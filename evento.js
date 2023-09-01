@@ -512,15 +512,20 @@ function iniSys(){
     Ah = window.screen.availHeight-100  ; Aw = window.screen.availWidth
     if(Aw<1000){mobFlag = 1 }
 
+
     hF = parseInt(window.getComputedStyle(el('Fundo')).height)
     wF = parseInt(window.getComputedStyle(el('Fundo')).width)
+    if (mobFlag==1 && wF>400){ hF = Aw/(Ah/wF) ; el('Fundo').style.height    =  (hF)+'px' }
+    
     fatX    =  Ah/wF ;    fatY     =  Aw/hF  ;  fatY = fatX
     delV    = (wF-hF)/2 + (hF/2)*(1-fatY)
+    delH    = (hF-wF)/2 + (wF/2)*(1-fatX)
     
-    if (mobFlag==1 && wF>400){ 
+
+    if (mobFlag==1 && wF>400){
         el('Fundo').style.transform = "rotateZ(-90deg)"+" scaleX("+fatX+")"+" scaleY("+fatY+")"
-        el('Fundo').style.left      = (-delV)+'px'
-        el('Fundo').style.height    =  (1000)+'px' 
+        el('Fundo').style.left  = (-delV)+'px'
+        el('Fundo').style.top   = (-delH)+'px'
         scrTurn = 1
     }
     // ......[ajusta mob]
