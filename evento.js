@@ -220,7 +220,6 @@ function iniSys(){
 
     evento = ''
 
-    
     // ---------- cria elementos de sistema
     Wh = window.innerHeight         ; Ww = window.innerWidth
     Ah = window.screen.availHeight  ; Aw = window.screen.availWidth
@@ -240,8 +239,7 @@ function iniSys(){
     el('divPrevScr').scrollLeft = 50000
 
     // ...[cria divs de Prevent Scroll]
-    
-    
+        
     // ... cria div - "console"
     para = document.createElement("div")
     el('Corpo').appendChild(para)
@@ -319,7 +317,6 @@ function iniSys(){
         para.style.width    = widL+'px'
     }
     // ...[cria div - "proprBox"]
-
             
     // ... cria canvas - "atuJib"
     para = document.createElement("canvas")
@@ -341,9 +338,6 @@ function iniSys(){
     // .  .  . [nome do Proj]
 
     // ...[cria canvas - "atuJib"]
-
-
-
 
     // ... cria div cursor - "ZoomDivCur"
     para = document.createElement("div")
@@ -371,47 +365,6 @@ function iniSys(){
     // ........[Zoom]
     
     // ---------- [cria elementos de sistema]
-
-
-
-
-
-    // --------- Atributos- ida: div-429 ; zoomMenuDiv: ZoomAma ; curLado: 50 ; zoomFat: 3 ;
-    
-    // ... set atributos definidos em TXT
-    /*
-    allEles = document.getElementsByTagName("*") ; nEles = allEles.length
-    Lels = []  ; for (i = 0; i <= nEles-1; i++){ Lels.push(allEles[i].id) }
-    
-    for (i=1; i < nEles-1; i++) {
-        innTex = '**' 
-        try{ 
-            ele     = el(Lels[i])
-            innTex  = ele.innerText
-        } catch{}
-        try {
-            if (innTex.includes('Atributos-')) {
-                innTex = innTex.replace('Atributos-','')  ; innTex = innTex.trim()+';'
-                iniAtt = 0 ; iniVal = 1 ; valAtt = '*'; j=0 ; nomAtt = '' ; valAtt = '' ; idAtt = ''
-                do {
-                    j++
-                    iniVal  = innTex.indexOf(":", iniAtt+1)   ; fimDiv  = innTex.indexOf(";", iniVal+1)
-                    if (iniVal>-1)  { 
-                        nomAtt  = innTex.slice(iniAtt,  iniVal)   ; nomAtt  = nomAtt.trim()
-                        valAtt  = innTex.slice(iniVal+1,  fimDiv) ; valAtt  = valAtt.trim()
-                        if (nomAtt=='ida') { idAtt = valAtt }
-                        if (idAtt==ele.id && nomAtt!='ida') { 
-                            ele.setAttribute(nomAtt, valAtt) 
-                            }
-                    }        
-                    // ..
-                    iniAtt = fimDiv+1
-                } while (iniVal>0 && fimDiv>0 && j<30)
-            }
-        } catch{}
-    }    
-    */
-    // ...[set atributos definidos em TXT]
 
     // . . . monta dictCoods - originais e aplica xl e yt e corrige overflow para mob
     allEl = document.getElementsByTagName("div")  ;  nDivs = allEl.length
@@ -452,7 +405,6 @@ function iniSys(){
         divId = Ldivs[iDiv]
         iAba = 0 ; eAba1 = divId.includes('-Aba-1')
         
-
         if (eAba1){ iA = divId.indexOf("-Aba-") ; iAba  = parseInt(divId.slice(iA+5)) ; divAbaId = divId.slice(0, iA)}
         if (iAba==1){
             wAba    = parseInt(window.getComputedStyle(el(divId)).width)
@@ -477,8 +429,7 @@ function iniSys(){
             el(divId).style.left    = (paraAba[divAbaId][1])+'px' ; dictCoods[iw][1] = paraAba[divAbaId][1]
             el(divId).style.width   = (paraAba[divAbaId][2])+'px'
             el(divId).style.height  = (paraAba[divAbaId][3])+'px'
-            nAbas = nAbas + 1 ;     paraAba[divAbaId][4] = nAbas
-            
+            nAbas = nAbas + 1 ;     paraAba[divAbaId][4] = nAbas            
         }
     }
     // . . . ativa aba de cada div
@@ -518,7 +469,6 @@ function iniSys(){
             }
         }
         catch{}
-    
     }
     // ........[abre Planilhas]
     
@@ -550,6 +500,7 @@ function iniSys(){
     el('console').style.left = '-3000px' ; el('proprBox').style.left = '-3000px' ; proprHab = 0
     el('console').style.zIndex = '100'   ; proprHab = 0
     
+    // . . . scroll inicial
     deslX = el('Corpo').getAttribute("deslX") ; deslY = el('Corpo').getAttribute("deslY")
     window.scrollTo(deslX,deslY)
 
@@ -569,7 +520,7 @@ function iniSys(){
     if (mobFlag==1 && wF>400){ 
         el('Fundo').style.transform = "rotateZ(-90deg)"+" scaleX("+fatX+")"+" scaleY("+fatY+")"
         el('Fundo').style.left      = (-delV)+'px'
-        el('Fundo').style.height    =  (Aw*2)+'px' 
+        //el('Fundo').style.width    =  (Aw*2)+'px' 
         scrTurn = 1
     }
     // ......[ajusta mob]
@@ -708,7 +659,7 @@ function eventTrap() {
 
     // **************************************
 
-    // ---------- Scroll de página e panilha  preencheSheet(
+    // ---------- Scroll de página e panilha
 
         // . . . scroll de Pla
         if( (evento=='wheel' || evento=='touchmove') && eleFoId.includes("-Pla")){
@@ -721,8 +672,8 @@ function eventTrap() {
             if(evento=='touchmove' && Math.abs(delY)<20) { delLin = 0 }
             if(evento=='touchmove' && Math.abs(delX)<20) { delCol = 0 }
 
-            if(scrTurn==1){ dR = delLin ; delLin = delCol ; delCol = -dR }
-            //if(scrTurn==1){ [delLin, delCol] = [delCol, -delLin] }
+            //(scrTurn==1){ dR = delLin ; delLin = delCol ; delCol = -dR }
+            if(scrTurn==1){ [delLin, delCol] = [delCol, -delLin] }
 
             lplan0N = lplan0 + delLin ; cplan0N = cplan0 + delCol
             preencheSheet(lplanIni=lplan0N, cplanIni=cplan0N, divSheetId)
