@@ -548,7 +548,7 @@ function iniSys(){
 
     // ... situação inicial de Console
     el('console').style.left = '-3000px' ; el('proprBox').style.left = '-3000px' ; proprHab = 0
-    el('console').style.zIndex = '100' ; proprHab = 0
+    el('console').style.zIndex = '100'   ; proprHab = 0
     
     deslX = el('Corpo').getAttribute("deslX") ; deslY = el('Corpo').getAttribute("deslY")
     window.scrollTo(deslX,deslY)
@@ -569,7 +569,7 @@ function iniSys(){
     if (mobFlag==1 && wF>400){ 
         el('Fundo').style.transform = "rotateZ(-90deg)"+" scaleX("+fatX+")"+" scaleY("+fatY+")"
         el('Fundo').style.left      = (-delV)+'px'
-        el('Fundo').style.height    = (Aw*fatY)+'px' 
+        el('Fundo').style.height    =  (Aw*2)+'px' 
         scrTurn = 1
     }
     // ......[ajusta mob]
@@ -581,8 +581,6 @@ function iniSys(){
 
 //  -------------- Trap de Eventos  -------------
 function eventTrap() {
-    
-    //window.scrollTo(0,0)
 
     // ---- Parâmetros de EVENTO
     // elementos de evento - On, Target, Foco
