@@ -569,7 +569,7 @@ function iniSys(){
     if (mobFlag==1 && wF>400){ 
         el('Fundo').style.transform = "rotateZ(-90deg)"+" scaleX("+fatX+")"+" scaleY("+fatY+")"
         el('Fundo').style.left      = (-delV)+'px'
-        if(hF<Aw){ el('Fundo').style.height  = (Aw)+'px' }
+        el('Fundo').style.height    = (Aw*fatY)+'px' 
         scrTurn = 1
     }
     // ......[ajusta mob]
