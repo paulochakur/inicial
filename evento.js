@@ -515,7 +515,7 @@ function iniSys(){
 
     hF = parseInt(window.getComputedStyle(el('Fundo')).height)
     wF = parseInt(window.getComputedStyle(el('Fundo')).width)
-    if (mobFlag==1 && wF>400){ hF = Aw/(Ah/wF) ; el('Fundo').style.height    =  (hF)+'px' }
+    if (mobFlag==1 && wF>400){ hF = Aw/(Ah/wF) ; el('Fundo').style.height  =  (hF)+'px' }
     
     fatX    =  Ah/wF ;    fatY     =  Aw/hF  ;  fatY = fatX
     delV    = (wF-hF)/2 + (hF/2)*(1-fatY)
