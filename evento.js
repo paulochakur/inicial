@@ -522,7 +522,7 @@ function iniSys(){
 
     if (mobFlag==1 && wF>400){
         el('Fundo').style.transform = "rotateZ(-90deg)"+" scaleX("+fatX+")"+" scaleY("+fatY+")"
-        el('Fundo').style.left  = (-delV-30)+'px'
+        el('Fundo').style.left  = (-delV-40)+'px'
         el('Fundo').style.top   = (-delH   )+'px'
         scrTurn = 1
     }
