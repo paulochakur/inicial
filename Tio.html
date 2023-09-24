@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html id="HTML*">
+
+    <head lang="en">
+
+        <!-- NOME DO PROJETO -->
+        <title>Tio</title>
+        <!-- [NOME DO PROJETO] -->
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- <link rel="stylesheet" href="Styles.css"> -->
+        <meta name="viewport" content="minimum-scale=1"/>    
+        <meta name="viewport" content="height=device-height, 
+        width=device-width, initial-scale=1.0, 
+        minimum-scale=1.0, maximum-scale=1.0, 
+        user-scalable=no, target-densitydpi=device-dpi">
+
+        <style>
+            /* width */
+            ::-webkit-scrollbar {
+            width: 5px; height: 5px; 
+            }
+
+            /* Track */
+            ::-webkit-scrollbar-track {
+            background: #d9d9d9; 
+            }
+
+            /* Handle */
+            ::-webkit-scrollbar-thumb {
+            background: #898989; 
+            }
+
+            /* Handle on hover */
+            ::-webkit-scrollbar-thumb:hover {
+            background: #000000; 
+            }
+
+            :root {
+                --xPos: 300px;
+                --bg-color: rgb(28, 0, 128);
+                --txt-color: white;
+                --ImFi:"C:/Users/Paulo/Documents/CHAKUR/TÉCNICOS/Programação/JAVA SCRIPT/Curso JS/PyCss/Image/canvas-630-654.jpg";
+            }
+
+
+            header {
+                position: sticky;
+                top: 0;
+            }
+
+
+            html {
+                            margin:0;
+                            padding:0;
+                            /*line-height: 1.5em;*/
+                            height: 100px;
+                            width: 100px;
+                            background-color: rgb(26, 150, 76);
+                            }
+
+            body {
+                            /*position: fixed;*/
+                            margin:0;
+                            padding:0;
+                            /*line-height: 1.5em;*/
+                            height: 100%;
+                            width: 100%;
+                            background-color: rgb(126, 250, 176);
+                            }
+
+
+
+            /*  ----------- FORMATAÇÃO REMOTA  ---------------------------------  */
+            /*  FORMAT OBJS  */
+            #Fundo{position: absolute; left: 0.0px; top: 0.0px; width: 703.0px; height: 516.0px; box-sizing: content-box; margin: 0px; padding: 0.0px; cursor: crosshair; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); border-color: black; border-radius: 0.0px; border-width: 0.0px; border-style: groove; background-color: rgb(120, 190, 190); color: light gray;  }
+                #button-619-Copy{position: absolute; left: 384.0px; top: 66px; width: 40.0px; bottom: 423px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); border-color: black; border-width: 0px; border-style: solid; background-color: light gray;  }
+                #input-686{position: absolute; left: 325.0px; top: 23.0px; width: 46.0px; height: 27.0px; box-sizing: content-box; margin: 0px; padding: 0px; padding-left: 10.0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); border-color: black; border-width: 0px; border-style: solid; background-color: light yellow;  }
+                #button-619{position: absolute; left: 325.0px; top: 66.0px; width: 40.0px; height: 27.0px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); border-color: black; border-width: 0px; border-style: solid; background-color: light gray;  }
+                #div-417{position: absolute; left: 16.0px; top: 23.0px; width: 286.0px; height: 438.0px; box-sizing: content-box; margin: 0px; padding: 0px; overflow: hidden; border-color: rgb(84, 0, 168); border-width: 1.0px; border-style: solid; background-color: rgb(255, 255, 0);  }
+                    #img-418-Map{position: absolute; left: 0.0px; top: 0.0px; width: 286.0px; height: 438.0px; box-sizing: content-box; margin: 0px; padding: 0px; border-color: black; border-width: 0px; border-style: solid; background-color: rgb(255, 255, 0);  }
+                    #img-418{position: absolute; left: 0.0px; top: 0.0px; width: 286.0px; height: 438.0px; box-sizing: content-box; margin: 0px; padding: 0px; border-color: black; border-width: 0px; border-style: solid; background-color: rgb(255, 255, 0);  }
+            /* [FORMAT OBJS] */
+            
+            /*  ----------- [FORMATAÇÃO REMOTA]  ---------------------------------  */
+
+        </style>
+
+    </head>
+
+    
+    <!--  -------------- Define Elementos  -------------  -->
+    <body id="Corpo" nomeProj="Tio"  deslX="1" deslY="1">
+        <div id="Fundo" iw=416     >
+            <button id="button-619-Copy" iw=687     >>></button>
+            <input id="input-686" iw=686     >
+            <button id="button-619" iw=619     ><<</button>
+            <div id="div-417" iw=417      scroll="hidden">
+                <map id="img-418-Map" iw=419      name="img-418-Map">
+                </map> <!-- [img-418-Map]   -->
+
+                <img id="img-418" iw=418      src="Tio/Imagens/CSS/br_tp_0026a_001.jpeg">
+            </div> <!-- [div-417]   -->
+        </div> <!-- [Fundo]   -->
+
+    <!--  --------------[Define Elementos] -------------  -->
+
+    
+    <!--  ............  Rotinas Gerais , Variáveis e Trap de Eventos - JS  ...........  -->
+    <script type="text/javascript" src="evento.js">      </script>
+    <!--  carrega arquivo -Var.js  -->
+    <script type="text/javascript" src="Tio/ArquvosJs/Tio-Var.js">   </script>
+    <!-- [carrega arquivo -Var.js]  -->
+
+    
+    
+    <!--  ............ Trap de Eventos - JS ...........  -->
+    <script>
+        /*      VARIÁVEIS DE EVENTOS E ELEMENTOS
+        
+                <body id="Corpo" deslX="120" deslY="320">
+
+                evento ;  Leventos  = []
+
+                eleTar ;  eleTaId  ;  eleTaTy      ;  taStyle  
+                eleOn  ;  eleOnId  ;  eleOnTy      ;  onStyle   
+                eleFoc ;  eleFoId  ;  eleFoTy      ;  foStyle   
+
+                xMe    ;  yMe   // relativas ao elemento
+                xMw    ;  yMw   // relativas à  window
+                xMs    ;  yMs   // relativas à  screen
+
+        */
+
+        var corrTam = 2
+        // . toggles
+        var togg    = -1 , togMar = -1
+
+        // ------- Trap de Planilha
+        
+        function SelectionChange() {
+            // . . . SelectionChange   -    
+            //      Cells:  iEl, iElN           jEl, jElN               valList = ListPlan[divSheetId][iElN][jElN]
+            //      Sheet:  iSheet, jSheet      iSheetA, jSheetA        elId    = divSheetId+'-Pla:('+iSheetA+','+jSheetA+')'
+            //                                                          elId: prox, elAntR          
+            //      valores:    iniValueInput, finValueInputA
+            //                  iniValueInputA - antes de atualização
+            //
+            //      i=2 ; j=3 ; elId    = divSheetId+'-Pla:('+i+','+j+')'
+            /*
+            print('*****************************')
+            print(' -----  inpCurId:'+inpCurId)
+            print(' -----  inpAntId:'+inpAntId)
+            print('') 
+            print(' ***     iSheetSel :'+iSheetSel+'  jSheetSel :'+jSheetSel)
+            print(' ***     iSheetSelA:'+iSheetSelA+'  jSheetSelA:'+jSheetSelA)
+            print(' ***     iElSel    :'+iElSel+'  jElSel   :'+jElSel)
+            print(' ***     iElSelA   :'+iElSelA+'  jElSelA  :'+jElSelA)
+            print(' ***     divSheetId:'+divSheetId) 
+            print(' iniValueInputA:'+iniValueInputA)
+            print(' finValueInputA:'+finValueInputA)
+            print(' iniValueInput :'+iniValueInput)
+            print('')
+            print('  entraInp:'+entraInp)
+            N=N+1
+            print('  |||||||| N:'+N)
+            print('*****************************')
+            */
+
+            // .... Lost Focus
+            if(entraInp=='Lost'){
+                // ..
+                //if (iElSelA==30){ el(elId).value = finValueInputA ; ListPlan[divSheetId][2][3] = finValueInputA}
+                
+                // ...
+            }
+            // ....[Lost Focus]
+
+            // .... Got Focus
+            if(entraInp=='Got'){
+                // ..
+
+                // ...
+            }
+            // ....[Got Focus]
+
+
+            // ........
+            return
+        }         
+        // . . .[SelectionChange]
+
+
+        // . . . valor em printCell
+        function planValorTrap(divSheetId, iC, jC) {
+            lFrz     = Cells[divSheetId][0][0]['lFrz'] ; cFrz      = Cells[divSheetId][0][0]['cFrz']
+            lin = iC-lFrz+1 ; col = jC-cFrz+1 // coords de ListPlan
+            // . . . 
+
+
+            // ........
+            return valor
+        }
+        // . . .[valor em printCell]
+
+        // -------[Trap de Planilha]
+
+        // ---- Início Local
+        function iniLoc(){
+            // ..........
+
+            // -------- inicia com console
+            //el('console').style.left = '10px'    ; el('proprBox').style.left = '4px'     ;  hab=0 ; proprHab = 0
+            el('console').style.zIndex = '101' ; hab=0; proprHab = 0 // console na frente
+            leftCon = 700
+            // --------[inicia com console]
+
+
+            el('input-686').value = 26
+
+        }
+        // ----[Início Local]
+
+        //  --------------------------------------------
+        //  -------------- Trap de Eventos -------------
+        function trapEvent() {
+
+            // ... segunda rodada
+            if (corrTam==1){
+                corrTam = 3
+                // ..
+                
+                // ..
+                
+            }
+            // ...[segunda rodada]
+
+            // ... primeira rodada
+            if (corrTam==2){
+                corrTam = 0
+                // ..
+                
+                corrTam = 1
+                // ..
+            }
+            // ...[primeira rodada]
+
+            // ******** GERAL DE EVENTOS
+            if(evento=='keydown' && eleTaId=='input-686' && keyCode==13) {
+                dirS = 'C:/Users/Paulo/Documents/CHAKUR/ACADÊMICOS/LETRAS/Gibi/Tio Patinhas/Capas TP bpm/'
+
+                num     = parseInt(el('input-686').value)
+                tpNS    = String(num).padStart(4, '0')
+                capaS   = dirS + 'br_tp_'+tpNS+'a_001.jpeg'
+                el('img-418').src = capaS
+            }
+
+            if(evento=='click' && eleTaId=='button-619-Copy') {
+                dirS = 'C:/Users/Paulo/Documents/CHAKUR/ACADÊMICOS/LETRAS/Gibi/Tio Patinhas/Capas TP bpm/'
+                num     = parseInt(el('input-686').value) + 1
+                if (num<90){
+                    el('input-686').value = num
+                    tpNS    = String(num).padStart(4, '0')
+                    capaS   = dirS + 'br_tp_'+tpNS+'a_001.jpeg'
+                    el('img-418').src = capaS
+                }
+            }
+            if(evento=='click' && eleTaId=='button-619') {
+                dirS = 'C:/Users/Paulo/Documents/CHAKUR/ACADÊMICOS/LETRAS/Gibi/Tio Patinhas/Capas TP bpm/'
+                num     = parseInt(el('input-686').value) - 1
+                if (num>0){
+                    el('input-686').value = num
+                    tpNS    = String(num).padStart(4, '0')
+                    capaS   = dirS + 'br_tp_'+tpNS+'a_001.jpeg'
+                    el('img-418').src = capaS
+                }
+            }
+        // ********[GERAL DE EVENTOS]
+
+
+        
+        // ......
+        } // . . . [trapEvent()]
+        //  --------------[Trap de Eventos] -------------
+        //  --------------------------------------------
+
+
+    </script>
+    <!--  ............ [Trap de Eventos - JS] ...........  -->
+
+
+    <!--  ...  -->
+    </body>
+    <!--  ... [body] ...  -->        
+</html>
