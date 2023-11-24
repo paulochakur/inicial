@@ -1500,7 +1500,7 @@ function formIm(imgId,  x='0', y='0', w='0', h='0', fitS, faEscX, faEscY, adjDiv
         if(adjDiv==1) { divImg.style.width  = imgWn+'px'  ; divImg.style.height = imgHn+'px'}
 
 
-        if(divImgId=='alteCapa'){ el('nomePrim-Txt').innerHTML    = 'wD:'+wD+' ===:'+(wD / oriW)*oriW+' :::'+imgWn+' .'+divImg.style.width }
+        if(divImgId=='alteCapa'){ el('nomePrim-Txt').innerHTML    = 'wD:'+wD+' ===:'+(wD / oriW)*oriW+' :::'+imgWn+' ||'+divImg.style.width }
 
         // . . . ajusta posição
         left0 = parseInt(x) ; top0 = parseInt(y)
