@@ -1463,7 +1463,15 @@ function formIm(imgId,  x='0', y='0', w='0', h='0', fitS, faEscX, faEscY, adjDiv
     // ***** depois de carregar Img
     if(el(imgId).complete==true){
         eleImg = el(imgId) ; divImg = eleImg.parentElement ; divImgId = divImg.id
-        wD = parseInt(window.getComputedStyle(divImg).width) ; hD = parseInt(window.getComputedStyle(divImg).height)
+        wD = parseInt(window.getComputedStyle(divImg).width)
+        hD = parseInt(window.getComputedStyle(divImg).height)
+
+        wDC = divImg.getBoundingClientRect().width
+        hDC = divImg.getBoundingClientRect().height
+
+        //print(' wD:'+wD+'  wDC:'+wDC+' divImgId:'+divImgId)
+        el('nomePrim-Txt').innerHTML    = 'wD:'+wD+'  wDC:'+wDC+' divImgId:'+divImgId
+
         oriW = eleImg.naturalWidth ; oriH = eleImg.naturalHeight
 
         // ----- Tamanho de Img
