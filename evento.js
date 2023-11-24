@@ -1469,10 +1469,9 @@ function formIm(imgId,  x='0', y='0', w='0', h='0', fitS, faEscX, faEscY, adjDiv
         wDC = divImg.getBoundingClientRect().width
         hDC = divImg.getBoundingClientRect().height
 
-        //print(' wD:'+wD+'  wDC:'+wDC+' divImgId:'+divImgId)
-        if(divImgId=='alteCapa'){ el('nomePrim-Txt').innerHTML    = 'wD:'+wD+'  wDC:'+wDC+' divImgId:'+divImgId }
-
         oriW = eleImg.naturalWidth ; oriH = eleImg.naturalHeight
+
+        if(divImgId=='alteCapa'){ el('nomePrim-Txt').innerHTML    = 'wD:'+wD+'  oriW:'+oriW }
 
         // ----- Tamanho de Img
         imgWn = oriW ; imgHn = oriH
