@@ -788,7 +788,7 @@ function eventTrap() {
     // ----------[Scroll de página e panilha]
 
     // ---------- scroll de Painel
-    if( ((evento=='wheel' || evento=='click') || (evento=='keydown' && (keyCode>36 && keyCode<41) ))){
+    if( (((evento=='wheel' || evento=='touchmove') || evento=='click') || (evento=='keydown' && (keyCode>36 && keyCode<41) ))){
 
         pai = 1 ; try{ divPaId  = Painel[painelNome]['divPainelId'] } catch{ pai = 0 }
 
@@ -834,7 +834,7 @@ function eventTrap() {
             // . . .[flechas]
 
             // . . . wheel
-            if(evento=='wheel'){
+            if((evento=='wheel' || evento=='touchmove')){
                 eleCell = el(painelNome, iPaiCurr, jPaiCurr)
                 yCell = parseInt(window.getComputedStyle(eleCell).top) ; xCell = parseInt(window.getComputedStyle(eleCell).left)
                 
@@ -846,7 +846,6 @@ function eventTrap() {
             }
             // . . .[wheel]
 
-        
             // ...............
             if(rePrint==1){
 
