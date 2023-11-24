@@ -267,6 +267,7 @@
                 if(num<=nLinPai0){
                     capaS  = dirS + ListPlan[arqPainel][num][1]
                     capaId = el('imgPainel',iC,jC).id
+                    print(' capaS:'+capaS)
                     fomatImg(imgId=capaId, imgSrc=capaS, x='0', y='0', w='0', h='0', fitS='fitH', faEscX = 1, faEscY = 1, adjDiv='')
                     el('divPaiNum-Txt',iC,jC).innerHTML = 'N. '+(num+129)+' '+ListPlan[arqPainel][num][4]
                 }
