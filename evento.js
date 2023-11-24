@@ -27,21 +27,36 @@
     ===	        Strict equal to: true if the operands are equal and of the same type
     !==	        Strict not equal to: true if the operands are equal but of different type or not equal at all
 
+
+    // ******* Promise
+    let loadImage = new Promise(function(resolve, reject) {
+        el(imgId).onload = () => resolve(imgId)
+    })
+    loadImage.then(
+        result => { formIm(imgId,  x, y, w, h, fitS, faEscX, faEscY, adjDiv) },
+      )
+    // *******[Promise]
+
 */
 
 
 //  -------------- Variáveis Globais -------------
 //var module = require('fs')
-var mobFlag = 0 , scrTurn = 0, lastX = 0, lastY = 0, delX = 0, delY = 0 ; divSheetId = '' ; divSheetAtiId = ''
+var mobFlag = 0 , scrTurn = 0, divSheetId = '' , divSheetAtiId = ''
 var ctx = 0, dictCoods = {}, verScr = 0
-var nomeProjS = ''  ;   ListPlan = {name: [3]}  ,  nLoad = 0 , N = 0 ; iAbaAti = 1
-var habClic = 0 ; var iniValueInput = 0 , iniValueInputA = 0 , finValueInputA = 0
-var toques=0
-var iCa=0 , a=0
-var List = [ 4 ]
-var eventoAc = '<br> .......'
+var linPrint = 0
 
-var blocTrap = 0
+// ... load arq Js
+var nomeProjS = '', LoadedJS={}
+var ListPlan = {name: [3]}  ,  nLoad = 0 , N = 0
+
+// ... Array e Painel
+var Painel = {'nome':{'toplin':1}} , Array = {'nome':{'toplin':1}}
+
+// ... console
+var eventoAc = '<br> .......'
+var proprHab = 0 ; leftCon = 500    // ... flag de habilitação de janela de propriedades
+
 
 // ... Zoom
 var divOriId        = '' , divOri       = 0     // div da img original
@@ -54,23 +69,24 @@ var divCursor       = 0                         // div cursor                   
 
 var fatZoom         = 1     // fator de aumento
 var menuZoom        = 0     // flag de zoom ativo
+
 var topAbs  = 0 , leftAbs = 0 , leftImO   = 0 , topImO   = 0 , zooParam  = 0 , cursLado = 0
 var scaleOriX = 0 , scaleOriY = 0
+// ...[Zoom]
 
-// ... flag de habilitação de janela de propriedades
-var proprHab = 0 ; leftCon = 500
+
+
 
 // ... evento
-var evento  = '' ; var Leventos  = []
+var evento  = '', eventoA = '', lastIn = ''  ; var Leventos  = []
 
-var eleTa  = 1   ; var eleTaId  = 'T' ; var eleTaTy     = 1 ; var taStyle    = 1 ; var eleTaClass   = 1
+var eleOn = 'O'  ; var eleOnId  = 'O' ; var eleOnTy     = 1 ; var onStyle    = 1 ; var eleOnClass   = 1 ; var onPar = 1
+var eleTa  = 1   ; var eleTaId  = 'T' ; var eleTaTy     = 1 ; var taStyle    = 1 ; var eleTaClass   = 1 ; var taPar = 1
+var eleFo  = '@' ; var eleFoId  = 'F' ; var eleFoTy     = 1 ; var foStyle    = 1 ; var eleFoClass   = 1 ; var foPar = 1
+
 var eleTaA = 1   ; var eleTaIdA = 'T' ; var eleTaTyA    = 1 ; var taStyleA   = 1 ; var eleTaClassA  = 1
-var inpCurId = '', inpAntId = '', inpCur = '', inpAnt = ''
+var eleFoA = '@' ; var eleFoIdA = 'F' ; var eleFoTyA    = 1 ; var foStyleA   = 1 ; var eleFoClassA  = 1
 
-var eleOn = 'O' ; var eleOnId  = 'O' ; var eleOnTy     = 1 ; var onStyle    = 1 ; var eleOnClass    = 1
-
-var eleFo = '@' ; var eleFoId  = 'F' ; var eleFoTy     = 1 ; var foStyle    = 1 ; var eleFoClass  = 1
-var eleFoA = '@'; var eleFoIdA = 'F' ; var eleFoTyA    = 1 ; var foStyleA   = 1 ; var eleFoClassA = 1
 var foco = '' , entraInp = ''
 var eleTaIdAnt = 0
 var eleScrTop = 1
@@ -83,27 +99,32 @@ var xMp  = 1    , yMp   = 1 , Ph    = 1 , Pw    = 1                             
 var Dh   = 1    , Dw    = 1                                                     // relativas a  document
 var xPs  = 1    , yPs   = 1                                                     // scroll de page
 
+var lastX = 0, lastY = 0, delX = 0, delY = 0 ; divSheetId = '' ; divSheetAtiId = ''
 
 var keyCode                         // keydown event
 var ctrK                            // keydown event
 // ...[evento]
 
+// ... input
+var habClic = 0 ; var iniValueInput = 0 , iniValueInputA = 0 , finValueInputA = 0
+var toques=0
+var inpCurId = '', inpAntId = '', inpCur = ''  , inpAnt = '', painelNome = '', celElA = ''
+var iPaiCurr = 0 , jPaiCurr = 0 , cellCurr = 0
+
 // ... abas
-var paraAba = {}
+var paraAba = {} , iAbaAti = 1
 
 // ... menu
 var IsubOpen   = [1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]
 var divMenuAti = '' ; var popMenuAti = ''
+var iMenAnt = 0 , linMeIdAnt = ''   , scrollHab = 0
 
 // ... planilha
 var multH = { '1':[0] }
-
-
 var elAnt = '' , curAnt = '', downPla = 0
-var iEl = 0 , jEl = 0 , divPlanCurr = 0 , divPlanCurrId = ''
-var iSheetA = 0 , jSheetA = 0 , iSheetSel = 0 , jSheetSel = 0 , iSheetSelA = 0 , jSheetSelA = 0
-var iMenAnt = 0  ; var linMeIdAnt = ''
-
+var iEl = 0     , jEl = 0           , divPlanCurr = 0   , divPlanCurrId = ''
+var iSheetSel = 0     , jSheetSel = 0 , iSheetSelA = 0 , jSheetSelA = 0
+var blocTrap = 0
 
 // ************ TESTES
 
@@ -115,109 +136,110 @@ dictJs.nomePlan = "planilha"
 dictJs[chT] = 456
 
 dictMt["primeira"] = dictJs
-
 */
 
 //  --------------[Variáveis Globais] -------------
 
-//  --------------Trap de Eventos -------------
+
+//  --------------Listener de Eventos -------------
 Leventos = ["abort", "afterprint", "animationend", "animationiteration", "animationstart", "beforeprint", "beforeunload", "blur", "canplay", "canplaythrough", "change", "click", "contextmenu", "copy", "cut", "dblclick", "drag", "dragend", "dragenter", "dragleave", "dragover", "dragstart", "drop", "durationchange", "ended", "error", "focus", "focusin", "focusout", "fullscreenchange", "fullscreenerror", "hashchange", "input", "invalid", "keydown", "keypress", "keyup", "load", "loadeddata", "loadedmetadata", "loadstart", "message", "mousedown", "mouseenter", "mouseleave", "mousemove", "mouseover", "mouseout", "mouseup", "mousewheel", "offline", "online", "open", "pagehide", "pageshow", "paste", "pause", "play", "playing", "popstate", "progress", "ratechange", "resize", "reset", "scroll", "search", "seeked", "seeking", "select", "show", "stalled", "storage", "submit", "suspend", "timeupdate", "toggle", "touchcancel", "touchend", "touchmove", "touchstart", "transitionend", "unload", "volumechange", "waiting", "wheel"]
 
 // ----- funções de addEventListener
-document.addEventListener("DOMContentLoaded", evIni)        ;  function evIni(){ evento = 'inicio'    ; iniSys() }
+document.addEventListener("DOMContentLoaded", evIni)        ;  function evIni(){ eventoA = evento; evento = 'inicio'    ; iniSys() }
 
-document.addEventListener(Leventos[00], ev00) ;  function ev00() { evento = Leventos[00]; eventTrap() }
-document.addEventListener(Leventos[01], ev01) ;  function ev01() { evento = Leventos[01]; eventTrap() }
-document.addEventListener(Leventos[02], ev02) ;  function ev02() { evento = Leventos[02]; eventTrap() }
-document.addEventListener(Leventos[03], ev03) ;  function ev03() { evento = Leventos[03]; eventTrap() }
-document.addEventListener(Leventos[04], ev04) ;  function ev04() { evento = Leventos[04]; eventTrap() }
-document.addEventListener(Leventos[05], ev05) ;  function ev05() { evento = Leventos[05]; eventTrap() }
-document.addEventListener(Leventos[06], ev06) ;  function ev06() { evento = Leventos[06]; eventTrap() }
-document.addEventListener(Leventos[07], ev07) ;  function ev07() { evento = Leventos[07]; eventTrap() }
-document.addEventListener(Leventos[08], ev08) ;  function ev08() { evento = Leventos[08]; eventTrap() }
-document.addEventListener(Leventos[09], ev09) ;  function ev09() { evento = Leventos[09]; eventTrap() }
-document.addEventListener(Leventos[10], ev10) ;  function ev10() { evento = Leventos[10]; eventTrap() }
-document.addEventListener(Leventos[11], ev11) ;  function ev11() { evento = Leventos[11]; eventTrap() }
-document.addEventListener(Leventos[12], ev12) ;  function ev12() { evento = Leventos[12]; eventTrap() }
-document.addEventListener(Leventos[13], ev13) ;  function ev13() { evento = Leventos[13]; eventTrap() }
-document.addEventListener(Leventos[14], ev14) ;  function ev14() { evento = Leventos[14]; eventTrap() }
-document.addEventListener(Leventos[15], ev15) ;  function ev15() { evento = Leventos[15]; eventTrap() }
-document.addEventListener(Leventos[16], ev16) ;  function ev16() { evento = Leventos[16]; eventTrap() }
-document.addEventListener(Leventos[17], ev17) ;  function ev17() { evento = Leventos[17]; eventTrap() }
-document.addEventListener(Leventos[18], ev18) ;  function ev18() { evento = Leventos[18]; eventTrap() }
-document.addEventListener(Leventos[19], ev19) ;  function ev19() { evento = Leventos[19]; eventTrap() }
-document.addEventListener(Leventos[20], ev20) ;  function ev20() { evento = Leventos[20]; eventTrap() }
-document.addEventListener(Leventos[21], ev21) ;  function ev21() { evento = Leventos[21]; eventTrap() }
-document.addEventListener(Leventos[22], ev22) ;  function ev22() { evento = Leventos[22]; eventTrap() }
-document.addEventListener(Leventos[23], ev23) ;  function ev23() { evento = Leventos[23]; eventTrap() }
-document.addEventListener(Leventos[24], ev24) ;  function ev24() { evento = Leventos[24]; eventTrap() }
-document.addEventListener(Leventos[25], ev25) ;  function ev25() { evento = Leventos[25]; eventTrap() }
-document.addEventListener(Leventos[26], ev26) ;  function ev26() { evento = Leventos[26]; eventTrap() }
-document.addEventListener(Leventos[27], ev27) ;  function ev27() { evento = Leventos[27]; eventTrap() }
-document.addEventListener(Leventos[28], ev28) ;  function ev28() { evento = Leventos[28]; eventTrap() }
-document.addEventListener(Leventos[29], ev29) ;  function ev29() { evento = Leventos[29]; eventTrap() }
-document.addEventListener(Leventos[30], ev30) ;  function ev30() { evento = Leventos[30]; eventTrap() }
-document.addEventListener(Leventos[31], ev31) ;  function ev31() { evento = Leventos[31]; eventTrap() }
-document.addEventListener(Leventos[32], ev32) ;  function ev32() { evento = Leventos[32]; eventTrap() }
-document.addEventListener(Leventos[33], ev33) ;  function ev33() { evento = Leventos[33]; eventTrap() }
-document.addEventListener(Leventos[34], ev34) ;  function ev34() { evento = Leventos[34]; eventTrap() }
-document.addEventListener(Leventos[35], ev35) ;  function ev35() { evento = Leventos[35]; eventTrap() }
-document.addEventListener(Leventos[36], ev36) ;  function ev36() { evento = Leventos[36]; eventTrap() }
-document.addEventListener(Leventos[37], ev37) ;  function ev37() { evento = Leventos[37]; eventTrap() }
-document.addEventListener(Leventos[38], ev38) ;  function ev38() { evento = Leventos[38]; eventTrap() }
-document.addEventListener(Leventos[39], ev39) ;  function ev39() { evento = Leventos[39]; eventTrap() }
-document.addEventListener(Leventos[40], ev40) ;  function ev40() { evento = Leventos[40]; eventTrap() }
-document.addEventListener(Leventos[41], ev41) ;  function ev41() { evento = Leventos[41]; eventTrap() }
-document.addEventListener(Leventos[42], ev42) ;  function ev42() { evento = Leventos[42]; eventTrap() }
-document.addEventListener(Leventos[43], ev43) ;  function ev43() { evento = Leventos[43]; eventTrap() }
-document.addEventListener(Leventos[44], ev44) ;  function ev44() { evento = Leventos[44]; eventTrap() }
-document.addEventListener(Leventos[45], ev45) ;  function ev45() { evento = Leventos[45]; eventTrap() }
-document.addEventListener(Leventos[46], ev46) ;  function ev46() { evento = Leventos[46]; eventTrap() }
-document.addEventListener(Leventos[47], ev47) ;  function ev47() { evento = Leventos[47]; eventTrap() }
-document.addEventListener(Leventos[48], ev48) ;  function ev48() { evento = Leventos[48]; eventTrap() }
-document.addEventListener(Leventos[49], ev49) ;  function ev49() { evento = Leventos[49]; eventTrap() }
-document.addEventListener(Leventos[50], ev50) ;  function ev50() { evento = Leventos[50]; eventTrap() }
-document.addEventListener(Leventos[51], ev51) ;  function ev51() { evento = Leventos[51]; eventTrap() }
-document.addEventListener(Leventos[52], ev52) ;  function ev52() { evento = Leventos[52]; eventTrap() }
-document.addEventListener(Leventos[53], ev53) ;  function ev53() { evento = Leventos[53]; eventTrap() }
-document.addEventListener(Leventos[54], ev54) ;  function ev54() { evento = Leventos[54]; eventTrap() }
-document.addEventListener(Leventos[55], ev55) ;  function ev55() { evento = Leventos[55]; eventTrap() }
-document.addEventListener(Leventos[56], ev56) ;  function ev56() { evento = Leventos[56]; eventTrap() }
-document.addEventListener(Leventos[57], ev57) ;  function ev57() { evento = Leventos[57]; eventTrap() }
-document.addEventListener(Leventos[58], ev58) ;  function ev58() { evento = Leventos[58]; eventTrap() }
-document.addEventListener(Leventos[59], ev59) ;  function ev59() { evento = Leventos[59]; eventTrap() }
-document.addEventListener(Leventos[60], ev60) ;  function ev60() { evento = Leventos[60]; eventTrap() }
-document.addEventListener(Leventos[61], ev61) ;  function ev61() { evento = Leventos[61]; eventTrap() }
-document.addEventListener(Leventos[62], ev62) ;  function ev62() { evento = Leventos[62]; eventTrap() }
-document.addEventListener(Leventos[63], ev63) ;  function ev63() { evento = Leventos[63]; eventTrap() }
-document.addEventListener(Leventos[64], ev64) ;  function ev64() { evento = Leventos[64]; eventTrap() }
-document.addEventListener(Leventos[65], ev65) ;  function ev65() { evento = Leventos[65]; eventTrap() }
-document.addEventListener(Leventos[66], ev66) ;  function ev66() { evento = Leventos[66]; eventTrap() }
-document.addEventListener(Leventos[67], ev67) ;  function ev67() { evento = Leventos[67]; eventTrap() }
-document.addEventListener(Leventos[68], ev68) ;  function ev68() { evento = Leventos[68]; eventTrap() }
-document.addEventListener(Leventos[69], ev69) ;  function ev69() { evento = Leventos[69]; eventTrap() }
-document.addEventListener(Leventos[70], ev70) ;  function ev70() { evento = Leventos[70]; eventTrap() }
-document.addEventListener(Leventos[71], ev71) ;  function ev71() { evento = Leventos[71]; eventTrap() }
-document.addEventListener(Leventos[72], ev72) ;  function ev72() { evento = Leventos[72]; eventTrap() }
-document.addEventListener(Leventos[73], ev73) ;  function ev73() { evento = Leventos[73]; eventTrap() }
-document.addEventListener(Leventos[74], ev74) ;  function ev74() { evento = Leventos[74]; eventTrap() }
-document.addEventListener(Leventos[75], ev75) ;  function ev75() { evento = Leventos[75]; eventTrap() }
-document.addEventListener(Leventos[76], ev76) ;  function ev76() { evento = Leventos[76]; eventTrap() }
-document.addEventListener(Leventos[77], ev77) ;  function ev77() { evento = Leventos[77]; eventTrap() }
-document.addEventListener(Leventos[78], ev78) ;  function ev78() { evento = Leventos[78]; eventTrap() }
-document.addEventListener(Leventos[79], ev79) ;  function ev79() { evento = Leventos[79]; eventTrap() }
-document.addEventListener(Leventos[80], ev80) ;  function ev80() { evento = Leventos[80]; eventTrap() }
-document.addEventListener(Leventos[81], ev81) ;  function ev81() { evento = Leventos[81]; eventTrap() }
-document.addEventListener(Leventos[82], ev82) ;  function ev82() { evento = Leventos[82]; eventTrap() }
-document.addEventListener(Leventos[83], ev83) ;  function ev83() { evento = Leventos[83]; eventTrap() }
-document.addEventListener(Leventos[84], ev84) ;  function ev84() { evento = Leventos[84]; eventTrap() }
+document.addEventListener(Leventos[00], ev00) ;  function ev00() { eventoA = evento; evento = Leventos[00]; eventTrap() }
+document.addEventListener(Leventos[01], ev01) ;  function ev01() { eventoA = evento; evento = Leventos[01]; eventTrap() }
+document.addEventListener(Leventos[02], ev02) ;  function ev02() { eventoA = evento; evento = Leventos[02]; eventTrap() }
+document.addEventListener(Leventos[03], ev03) ;  function ev03() { eventoA = evento; evento = Leventos[03]; eventTrap() }
+document.addEventListener(Leventos[04], ev04) ;  function ev04() { eventoA = evento; evento = Leventos[04]; eventTrap() }
+document.addEventListener(Leventos[05], ev05) ;  function ev05() { eventoA = evento; evento = Leventos[05]; eventTrap() }
+document.addEventListener(Leventos[06], ev06) ;  function ev06() { eventoA = evento; evento = Leventos[06]; eventTrap() }
+document.addEventListener(Leventos[07], ev07) ;  function ev07() { eventoA = evento; evento = Leventos[07]; eventTrap() }
+document.addEventListener(Leventos[08], ev08) ;  function ev08() { eventoA = evento; evento = Leventos[08]; eventTrap() }
+document.addEventListener(Leventos[09], ev09) ;  function ev09() { eventoA = evento; evento = Leventos[09]; eventTrap() }
+document.addEventListener(Leventos[10], ev10) ;  function ev10() { eventoA = evento; evento = Leventos[10]; eventTrap() }
+document.addEventListener(Leventos[11], ev11) ;  function ev11() { eventoA = evento; evento = Leventos[11]; eventTrap() }
+document.addEventListener(Leventos[12], ev12) ;  function ev12() { eventoA = evento; evento = Leventos[12]; eventTrap() }
+document.addEventListener(Leventos[13], ev13) ;  function ev13() { eventoA = evento; evento = Leventos[13]; eventTrap() }
+document.addEventListener(Leventos[14], ev14) ;  function ev14() { eventoA = evento; evento = Leventos[14]; eventTrap() }
+document.addEventListener(Leventos[15], ev15) ;  function ev15() { eventoA = evento; evento = Leventos[15]; eventTrap() }
+document.addEventListener(Leventos[16], ev16) ;  function ev16() { eventoA = evento; evento = Leventos[16]; eventTrap() }
+document.addEventListener(Leventos[17], ev17) ;  function ev17() { eventoA = evento; evento = Leventos[17]; eventTrap() }
+document.addEventListener(Leventos[18], ev18) ;  function ev18() { eventoA = evento; evento = Leventos[18]; eventTrap() }
+document.addEventListener(Leventos[19], ev19) ;  function ev19() { eventoA = evento; evento = Leventos[19]; eventTrap() }
+document.addEventListener(Leventos[20], ev20) ;  function ev20() { eventoA = evento; evento = Leventos[20]; eventTrap() }
+document.addEventListener(Leventos[21], ev21) ;  function ev21() { eventoA = evento; evento = Leventos[21]; eventTrap() }
+document.addEventListener(Leventos[22], ev22) ;  function ev22() { eventoA = evento; evento = Leventos[22]; eventTrap() }
+document.addEventListener(Leventos[23], ev23) ;  function ev23() { eventoA = evento; evento = Leventos[23]; eventTrap() }
+document.addEventListener(Leventos[24], ev24) ;  function ev24() { eventoA = evento; evento = Leventos[24]; eventTrap() }
+document.addEventListener(Leventos[25], ev25) ;  function ev25() { eventoA = evento; evento = Leventos[25]; eventTrap() }
+document.addEventListener(Leventos[26], ev26) ;  function ev26() { eventoA = evento; evento = Leventos[26]; eventTrap() }
+document.addEventListener(Leventos[27], ev27) ;  function ev27() { eventoA = evento; evento = Leventos[27]; eventTrap() }
+document.addEventListener(Leventos[28], ev28) ;  function ev28() { eventoA = evento; evento = Leventos[28]; eventTrap() }
+document.addEventListener(Leventos[29], ev29) ;  function ev29() { eventoA = evento; evento = Leventos[29]; eventTrap() }
+document.addEventListener(Leventos[30], ev30) ;  function ev30() { eventoA = evento; evento = Leventos[30]; eventTrap() }
+document.addEventListener(Leventos[31], ev31) ;  function ev31() { eventoA = evento; evento = Leventos[31]; eventTrap() }
+document.addEventListener(Leventos[32], ev32) ;  function ev32() { eventoA = evento; evento = Leventos[32]; eventTrap() }
+document.addEventListener(Leventos[33], ev33) ;  function ev33() { eventoA = evento; evento = Leventos[33]; eventTrap() }
+document.addEventListener(Leventos[34], ev34) ;  function ev34() { eventoA = evento; evento = Leventos[34]; eventTrap() }
+document.addEventListener(Leventos[35], ev35) ;  function ev35() { eventoA = evento; evento = Leventos[35]; eventTrap() }
+document.addEventListener(Leventos[36], ev36) ;  function ev36() { eventoA = evento; evento = Leventos[36]; eventTrap() }
+document.addEventListener(Leventos[37], ev37) ;  function ev37() { eventoA = evento; evento = Leventos[37]; eventTrap() }
+document.addEventListener(Leventos[38], ev38) ;  function ev38() { eventoA = evento; evento = Leventos[38]; eventTrap() }
+document.addEventListener(Leventos[39], ev39) ;  function ev39() { eventoA = evento; evento = Leventos[39]; eventTrap() }
+document.addEventListener(Leventos[40], ev40) ;  function ev40() { eventoA = evento; evento = Leventos[40]; eventTrap() }
+document.addEventListener(Leventos[41], ev41) ;  function ev41() { eventoA = evento; evento = Leventos[41]; eventTrap() }
+document.addEventListener(Leventos[42], ev42) ;  function ev42() { eventoA = evento; evento = Leventos[42]; eventTrap() }
+document.addEventListener(Leventos[43], ev43) ;  function ev43() { eventoA = evento; evento = Leventos[43]; eventTrap() }
+document.addEventListener(Leventos[44], ev44) ;  function ev44() { eventoA = evento; evento = Leventos[44]; eventTrap() }
+document.addEventListener(Leventos[45], ev45) ;  function ev45() { eventoA = evento; evento = Leventos[45]; eventTrap() }
+document.addEventListener(Leventos[46], ev46) ;  function ev46() { eventoA = evento; evento = Leventos[46]; eventTrap() }
+document.addEventListener(Leventos[47], ev47) ;  function ev47() { eventoA = evento; evento = Leventos[47]; eventTrap() }
+document.addEventListener(Leventos[48], ev48) ;  function ev48() { eventoA = evento; evento = Leventos[48]; eventTrap() }
+document.addEventListener(Leventos[49], ev49) ;  function ev49() { eventoA = evento; evento = Leventos[49]; eventTrap() }
+document.addEventListener(Leventos[50], ev50) ;  function ev50() { eventoA = evento; evento = Leventos[50]; eventTrap() }
+document.addEventListener(Leventos[51], ev51) ;  function ev51() { eventoA = evento; evento = Leventos[51]; eventTrap() }
+document.addEventListener(Leventos[52], ev52) ;  function ev52() { eventoA = evento; evento = Leventos[52]; eventTrap() }
+document.addEventListener(Leventos[53], ev53) ;  function ev53() { eventoA = evento; evento = Leventos[53]; eventTrap() }
+document.addEventListener(Leventos[54], ev54) ;  function ev54() { eventoA = evento; evento = Leventos[54]; eventTrap() }
+document.addEventListener(Leventos[55], ev55) ;  function ev55() { eventoA = evento; evento = Leventos[55]; eventTrap() }
+document.addEventListener(Leventos[56], ev56) ;  function ev56() { eventoA = evento; evento = Leventos[56]; eventTrap() }
+document.addEventListener(Leventos[57], ev57) ;  function ev57() { eventoA = evento; evento = Leventos[57]; eventTrap() }
+document.addEventListener(Leventos[58], ev58) ;  function ev58() { eventoA = evento; evento = Leventos[58]; eventTrap() }
+document.addEventListener(Leventos[59], ev59) ;  function ev59() { eventoA = evento; evento = Leventos[59]; eventTrap() }
+document.addEventListener(Leventos[60], ev60) ;  function ev60() { eventoA = evento; evento = Leventos[60]; eventTrap() }
+document.addEventListener(Leventos[61], ev61) ;  function ev61() { eventoA = evento; evento = Leventos[61]; eventTrap() }
+document.addEventListener(Leventos[62], ev62) ;  function ev62() { eventoA = evento; evento = Leventos[62]; eventTrap() }
+document.addEventListener(Leventos[63], ev63) ;  function ev63() { eventoA = evento; evento = Leventos[63]; eventTrap() }
+document.addEventListener(Leventos[64], ev64) ;  function ev64() { eventoA = evento; evento = Leventos[64]; eventTrap() }
+document.addEventListener(Leventos[65], ev65) ;  function ev65() { eventoA = evento; evento = Leventos[65]; eventTrap() }
+document.addEventListener(Leventos[66], ev66) ;  function ev66() { eventoA = evento; evento = Leventos[66]; eventTrap() }
+document.addEventListener(Leventos[67], ev67) ;  function ev67() { eventoA = evento; evento = Leventos[67]; eventTrap() }
+document.addEventListener(Leventos[68], ev68) ;  function ev68() { eventoA = evento; evento = Leventos[68]; eventTrap() }
+document.addEventListener(Leventos[69], ev69) ;  function ev69() { eventoA = evento; evento = Leventos[69]; eventTrap() }
+document.addEventListener(Leventos[70], ev70) ;  function ev70() { eventoA = evento; evento = Leventos[70]; eventTrap() }
+document.addEventListener(Leventos[71], ev71) ;  function ev71() { eventoA = evento; evento = Leventos[71]; eventTrap() }
+document.addEventListener(Leventos[72], ev72) ;  function ev72() { eventoA = evento; evento = Leventos[72]; eventTrap() }
+document.addEventListener(Leventos[73], ev73) ;  function ev73() { eventoA = evento; evento = Leventos[73]; eventTrap() }
+document.addEventListener(Leventos[74], ev74) ;  function ev74() { eventoA = evento; evento = Leventos[74]; eventTrap() }
+document.addEventListener(Leventos[75], ev75) ;  function ev75() { eventoA = evento; evento = Leventos[75]; eventTrap() }
+document.addEventListener(Leventos[76], ev76) ;  function ev76() { eventoA = evento; evento = Leventos[76]; eventTrap() }
+document.addEventListener(Leventos[77], ev77) ;  function ev77() { eventoA = evento; evento = Leventos[77]; eventTrap() }
+document.addEventListener(Leventos[78], ev78) ;  function ev78() { eventoA = evento; evento = Leventos[78]; eventTrap() }
+document.addEventListener(Leventos[79], ev79) ;  function ev79() { eventoA = evento; evento = Leventos[79]; eventTrap() }
+document.addEventListener(Leventos[80], ev80) ;  function ev80() { eventoA = evento; evento = Leventos[80]; eventTrap() }
+document.addEventListener(Leventos[81], ev81) ;  function ev81() { eventoA = evento; evento = Leventos[81]; eventTrap() }
+document.addEventListener(Leventos[82], ev82) ;  function ev82() { eventoA = evento; evento = Leventos[82]; eventTrap() }
+document.addEventListener(Leventos[83], ev83) ;  function ev83() { eventoA = evento; evento = Leventos[83]; eventTrap() }
+document.addEventListener(Leventos[84], ev84) ;  function ev84() { eventoA = evento; evento = Leventos[84]; eventTrap() }
 
-document.addEventListener('DOMMouseScroll', ev84) ; function ev85() { evento = 'DOMMouseScroll'; eventTrap() }
+document.addEventListener('DOMMouseScroll', ev84) ; function ev85() { eventoA = evento; evento = 'DOMMouseScroll'; eventTrap() }
 // -----[funções de addEventListener]
+// [--------------Listener de Eventos -------------]
+
 
 // ----- inicio Sys
 function iniSys(){
-
     evento = ''
 
     // ---------- cria elementos de sistema
@@ -227,17 +249,26 @@ function iniSys(){
 
     // ... cria divs de Prevent Scroll
     para = document.createElement("div")
-    el('Corpo').appendChild(para)
+    el('Fundo').appendChild(para)
     para.id     = "divPrevScr"
     el("divPrevScr").style = 'position: absolute; left: -10000px; top: 74.0px; width: 1162.0px; height: 300.0px; box-sizing: content-box; margin: 0px; padding: 0px; overflow: scroll; border-color: black; border-width: 3.0px; border-style: solid; z-index: 1000;   '    
-    
+    el('divPrevScr').style.pointerEvents="none"
+
     para = document.createElement("div")
     el('divPrevScr').appendChild(para)
     para.id     = "divPrevMov"
-    el("divPrevMov").style = 'position: absolute; left: -2000.0px; top: -2000.0px; width: 10000.0px; height: 10000.0px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); border-color: black; border-width: 0px; border-style: solid;   '    
+    el("divPrevMov").style = 'position: absolute; left: -2000.0px; top: -2000.0px; width: 10000.0px; height: 10000.0px; box-sizing: content-box; margin: 0px; padding: 0px; border-color: black; border-width: 0px; border-style: solid'    
+    
+    el("divPrevMov").style.top  = '-2000.0px'
+    el("divPrevMov").style.left = '-2000.0px'
+    el("divPrevMov").setAttribute('wheelPrev', true)
+
+    el('divPrevScr').style.top  = '-10000px'
+    el('divPrevScr').style.left = '-10000px'
+    el("divPrevScr").setAttribute('wheelPrev', true)
+
     el('divPrevScr').scrollTop  = 50000
     el('divPrevScr').scrollLeft = 50000
-
     // ...[cria divs de Prevent Scroll]
         
     // ... cria div - "console"
@@ -448,6 +479,57 @@ function iniSys(){
 
     // .......[Inicial abas]
 
+    // ........ cria Array
+    allEl = document.getElementsByTagName("div")  ;  nDivs = allEl.length
+    Ldivs = []  ; for (i = 0; i <= nDivs-1; i++){ Ldivs.push(allEl[i].id) }
+    for (iDiv = 0; iDiv <= nDivs-1; iDiv++){
+        try  {
+            divId = Ldivs[iDiv] ; divE = el(divId)
+        
+            nLar = parseInt(divE.getAttribute("nLar")) ; if (nLar==null){ nLar = 0 }
+            nCar = parseInt(divE.getAttribute("nCar")) ; if (nCar==null){ nCar = 0 }
+            hPar = parseInt(divE.getAttribute("hPar")) ; if (hPar==null){ hPar = 0 }
+            vPar = parseInt(divE.getAttribute("vPar")) ; if (vPar==null){ vPar = 0 }
+            
+            styles = window.getComputedStyle(divE)
+            lOri    = parseInt(styles.left)   ; tOri    = parseInt(styles.top)
+            wOri    = parseInt(styles.width)  ; hOri    = parseInt(styles.height)
+            divE.setAttribute('lOri', lOri) ; divE.setAttribute('tOri', tOri) ; divE.setAttribute('wOri', wOri) ; divE.setAttribute('hOri', hOri)
+
+            // . . . se div definida como array
+            if ((nLar*nCar)>1){        
+                divPainelId = divE.parentElement.id         
+                // . . . preenche atributos de Array
+                divE.className  = divId
+                Array[divId]    = { 'nLar':nLar , 'nCar':nCar , 'hPar':hPar , 'vPar':vPar , 'topLin': 1 , 'lefCol': 1 ,
+                                    'lOri':lOri , 'tOri':tOri , 'wOri':wOri , 'hOri':hOri ,
+                                    'parDivId': divE.parentElement.id
+                                  }
+
+                for (iArr = 0; iArr<=nLar-1; iArr++){
+                    for (jArr = 0; jArr<=nCar-1; jArr++){
+                        oriId = divId ; idApp = '_'+(iArr+1)+':'+(jArr+1)
+                        
+                        // ------ function clonaEle (oriId, idApp)
+                        // . . . dissemina class por todos descendentes
+                        Descen = el(oriId).querySelectorAll('*')
+                        for (iCh = 0; iCh<=Descen.length-1; iCh++){ Descen[iCh].className = el(oriId).className}
+
+                        clonaEle (oriId, idApp)
+                        // ... redefine posição
+                        elCel = el(divId+idApp)
+                        elCel.style.left = (lOri+ (jArr-0)*(wOri+hPar))+'px'   
+                        elCel.style.top  = (tOri+ (iArr-0)*(hOri+vPar))+'px'
+                        // ------[function clonaEle (oriId, idApp)]
+                    }
+                }
+                divE.remove()
+            }
+
+        }catch{}
+    }
+    // ........[cria Array]
+
     // ........ abre Planilhas
     allEl = document.getElementsByTagName("div")  ;  nDivs = allEl.length
     Ldivs = []  ; for (i = 0; i <= nDivs-1; i++){ Ldivs.push(allEl[i].id) }
@@ -496,9 +578,6 @@ function iniSys(){
     // ....
     // -------- finaliza rotina inicial
 
-    // ... situação inicial de Console
-    el('console').style.left = '-3000px' ; el('proprBox').style.left = '-3000px' ; proprHab = 0
-    el('console').style.zIndex = '100'   ; proprHab = 0
     
     // . . . scroll inicial
     deslX = el('Corpo').getAttribute("deslX") ; deslY = el('Corpo').getAttribute("deslY")
@@ -506,7 +585,13 @@ function iniSys(){
 
     iniLoc()
     atuJib()
-    
+
+    // ... situação inicial de Console
+    if(hab==0)      { el('console').style.left = '-3000px'      ; el('proprBox').style.left = '-3000px'}
+    if(hab==1)      { el('console').style.left = leftCon+'px'   ; el('proprBox').style.left = leftCon+'px'}
+    if(proprHab==0) { el('console').style.zIndex = '101' }
+    if(proprHab==1) { el('console').style.zIndex = '99' }
+
     // ...... ajusta mob
     Wh = window.innerHeight             ; Ww = window.innerWidth
     Ah = window.screen.availHeight-110  ; Aw = window.screen.availWidth
@@ -536,26 +621,26 @@ function iniSys(){
 
 //  -------------- Trap de Eventos  -------------
 function eventTrap() {
-
     // ---- Parâmetros de EVENTO
     // elementos de evento - On, Target, Foco
     eleTa  = event.target
     eleFo  = document.activeElement
     if (eleOn=='O')          { eleOn  = eleFo }
     if (evento=="mousemove") { eleOn  = eleTa }
+    if(evento=='click' && eleTa!=eleOn) { eleTa = eleFo } // "click through"
     // . .
 
     // . . . anteriores
-    foco='' ; entraInp = ''
+    foco=''
     if (eleFoA!=eleFo) { eleFoA = eleFo  ;   eleFoIdA = eleFoId  ;  eleFoClassA = eleFoClass  ;   eleFoTyA = eleFoTy ; foco='MUDOUfoco'} // ; print(' .....    MUDA FOCO evento:'+evento+' eleFo.tagName:'+eleFo.tagName) }
     if (eleTaA!=eleTa) { eleTaA = eleTa  ;   eleTaIdA = eleTaId  ;  eleTaClassA = eleTaClass  ;   eleTaTyA = eleTaTy }
 
     // On     Element
-    eleOnId    = eleOn.id      ;   eleOnClass  = eleOn.className   ;   eleOnTy     = eleOn.tagName ;   onStyle = getComputedStyle(eleOn)                
+    eleOnId    = eleOn.id      ;   eleOnClass  = eleOn.className   ;   eleOnTy     = eleOn.tagName ;   onStyle = getComputedStyle(eleOn)    ;   onPar = eleOn.parentElement
     // Target Element
-    eleTaId    = eleTa.id      ;   eleTaClass  = eleTa.className   ;   eleTaTy     = eleTa.tagName ;   taStyle = getComputedStyle(eleTa)
+    eleTaId    = eleTa.id      ;   eleTaClass  = eleTa.className   ;   eleTaTy     = eleTa.tagName ;   taStyle = getComputedStyle(eleTa)    ;   taPar = eleTa.parentElement
     // Focus  Element
-    eleFoId    = eleFo.id      ;   eleFoClass  = eleFo.className   ;   eleFoTy     = eleFo.tagName ;   foStyle = getComputedStyle(eleFo)
+    eleFoId    = eleFo.id      ;   eleFoClass  = eleFo.className   ;   eleFoTy     = eleFo.tagName ;   foStyle = getComputedStyle(eleFo)    ;   foPar = eleFo.parentElement
     // Movimento - deltas
     if (evento=='touchstart') { lastX = event.touches[0].clientX                     ; lastY = event.touches[0].clientY }
     if (evento=='touchmove')  { delX  = parseInt(-event.touches[0].clientX + lastX ) ; delY  = parseInt(-event.touches[0].clientY + lastY) }
@@ -566,11 +651,9 @@ function eventTrap() {
     if (eleFoClass==undefined){ eleFoClass = 'Und'}
 
     // elementos de evento - On, Target, Foco
-    if (evento!="focusout"){ eleTa  = event.target}
+    // if (evento!="focusout"){ eleTa  = event.target} // ?????
     
     // .  .  .[tipo INPUT]
-
-
 
     // --- Mouse Coords / Window  -  Não atuliza se evento=="keyup"
     if (evento!="keyup" && evento!="keydown" && evento!="keypress") {
@@ -604,95 +687,202 @@ function eventTrap() {
     // Keys
     keyCode = event.keyCode         ; ctrK = event.ctrlKey
 
+    // . . . Painel
+    painelNome = ''
+    try{ 
+        if( evento!='wheel' || evento!='click') { painelNome = eleTaClass }
+        if( evento=='keydown')                  { painelNome = eleOnClass }
+    }catch{}
+    // . . .[Painel]
+
     // ..... atualiza Jiboia
-    
     if(keyCode==88){ atuJib() }  // ctr X
 
     // .... inibe menu do browser em rightClick
     if(evento=='contextmenu'){ evento = 'rightclick' ; event.preventDefault() }
 
-    // ..... prevent default de scroll Pla
-    if( !eleFoId.includes("-Pla")){
-        el('divPrevScr').style.top      = '-10000px'
-        el('divPrevScr').style.left     = '-10000px'
-    }
-    if( eleFoId.includes("-Pla")){
-        divSheet      = eleFo.parentElement ; divSheetId = divSheet.id ; parDiv = divSheet.parentElement
-        tDivPla  = divSheet.getBoundingClientRect().top
-        lDivPla  = divSheet.getBoundingClientRect().left
-        wDivPla  = divSheet.getBoundingClientRect().width
-        hDivPla  = divSheet.getBoundingClientRect().height
-
-        el('divPrevScr').style.top      = tDivPla+'px'
-        el('divPrevScr').style.left     = lDivPla+'px'
-        el('divPrevScr').style.width    = wDivPla+'px'
-        el('divPrevScr').style.height   = hDivPla+'px'
-    }
-        // ..... recoloca Prevent Scroll
-        el('divPrevScr').scrollTop  = 5000
-        el('divPrevScr').scrollLeft = 5000
-
-    if (eleOnId=="divPrevMov"){
-
-        if(evento=='mouseup' && downPla==1) { 
-            eleTa.focus()
-            el('divPrevScr').style.pointerEvents="auto" 
-            downPla = 0
-        }
-        if(evento=='mousedown' && eleTaId=="divPrevMov") {
-            el('divPrevScr').style.pointerEvents="none"
-            downPla = 1
-        }
-    }
-    // .....[prevent default de scroll Pla]
-
-
+    // ..... último'focusin'
+    if(evento=='focusin')                    { lastIn = eleTa }
 
 
     //if (evento=='dblclick')  { event.preventDefault() ; event.stopPropagation()}
     //event.stopPropagation()
     /*
-    if(evento=='dblclick'){ 
+    if(evento=='wheel'){ 
         cc = event.cancelable
         print('cc: '+cc)
-        event.preventDefault()     
+        //event.preventDefault()     
     }
     */
 
+        // ...
+        
     // ----[Parâmetros de EVENTO]
 
     // **************************************
 
     // ---------- Scroll de página e panilha
+    // ..... prevent default de scroll
+    wheelPrevOn   = ( (onPar.getAttribute('wheelPrev')) || (eleOn.getAttribute('wheelPrev')) )
+    if( !(wheelPrevOn) && scrollHab==1){
+        scrollHab = 0
+        el("divPrevMov").style.top  = '-2000.0px'
+        el("divPrevMov").style.left = '-2000.0px'
+    
+        el('divPrevScr').style.top  = '-10000px'
+        el('divPrevScr').style.left = '-10000px'
+    }
+    if(wheelPrevOn && scrollHab==0){
+        scrollHab = 1   ;   divPrevScr = el('divPrevScr')
+        if(onPar.getAttribute('wheelPrev')) { divSheet  = onPar }
+        if(eleOn.getAttribute('wheelPrev')) { divSheet  = eleOn }
+        divSheetId = divSheet.id ; parDiv = divSheet.parentElement
+        
+        // . . . geometria de divPrevScr
+        parDiv.appendChild(divPrevScr)
+        divPrevScr.style.top    = parseInt(window.getComputedStyle(divSheet).top)    +'px'
+        divPrevScr.style.left   = parseInt(window.getComputedStyle(divSheet).left)   +'px'
+        divPrevScr.style.width  = parseInt(window.getComputedStyle(divSheet).width)  +'px'
+        divPrevScr.style.height = parseInt(window.getComputedStyle(divSheet).height) +'px'
 
-        // . . . scroll de Pla
-        if( (evento=='wheel' || evento=='touchmove') && eleFoId.includes("-Pla")){
-            nomeSheet   = eleFoClass
-            lplan0      = Cells[divSheetId][0][0]['lplan0'] ; cplan0    = Cells[divSheetId][0][0]['cplan0']
-            delLin = 0 ; delCol = 0
-            if (delY!=0){ delLin = (Math.abs(delY)/delY) }
-            if (delX!=0){ delCol = (Math.abs(delX)/delX) }
+        // ..... recoloca Prevent Scroll
+        divPrevScr.scrollTop  = 5000 ; divPrevScr.scrollLeft = 5000
+        divPrevScr.style.pointerEvents="auto"
+    }
+    // . . . reposiciona Prevent Scroll
+    if(scrollHab==1){ divPrevScr.scrollTop  = 5000  ;   divPrevScr.scrollLeft = 5000 }
 
-            if(evento=='touchmove' && Math.abs(delY)<20) { delLin = 0 }
-            if(evento=='touchmove' && Math.abs(delX)<20) { delCol = 0 }
+    if(eleOnId=="divPrevMov" && evento=='mouseup' && downPla==1) { 
+        eleTa.focus()
+        el('divPrevScr').style.pointerEvents="auto"
+        downPla = 0
+    }
+    if(eleOnId=="divPrevMov" && evento=='mousedown' && eleTaId=="divPrevMov") {
+        el('divPrevScr').style.pointerEvents="none"
+        downPla = 1
+    }    
+    // .....[prevent default de scroll]
 
-            //(scrTurn==1){ dR = delLin ; delLin = delCol ; delCol = -dR }
-            if(scrTurn==1){ [delLin, delCol] = [delCol, -delLin] }
+    if( (evento=='wheel' || evento=='touchmove') && eleFoId.includes("-Pla") && scrollHab==1){
+        nomeSheet   = eleFoClass
+        lplan0      = Cells[divSheetId][0][0]['lplan0'] ; cplan0    = Cells[divSheetId][0][0]['cplan0']
+        delLin = 0 ; delCol = 0
+        if (delY!=0){ delLin = (Math.abs(delY)/delY) }
+        if (delX!=0){ delCol = (Math.abs(delX)/delX) }
 
-            lplan0N = lplan0 + delLin ; cplan0N = cplan0 + delCol
-            preencheSheet(lplanIni=lplan0N, cplanIni=cplan0N, divSheetId)
-            elId    = divSheetId+'-Pla:('+iSheet+','+jSheet+')'
-            el(elId).style.zIndex = 3
-        }
-        // . . .[scroll de Pla]
+        if(evento=='touchmove' && Math.abs(delY)<20) { delLin = 0 }
+        if(evento=='touchmove' && Math.abs(delX)<20) { delCol = 0 }
 
+        //(scrTurn==1){ dR = delLin ; delLin = delCol ; delCol = -dR }
+        if(scrTurn==1){ [delLin, delCol] = [delCol, -delLin] }
 
+        lplan0N = lplan0 + delLin ; cplan0N = cplan0 + delCol
+        preencheSheet(lplanIni=lplan0N, cplanIni=cplan0N, divSheetId)
+        elId    = divSheetId+'-Pla:('+iSheet+','+jSheet+')'
+        el(elId).style.zIndex = 3
 
+        // ..... recoloca Prevent Scroll
+        el('divPrevScr').scrollTop  = 5000
+        el('divPrevScr').scrollLeft = 5000
+    }
     // ----------[Scroll de página e panilha]
+
+    // ---------- scroll de Painel
+    if( ((evento=='wheel' || evento=='click') || (evento=='keydown' && (keyCode>36 && keyCode<41) ))){
+
+        pai = 1 ; try{ divPaId  = Painel[painelNome]['divPainelId'] } catch{ pai = 0 }
+
+        if(pai==1){
+            rePrint = 0 ; roda = 0
+            // setas - preventdefault
+            if(evento=='keydown' && (keyCode>36 && keyCode<41)){ event.preventDefault() }
+
+            // ... parâmetros de Painel
+            divPaId  = Painel[painelNome]['divPainelId'] ; porLInha  = Painel[painelNome]['porLInha']
+            altLin   = Painel[painelNome]['altLin']      ; larCol    = Painel[painelNome]['larCol']
+            nLinPai  = Painel[painelNome]['nLinPai']     ; nColPai     = Painel[painelNome]['nColPai']
+            nCelPai  = Painel[painelNome]['nCelPai']
+            nlWind   = Painel[painelNome]['nlWind']      ; ncWind    = Painel[painelNome]['ncWind']
+            nLar     = Painel[painelNome]['nLar']        ; nCar      = Painel[painelNome]['nCar']
+            tOri     = Painel[painelNome]['tOri']        ; lOri      = Painel[painelNome]['lOri']
+            
+            // . . . atual de Painel
+            iTop     = Painel[painelNome]['iTop']        ; jLef      = Painel[painelNome]['jLeft']
+            cellCurr = Painel[painelNome]['cellCurr']    ; iPaiCurr  = Painel[painelNome]['iPaiCurr']    ; jPaiCurr  = Painel[painelNome]['jPaiCurr']
+            iTDisp   = Painel[painelNome]['iTDisp']      ; jLDisp    = Painel[painelNome]['jLDisp']
+            
+            scrTop   = el(divPaId).scrollTop             ; scrLef   = el(divPaId).scrollLeft
+
+            // ------- calcula cell foco - iPaiCurr
+            // . . . click - define cell foco
+            kcelarray   = parseInt(eleTa.getAttribute('kcelarray'))
+            iArray      = parseInt(eleTa.getAttribute('iArray'))    ; jArray     = parseInt(eleTa.getAttribute('jArray'))
+            if( evento=='click')  { 
+                iPaiCurr =  iArray ; jPaiCurr =  jArray
+                rePrint = 1 ; roda = 1
+            }
+            
+            // . . . flechas
+            if(evento=='keydown'){
+                if(keyCode==38){ iPaiCurr = iPaiCurr-1 }
+                if(keyCode==40){ iPaiCurr = iPaiCurr+1 }
+                if(keyCode==37){ jPaiCurr = jPaiCurr-1 }
+                if(keyCode==39){ jPaiCurr = jPaiCurr+1 }
+
+                rePrint = 1 ; roda = 1
+            }
+            // . . .[flechas]
+
+            // . . . wheel
+            if(evento=='wheel'){
+                eleCell = el(painelNome, iPaiCurr, jPaiCurr)
+                yCell = parseInt(window.getComputedStyle(eleCell).top) ; xCell = parseInt(window.getComputedStyle(eleCell).left)
+                
+                if (yCell<scrTop+50 && delY>0)                         { iPaiCurr++ ; rePrint = 1 ; roda = 0 }
+                if (yCell>scrTop+(nlWind*altLin-altLin)-50  && delY<0) { iPaiCurr-- ; rePrint = 1 ; roda = 0 }
+
+                if (xCell<scrLef+50 && delX>0)                         { jPaiCurr++ ; rePrint = 1 ; roda = 0 }
+                if (xCell>scrLef+(ncWind*larCol-larCol)-50 && delX<0)  { jPaiCurr-- ; rePrint = 1 ; roda = 0 }
+            }
+            // . . .[wheel]
+
+        
+            // ...............
+            if(rePrint==1){
+
+                if(porLInha==1){
+                    if(jPaiCurr<1)    { jPaiCurr = nCar ; iPaiCurr = iPaiCurr - 1 ; if(iPaiCurr<1) { jPaiCurr = 1 } }
+                    if(jPaiCurr>nCar) { jPaiCurr = 1    ; iPaiCurr = iPaiCurr + 1 }
+
+                    if(iPaiCurr<1) { iPaiCurr = 1 }     ; if(jPaiCurr>nColPai) { jPaiCurr = nColPai }
+                    if(jPaiCurr<1) { jPaiCurr = 1 }
+
+                    cellCurr = (iPaiCurr-1)*nCar + jPaiCurr
+                    if(cellCurr>nCelPai){ cellCurr = nCelPai ;  iPaiCurr = Math.ceil(cellCurr/nCar)    ; jPaiCurr = cellCurr-(iPaiCurr-1)*nCar }
+                }
+                if(porLInha==0){
+                    if(iPaiCurr<1)    { iPaiCurr = nLar ; jPaiCurr = jPaiCurr - 1 ; if(jPaiCurr<1) { jPaiCurr = iPaiCurr } }
+                    if(iPaiCurr>nLar) { iPaiCurr = 1    ; jPaiCurr = jPaiCurr + 1 }
+
+                    if(jPaiCurr<1) { jPaiCurr = 1 }     ; if(jPaiCurr>nColPai) { jPaiCurr = nColPai }
+                    if(iPaiCurr<1) { iPaiCurr = 1 }
+
+                    cellCurr = (jPaiCurr-1)*nLar + iPaiCurr
+                    if(cellCurr>nCelPai){ cellCurr = nCelPai ;  jPaiCurr = Math.ceil(cellCurr/nLar)    ; iPaiCurr = cellCurr-(jPaiCurr-1)*nLar }
+                }
+
+                Painel[painelNome]['cellCurr'] = cellCurr    ; Painel[painelNome]['iPaiCurr'] = iPaiCurr   ; Painel[painelNome]['jPaiCurr'] = jPaiCurr
+                preenchePainel( cellCurr=cellCurr, painelNome=painelNome, centra=roda, nCelPai=1, porLInha=1) 
+            }
+        }
+
+        // . . .
+    }
+    // ----------[scroll de Painel]
+
 
     // -------- CONSOLE
     //if (evento=='keydown') { print(' keyCode: '+keyCode) }
-
     // ... copia valor de input                 - ctr"insert" ctr"c" 
     if (evento=='keydown' && (keyCode==67 || keyCode==45) && ctrK && eleTaid!='console') {
         navigator.clipboard.writeText(eleTa.value)
@@ -724,7 +914,6 @@ function eventTrap() {
                 nomeAtt = attrs[i] ; no = '                   '. slice(0, 20-nomeAtt.length) +  nomeAtt
                 if (nomeAtt!='id' && nomeAtt!='style') { print(no+': '+el(nome).getAttribute(nomeAtt)) }
             }
-            //if(el(nome).className!='') { print(' Class : '+ el(nome).className) }
             print(' HTML atrributes: ')
             print('')
             print(' Parent : '+ el(nome).parentElement.id)
@@ -735,21 +924,19 @@ function eventTrap() {
         } catch{}
     }
 
-
     // ... toggle CONSOLE visível   - ctr"c"
     if (evento=='keydown' && keyCode==90 && ctrK) { 
         leftAtu = el('console').style.left
-        hab=1
-        if (leftAtu!='-3000px'  && hab==1){ el('console').style.left = '-3000px' ; el('proprBox').style.left = '-3000px' ;  hab=0 ; proprHab = 0}
-        if (leftAtu=='-3000px'  && hab==1){ el('console').style.left = leftCon+'px'    ; el('proprBox').style.left = (leftCon+4)+'px'     ;  hab=0 ; proprHab = 1}
-        if(el('console').style.zIndex=='101') { proprHab = 0 }
+        habLoc=1
+        if (leftAtu!='-3000px'  && habLoc==1){ el('console').style.left = '-3000px' ; el('proprBox').style.left = '-3000px' ;  habLoc=0 ; proprHab = 0}
+        if (leftAtu=='-3000px'  && habLoc==1){ el('console').style.left = leftCon+'px'    ; el('proprBox').style.left = (leftCon+4)+'px'     ;  habLoc=0 ; proprHab = 1}
     }
     // ... toggle CONSOLE front/bottom com Propriedades   - click
     if (evento=='click' && (eleTaId=='proprBox' || eleOn.parentElement.id=='proprBox')) { 
         frontAtu = el('console').style.zIndex
-        hab=1
-        if (frontAtu==100 && hab==1){ el('console').style.zIndex = '101' ; hab=0; proprHab = 0}
-        if (frontAtu==101 && hab==1){ el('console').style.zIndex = '100' ; hab=0; proprHab = 1}
+        habLoc=1
+        if (frontAtu<101  && habLoc==1){ el('console').style.zIndex = '101' ; habLoc=0; proprHab = 0}
+        if (frontAtu==101 && habLoc==1){ el('console').style.zIndex = '99'  ; habLoc=0; proprHab = 1}
     }
 
     // . . . preenche quadro
@@ -760,7 +947,7 @@ function eventTrap() {
         el("eleon2").style.backgroundColor      = onBg
         el("tipoDiv2").innerHTML                = eleOnTy                        //+" "+eleOn.scrollTop
         el("parentDiv2").innerHTML              = eleOn.parentElement.id         //+" "+window.pageYOffset
-        el("classDiv2").innerHTML               = eleOn.className + ' : '+ eleOn.getAttribute('class')                   //+" "+window.screenY
+        el("classDiv2").innerHTML               = eleOn.className                + ' : '+ eleOn.getAttribute('class')                   //+" "+window.screenY
         el("eleTarDiv2").innerHTML              = eleTaId
         el("focusDiv2").innerHTML               = eleFoId
         
@@ -774,107 +961,53 @@ function eventTrap() {
     }
     // . . .[preenche quadro]
 
-
     // --------[CONSOLE]
 
+    
     // ----------- INPUT
+    entraInp = ''
     if (eleTaTy=='INPUT' || eleTaTyA=='INPUT') {
         
-        if ( (evento=="keyup" || evento=="keydown" || evento=="focusin" || evento=="focusout" || evento=="click") && (eleFo.type!='range' || eleFoA.type=='range') ) {    
+        if ( (evento=="keyup" || evento=="keydown" || evento=='focusin' || evento=="focusout" || evento=="click") && (eleFo.type!='range' || eleFoA.type=='range') ) {    
             
             readO = eleFo.getAttribute('readonly')
             
             // ... apaga em primeiro toque
-            if(evento=="keydown" && readO!='true' && (keyCode>40 || keyCode==8 || keyCode==46) && toques==0) { eleFo.value = '' }
+            if(evento=="keydown" && readO!='true' && (keyCode>40 || keyCode==8 || keyCode==46) && toques==0) { eleFo.value = '' ; print('######')}
             // ... escape
             if(evento=="keydown" && readO!='true' && keyCode==27) { eleFo.value = iniValueInput }
 
             // . . . Got Focus
-            if (eleTaTy== 'INPUT' && evento=="focusin")  { 
-                inpCur = eleTa  ; inpCurId = eleTaId                       
+            if (eleTaTy== 'INPUT' && evento=='focusin')  { 
+                inpCur = eleTa  ; inpCurId = eleTaId
                 entraInp = 'Got'
                 iniValueInput  = eleTa.value
-
                 // . . . toques    
                 toques = 0 ; habClic = 0 ; setTimeout( fhabClic, 300)
+                
+                SelectionChange()
             } 
             // . . .[Got Focus]
-
+            
             // . . . Lost Focus            
-            if (eleTaTy=='INPUT' && evento=="focusout") { 
+            if (eleTaTy=='INPUT' && evento=="focusout") {
                 inpAnt = inpCur ; inpAntId = inpCurId
-                inpCur = ''     ; inpCurId = '****'
+                inpCur = ''  ; inpCurId = 'lost'
                 
                 entraInp = 'Lost'
                 iniValueInputA  = iniValueInput
                 finValueInputA  = inpAnt.value
+
+                SelectionChange()
             }
             // . . .[Lost Focus]
-
-
+            
             // . . . incrementa toques
             if( readO!='true' && ((evento=="keydown" && keyCode>40) || (evento=="click" && habClic==1))  )   { toques++ }
         
             // .....
         }
-
     }
-
-    // . . . Selection Change
-    if( inpCurId!=inpAntId ) {
-        
-        // . . . input de Plan
-        inpAntClass='*'                        
-        inpAntClass = inpAnt.className ; inpCurClass = inpCur.className
-        if(inpAntClass==undefined){ inpAntClass='' }
-        if(inpCurClass==undefined){ inpCurClass='' }
-        divSheetId = ''
-    
-        if (inpCurClass.includes("-Pla") ) { 
-            posPla = inpCurId.indexOf("-Pla") ; abrePar = inpCurId.indexOf("(") ; fechaPar  = inpCurId.indexOf(")") ; virg = inpCurId.indexOf(",")
-            iSheetSel  = parseInt(inpCurId.slice(abrePar+1, virg)) ; jSheetSel   = parseInt(inpCurId.slice(virg+1, fechaPar))
-            divSheetId = inpCurId.slice(0, posPla)
-
-            lplan0      = Cells[divSheetId][0][0]['lplan0']         ; cplan0    = Cells[divSheetId][0][0]['cplan0']
-            lFrz        = Cells[divSheetId][0][0]['lFrz']           ; cFrz      = Cells[divSheetId][0][0]['cFrz']    
-    
-            iElSel     = iSheetSel          ; jElSel       = jSheetSel
-            if(iSheetSel>=lFrz){ iElSel     = iSheetSel + lplan0 - lFrz }
-            if(jSheetSel>=cFrz){ jElSel     = jSheetSel + cplan0 - cFrz }
-        }
-        if (inpAntClass.includes("-Pla")) { 
-            posPla = inpAntId.indexOf("-Pla") ;  ; abrePar = inpAntId.indexOf("(") ; fechaPar  = inpAntId.indexOf(")") ; virg = inpAntId.indexOf(",")
-            iSheetSelA = parseInt(inpAntId.slice(abrePar+1, virg)) ; jSheetSelA  = parseInt(inpAntId.slice(virg+1, fechaPar))
-            divSheetId = inpAntId.slice(0, posPla)
-
-            lplan0      = Cells[divSheetId][0][0]['lplan0']         ; cplan0    = Cells[divSheetId][0][0]['cplan0']
-            lFrz        = Cells[divSheetId][0][0]['lFrz']           ; cFrz      = Cells[divSheetId][0][0]['cFrz']    
-    
-            iElSelA    = iSheetSelA       ; jElSelA      = jSheetSelA
-            if(iSheetSelA>=lFrz){ iElSelA    = iSheetSelA + lplan0 - lFrz }
-            if(jSheetSelA>=cFrz){ jElSelA    = jSheetSelA + cplan0 - cFrz }
-        }
-        // . . .[input de Plan]
-
-        SelectionChange()
-        // -------- atualiza ListPlan - SYST
-        // .  . anterior (lost focus)
-        if(entraInp=='Lost' && inpAnt.className.includes("-Pla")){ 
-            inpAnt.value                                                 = finValueInputA
-            try{ ListPlan[divSheetId][iElSelA][jElSelA]       = finValueInputA } catch{}
-        }
-        // .  . current (got focus)
-        if(entraInp=='Got' && inpCur.className.includes("-Pla")){ 
-            inpCur.value                                                 = iniValueInput
-            try{ ListPlan[divSheetId][iElSel][jElSel]         = iniValueInput } catch{}
-        }
-        // --------[atualiza ListPlan - SYST]
-
-        inpAntId = inpCurId ; inpAnt = inpCur
-        
-    }
-    // . . .[Selection Change]
-    
     // -----------[INPUT]
 
 
@@ -885,7 +1018,7 @@ function eventTrap() {
             if(divZooId=='Zoom'){ el(divZooId).style.top        = '-3000px'  ; el(divZooId).style.left      = '-3000px' }
             el('Corpo').appendChild( el('ZoomImg') )
         
-            divCursor.style.top  = '-3000px'   ; divCursor.style.left  = '-3000px'
+            divCursor.style.top   = '-3000px'  ; divCursor.style.left  = '-3000px'
             imgZoom.style.top     = '-3000px'  ; imgZoom.style.left     = '-3000px'
             imgZoom.style.width   = '10px '    ; imgZoom.style.height   = '10px'
             imgZoom.style.zIndex  = '0'
@@ -895,7 +1028,7 @@ function eventTrap() {
     // ...[sai de Zoom]
 
     // ... inicia Zoom
-    if((evento=='mousemove' || evento=='click') && eleTa.getAttribute('zoommenudiv')!=null && eleTaTy=='IMG' && menuZoom==0){
+    if((evento=='mousemove' || evento=='click') && eleTa.getAttribute('zoommenudiv')!=null && eleTa.getAttribute('zoommenudiv')!='' && eleTaTy=='IMG' && menuZoom==0){
         imgZooOri   = eleTa                     ;   imgZooOriId   = eleTaId
         divOri      = imgZooOri.parentElement   ;   divOriId      = divOri.id
         divCursor   = el("ZoomDivCur")
@@ -998,11 +1131,9 @@ function eventTrap() {
     // ...[move cursor Zoom]
     // ---------[ZOOM]
 
-
-
     // ---------------- Menus    
-    // ....... abre e recolhe
     
+    // ....... abre e recolhe    
     // . . .  recolhe Menu Pop  e Horizontal com click
     if (divMenuAti!='') {
         if ( (evento=='click') && ! eleTaClass.includes(divMenuAti.id) ){ 
@@ -1107,17 +1238,19 @@ function eventTrap() {
     
     // ---------------- Movimento em Sheet
     if (eleTaClass.includes("-Pla")) {
-        if ( blocTrap==0 && (evento=="keydown" || evento=="focusin" || evento=='input')  ){
+
+        if (blocTrap==0 && (evento=="keydown" || (evento=="click" && Number(eleTa.getAttribute('iElN'))>0) || evento=='input')  ){
+
             scro = 0 ; keyCodeF = 100
-            // . . . índices de input focus em Sheet
-            abrePar = eleTaId.indexOf("(") ; fechaPar  = eleTaId.indexOf(")") ; virg = eleTaId.indexOf(",")
-            if (abrePar>0){
-                iSheet  = parseInt(eleTaId.slice(abrePar+1, virg)) ; jSheet   = parseInt(eleTaId.slice(virg+1, fechaPar))
-                if (evento=="focusin") { keyCodeF = 1 }
-            }
+            if (evento=="click") { keyCodeF = 1 }
+
+            iSheet  = Number(eleTa.getAttribute('iSheet'))  ; jSheet = Number(eleTa.getAttribute('jSheet'))
+            iElN    = Number(eleTa.getAttribute('iElN'))    ; jElN   = Number(eleTa.getAttribute('jElN'))
+            elAnt   = eleTa
+
+            //if (!evento.includes('mouse') ){ print('movev:'+evento+'  eleTa:'+eleTa.id+':'+iElN) }
 
             // .... inibe scroll com flechas
-            // https://stackoverflow.com/questions/10280250/getattribute-versus-element-object-properties
             readO = eleFo.getAttribute('readonly')
             if(evento=='keydown' && (keyCode<41 && keyCode!=8 && keyCode!=32) || (readO=='true' && keyCode==32)){ event.preventDefault() }
 
@@ -1138,11 +1271,9 @@ function eventTrap() {
             scrollBars  = Cells[divSheetId][0][0]['scrollBars'] 
             header      = Cells[divSheetId][0][0]['header']         ; LinMod    = Cells[divSheetId][0][0]['LinMod']
 
+
             // ------ mudança de foco em Sheet
-            iElN     = iSheet + lplan0 - lFrz   ; jElN       = jSheet + cplan0 - cFrz
-            if (iSheet<lFrz){ iElN = iSheet }
-            if (jSheet<cFrz){ jElN = jSheet }
-            
+
             // ------ linha entrada em cabeçalho
             if (evento=="keydown" && keyCode==13 && eleFoId.includes("-headerLinL")){
                 linEntr = parseInt( el(nomeSheet+"-headerLinL").value ) + lFrz - 1
@@ -1189,19 +1320,14 @@ function eventTrap() {
 
                 if (iElN==lFrz && iElC<lFrz)  { iElN = lplan0 }    // transição cabeçalho-corpo
                 if (jElN==cFrz && jElC<cFrz)  { jElN = cplan0 }    // transição cabeçalho-corpo
-            
-
-                
+                            
                 // ----------------------------------------------------------------
-                focoCell(divSheetId)   // iElN, jElN,  iSheetA, jSheetA, iEl, jEl
+                focoCell(divSheetId)   // iElN, jElN
                 // ----------------------------------------------------------------
 
-
-                iSheetA = iSheet    ;   jSheetA = jSheet
             }    
         }
-        // ------ movimento em Planilha - Tecla - NOVO FOCO
-
+        // ------[movimento em Planilha - Tecla - NOVO FOCO]
     
         // ......        
     }
@@ -1209,12 +1335,229 @@ function eventTrap() {
 
     // ------------------
     // ... eventTrap()
-    trapEvent() // executa trap específicos do projeto em .html
+    trapEvent() // executa traps específicos do projeto em .html
 }    
 //  --------------[Trap de Eventos] -------------
 
             
 // ************************* FUNCTIONS DE SISTEMA EM .js
+
+// ..... Converte data
+function dataConv(dataS){                       // data brasileira para JS padrão new Date
+    msPerDay = 1000 * 60 * 60 * 24
+    Months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
+
+    dataSa = dataS
+    dataS  = dataS.toLowerCase()
+    
+    dataS  = dataS.replace( RegExp("dia", 'g'),  " ")
+    dataS  = dataS.replace( RegExp(",", 'g'),  " ")
+    dataS  = dataS.replace( RegExp("-", 'g'),  " ")
+    dataS  = dataS.replace( RegExp("/", 'g') , " ")
+    dataS  = dataS.replace( RegExp("de ",'g') , " ")
+    dataS  = dataS.replace( RegExp("  ",'g') , " ")
+    dataS  = dataS.replace( RegExp("  ",'g') , " ")
+    dataS  = dataS.replace( RegExp("  ",'g') , " ")
+    dataS  = dataS.replace( RegExp("  ",'g') , " ")
+    dataS  = dataS.replace( RegExp("  ",'g') , " ")
+
+    inMes = dataS.indexOf(" ") ; fiMes  = dataS.indexOf(" ", inMes+1)
+    mes = parseInt(  dataS.substring(inMes+1, fiMes) )
+    
+    // . . . data bras. tipo "25/12/1968"
+    if(mes>1 && mes<13) { 
+        mo = Months[mes-1]
+        dataS = dataS.substring(0, inMes) + ' ' + mo + dataS.substring(fiMes)
+    }
+
+    // ------------
+    dataS  = dataS.replace("janeiro",   "jan")
+    dataS  = dataS.replace("fevereiro", "feb")
+    dataS  = dataS.replace("março",     "mar")
+    dataS  = dataS.replace("abril",     "apr")
+    dataS  = dataS.replace("maio",      "may")
+    dataS  = dataS.replace("junho",     "jun")
+    dataS  = dataS.replace("julho",     "jul")
+    dataS  = dataS.replace("agosto",    "aug")
+    dataS  = dataS.replace("setembro",  "sep")
+    dataS  = dataS.replace("outubro",   "oct")
+    dataS  = dataS.replace("novembro",  "nov")
+    dataS  = dataS.replace("dezembro",  "dec")
+
+    dataS  = dataS.replace("fev",     "feb")
+    dataS  = dataS.replace("abr",     "apr")
+    dataS  = dataS.replace("mai",     "may")
+    dataS  = dataS.replace("ago",     "aug")
+    dataS  = dataS.replace("set",     "sep")
+    dataS  = dataS.replace("out",     "oct")
+    dataS  = dataS.replace("dez",     "dec")
+    // ------------
+
+    dateJS = new Date(dataS)
+
+    // ....
+    return dateJS 
+}
+// .....[Converte data]
+
+
+// ..... scale div
+function scaleDiv(divId='', fitS='', faEscX = '', faEscY = '', desl=''){
+    divE = el(divId)
+    if(faEscX==''){ faEscX = faEscY }
+    if(faEscY==''){ faEscY = faEscX }
+
+    // . . . fit
+    if(fitS!=''){
+        divPar = divE.parentElement
+        wPar = parseInt(window.getComputedStyle(divPar).width) ; hPar = parseInt(window.getComputedStyle(divPar).height)
+        wDiv = parseInt(window.getComputedStyle(divE)  .width) ; hDiv = parseInt(window.getComputedStyle(divE)  .height)
+        
+        if(fitS=='fitW'){ faEscX = wPar/wDiv ; faEscY = faEscX }
+        if(fitS=='fitH'){ faEscY = hPar/hDiv ; faEscX = faEscY }
+    }
+
+
+    x0 = parseInt(window.getComputedStyle(divE).left)  ; y0 = parseInt(window.getComputedStyle(divE).top)
+    w0 = parseInt(window.getComputedStyle(divE).width) ; h0 = parseInt(window.getComputedStyle(divE).height)
+
+    // . . . aplica escs
+    divE.style.transform = 'scaleX('+faEscX+') scaleY('+faEscY+')'
+    xDesl = (w0/2)*(faEscX-1) ; yDesl = (h0/2)*(faEscY-1)
+    if(desl!=''){ divE.style.left =  (x0 + xDesl)+'px' ; divE.style.top = (y0 + yDesl)+'px' }
+}
+// .....[scale div]
+
+// ..... Fomata Image
+function fomatImg(imgId='', imgSrc='', x='', y='', w='', h='', fitS='', faEscX = '', faEscY = '', adjDiv=''){
+    eleImg = el(imgId)
+    
+    if(x=='')      { x         = eleImg.getAttribute('x')       ; if(x==null)       { x = '0'} }
+    if(y=='')      { y         = eleImg.getAttribute('y')       ; if(y==null)       { y = '0'}  }        
+    if(w=='')      { w         = eleImg.getAttribute('w')       ; if(w==null)       { w = '0'}  }        
+    if(h=='')      { h         = eleImg.getAttribute('h')       ; if(h==null)       { h = '0'}  }        
+    if(fitS=='')   { fitS      = eleImg.getAttribute('fitS')    ; if(fitS==null)    { fitS = 'fit'} }
+    if(faEscX=='') { faEscX    = eleImg.getAttribute('faEscX')  ; if(faEscX==null)  { faEscX = 1}  }   
+    if(faEscY=='') { faEscY    = eleImg.getAttribute('faEscY')  ; if(faEscY==null)  { faEscY = 1}  }   
+    if(adjDiv=='') { adjDiv    = eleImg.getAttribute('adjDiv')  ; if(adjDiv==null)  { adjDiv = 0}  }   
+    eleImg.setAttribute('x' , x)
+    eleImg.setAttribute('y' , y)
+    eleImg.setAttribute('w' , w)
+    eleImg.setAttribute('h' , h)
+    eleImg.setAttribute('fitS' , fitS)
+    eleImg.setAttribute('faEscX' , faEscX)
+    eleImg.setAttribute('faEscY' , faEscY)
+    eleImg.setAttribute('adjDiv' , adjDiv)
+
+    srsAtu = eleImg.getAttribute('src')
+    // . . . carrega nova imagem
+    if (imgSrc!='' && imgSrc!=srsAtu) { el(imgId).src = imgSrc }
+
+    //eleImg.style.left  = '-10000px'  ; eleImg.style.top = '-10000px'
+
+    // ------- listener
+    eleImg.addEventListener("load", loaImg) ;  function loaImg() { formIm(imgId,  x, y, w, h, fitS, faEscX, faEscY, adjDiv) } 
+// . . . 
+}
+// . . . formata e não carrega
+function formIm(imgId,  x='0', y='0', w='0', h='0', fitS, faEscX, faEscY, adjDiv){
+    // ***** depois de carregar Img
+    if(el(imgId).complete==true){
+        eleImg = el(imgId) ; divImg = eleImg.parentElement ; divImgId = divImg.id
+        wD = parseInt(window.getComputedStyle(divImg).width) ; hD = parseInt(window.getComputedStyle(divImg).height)
+        oriW = eleImg.naturalWidth ; oriH = eleImg.naturalHeight
+
+        // ----- Tamanho de Img
+        imgWn = oriW ; imgHn = oriH
+
+        // . . . W e H (prioridade 2)
+        if (w!='0' || h!='0'){         
+            w0 = parseInt(w) ; h0 = parseInt(h)
+            if (w.includes('%')){ w0 = (w0/100) * wD }
+            if (h.includes('%')){ h0 = (h0/100) * hD }        
+            if (w0!=0){ imgWn = w0 ; faEscX = 1 ; if (h0==0){ imgHn = (imgWn/oriW)*oriH ; faEscY = 1 } }
+            if (h0!=0){ imgHn = h0 ; faEscY = 1 ; if (w0==0){ imgWn = (imgHn/oriH)*oriW ; faEscX = 1 } }
+        }
+        // . . . fit (prioridade 1)
+        
+        if (fitS=='fitW' || fitS=='fitH' || fitS=='fit'){
+            if (fitS=='fitW'){ faEscX = wD / oriW ; faEscY = faEscX      }
+            if (fitS=='fitH'){ faEscY = hD / oriH ; faEscX = faEscY      }
+            if (fitS=='fit') { faEscX = wD / oriW ; faEscY = hD / oriH   }    
+        }       
+        // . . . scales (prioridade 3)
+        imgWn = parseInt(oriW*faEscX) ; imgHn = parseInt(oriH*faEscY)
+        eleImg.style.width  = imgWn+'px'  ; eleImg.style.height = imgHn+'px'
+        // -----[Tamanho de Img]
+
+        // . . . ajusta tamanho de container
+        if(adjDiv==1) { divImg.style.width  = imgWn+'px'  ; divImg.style.height = imgHn+'px'}
+
+        // . . . ajusta posição
+        left0 = parseInt(x) ; top0 = parseInt(y)
+        if (x.includes('%')){ left0 = (left0/100) * oriW }
+        if (y.includes('%')){ top0  = (top0/100)  * oriH }
+        eleImg.style.left  = left0+'px'  ; eleImg.style.top = top0+'px'
+        // . . .[ajusta posição]
+    }
+    // *****[depois de carregar Img]
+}
+// .....[Fomata Image]
+
+// ..... Clona Elemento
+function clonaEle(oriId, idApp){
+    clonaUniE(oriId, idApp, cloneChild=0)
+
+    // . . . clone Children
+    //Chil = el(oriId).children
+    Descen = el(oriId).querySelectorAll('*')
+    nCh = Descen.length
+    parCloneId = oriId+idApp
+    for (iCh = 0; iCh<=nCh-1; iCh++){
+        oriIdC = Descen[iCh].id
+        clonaUniE(oriIdC, idApp, cloneChild=1)
+    }
+    // . . .[clone Children]
+}
+function clonaUniE(oriId, idApp, cloneChild){
+    // ----- function clonaUniE(oriIdU, idApp, parCloneId)
+    // ... clona attributes                
+    eleOri = el(oriId)  ; parOri = eleOri.parentElement   ; parOriId = parOri.id    ;   tipoEl = eleOri.tagName
+    styles = window.getComputedStyle(eleOri) ; Att = eleOri.attributes
+
+    // . . . separa i e j de idApp prese
+    // . . . índices de input focus em Sheet
+    iArray = '' ; jArray = ''
+    
+    idAppI = '*'+idApp
+    try{
+        abrePar = idAppI.indexOf("_") ; virg  = idAppI.indexOf(":") ; fim = idAppI.length
+        if (abrePar>0){ iArray  = idAppI.slice(abrePar+1, virg) ; jArray   = idAppI.slice(virg+1, fim) }
+    }catch{}
+           
+    if(cloneChild==0){ parCloneId = parOriId }    
+    if(cloneChild==1){ parCloneId = parOriId+ idApp}    
+    
+    para = document.createElement(tipoEl)
+    para.id = oriId + idApp
+    el(parCloneId).appendChild(para)
+
+    // ... clona Attr
+    for (i=0; i<Att.length; i++){ if(Att[i].name!='id'){ para.setAttribute(Att[i].name, Att[i].value) } }
+    // ... clona CSS
+    for (iSt in styles){ stN = styles[iSt] ; if (stN!=undefined && stN!=''){ para.style[iSt] = stN } }
+    // -----[function clonaUniE(oriIdU, idApp, parCloneId)]
+
+    // ... attrs de identificação
+    if (iArray!=''){ 
+        para.setAttribute('iArray' , iArray) ; para.setAttribute('jArray' , jArray)
+        para.setAttribute('niArray', nLar)   ; para.setAttribute('njArray', nCar)
+    }
+
+}
+// .....[Clona Elemento]
+
+
 function atuJib(){
     // ... escreve para Jiboia
     // . . . 
@@ -1291,19 +1634,21 @@ function atuJib(){
     }
     // . . .[desl de Scroll e parâmetros de Aba]
     
-
         // ....
         return
 }
 // ...[escreve para Jiboia]
 
-
 // ---- print em console
-function print(strPrint){ eventoAc = '<br>'+strPrint +eventoAc ; el("console").innerHTML = eventoAc ; return }
+function print(strPrint){ linPrint ++; eventoAc = '<br> '+(linPrint)+' '+strPrint +eventoAc ; el("console").innerHTML = eventoAc ; return }
 // ---
 
 // ---- Get El by Id
-function el(idS){ return document.getElementById(idS) }
+function el(idS, iArr=0, jArr=0){ 
+    if(typeof(idS)=='object') { idS = idS.id }
+    if(iArr!=0 && jArr!=0)    { idS = idS+'_'+iArr+':'+jArr }
+    return document.getElementById(idS) 
+}
 // ---
 
 // ---- substitui caracteres especiais de strO
@@ -1322,10 +1667,6 @@ function charSpeci(strO){
     }    
     // ....
     return strO
-
-
-
-
 }
 // ----[substitui caracteres especiais de strO]
 
@@ -1354,7 +1695,6 @@ function lenPxTxt (text, fontFam, fontSize){
 
 // .... INPUT
 function fhabClic(){ habClic = 1 ; eleFo.setSelectionRange( 0, 0)}   //forward, backward and None
-
 
 // ... show Aba
 function showAba(divId, iAba=1){ 
@@ -1536,10 +1876,8 @@ function criaMenu(divMenuId) {
             }
             // . .[novo subMenu]
             
-            formMenu[i][12]  = TopRel[iSub] + deslHab       // topL
-            
+            formMenu[i][12]  = TopRel[iSub] + deslHab       // topL            
             formMenu[i][15]  = 10                           // padL
-
             TopRel[iSub]     = TopRel[iSub] + heighLi
         
             // ... bordas
@@ -1723,7 +2061,7 @@ function criaMenu(divMenuId) {
         para.style.textDecorationThickness  = '1px'
         para.style.backgroundColor          = bc
         
-        desBordas(0, 0, para, brd)
+        desBordas(para, brd)
         // . . menu tipo "aba"    border-bottom-left-radius
         if(orient=='aba'){ 
             para.style.borderTopLeftRadius      = (hl/1.5)+"px"
@@ -2060,13 +2398,17 @@ function largSroll(ele){
 
 // ------ Carrega arquivo de dados
 function loadDadosJS(divSheetId, arqDados=''){
+    
     nomeProjS = el("Corpo").getAttribute('nomeProj')
     nLoad = nLoad + 1
     if (arqDados=='') { arqDados = Cells[divSheetId][0][0]['arqDados'] }
+    
     // ........ Load arquivo de dados JS
     scriptEle1 = document.createElement("script")        ; el('Corpo').appendChild(scriptEle1)
     scriptEle1.setAttribute("type", "text/javascript")   ; scriptEle1.setAttribute("async", true)
     scriptEle1.setAttribute("src", nomeProjS+"/ArquvosJs/"+arqDados)
+    LoadedJS[divSheetId] = 0
+
     if (nLoad==1) { scriptEle1.addEventListener("load", loa1) ;  function loa1() { divLoadId = divSheetId; loadListener(divLoadId) } }
     if (nLoad==2) { scriptEle1.addEventListener("load", loa2) ;  function loa2() { divLoadId = divSheetId; loadListener(divLoadId) } }
     scriptEle1.remove()
@@ -2078,26 +2420,33 @@ function loadListener(divLoadId){
     ListPlan[divLoadId] = Clone
     listS = '' ; Clone = [] ; ListArq = ''
     nLinPla = ListPlan[divLoadId][0][0]
-    Cells[divLoadId][0][0]['nLinPla'] = nLinPla
-    Cells[divLoadId][0][1]['nLinPla'] = 1       ;  ListPlan[divLoadId][0][1] = 1 // flag de arquivo carregado
+    LoadedJS[divLoadId] = 1
+    
+    // .... somente para arquivos vinculados a Sheet
+    try{
+        Cells[divLoadId][0][0]['nLinPla'] = nLinPla
+        Cells[divLoadId][0][1]['nLinPla'] = 1       ;  ListPlan[divLoadId][0][1] = 1 // flag de arquivo carregado
+        // . . . recalcula lplan0Max
+        lFrz        = Cells[divLoadId][0][0]['lFrz']           ; hei       = Cells[divLoadId][lFrz][1]['height']
+        hWindow     = Number(divLoad.getAttribute('hWindow'))  ; LinMod    = Cells[divLoadId][0][0]['LinMod']
+        if(LinMod>0) { 
+            lplan0Max = nLinPla - parseInt(hWindow/hei) + 1
+            if(lplan0Max<2){ lplan0Max = 2 }
+            divLoad.setAttribute('lplan0Max', lplan0Max) 
+        }
+        // ...
+        preencheSheet(lplanIni=0, cplanIni=0, divLoadId) 
+    }catch{}
+    // .... somente para arquivos vinculados a Sheet
 
-    // . . . recalcula lplan0Max
-    lFrz        = Cells[divLoadId][0][0]['lFrz']           ; hei       = Cells[divLoadId][lFrz][1]['height']
-    hWindow     = Number(divLoad.getAttribute('hWindow'))  ; LinMod    = Cells[divLoadId][0][0]['LinMod']
-    if(LinMod>0) { 
-        lplan0Max = nLinPla - parseInt(hWindow/hei) + 1
-        if(lplan0Max<2){ lplan0Max = 2 }
-        divLoad.setAttribute('lplan0Max', lplan0Max) 
-    }
+    trapLoad(divLoadId)
+
     // ...
-    print(' divLoadId:'+divLoadId)
-    preencheSheet(lplanIni=0, cplanIni=0, divLoadId) 
     }
 // ------[Carrega arquivo de dados]
 
 // ---- Cria Sheet baseado em dictFormPla e MatrCellsPla
 function criaSheet(divSheetId){
-
     nLinPla     = Cells[divSheetId][0][0]['nLinPla']        ; nColPla   = Cells[divSheetId][0][0]['nColPla']
     lplan0      = Cells[divSheetId][0][0]['lplan0']         ; cplan0    = Cells[divSheetId][0][0]['cplan0']
     lFrz        = Cells[divSheetId][0][0]['lFrz']           ; cFrz      = Cells[divSheetId][0][0]['cFrz']
@@ -2107,13 +2456,13 @@ function criaSheet(divSheetId){
     scrollBars  = Cells[divSheetId][0][0]['scrollBars']     ; autoSize  = Cells[divSheetId][0][0]['autosize']
     arqDados    = Cells[divSheetId][0][0]['arqDados']
 
-    Cells[divSheetId][0][0]['iElC']     = 0      ; Cells[divSheetId][0][0]['jElC']   = 0
     Cells[divSheetId][0][0]['lplan0']   = lFrz   ; Cells[divSheetId][0][0]['cplan0'] = cFrz
+    Cells[divSheetId][0][0]['iElC']     = lFrz   ; Cells[divSheetId][0][0]['jElC']   = cFrz
     
     ListPlan[divSheetId] = [ [nLinPla] ]
     
     lplan0  = lFrz  ; cplan0    = cFrz
-
+    
     // ... substitui caracteres especiais e Carrega ListPlan
     nLin = nLinPla
     if(LinMod>0) {nLin = lFrz}
@@ -2150,7 +2499,7 @@ function criaSheet(divSheetId){
     hWindow   = hUtil - margB - Cells[divSheetId][lFrz][1]['top'] - 1       ; wWindow   = wUtil - margD - Cells[divSheetId][1][cFrz]['left'] - 1
 
     nLinSh  = 0 ; nColSh  = 0
-    nLinInps = 70 ; nColInps = 30
+    nLinInps = 30 ; nColInps = 10
     
     if(LinMod>0){ 
         nLinSh = Math.floor( hWindow / Cells[divSheetId][lFrz][1]['height'] ) 
@@ -2159,8 +2508,7 @@ function criaSheet(divSheetId){
         multH[divSheetId] = Lmult
     }
     
-    // ---------- calcula lplan0Max cplan0Max
-    
+    // ---------- calcula lplan0Max cplan0Max    
     lplan0Max = 0 ; cplan0Max = 0
     
     // ... cplan0Max
@@ -2173,16 +2521,14 @@ function criaSheet(divSheetId){
     if(LinMod==0){ 
         hPint = 0
         for (i = nLinPla; i >= lFrz; i--){
-            hPint = hPint + Cells[divSheetId][1][j]['height']
-            if(wPint>hWindow){ lplan0Max = i + 1; i = 0}
+            hPint = hPint + Cells[divSheetId][i][1]['height']
+            if(hPint>hWindow){ lplan0Max = i + 1; break}
         }
     }
 
     lFrz        = Cells[divSheetId][0][0]['lFrz'] ; hei = Cells[divSheetId][lFrz][1]['height']
     if(LinMod>0)   { lplan0Max = nLinPla - parseInt(hWindow/hei) + 1}
-
     // ---------- [calcula lplan0Max cplan0Max]
-
     // guarda
     divSheet.setAttribute('nomeSheet', nomeSheet)
     divSheet.setAttribute('nLinSh', nLinSh)             ; divSheet.setAttribute('nColSh'   , nColSh)
@@ -2190,15 +2536,16 @@ function criaSheet(divSheetId){
     divSheet.setAttribute('hWindow', hWindow)           ; divSheet.setAttribute('wWindow'   , wWindow)
     divSheet.setAttribute('margL', margL)               ; divSheet.setAttribute('margT'   , margT)
     divSheet.setAttribute('lplan0Max', lplan0Max)       ; divSheet.setAttribute('cplan0Max', cplan0Max)
+    divSheet.setAttribute('wheelPrev', true)
     
     // . . . para leitura
     nLinSh      = Number(divSheet.getAttribute('nLinSh'))    ; nColSh    = Number(divSheet.getAttribute('nColSh'))
     nLinInps    = Number(divSheet.getAttribute('nLinInps'))  ; nColInps  = Number(divSheet.getAttribute('nColInps'))
     hWindow     = Number(divSheet.getAttribute('hWindow'))   ; wWindow   = Number(divSheet.getAttribute('wWindow'))
     margL       = Number(divSheet.getAttribute('margL'))     ; margT     = Number(divSheet.getAttribute('margT'))
-    lplan0Max   = Number(divSheet.getAttribute('lplan0Max')) ; cplan0Max   = Number(divSheet.getAttribute('cplan0Max'))
+    lplan0Max   = Number(divSheet.getAttribute('lplan0Max')) ; cplan0Max = Number(divSheet.getAttribute('cplan0Max'))
+    wheelPrev   = Number(divSheet.getAttribute('wheelPrev'))
     
-
     // ... cria Inputs
     for (i = 1; i <= nLinInps; i++){
         for (j = 1; j <= nColInps; j++){
@@ -2211,6 +2558,8 @@ function criaSheet(divSheetId){
             para.style.textDecorationThickness  = '1px'
             para.style.zIndex                   = 2
             para.setAttribute('spellcheck', false)
+            para.setAttribute('iSheet', i) ; para.setAttribute('jSheet', j)
+            para.setAttribute('divSheetId', divSheetId)
         }
     }
     // ...[cria Inputs]
@@ -2245,6 +2594,7 @@ function criaSheet(divSheetId){
         para.style.borderWidth      = "0px"  
         para.style.backgroundColor  = '#E4E4E4'
         para.style.zIndex = '4'
+        para.value = 1
         
         para = document.createElement("INPUT") ; para.setAttribute('readonly', 'readonly')
         divSheet.appendChild(para);
@@ -2321,8 +2671,7 @@ function criaSheet(divSheetId){
 // ----[Cria Sheet baseado em dictFormPla e MatrCellsPla]
 
 // ----- Põe foco em Cell de Plan
-function focoCell(divSheetId){    // iElN, jElN,  iSheetA, jSheetA
-    
+function focoCell(divSheetId){    // iElN, jElN
     scro = 0
     lplan0      = Cells[divSheetId][0][0]['lplan0']         ; cplan0    = Cells[divSheetId][0][0]['cplan0']
     nLinPla     = Cells[divSheetId][0][0]['nLinPla']        ; nColPla   = Cells[divSheetId][0][0]['nColPla']
@@ -2331,7 +2680,7 @@ function focoCell(divSheetId){    // iElN, jElN,  iSheetA, jSheetA
     header      = Cells[divSheetId][0][0]['header']         ; LinMod    = Cells[divSheetId][0][0]['LinMod']
     cursor      = Cells[divSheetId][0][0]['cursor']
 
-    iElC = Cells[divSheetId][0][0]['iElC']                  ; jElC = Cells[divSheetId][0][0]['jElC']
+    iElC        = Cells[divSheetId][0][0]['iElC']           ; jElC      = Cells[divSheetId][0][0]['jElC']
 
     // . . . limites
     if (iElN<=1)       { iElN = 1       }
@@ -2363,25 +2712,25 @@ function focoCell(divSheetId){    // iElN, jElN,  iSheetA, jSheetA
     // . . . estouro ESQUERDA
     if (jElN<cplan0 && jElN>=cFrz) { cplan0 = jElN  ;  Cells[divSheetId][0][0]['cplan0'] = cplan0 ;     scro = 2 }
     // . . . estouro ABAIXO
-    if (bF>hWindow)         {                       scro = 3    ; hPint = 0
+    if (bF>hWindow)         {                hPint = 0;                                                 scro = 3
         if(LinMod==0){
             for (i = iElN; i >= lFrz; i--){
                 jj = 1
                 if (i==iElN) { jj = jElN }    
                 hPint = hPint + Cells[divSheetId][i][jj]['height']
-                if(hPint>hWindow){ lplan0 = i + 1; i = 0}
+                if(hPint>hWindow){ lplan0 = i + 1; break}
             }
         }
         if(LinMod>0){lplan0 = iElN - nLinSh + lFrz}
         Cells[divSheetId][0][0]['lplan0'] = lplan0
     }
     // . . . estouro DIREITA
-    if (dF>wWindow)         {                       scro = 4    ; wPint = 0
+    if (dF>wWindow)         {                wPint = 0;                                                 scro = 4
         for (j = jElN; j >= cFrz; j--){
             ii = 1
             if (j==jElN) { ii = iElNf }
             wPint = wPint + Cells[divSheetId][ii][j]['width']
-            if(wPint>wWindow){ cplan0 = j + 1; j = 0}
+            if(wPint>wWindow){ cplan0 = j + 1; break}
         }
         Cells[divSheetId][0][0]['cplan0'] = cplan0
     }            
@@ -2391,36 +2740,22 @@ function focoCell(divSheetId){    // iElN, jElN,  iSheetA, jSheetA
     iSheet = iElN - lplan0 + lFrz       ;   jSheet = jElN - cplan0 + cFrz
     if (iElN<lFrz){ iSheet = iElN }
     if (jElN<cFrz){ jSheet = jElN }
+
     prox = nomeSheet+":(" + iSheet + "," + jSheet +")"
-    // ... ant
-    elAnt = ''
-    if (iSheetA>0){ elAnt = nomeSheet+":(" + iSheetA + "," + jSheetA +")" }
 
     // ------------  Scroll de plan
     if (scro>0){ 
         
-        // ....... SelectionChange de Scroll
-        iniValueInput  = ListPlan[divSheetId][iElN][jElN]
-        
-        // -------- atualiza ListPlan - SYST
-        // .  . anterior (lost focus)
-        if (elAnt!='' && iElC>0){
-            inpAnt = el(elAnt)
-            finValueInputA = inpAnt.value
-            entraInp = 'Lost'   ; SelectionChange()
-            inpAnt.value                       = finValueInputA
-            ListPlan[divSheetId][iElC][jElC]   = finValueInputA
-            iniValueInputA  = iniValueInput
-        }
-        // .  . current (got focus)
-        entraInp = 'Got'    ; SelectionChange()
-        el(prox).value                         = iniValueInput
-        ListPlan[divSheetId][iElN][jElN]       = iniValueInput  
-        // --------[atualiza ListPlan - SYST]
         // .......[SelectionChange de Scroll]
+        inpAnt = elAnt; inpAntId = inpAnt.id; inpCur = ''; inpCurId = 'lost';   finValueInputA = inpAnt.value
+        entraInp = 'Lost'; SelectionChange()
         
+        // .... preenche de Scrooll Plan
         preencheSheet(lplanIni=0, cplanIni=0, divSheetId) ; toques = 0
-               
+        // ....[preenche de Scrooll Plan]
+
+        inpCur = el(prox); inpCurId = inpCur.id;                                iniValueInput  = inpCur.value
+        entraInp = 'Got' ; SelectionChange()
     }
     // ------------ [Scroll de plan]
     
@@ -2435,7 +2770,7 @@ function focoCell(divSheetId){    // iElN, jElN,  iSheetA, jSheetA
         mergedLinsA  = Cells[divSheetId][iElNf][jElN]['mergedLins']
         el(curAnt).style.zIndex = '2'
         if(mergedColsA!=1 || mergedLinsA!=1){ el(curAnt).style.zIndex = '1' }
-        if (cursor!='outline'){ desBordas(iSheetA, jSheetA, el(curAnt)) }
+        if (cursor!='outline'){ desBordas(el(curAnt)) }
     }
     // . . .[retira Cursor anterior]
 
@@ -2455,7 +2790,7 @@ function focoCell(divSheetId){    // iElN, jElN,  iSheetA, jSheetA
         if(header=='header'){ 
             iLinH = iElN - lFrz + 1
             if (iLinH<0){ iLinH=0 }
-            head = el(nomeSheet+"-headerLinL")   ; head.value = iLinH
+            head = el(nomeSheet+"-headerLinL")   ; head.value = iLinH //; print(' +++ iElN:'+iElN+' iLinH:'+iLinH)
             head = el(nomeSheet+"-headerLinN")   ; head.value = ' de '+(nLinPla-lFrz+1)
         }
         // .  .
@@ -2487,34 +2822,37 @@ function preencheSheet(lplanIni=0, cplanIni=0, divSheetId){
     if (divSheet.getAttribute('nLinSh')==null){ criaSheet(divSheetId) }
 
     // . . . parâmetros de Planilha
-    nLinPla  = Cells[divSheetId][0][0]['nLinPla']       ; nColPla   = Cells[divSheetId][0][0]['nColPla']
-    lplan0   = Cells[divSheetId][0][0]['lplan0']        ; cplan0    = Cells[divSheetId][0][0]['cplan0']
-    lFrz     = Cells[divSheetId][0][0]['lFrz']          ; cFrz      = Cells[divSheetId][0][0]['cFrz']
-    iElC     = Cells[divSheetId][0][0]['iElC']          ; jElC      = Cells[divSheetId][0][0]['jElC']             // foco atual em Pla
-    cursor   = Cells[divSheetId][0][0]['cursor']        ; enterMove = Cells[divSheetId][0][0]['enterMove']   ;   scrollBars = Cells[divSheetId][0][0]['scrollBars'] 
-    header   = Cells[divSheetId][0][0]['header']        ; LinMod    = Cells[divSheetId][0][0]['LinMod']
-    autoSize = Cells[divSheetId][0][0]['autosize']
-
-    
-    
-
-    Cells[divSheetId][0][0]['lplan0'] = lplan0  ; Cells[divSheetId][0][0]['cplan0'] = cplan0
+    nLinPla     = Cells[divSheetId][0][0]['nLinPla']       ; nColPla   = Cells[divSheetId][0][0]['nColPla']
+    lplan0      = Cells[divSheetId][0][0]['lplan0']        ; cplan0    = Cells[divSheetId][0][0]['cplan0']
+    lFrz        = Cells[divSheetId][0][0]['lFrz']          ; cFrz      = Cells[divSheetId][0][0]['cFrz']
+    iElC        = Cells[divSheetId][0][0]['iElC']          ; jElC      = Cells[divSheetId][0][0]['jElC']        // foco atual em Pla
+    cursor      = Cells[divSheetId][0][0]['cursor']        ; enterMove = Cells[divSheetId][0][0]['enterMove']
+    scrollBars  = Cells[divSheetId][0][0]['scrollBars'] 
+    header      = Cells[divSheetId][0][0]['header']        ; LinMod    = Cells[divSheetId][0][0]['LinMod']
+    autoSize    = Cells[divSheetId][0][0]['autosize']
 
     // ....  parâmetros de Sheet
-    nLinSh      = Number(divSheet.getAttribute('nLinSh'))   ; nColSh    = Number(divSheet.getAttribute('nColSh'))
-    nLinInps    = Number(divSheet.getAttribute('nLinInps')) ; nColInps  = Number(divSheet.getAttribute('nColInps'))
-    hWindow     = Number(divSheet.getAttribute('hWindow'))  ; wWindow   = Number(divSheet.getAttribute('wWindow'))
-    margT       = Number(divSheet.getAttribute('margT'))    ; margL     = Number(divSheet.getAttribute('margL'))
-
+    nLinSh      = Number(divSheet.getAttribute('nLinSh'))    ; nColSh    = Number(divSheet.getAttribute('nColSh'))
+    nLinInps    = Number(divSheet.getAttribute('nLinInps'))  ; nColInps  = Number(divSheet.getAttribute('nColInps'))
+    hWindow     = Number(divSheet.getAttribute('hWindow'))   ; wWindow   = Number(divSheet.getAttribute('wWindow'))
+    margT       = Number(divSheet.getAttribute('margT'))     ; margL     = Number(divSheet.getAttribute('margL'))
+    lplan0Max   = Number(divSheet.getAttribute('lplan0Max')) ; cplan0Max = Number(divSheet.getAttribute('cplan0Max'))
+    
+    // . . . redefine lplan0, cplan0
     if (lplanIni>=lFrz){ lplan0 = lplanIni}
     if (cplanIni>=cFrz){ cplan0 = cplanIni}
-
-    // . . .   recalcula lplan0 e cplan0
-    lplan0Max   = Number(divSheet.getAttribute('lplan0Max')) ; cplan0Max   = Number(divSheet.getAttribute('cplan0Max'))
+    // .  .  .   limites lplan0 e cplan0
     if (lplan0>lplan0Max && lplan0Max>0){ lplan0 = lplan0Max}
     if (cplan0>cplan0Max && cplan0Max>0){ cplan0 = cplan0Max}
     Cells[divSheetId][0][0]['lplan0'] = lplan0  ; Cells[divSheetId][0][0]['cplan0'] = cplan0
-    // . . .  [recalcula lplan0 e cplan0]
+    // . . .[redefine lplan0, cplan0]
+
+    // . . .  xTop ; yTop
+    xTop = Cells[divSheetId][1][cFrz]['left']  - Cells[divSheetId][1][cplan0]['left'] + 1
+    if(LinMod==1){ yTop = 0  }
+    if(LinMod==0){ yTop = Cells[divSheetId][lFrz][1]['top']   - Cells[divSheetId][lplan0][1]['top']  + 1 }
+    // . . . [xTop ; yTop] 
+
 
     // . . . define nLinSh
     xTop = Cells[divSheetId][1][cFrz]['left']  - Cells[divSheetId][1][cplan0]['left'] + 1
@@ -2539,7 +2877,8 @@ function preencheSheet(lplanIni=0, cplanIni=0, divSheetId){
     divSheet.setAttribute('nColSh', nColSh)
     // . . .[define nColSh]
 
-    // . . . ajusta autosize
+
+    // . . . ajusta autosize - dimensões de div window (divSheetId)
     if(autoSize=='autosize'){
         xUlt = Cells[divSheetId][1][nColPla]['left'] + Cells[divSheetId][1][nColPla]['width']  +1         + margD
         if(LinMod==0) { yUlt = Cells[divSheetId][nLinPla][1]['top']  + Cells[divSheetId][nLinPla][1]['height']         +1 + margT + margB }
@@ -2547,62 +2886,28 @@ function preencheSheet(lplanIni=0, cplanIni=0, divSheetId){
         if (xUlt<wSheet) { el(divSheetId).style.width = xUlt+'px' }
         if (yUlt<hSheet) { el(divSheetId).style.height= yUlt+'px' }
     }
-    // . . .[ajusta autosize]
-
+    // . . .[ajusta autosize - dimensões de div window (divSheetId)]
 
     // ----
 
     //  i, j - Sheet               iC, jC - Planilha
-    // ... corpo
-    for (i = 1; i <= nLinSh; i++){
-        for (j = 1; j <= nColSh; j++){
-            printCell(i, j, divSheet)
-        }
-    }
-    
-    // ... rodapé
-    for (i = nLinSh+1; i <= nLinInps; i++){
-        for (j = 1; j <= nColInps; j++){
-            cell = el(divSheetId+"-Pla:("+i+","+j+")")
-            iC = i + lplan0 - lFrz ; jC = j + cplan0 - cFrz
-            if(iC<=nLinPla) { printCell(i, j, divSheet) }
-            if(iC> nLinPla) { cell.style.top = '-3000px'   }
-        }
-    }
+    // ... corpo - 
+    for (i = 1; i <= nLinInps; i++){  for (j = 1; j <= nColInps; j++){
+        // ---
+        iC  = i ; jC  = j
+        if(i>=lFrz) { iC  = i + lplan0 - lFrz }
+        if(j>=cFrz) { jC  = j + cplan0 - cFrz }  
+        // ---
 
-    // ... lateral DIREITA
-    for (i = 1; i <= nLinInps; i++){
-        for (j = nColSh+1; j <= nColInps; j++){
-            cell = el(divSheetId+"-Pla:("+i+","+j+")")
-            iC = i + lplan0 - lFrz ; jC = j + cplan0 - cFrz
-            if(jC<=nColPla) { printCell(i, j, divSheet) }
-            if(jC> nColPla) { cell.style.left = '-3000px' }
-        }
-    }
+        cell    = el(divSheetId+"-Pla:("+i+","+j+")")
 
-    //  ... células mescladas
-    for (i = 1; i <= nLinSh+1; i++){
-        for (j = 1; j <= nColSh+1; j++){
-            iC = i + lplan0 - lFrz ; jC = j + cplan0 - cFrz
-            if(i<lFrz)  { iC = i}
-            if(j<cFrz)  { jC = j}        
-            if( jC<=nColPla && iC<=nLinPla){
-                iCf = iC
-                if (LinMod>0 && iCf>lFrz) { iCf = lFrz }
-                mergedCols          = Cells[divSheetId][iCf][jC]['mergedCols']
-                mergedLins          = Cells[divSheetId][iCf][jC]['mergedLins']
-                if(  (mergedCols<1 && j+mergedCols<cFrz && j>=cFrz) || (mergedLins<1 && i+mergedLins<lFrz && i>=lFrz)   ){ 
-                    cplan0R = cplan0 ; lplan0R = lplan0
-                    if (mergedCols<1 && j+mergedCols<cFrz && j>=cFrz) { cplan0 = jC+mergedCols ; printCell(i, cFrz, divSheet) ; cell = el(divSheetId+"-Pla:("+i+","+cFrz+")") ; cell.style.zIndex = '1' }
-                    if (mergedLins<1 && i+mergedLins<lFrz && i>=lFrz) { lplan0 = iC+mergedLins ; printCell(lFrz, j, divSheet) ; cell = el(divSheetId+"-Pla:("+lFrz+","+j+")") ; cell.style.zIndex = '1' }                
-                    cplan0 = cplan0R ; lplan0 = lplan0R                
-                }
-            }                
-        }
-    }
+        if(iC<=nLinPla && jC<=nColPla){ printCell(i, j, divSheet) }
+        
+        if(iC> nLinPla) { cell.style.top  = '-3000px' }
+        if(jC> nColPla) { cell.style.left = '-3000px' }    
+    }}
 
-    // . . . Atualiza header
-    if (header){ elId = divSheetId+'-Pla-headerLinN' ; el(elId).value = ' de '+(nLinPla-lFrz+1) }
+    // ******* FINAL
 
     // . . . foco inicial
     if(iElC==0){
@@ -2613,9 +2918,9 @@ function preencheSheet(lplanIni=0, cplanIni=0, divSheetId){
         el(prox).focus()
         el(prox).style.zIndex = '3'
         iElN = lFrz ;  jElN = cFrz
-        //focoCell(divSheetId) // iElN, jElN,  iSheetA, jSheetA, iEl, jEl
     }
-    
+    // *******[FINAL]
+
     // ....
 }    
 // ----[Preenche Sheet a partir de Cells]
@@ -2623,29 +2928,47 @@ function preencheSheet(lplanIni=0, cplanIni=0, divSheetId){
 function printCell(i, j, divSheet){   // i, j  em Sheet
     divSheetId  = divSheet.id
     yTopP = yTop ; xTopP = xTop
-    
-    // corpo
+
+    // ---
+    iC  = i ; jC  = j
     if(i>=lFrz)     { iC  = i + lplan0 - lFrz }
     if(j>=cFrz)     { jC  = j + cplan0 - cFrz }  
-
+    // ---
     // lateral e cabeçalho
-    if(i<lFrz)  { iC = i ; yTopP = 0}
-    if(j<cFrz)  { jC = j ; xTopP = 0}
+    if(iC<lFrz)  { yTopP = 0}
+    if(jC<cFrz)  { xTopP = 0}
+
+    zOrd = 2 ; prCell = 0 
+    if(iC<=nLinPla && jC<=nColPla){ prCell = 1 }
+
+    cell    = el(divSheetId+"-Pla:("+i+","+j+")")
+
+    //  ... células mescladas
+    try{
+        mergedCols          = Cells[divSheetId][iC][jC]['mergedCols']
+        mergedLins          = Cells[divSheetId][iC][jC]['mergedLins']
+        if (mergedCols<0) { jC = jC + mergedCols ; zOrd = 1 }
+        if (mergedLins<0) { iC = iC + mergedLins ; zOrd = 1 }
+    } catch{}
+    //  ...[células mescladas]
+
+    iCf = iC    ; if (LinMod>0 && iCf>lFrz) { iCf = lFrz }
 
     // ... printa célula de Sheet
-    if(iC<=nLinPla && jC<=nColPla){
-        cell = el(divSheetId+"-Pla:("+i+","+j+")")
-        cell.style.zIndex = '2'
-            
+    if(prCell==1){
+        cell.setAttribute('iElN', iC) ; cell.setAttribute('jElN', jC) ; 
+
         // geometria de Cell
-        iCf = iC ; hei = parseInt(Cells[divSheetId][lFrz][1]['height'])
+        hei = parseInt(Cells[divSheetId][lFrz][1]['height'])
+        
         if(iC<lFrz  || LinMod==0)  {               cellTop = (Cells[divSheetId][iC][jC]['top']   + yTopP + margT)  }
         if(iC>=lFrz && LinMod>0)   {iCf = lFrz ;   cellTop =  Cells[divSheetId][lFrz][1]['top']  + multH[divSheetId][i-lFrz] + margT + 1 }
 
         cell.style.top                  = cellTop + 'px'
         cell.style.left                 = (Cells[divSheetId][1][jC]['left'] + xTopP + margL)  + 'px'
-        cell.style.width                = Cells[divSheetId][iCf][jC]['width']                   + 'px'
-        cell.style.height               = Cells[divSheetId][iCf][jC]['height']                 + 'px'
+        cell.style.width                = Cells[divSheetId][iCf][jC]['width']                 + 'px'
+        cell.style.height               = Cells[divSheetId][iCf][jC]['height']                + 'px'
+        //[geometria de Cell]
 
         // ... parâmetros de Cell
         backgroundColor     = Cells[divSheetId][iCf][jC]['backgroundColor']
@@ -2657,25 +2980,18 @@ function printCell(i, j, divSheet){   // i, j  em Sheet
         fontStyle           = Cells[divSheetId][iCf][jC]['fontStyle']
         textDecorationLine  = Cells[divSheetId][iCf][jC]['textDecorationLine']
         readO               = Cells[divSheetId][iCf][jC]['readonly']
-        mergedCols          = Cells[divSheetId][iCf][jC]['mergedCols']
-        mergedLins          = Cells[divSheetId][iCf][jC]['mergedLins']
-
-        if(mergedCols<0) { cell.style.top                  = '-3000px'}
-        if(mergedLins<0) { cell.style.top                  = '-3000px'}
-
         // ...[parâmetros de Cell]
-
+        
         // ---- TRAP  DE VALOR
         valor = ''
         // ...  arquivo JS
         try{ valor   = ListPlan[divSheetId][iC][jC] } catch{}
-
         planValorTrap(divSheetId, iC, jC)
         cell.value                      = valor
         // ----[TRAP  DE VALOR]
 
         // format Cell
-        cell.style.zIndex               = 2
+        cell.style.zIndex               = zOrd
         cell.style.backgroundColor      = backgroundColor
         cell.style.color                = color
         cell.style.textAlign            = textAlign
@@ -2687,7 +3003,7 @@ function printCell(i, j, divSheet){   // i, j  em Sheet
         cell.removeAttribute('readonly')
         if (readO=='true')  { cell.setAttribute('readonly', true)  }
 
-        desBordas(iCf, jC, cell)
+        desBordas(cell)
     }
 
     // ...
@@ -2695,7 +3011,10 @@ function printCell(i, j, divSheet){   // i, j  em Sheet
 // ------- function printCell()
 
 // ----- Desenha Bordas
-function desBordas(iCf, jC, eleBord, fomBord=''){
+function desBordas(eleBord, fomBord=''){
+    divSheet  = eleBord.parentElement ; divSheetId = divSheet.id
+    iCf       = Number(eleBord.getAttribute('iElN'))    ; jC   = Number(eleBord.getAttribute('jElN'))
+
     // bordas
     if (iCf>0)  {
         lFrz        = Cells[divSheetId][0][0]['lFrz'] ; LinMod    = Cells[divSheetId][0][0]['LinMod']
@@ -2729,6 +3048,216 @@ function desBordas(iCf, jC, eleBord, fomBord=''){
 }
 // -----[Desenha Bordas]
 
+// ----- Preenche Pag de Painel
+function preenchePainel(cellCurr=0, painelNome='', centra=0, nCelPai=0, porLInha=1){
+    // iTopPai  - linha do alto do painel
+    //      preenche todas Cell definidas em divArrId
+    // VER // ---------- scroll de Painel
+    
+    // . . . parâmetrod de divArr
+    divArrId = painelNome  ;  dictArray = Array[divArrId]
+    parDivId    = dictArray['parDivId']
+    nLar        = dictArray['nLar']     ; nCar      = dictArray['nCar']     ; hPar = dictArray['hPar'] ; vPar = dictArray['vPar']
+    lOri        = dictArray['lOri']     ; tOri      = dictArray['tOri']     ; wOri = dictArray['wOri'] ; hOri = dictArray['hOri']    
+    iTpArr      = dictArray['topLin']   ; jLfArr    = dictArray['lefCol']    
+    altLin      =  hOri+vPar            ; larCol    = wOri+hPar
+    // . . .[parâmetrod de divArr]
+
+    // ..... cria Painel, se inexistente painelNome = arrayClass = divArrId
+    try{ a = Painel[painelNome]['novoPainel'] ; novoPainel = a } catch{ novoPainel = 1}    
+    if(novoPainel==1){        
+        parDiv  = el(parDivId) ; parDiv.className = painelNome
+        altWind = parseInt(window.getComputedStyle(parDiv).height) ; larWind = parseInt(window.getComputedStyle(parDiv).width)
+        nlWind  = Math.floor(altWind/altLin)                       ; ncWind  = Math.floor(larWind/larCol)
+        slackL  = Math.floor( (nLar-nlWind)/2 )                    ; slackC  = Math.floor( (nCar-ncWind)/2 )
+        
+        iTDisp  = 0  ;  jLDisp = 0 ; iPaiCurr = 0 ; jPaiCurr = 0
+
+        if(nCelPai==0)  { nCelPai = nLar*nCar }
+        if(porLInha==0) { nLinPai = nLar                       ;   nColPai = Math.ceil(nCelPai/nLar) }
+        if(porLInha==1) { nLinPai = Math.ceil(nCelPai/nCar)    ;   nColPai = nCar }
+ 
+        Painel[painelNome] = {  'divPainelId': parDivId , 'porLInha': porLInha, 
+                                'nCelPai' : nCelPai,      'nLinPai' : nLinPai,   'nColPai' : nColPai,
+                                'nlWind'  : nlWind,       'ncWind'  : ncWind,    'altLin'  : altLin,   'larCol': larCol,
+                                'slackL'  : slackL,       'slackC'  : slackC,
+                                'nLar'    : nLar,         'nCar'    : nCar,      'lOri'   : lOri,     'tOri'  : tOri,
+                                'xTopAtu' : tOri,         'yLefAtu' : lOri,
+                                'iTop'    : 0,            'jLeft'   : 0,
+                                'iTDisp'  : iTDisp,       'jLDisp'  : jLDisp,
+                                'cellCurr': cellCurr,     'iPaiCurr': jPaiCurr,  'jPaiCurr': jPaiCurr,
+                                'novoPainel': 0
+                             }
+    }
+    // .....[cria Painel, se inexistente painelNome = arrayClass = divArrId]
+    
+    // .......... lê parâmetros correntes de Painel
+    porLInha    = Painel[painelNome]['porLInha']    
+    nCelPai     = Painel[painelNome]['nCelPai']
+    nLinPai     = Painel[painelNome]['nLinPai']  ; nColPai  = Painel[painelNome]['nColPai']
+    nlWind      = Painel[painelNome]['nlWind']   ; ncWind   = Painel[painelNome]['ncWind']
+    slackL      = Painel[painelNome]['slackL']   ; slackC   = Painel[painelNome]['slackC']
+    
+    cellCurrAtu = Painel[painelNome]['cellCurr']
+    iTopAtu     = Painel[painelNome]['iTop']     ; jTopAtu  = Painel[painelNome]['jLeft']
+    iTDisp      = Painel[painelNome]['iTDisp']   ; jLDisp   = Painel[painelNome]['jLDisp']
+
+    if(porLInha==1){ iPaiCurr = Math.ceil(cellCurr/nCar)    ; jPaiCurr = cellCurr-(iPaiCurr-1)*nCar }
+    if(porLInha==0){ jPaiCurr = Math.ceil(cellCurr/nLar)    ; iPaiCurr = cellCurr-(jPaiCurr-1)*nLar }
+
+    // . . . verifica se iPaiCurr dentro de window atual
+    dentro = 0                                                                          // dentro
+    if(iPaiCurr<iTDisp)             { dentro = -1 ; iTDisp = iPaiCurr }                 // acima
+    if(iPaiCurr>iTDisp+nlWind-1)    { dentro =  1 ; iTDisp = iPaiCurr - nlWind + 1 }    // abaixo
+    if(jPaiCurr<jLDisp)             { dentro = -1 ; jLDisp = jPaiCurr }                 // esquerda
+    if(jPaiCurr>jLDisp+ncWind-1)    { dentro =  1 ; jLDisp = jPaiCurr - ncWind + 1 }    // direita
+
+    iTopPai = iTDisp - slackL ; jTopPai = jLDisp-slackC
+
+    // . . . 
+    if(iTopPai<1) { iTopPai = 1 } ;   if(jTopPai<1) { jTopPai = 1 }
+
+    if(iTopPai> nLinPai - nLar){ iTopPai = nLinPai - nLar + 1 }
+    if(jTopPai> nColPai - nCar){ jTopPai = nColPai - nCar + 1 }
+    
+    // ------ Preenche painel  iTopPai, jTopPai
+    if(iTopAtu!=iTopPai || jTopPai!=jTopAtu){
+        iPaiIni = iTopPai ; iPaiFin = iTopPai  + nLar - 1
+        if(iPaiFin>nLinPai){ iPaiFin = nLinPai }  // menor que nLinPai
+
+        jPaiIni = jTopPai ; jPaiFin =  jTopPai  + nCar - 1
+        if(jPaiFin>nColPai){ jPaiFin = nColPai }  // menor que nColPai
+        
+        // ... de Array, marca cells disponíveis para Subst
+        iCsub = 0
+        for(iArr=iTpArr ; iArr<iTpArr+nLar ; iArr++){    for(jArr=jLfArr ; jArr<jLfArr+nCar ; jArr++){
+            disp = 0
+
+            // . . . fora do range de novo print
+            if( (iArr<iPaiIni || iArr>iPaiFin) || (jArr<jPaiIni  || jArr>jPaiFin) || novoPainel==1 ){ disp = 1 }
+            if(disp==1){ 
+                iCsub = iCsub + 1 ; idSub = 'Sub'+iCsub; el(divArrId,iArr,jArr).id = idSub
+                Descen = el(idSub).querySelectorAll('*')
+                nCh = Descen.length
+                for(iCh = 0; iCh<=nCh-1; iCh++){
+                    descen = Descen[iCh] ; descId = descen.id
+                    posCoo = descId.indexOf("_") ; oriId  = descId.slice(0, posCoo)
+                    descen.id = oriId+'_'+iCh
+                }
+            }
+        }}
+        // ...[de Array, marca cells disponíveis para Sub]
+        
+        iCell = 0
+        for(iPai=iPaiIni ; iPai<=iPaiFin ; iPai++){
+            for(jPai=jPaiIni ; jPai<=jPaiFin ; jPai++){
+                
+                // *****       
+                if(porLInha==1)  { kCell    = (iPai-1)*nCar + jPai }
+                if(porLInha==0)  { kCell    = (jPai-1)*nLar + iPai }
+                // *****
+                
+                // ... célula de Painel já preenchida
+                cellPres = 0
+                try{
+                    elCell  = el(divArrId,iPai,jPai)
+                    num     = parseInt(elCell.getAttribute('kcelarray'))
+                    if (num==kCell){ cellPres = 1 }
+                }catch{}
+                // ...[célula de Painel já preenchida]
+                
+                // ...... célula nova reciclada
+                if(cellPres==0){
+                    iCell = iCell + 1
+
+                    // . . . printa Cell iPai, jPai sobre Array(iSub, jSub)
+                    coordsN  = '_'+iPai+':'+jPai
+                    novoNome = divArrId + coordsN
+                    
+                    // ------- célula Sub
+                    elCell   = el('Sub'+iCell)
+                    
+                    // . . . renomeia Cell substituta reciclada
+                    elCell.id        = novoNome
+                    elCell.setAttribute('iArray' , iPai) ; elCell.setAttribute('jArray' , jPai)
+                    elCell.setAttribute('kcelarray' , kCell)
+
+                    // . . . renomeia descendentes
+                    Descen = el(novoNome).querySelectorAll('*')
+                    nCh = Descen.length
+                    for(iCh = 0; iCh<=nCh-1; iCh++){
+                        descen = Descen[iCh] ; descId = descen.id
+                        
+                        posCoo = descId.indexOf("_")
+                        oriId  = descId.slice(0, posCoo)
+                        descen.id = oriId+coordsN
+                        descen.setAttribute('iArray' , iPai) ; descen.setAttribute('jArray' , jPai) ; descen.setAttribute('kcelarray' , kCell)
+                    }
+                    // . . .[renomeia descendentes]
+
+                    // . . . trap de compõe cell de Arr
+                    if(kCell<=nCelPai){ ContentCellArr(divArrId, iPai, jPai, kCell) }
+                    // -------
+                    // . . .[printa Cell iPai, jPai]
+
+                }
+                // ......[célula nova reciclada]
+
+            }
+            // . . .[preenche linha]
+        }
+
+        // .... Reposiciona Painel
+        for(iPai=iPaiIni ; iPai<=iPaiFin ; iPai++){ ;   for(jPai=jPaiIni ; jPai<=jPaiFin ; jPai++){
+            oriCell = el(divArrId,iPai,jPai) ; oriKcell = parseInt(oriCell.getAttribute('kcelarray'))
+            topCell  = tOri + (iPai-iPaiIni)*(hOri+vPar)
+            leftCell = lOri + (jPai-jPaiIni)*(wOri+hPar)
+            // . . . expulsa maiores que máximo
+            if(oriKcell>nCelPai){ leftCell = -1000 }
+
+            oriCell.style.top  = topCell +'px'
+            oriCell.style.left = leftCell+'px'
+        }}
+        // ....[Reposiciona Painel]
+
+        // ------[Preenche painel]
+
+    }
+    // ------[Preenche painel  iTopPai, jTopPai]
+
+    // . . . atualiza Array e Painel
+    Array[divArrId]['topLin']       = iTopPai   ;   Array[divArrId]['lefCol']       = jTopPai
+
+    xTopAtu = tOri + (iTopPai-1)*(hOri+vPar)    ;   yLefAtu = lOri + (jTopPai-1)*(wOri+hPar)
+    
+    Painel[painelNome]['porLInha']  = porLInha
+    Painel[painelNome]['xTopAtu']   = xTopAtu   ;   Painel[painelNome]['yLefAtu']   = yLefAtu
+    Painel[painelNome]['iTop']      = iTopPai   ;   Painel[painelNome]['jLeft']     = jTopPai
+    Painel[painelNome]['iTDisp']    = iTDisp    ;   Painel[painelNome]['jLDisp']    = jLDisp
+    Painel[painelNome]['iPaiCurr']  = iPaiCurr  ;   Painel[painelNome]['jPaiCurr']  = jPaiCurr
+    Painel[painelNome]['cellCurr']  = cellCurr
+
+    // scroll div parent
+    if(centra!=0){ el(parDivId).scrollTop = (iTDisp-iPaiIni)*(hOri+vPar) ; el(parDivId).scrollLeft = (jLDisp-jPaiIni)*(wOri+hPar) }
+
+    // . . . tira e põe cursor
+    try{
+        celEl = el(painelNome, iPaiCurr, jPaiCurr) ; celEl.style.outlineWidth = "1px"
+        if(celElA!='' && celElA!=celEl) { 
+            celElA.style.outlineWidth = "0px"
+            scaleDiv(divId=celElA.id, fitS='', faEscX = 1, faEscY = 1, desl='') 
+        }
+        scaleDiv(divId=celEl.id, fitS='', faEscX = 1.05, faEscY = '', desl='')
+
+        celElA = celEl
+    }catch{}
+
+
+
+
+    // ....
+}    
+// -----[Preenche Pag de Painel]
 
 
 // *************************[FUNCTIONS DE SISTEMA EM .js]
