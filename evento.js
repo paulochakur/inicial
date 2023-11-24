@@ -593,8 +593,8 @@ function iniSys(){
     if(proprHab==1) { el('console').style.zIndex = '99' }
 
     // ...... ajusta mob
-    Wh = window.innerHeight - 100            ; Ww = window.innerWidth
-    Ah = window.screen.availHeight-110  ; Aw = window.screen.availWidth
+    //Wh = window.innerHeight             ; Ww = window.innerWidth
+    Ah = window.screen.availHeight-210  ; Aw = window.screen.availWidth
     if(Aw<1000){mobFlag = 1 }
 
     hF = parseInt(window.getComputedStyle(el('Fundo')).height)
