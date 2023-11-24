@@ -76,10 +76,9 @@
             /*  FORMAT OBJS  */
             #Fundo{position: fixed; left: 0.0px; top: 0.0px; width: 1400.0px; height: 622.0px; box-sizing: content-box; margin: 0px; padding: 0.0px; cursor: crosshair; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); border-color: black; border-radius: 0.0px; border-width: 0.0px; border-style: groove; background-color: rgb(215, 235, 211); color: light gray;  }
                 #alteCapa{position: absolute; left: 380.0px; top: 420.0px; width: 133.0px; height: 105.0px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); overflow: hidden; border-color: rgb(35, 72, 220); border-width: 1.0px; border-style: solid; background-color: rgb(215, 235, 211);  }
-                    #peqAlte-Map{position: absolute; left: 14px; top: 19px; width: 100px; height: 50px; box-sizing: content-box; margin: 0px; padding: 0px; border-color: black; border-width: 0px; border-style: solid; background-color: rgb(255, 255, 0);  }
                     #peqAlte{position: absolute; left: 14px; top: 19px; width: 100px; height: 50px; box-sizing: content-box; margin: 0px; padding: 0px; border-color: black; border-width: 0px; border-style: solid; background-color: rgb(255, 255, 0);  }
                 #divBranca{position: absolute; left: 603.0px; top: 9.0px; width: 633.0px; height: 603.0px; box-sizing: content-box; margin: 0px; padding: 0px; overflow: scroll; border-color: black; border-width: 0px; border-style: solid; background-color: rgb(255, 255, 255);  }
-                #divBranca::-webkit-scrollbar { width: 1.0px; height: 1.0px }  
+#divBranca::-webkit-scrollbar { width: 1.0px; height: 1.0px }  
                     #divGeral{position: absolute; left: 15.0px; top: 10.0px; width: 119.0px; height: 188.0px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); overflow: hidden; border-color: black; border-width: 0px; border-style: solid; outline-style: solid; outline-width: 0.0px; outline-offset: 3.0px; outline-color: rgb(128, 0, 255); background-color: rgb(236, 245, 253);  }
                         #divPaiNum{position: absolute; left: 12.0px; top: 170.0px; width: 91.0px; height: 18.0px; box-sizing: content-box; margin: 0px; padding: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); scroll-padding: 0px; scroll-padding-block: 0px; scroll-padding-inline: 0px; border-color: black; border-width: 0px; border-style: solid; background-color: rgb(236, 245, 253); font-family: 'Times New Roman', serif; font-size: 15.0px;  }
                         #divPaiCapa{position: absolute; left: 10.0px; top: 3.0px; height: 164.0px; right: 10.0px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); overflow: hidden; border-color: black; border-width: 0px; border-style: solid; background-color: rgb(236, 245, 253);  }
@@ -106,8 +105,7 @@
     <!--  -------------- Define Elementos  -------------  -->
     <body id="Corpo" nomeProj="Tio"  deslX="1" deslY="1">
         <div id="Fundo" iw=416 >
-            <div id="alteCapa" iw=432  scroll="hidden">
-                <map id="peqAlte-Map" iw=434  name="peqAlte-Map"></map>
+            <div id="alteCapa" iw=432  nLar=0 nCar=0 hPar=0 vPar=0 scroll="hidden">
                 <img id="peqAlte" iw=433  src="Tio/Imagens/CSS/Motim.JPG">
             </div> <!-- [alteCapa]   -->
 
@@ -406,7 +404,7 @@
                 tpNS    = String(num).padStart(4, '0')
                 capaS = dirS + ListPlan[arqPainel][num][1]
                 primS = dirS + ListPlan[arqPainel][num][2]
-                fomatImg(imgId='img-418', imgSrc=capaS,  x='0', y='0', w='0', h='0', fitS='fitH', faEscX = 2, faEscY = 1, adjDiv=1)
+                fomatImg(imgId='img-418', imgSrc=capaS,  x='0', y='0', w='0', h='0', fitS='fitH', faEscX = 1, faEscY = 1, adjDiv=1)
                 fomatImg(imgId='img-424', imgSrc=primS,  x='0', y='0', w='0', h='0', fitS='fitH', faEscX = 1, faEscY = 1, adjDiv=1)
 
                 //el('nomePrim-Txt').innerHTML    = ListPlan[arqPainel][num][3]
@@ -421,7 +419,6 @@
                     }
                 }
                 
-                
                 // ..... calcula numAlte
                 dataPinc = dataConv( ListPlan[arqPainel][num][5] )
                 for (numAlte=1 ; numAlte<=ListPlan[arqParale][0][0] ; numAlte++){
@@ -430,8 +427,13 @@
                 }
                 capaS = ListPlan[arqParale][0][1] + ListPlan[arqParale][numAlte][1]
                 capaId = 'peqAlte'
-                fomatImg(imgId=capaId, imgSrc=capaS, x='0', y='0', w='0', h='0', fitS='fitH', faEscX = 2, faEscY = 1, adjDiv=1)
-                //fomatImg(imgId='img-418', imgSrc=capaS,  x='0', y='0', w='0', h='0', fitS='fitH', faEscX = 2, faEscY = 1, adjDiv=1)
+                fomatImg(  imgId=capaId,    imgSrc=capaS,  x='0', y='0', w='0', h='0', fitS='fitH', faEscX = 1, faEscY = 1, adjDiv=1)
+                fomatImg(  imgId=capaId,    imgSrc=capaS,  x='0', y='0', w='0', h='0', fitS='fitH', faEscX = 1, faEscY = 1, adjDiv=1)
+                fomatImg(  imgId=capaId,    imgSrc=capaS,  x='0', y='0', w='0', h='0', fitS='fitH', faEscX = 1, faEscY = 1, adjDiv=1)
+                fomatImg(  imgId=capaId,    imgSrc=capaS,  x='0', y='0', w='0', h='0', fitS='fitH', faEscX = 1, faEscY = 1, adjDiv=1)
+                fomatImg(  imgId=capaId,    imgSrc=capaS,  x='0', y='0', w='0', h='0', fitS='fitH', faEscX = 1, faEscY = 1, adjDiv=1)
+                fomatImg(  imgId=capaId,    imgSrc=capaS,  x='0', y='0', w='0', h='0', fitS='fitH', faEscX = 1, faEscY = 1, adjDiv=1)
+                //fomatImg(imgId='img-418', imgSrc=capaS,  x='0', y='0', w='0', h='0', fitS='fitH', faEscX = 1, faEscY = 1, adjDiv=1)
             }
             // . . .[mostra número]
         }
