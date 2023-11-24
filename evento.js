@@ -1471,7 +1471,7 @@ function formIm(imgId,  x='0', y='0', w='0', h='0', fitS, faEscX, faEscY, adjDiv
 
         oriW = eleImg.naturalWidth ; oriH = eleImg.naturalHeight
 
-        if(divImgId=='alteCapa'){ el('nomePrim-Txt').innerHTML    = 'wD:'+wD+'  oriW:'+oriW }
+        if(divImgId=='alteCapa'){ el('nomePrim-Txt').innerHTML    = 'wD:'+wD+'  ====:'+(wD / oriW)*oriW }
 
         // ----- Tamanho de Img
         imgWn = oriW ; imgHn = oriH
