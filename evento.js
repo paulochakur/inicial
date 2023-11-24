@@ -1492,7 +1492,7 @@ function formIm(imgId,  x='0', y='0', w='0', h='0', fitS, faEscX, faEscY, adjDiv
             if (fitS=='fit') { faEscX = wD / oriW ; faEscY = hD / oriH   }    
         }       
         // . . . scales (prioridade 3)
-        imgWn = parseInt(oriW*faEscX) ; imgHn = parseInt(oriH*faEscY)
+        imgWn = Math.round(oriW*faEscX) ; imgHn = Math.round(oriH*faEscY)
         eleImg.style.width  = imgWn+'px'  ; eleImg.style.height = imgHn+'px'
         // -----[Tamanho de Img]
 
