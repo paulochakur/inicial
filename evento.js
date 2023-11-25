@@ -1464,8 +1464,11 @@ function formIm(imgId,  x='0', y='0', w='0', h='0', fitS, faEscX, faEscY, adjDiv
     
     if(el(imgId).complete==true){
         eleImg = el(imgId) ; divImg = eleImg.parentElement ; divImgId = divImg.id
-        wD = parseInt(window.getComputedStyle(divImg).width)
-        hD = parseInt(window.getComputedStyle(divImg).height)
+        wDS = (window.getComputedStyle(divImg).width)
+        hDS = (window.getComputedStyle(divImg).height)
+
+        wD = parseInt(wDS)
+        hD = parseInt(hDS)
 
         wDC = divImg.getBoundingClientRect().width
         hDC = divImg.getBoundingClientRect().height
@@ -1500,7 +1503,7 @@ function formIm(imgId,  x='0', y='0', w='0', h='0', fitS, faEscX, faEscY, adjDiv
         widS = imgWn+'px' ; heiS = imgHn+'px'
         if(adjDiv==1) { divImg.style.width  = widS  ; divImg.style.height = heiS}
 
-        if(imgId=='capaPequena_1:3'){ divImg.style.width = '200px' ; el('nomePrim-Txt').innerHTML    = 'wD:'+wD+' :::'+imgWn+' fitS:'+fitS}
+        if(imgId=='capaPequena_1:3'){ divImg.style.width = '300px' ; el('nomePrim-Txt').innerHTML    = 'wD:'+wD+' :::'+wDS+' fitS:'+fitS}
 
         // . . . ajusta posição
         left0 = parseInt(x) ; top0 = parseInt(y)
