@@ -75,7 +75,7 @@
             /*  ----------- FORMATAÇÃO REMOTA  ---------------------------------  */
             /*  FORMAT OBJS  */
             #Fundo{position: fixed; left: 0.0px; top: 0.0px; width: 1400.0px; height: 622.0px; box-sizing: content-box; margin: 0px; padding: 0.0px; cursor: crosshair; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); border-color: black; border-radius: 0.0px; border-width: 0.0px; border-style: groove; background-color: rgb(215, 235, 211); color: light gray;  }
-                #alteCapa{position: absolute; left: 483.0px; top: 497.0px; width: 46.0px; height: 114.0px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); overflow: hidden; border-color: rgb(35, 72, 220); border-width: 1.0px; border-style: solid; background-color: rgb(215, 235, 211);  }
+                #alteCapa{position: absolute; left: 481.0px; top: 424.0px; width: 46.0px; height: 114.0px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); overflow: hidden; border-color: rgb(35, 72, 220); border-width: 1.0px; border-style: solid; background-color: rgb(215, 235, 211);  }
                     #peqAlte{position: absolute; left: 14px; top: 19px; width: 100px; height: 50px; box-sizing: content-box; margin: 0px; padding: 0px; border-color: black; border-width: 0px; border-style: solid; background-color: rgb(255, 255, 0);  }
                 #divBranca{position: absolute; left: 603.0px; top: 9.0px; width: 633.0px; height: 603.0px; box-sizing: content-box; margin: 0px; padding: 0px; overflow: scroll; border-color: black; border-width: 0px; border-style: solid; background-color: rgb(255, 255, 255);  }
 #divBranca::-webkit-scrollbar { width: 1.0px; height: 1.0px }  
@@ -408,7 +408,7 @@
                 pequS = 'Tio/Tio_Patinhas/Capas_MK_bpm//br_mk_0171a_001.jpeg'
                 fomatImg(imgId='img-418', imgSrc=capaS,  x='0', y='0', w='0', h='0', fitS='fitH', faEscX = 1, faEscY = 1, adjDiv=1)
                 fomatImg(imgId='img-424', imgSrc=primS,  x='0', y='0', w='0', h='0', fitS='fitH', faEscX = 1, faEscY = 1, adjDiv=1)
-                fomatImg(imgId='peqAlte', imgSrc=pequS,  x='0', y='0', w='0', h='0', fitS='fitH', faEscX = 1, faEscY = 1, adjDiv=1)
+
 
                 //el('nomePrim-Txt').innerHTML    = ListPlan[arqPainel][num][3]
                 el('data-Txt').innerHTML        = ListPlan[arqPainel][num][5]
@@ -429,6 +429,9 @@
                     if( (dataAlte-dataPinc)>=0 ) { break }
                 }
                 capaS = ListPlan[arqParale][0][1] + ListPlan[arqParale][numAlte][1]
+
+                fomatImg(imgId='peqAlte', imgSrc=pequS,  x='0', y='0', w='0', h='0', fitS='fitH', faEscX = 1, faEscY = 1, adjDiv=1)
+
             }
             // . . .[mostra número]
         }
