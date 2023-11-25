@@ -1472,7 +1472,6 @@ function formIm(imgId,  x='0', y='0', w='0', h='0', fitS, faEscX, faEscY, adjDiv
 
         oriW = eleImg.naturalWidth ; oriH = eleImg.naturalHeight
 
-        
         // ----- Tamanho de Img
         imgWn = oriW ; imgHn = oriH
 
@@ -1492,7 +1491,7 @@ function formIm(imgId,  x='0', y='0', w='0', h='0', fitS, faEscX, faEscY, adjDiv
         }       
         // . . . scales (prioridade 3)
 
-        imgWn = Math.round(oriW*faEscX) ; imgHn = Math.round(oriH*faEscY)
+        imgWn = Math.round(oriW*faEscX)   ; imgHn = Math.round(oriH*faEscY)
         eleImg.style.width  = imgWn+'px'  ; eleImg.style.height = imgHn+'px'
         // -----[Tamanho de Img]
 
@@ -1500,9 +1499,8 @@ function formIm(imgId,  x='0', y='0', w='0', h='0', fitS, faEscX, faEscY, adjDiv
         // document.getElementById('div_register').setAttribute("style","width:500px")
         widS = imgWn+'px' ; heiS = imgHn+'px'
         if(adjDiv==1) { divImg.style.width  = widS  ; divImg.style.height = heiS}
-        //if(adjDiv==1) { divImg.setAttribute("style","width:"+widS)  = widS  ; divImg.setAttribute("style","height:"+heiS)}
 
-        if(imgId=='peqAlte'){ el('nomePrim-Txt').innerHTML    = 'wD:'+wD+' :::'+imgWn+' fitS:'+fitS}
+        if(imgId=='capaPequena_1:3'){ el('nomePrim-Txt').innerHTML    = 'wD:'+wD+' :::'+imgWn+' fitS:'+fitS}
 
         // . . . ajusta posição
         left0 = parseInt(x) ; top0 = parseInt(y)
