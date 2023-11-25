@@ -406,8 +406,8 @@ function iniSys(){
         try{
             iw = el(divId).getAttribute("iw")
             if (iw>0){
-                tDiv    = parseInt(window.getComputedStyle(el(divId)).top)
-                lDiv    = parseInt(window.getComputedStyle(el(divId)).left)
+                tDiv    = cssUnitToNr(window.getComputedStyle(el(divId)).top)
+                lDiv    = cssUnitToNr(window.getComputedStyle(el(divId)).left)
                 scrDiv  = el(divId).getAttribute("scroll")
                 yt      = el(divId).getAttribute("yt")
                 xl      = el(divId).getAttribute("xl")
@@ -594,11 +594,11 @@ function iniSys(){
 
     // ...... ajusta mob
     //Wh = window.innerHeight             ; Ww = window.innerWidth
-    Ah = window.screen.availHeight-210  ; Aw = window.screen.availWidth
+    Ah = window.screen.availHeight-310  ; Aw = window.screen.availWidth
     if(Aw<1000){mobFlag = 1 }
 
-    hF = parseInt(window.getComputedStyle(el('Fundo')).height)
-    wF = parseInt(window.getComputedStyle(el('Fundo')).width)
+    hF = cssUnitToNr(window.getComputedStyle(el('Fundo')).height)
+    wF = cssUnitToNr(window.getComputedStyle(el('Fundo')).width)
     //if (mobFlag==1 && wF>400){ hF = Aw/(Ah/wF) ; el('Fundo').style.height  =  (hF)+'px' }
     
     fatX    =  Ah/wF ;    fatY     =  Aw/hF  ;  fatY = fatX
@@ -1421,16 +1421,16 @@ function scaleDiv(divId='', fitS='', faEscX = '', faEscY = '', desl=''){
     // . . . fit
     if(fitS!=''){
         divPar = divE.parentElement
-        wPar = parseInt(window.getComputedStyle(divPar).width) ; hPar = parseInt(window.getComputedStyle(divPar).height)
-        wDiv = parseInt(window.getComputedStyle(divE)  .width) ; hDiv = parseInt(window.getComputedStyle(divE)  .height)
+        wPar = cssUnitToNr(window.getComputedStyle(divPar).width) ; hPar = cssUnitToNr(window.getComputedStyle(divPar).height)
+        wDiv = cssUnitToNr(window.getComputedStyle(divE)  .width) ; hDiv = cssUnitToNr(window.getComputedStyle(divE)  .height)
         
         if(fitS=='fitW'){ faEscX = wPar/wDiv ; faEscY = faEscX }
         if(fitS=='fitH'){ faEscY = hPar/hDiv ; faEscX = faEscY }
     }
 
 
-    x0 = parseInt(window.getComputedStyle(divE).left)  ; y0 = parseInt(window.getComputedStyle(divE).top)
-    w0 = parseInt(window.getComputedStyle(divE).width) ; h0 = parseInt(window.getComputedStyle(divE).height)
+    x0 = cssUnitToNr(window.getComputedStyle(divE).left)  ; y0 = cssUnitToNr(window.getComputedStyle(divE).top)
+    w0 = cssUnitToNr(window.getComputedStyle(divE).width) ; h0 = cssUnitToNr(window.getComputedStyle(divE).height)
 
     // . . . aplica escs
     divE.style.transform = 'scaleX('+faEscX+') scaleY('+faEscY+')'
@@ -1492,7 +1492,7 @@ function formIm(imgId,  x='0', y='0', w='0', h='0', fitS, faEscX, faEscY, adjDiv
 
         // . . . W e H (prioridade 2)
         if (w!='0' || h!='0'){         
-            w0 = parseInt(w) ; h0 = parseInt(h)
+            w0 = cssUnitToNr(w) ; h0 = cssUnitToNr(h)
             if (w.includes('%')){ w0 = (w0/100) * wD }
             if (h.includes('%')){ h0 = (h0/100) * hD }        
             if (w0!=0){ imgWn = w0 ; faEscX = 1 ; if (h0==0){ imgHn = (imgWn/oriW)*oriH ; faEscY = 1 } }
@@ -1514,10 +1514,8 @@ function formIm(imgId,  x='0', y='0', w='0', h='0', fitS, faEscX, faEscY, adjDiv
         // document.getElementById('div_register').setAttribute("style","width:500px")
         if(adjDiv==1) { divImg.style.width  = imgWn+'px'  ; divImg.style.height = imgHn+'px'}
 
-        //if(imgId=='capaPequena_1:3'){ el('nomePrim-Txt').innerHTML    = 'wD:'+wD+' :::'+wDS+' fitS:'+fitS}
-
         // . . . ajusta posição
-        left0 = parseInt(x) ; top0 = parseInt(y)
+        left0 = cssUnitToNr(x) ; top0 = cssUnitToNr(y)
         if (x.includes('%')){ left0 = (left0/100) * oriW }
         if (y.includes('%')){ top0  = (top0/100)  * oriH }
         eleImg.style.left  = left0+'px'  ; eleImg.style.top = top0+'px'
