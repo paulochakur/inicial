@@ -1499,7 +1499,7 @@ function formIm(imgId,  x='0', y='0', w='0', h='0', fitS, faEscX, faEscY, adjDiv
         // . . . ajusta tamanho de container
         if(adjDiv==1) { divImg.style.width  = imgWn+'px'  ; divImg.style.height = imgHn+'px'}
 
-        if(imgId=='peqAlte'){ el('nomePrim-Txt').innerHTML    = 'wD:'+wD+' =|=:'+(wD / oriW)*oriW+' :::'+imgWn+' fitS:'+fitS}
+        if(imgId=='peqAlte'){ el('nomePrim-Txt').innerHTML    = 'wD:'+wD+' :::'+imgWn+' fitS:'+fitS}
 
         // . . . ajusta posição
         left0 = parseInt(x) ; top0 = parseInt(y)
