@@ -1346,9 +1346,7 @@ function cssUnitToNr(cssUnS){
     unS = cssUnS.replace('px', '')
     unS = unS.replace('%' , '')
 
-
     numUnit = Number(unS)
-    print('  unS:'+unS+'  numUnit:'+numUnit)
     // ....
     return numUnit
 }
@@ -1481,8 +1479,8 @@ function formIm(imgId,  x='0', y='0', w='0', h='0', fitS, faEscX, faEscY, adjDiv
         wDS = (window.getComputedStyle(divImg).width)
         hDS = (window.getComputedStyle(divImg).height)
 
-        wD = cssUnitToNr(wDS)
-        hD = cssUnitToNr(hDS)
+        wD = Math.round(cssUnitToNr(wDS))
+        hD = Math.round(cssUnitToNr(hDS))
 
         wDC = divImg.getBoundingClientRect().width
         hDC = divImg.getBoundingClientRect().height
@@ -1514,10 +1512,9 @@ function formIm(imgId,  x='0', y='0', w='0', h='0', fitS, faEscX, faEscY, adjDiv
 
         // . . . ajusta tamanho de container
         // document.getElementById('div_register').setAttribute("style","width:500px")
-        widS = imgWn+'px' ; heiS = imgHn+'px'
-        if(adjDiv==1) { divImg.style.width  = widS  ; divImg.style.height = heiS}
+        if(adjDiv==1) { divImg.style.width  = imgWn+'px'  ; divImg.style.height = imgHn+'px'}
 
-        if(imgId=='capaPequena_1:3'){ divImg.style.width = '300px' ; el('nomePrim-Txt').innerHTML    = 'wD:'+wD+' :::'+wDS+' fitS:'+fitS}
+        //if(imgId=='capaPequena_1:3'){ el('nomePrim-Txt').innerHTML    = 'wD:'+wD+' :::'+wDS+' fitS:'+fitS}
 
         // . . . ajusta posição
         left0 = parseInt(x) ; top0 = parseInt(y)
