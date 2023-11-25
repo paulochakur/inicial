@@ -1461,6 +1461,7 @@ function fomatImg(imgId='', imgSrc='', x='', y='', w='', h='', fitS='', faEscX =
 // . . . formata e não carrega
 function formIm(imgId,  x='0', y='0', w='0', h='0', fitS, faEscX, faEscY, adjDiv){
     // ***** depois de carregar Img
+    
     if(el(imgId).complete==true){
         eleImg = el(imgId) ; divImg = eleImg.parentElement ; divImgId = divImg.id
         wD = parseInt(window.getComputedStyle(divImg).width)
@@ -1490,15 +1491,15 @@ function formIm(imgId,  x='0', y='0', w='0', h='0', fitS, faEscX, faEscY, adjDiv
             if (fitS=='fit') { faEscX = wD / oriW ; faEscY = hD / oriH   }    
         }       
         // . . . scales (prioridade 3)
+
         imgWn = Math.round(oriW*faEscX) ; imgHn = Math.round(oriH*faEscY)
-        
         eleImg.style.width  = imgWn+'px'  ; eleImg.style.height = imgHn+'px'
         // -----[Tamanho de Img]
 
         // . . . ajusta tamanho de container
-        if(adjDiv==1) { divImg.style.width  = wD+'px'  ; divImg.style.height = imgHn+'px'}
+        if(adjDiv==1) { divImg.style.width  = imgWn+'px'  ; divImg.style.height = imgHn+'px'}
 
-        if(divImgId=='alteCapa'){ el('nomePrim-Txt').innerHTML    = 'wD:'+wD+' =|=:'+(wD / oriW)*oriW+' :::'+imgWn+' ||'+divImg.style.width }
+        if(imgId=='peqAlte'){ el('nomePrim-Txt').innerHTML    = 'wD:'+wD+' =|=:'+(wD / oriW)*oriW+' :::'+imgWn+' fitS:'+fitS}
 
         // . . . ajusta posição
         left0 = parseInt(x) ; top0 = parseInt(y)
