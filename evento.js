@@ -1341,6 +1341,20 @@ function eventTrap() {
             
 // ************************* FUNCTIONS DE SISTEMA EM .js
 
+// ..... cssUnitToNr
+function cssUnitToNr(cssUnS){
+    unS = cssUnS.replace('px', '')
+    unS = unS.replace('%' , '')
+
+
+    numUnit = Number(unS)
+    print('  unS:'+unS+'  numUnit:'+numUnit)
+    // ....
+    return numUnit
+}
+
+
+
 // ..... Converte data
 function dataConv(dataS){                       // data brasileira para JS padrão new Date
     msPerDay = 1000 * 60 * 60 * 24
@@ -1467,8 +1481,8 @@ function formIm(imgId,  x='0', y='0', w='0', h='0', fitS, faEscX, faEscY, adjDiv
         wDS = (window.getComputedStyle(divImg).width)
         hDS = (window.getComputedStyle(divImg).height)
 
-        wD = parseInt(wDS)
-        hD = parseInt(hDS)
+        wD = cssUnitToNr(wDS)
+        hD = cssUnitToNr(hDS)
 
         wDC = divImg.getBoundingClientRect().width
         hDC = divImg.getBoundingClientRect().height
