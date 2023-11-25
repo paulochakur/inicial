@@ -606,6 +606,7 @@ function iniSys(){
     delH    = (hF-wF)/2 + (wF/2)*(1-fatX)
 
     if (mobFlag==1 && wF>400){
+        fatX=1;fatY=1
         el('Fundo').style.transform = "rotateZ(-90deg)"+" scaleX("+fatX+")"+" scaleY("+fatY+")"
         el('Fundo').style.left  = (-delV-5)+'px'
         el('Fundo').style.top   = (-delH+0  )+'px'
