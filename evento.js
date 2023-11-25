@@ -1497,7 +1497,10 @@ function formIm(imgId,  x='0', y='0', w='0', h='0', fitS, faEscX, faEscY, adjDiv
         // -----[Tamanho de Img]
 
         // . . . ajusta tamanho de container
-        if(adjDiv==1) { divImg.style.width  = imgWn+'px'  ; divImg.style.height = imgHn+'px'}
+        // document.getElementById('div_register').setAttribute("style","width:500px")
+        widS = imgWn+'px' ; heiS = imgHn+'px'
+        if(adjDiv==1) { divImg.style.width  = widS  ; divImg.style.height = heiS}
+        //if(adjDiv==1) { divImg.setAttribute("style","width:"+widS)  = widS  ; divImg.setAttribute("style","height:"+heiS)}
 
         if(imgId=='peqAlte'){ el('nomePrim-Txt').innerHTML    = 'wD:'+wD+' :::'+imgWn+' fitS:'+fitS}
 
