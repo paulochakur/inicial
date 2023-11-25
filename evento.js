@@ -594,7 +594,7 @@ function iniSys(){
 
     // ...... ajusta mob
     //Wh = window.innerHeight             ; Ww = window.innerWidth
-    Ah = window.screen.availHeight-310  ; Aw = window.screen.availWidth
+    Ah = window.screen.availHeight-110  ; Aw = window.screen.availWidth
     if(Aw<1000){mobFlag = 1 }
 
     hF = cssUnitToNr(window.getComputedStyle(el('Fundo')).height)
@@ -607,8 +607,8 @@ function iniSys(){
 
     if (mobFlag==1 && wF>400){
         el('Fundo').style.transform = "rotateZ(-90deg)"+" scaleX("+fatX+")"+" scaleY("+fatY+")"
-        el('Fundo').style.left  = (-delV-5)+'px'
-        el('Fundo').style.top   = (-delH+0)+'px'
+        el('Fundo').style.left  = (-delV)+'px'
+        el('Fundo').style.top   = (-delH)+'px'
         scrTurn = 1
     }
     // ......[ajusta mob]
