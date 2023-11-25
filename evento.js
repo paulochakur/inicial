@@ -1500,7 +1500,7 @@ function formIm(imgId,  x='0', y='0', w='0', h='0', fitS, faEscX, faEscY, adjDiv
         widS = imgWn+'px' ; heiS = imgHn+'px'
         if(adjDiv==1) { divImg.style.width  = widS  ; divImg.style.height = heiS}
 
-        if(imgId=='capaPequena_1:3'){ el('nomePrim-Txt').innerHTML    = 'wD:'+wD+' :::'+imgWn+' fitS:'+fitS}
+        if(imgId=='capaPequena_1:3'){ divImg.style.width = '80px' ; el('nomePrim-Txt').innerHTML    = 'wD:'+wD+' :::'+imgWn+' fitS:'+fitS}
 
         // . . . ajusta posição
         left0 = parseInt(x) ; top0 = parseInt(y)
