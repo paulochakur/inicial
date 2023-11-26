@@ -2,5 +2,5 @@
     "name": "My Sample PWA",
     "lang": "en-US",
     "start_url": "/",
-    "screenOrientation":"landscape"
+    "orientation":"landscape"
 }
