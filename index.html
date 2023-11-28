@@ -341,7 +341,10 @@
             imgZ.setAttribute('zoomfat', '5')
             // ....[põe zoom em Img]
 
-            try{ el('Rosa').innerHTML = (' INICIAL mobFlag:'+mobFlag+' Ah:'+ window.screen.availHeight) } catch{}
+            Ah = window.screen.availHeight
+            Wh = window.screen.height
+            try{ Oh = window.outerHeight }catch{ Oh = 0 }
+            try{ el('Rosa').innerHTML = (' INICIAL  Ah:'+Ah+' Wh:'+Wh+' Oh:'+Oh) } catch{}
 
             el('divTarja').style.height = (window.screen.availHeight - 200)+'px'
 
