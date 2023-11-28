@@ -595,7 +595,7 @@ function iniSys(){
     // ...... ajusta mob
     //Wh = window.innerHeight             ; Ww = window.innerWidth
     Ah = window.screen.availHeight-110  ; Aw = window.screen.availWidth
-    Oh = window.outerHeight             ; Ow = window.outerWidth
+    Oh = window.outerHeight       -110  ; Ow = window.outerWidth
     if(Aw<1000){mobFlag = 1 }
 
     hF = cssUnitToNr(window.getComputedStyle(el('Fundo')).height)
