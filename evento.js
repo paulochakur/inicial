@@ -612,7 +612,7 @@ function iniSys(){
         el('Fundo').style.top   = (-delH)+'px'
         scrTurn = 1
     }
-    window.scrollTo(0, 1)
+    window.scrollTo(0, 100)
     // ......[ajusta mob]
 
     document.activeElement.blur()
