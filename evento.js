@@ -595,13 +595,14 @@ function iniSys(){
     // ...... ajusta mob
     //Wh = window.innerHeight             ; Ww = window.innerWidth
     Ah = window.screen.availHeight-110  ; Aw = window.screen.availWidth
+    Oh = window.outerHeight             ; Ow = window.outerWidth
     if(Aw<1000){mobFlag = 1 }
 
     hF = cssUnitToNr(window.getComputedStyle(el('Fundo')).height)
     wF = cssUnitToNr(window.getComputedStyle(el('Fundo')).width)
     //if (mobFlag==1 && wF>400){ hF = Aw/(Ah/wF) ; el('Fundo').style.height  =  (hF)+'px' }
     
-    fatX    =  Ah/wF ;    fatY     =  Aw/hF  ;  fatY = fatX
+    fatX    =  Oh/wF ;    fatY     =  Aw/hF  ;  fatY = fatX
     delV    = (wF-hF)/2 + (hF/2)*(1-fatY)
     delH    = (hF-wF)/2 + (wF/2)*(1-fatX)
 
