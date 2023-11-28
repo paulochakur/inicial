@@ -343,8 +343,9 @@
 
             Ah = window.screen.availHeight
             Wh = window.screen.height
+            Ih = window.innerHeight
             try{ Oh = window.outerHeight }catch{ Oh = 0 }
-            try{ el('Rosa').innerHTML = (' INICIAL  Ah:'+Ah+' Wh:'+Wh+' Oh:'+Oh) } catch{}
+            try{ el('Rosa').innerHTML = (' INICIAL  Ah:'+Ah+' Wh:'+Wh+' Oh:'+Oh+' Ih:'+Ih) } catch{}
 
             el('divTarja').style.height = (window.screen.availHeight - 200)+'px'
 
