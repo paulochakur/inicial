@@ -75,6 +75,7 @@
             /*  ----------- FORMATAÇÃO REMOTA  ---------------------------------  */
             /*  FORMAT OBJS  */
             #Fundo{position: absolute; left: 0.0px; top: 0.0px; width: 350.0px; height: 600.0px; box-sizing: content-box; margin: 0px; padding: 0.0px; cursor: crosshair; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); overflow: hidden; border-color: black; border-radius: 0.0px; border-width: 0.0px; border-style: groove; background-image: linear-gradient(180deg , rgb(128, 0, 128) 0.0%, rgb(255, 255, 128) 30.0%);  }
+                #divTarja{position: absolute; left: 301.0px; top: 3.0px; width: 30.0px; height: 133.0px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); border-color: rgb(255, 0, 0); border-width: 1.0px; border-style: solid; background-color: rgb(255, 255, 0); z-index: 100;  }
                 #divPage{position: absolute; left: 7.0px; top: 116.0px; width: 337.0px; height: 450.0px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); overflow: scroll; border-color: black; border-width: 0px; border-style: solid; background-color: rgb(255, 255, 0);  }
 #divPage::-webkit-scrollbar { width: 20.0px; height: 2.0px }  
                     #divSelecionados{position: absolute; left: 1.0px; top: -2.0px; width: 600.0px; height: 1000.0px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); overflow: hidden; border-color: black; border-width: 0px; border-style: solid; background-color: rgb(218, 218, 218); background-image: linear-gradient(90deg , rgb(79, 79, 79) , rgb(238, 238, 238) 100.0% 60.0%);  }
@@ -94,7 +95,7 @@
                         #LicitPubi{position: absolute; left: 5.0px; top: 7.0px; width: 302.0px; height: 157.0px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); overflow: auto; border-color: rgb(119, 119, 0); border-width: 2.0px; border-style: solid; background-color: rgb(255, 128, 0); z-index: 30;  }
 #LicitPubi::-webkit-scrollbar { width: 5.0px; height: 5.0px }  
                         #ExcelP1{position: absolute; left: 4.0px; top: 324.0px; width: 302.0px; height: 344.0px; box-sizing: content-box; margin: 0px; padding: 0.0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); overflow: hidden; border-color: rgb(0, 0, 160); border-radius: 0.0px; border-width: 4.0px; border-style: solid; background-color: rgb(182, 218, 165);  }
-                #Rosa{position: absolute; left: 6.0px; top: 30.0px; width: 304.0px; height: 66.0px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); overflow: hidden; border-color: black; border-width: 2.0px; border-style: solid; background-color: rgb(128, 128, 255);  }
+                #Rosa{position: absolute; left: 6.0px; top: 25.0px; width: 304.0px; height: 66.0px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); overflow: hidden; border-color: black; border-width: 2.0px; border-style: solid; background-color: rgb(128, 128, 255);  }
                     #imgDown{position: absolute; left: 34px; top: 23px; width: 100px; height: 50px; box-sizing: content-box; margin: 0px; padding: 0px; border-color: black; border-width: 0px; border-style: solid; background-color: rgb(255, 255, 0);  }
                 #embed-465{position: absolute; left: 1352.0px; top: 768.0px; width: 360.0px; height: 545.0px; box-sizing: border-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); border-color: black; border-radius: 20.0px; border-width: 5.0px; border-style: solid; background-color: rgb(255, 255, 0); box-shadow: 10.0 10.0 10.0 10.0 rgb(255, 0, 128);  }
                 #ZoomAma{position: absolute; left: 1983.0px; top: 352.0px; width: 207px; height: 168px; box-sizing: content-box; margin: 0px; padding: 0px; cursor: s-resize; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); overflow: hidden; border-color: rgb(125, 13, 130); border-radius: 3.0%; border-width: 2.0px; border-style: solid; background-color: rgb(255, 255, 0); z-index: 15;  }
@@ -123,11 +124,12 @@
     <!--  -------------- Define Elementos  -------------  -->
     <body id="Corpo" nomeProj="index"  deslX="0" deslY="0">
         <div id="Fundo" iw=416  scroll="hidden" wheelPrev="">
+            <div id="divTarja" iw=453  nLar=0 nCar=0 hPar=0 vPar=0></div>
             <div id="divPage" iw=446  scroll="scroll">
                 <div id="divSelecionados" iw=435  scroll="hidden"  ascScr="divPage">
                     <button id="buttDownload" iw=451   ascScr="divPage">buttDownload</button>
                     <input id="inpMudaLIn" iw=450   ascScr="divPage">
-                    <div id="divPage2" iw=447  scY=187 scroll="scroll"  ascScr="divPage" wheelPrev="true">
+                    <div id="divPage2" iw=447  scroll="scroll"  ascScr="divPage" wheelPrev="true">
                         <div id="div-450" iw=448   ascScr="divPage2">
                             <div id="div-452R" iw=449   ascScr="divPage2"></div>
                         </div> <!-- [div-450]   -->
@@ -340,6 +342,8 @@
             // ....[põe zoom em Img]
 
             try{ el('Rosa').innerHTML = (' INICIAL mobFlag:'+mobFlag+' Ah:'+ window.screen.availHeight) } catch{}
+
+            el('divTarja').style.height = (window.screen.availHeight - 200)+'px'
 
         }
         // ----[Início Local]
