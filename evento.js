@@ -1119,7 +1119,7 @@ function eventTrap() {
         xMimg  = xMdivZ - leftImO   ; yMimg = yMdivZ - topImO
         
         // . . . posiciona cursor
-        if (zooParam!='self') { 
+        if (zooParam!='self2') { 
             xCur = xMdivZ - cursLado/2 ; yCur = yMdivZ - cursLado/2 
             divCursor.style.top  = yCur+'px'
             divCursor.style.left = xCur+'px'
