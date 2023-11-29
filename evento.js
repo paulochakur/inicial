@@ -593,9 +593,9 @@ function iniSys(){
     if(proprHab==1) { el('console').style.zIndex = '99' }
 
     // ...... ajusta mob
-    Ih = window.innerHeight             ; Iw = window.innerWidth
-    Ah = window.screen.availHeight-110  ; Aw = window.screen.availWidth
-    Oh = window.outerHeight       -110  ; Ow = window.outerWidth
+    Ih = window.innerHeight         ; Iw = window.innerWidth
+    Ah = window.screen.availHeight  ; Aw = window.screen.availWidth
+    Oh = window.outerHeight         ; Ow = window.outerWidth
     if(Aw<1000){mobFlag = 1 }
 
     hF = cssUnitToNr(window.getComputedStyle(el('Fundo')).height)
@@ -668,6 +668,11 @@ function eventTrap() {
                                                       Ah = window.screen.availHeight  ; Aw = window.screen.availWidth
         // relativo a  page / body
         xMp = event.pageX   ; yMp = event.pageY     ; Ph = document.body.clientHeight ; Pw = document.body.clientWidth
+        if(scrTurn==10){ 
+            [xMe, yMe] = [yMe, xMe] ;
+            [xMw, yMw] = [yMw, xMw] ;
+            [xMs, yMs] = [yMs, xMs] 
+        }
     }
     // relativo a  document  - não inclui barras de scroll
     Dh  = document.documentElement.clientHeight ; Dw = document.documentElement.clientWidth
@@ -774,7 +779,6 @@ function eventTrap() {
         if(evento=='touchmove' && Math.abs(delY)<20) { delLin = 0 }
         if(evento=='touchmove' && Math.abs(delX)<20) { delCol = 0 }
 
-        //(scrTurn==1){ dR = delLin ; delLin = delCol ; delCol = -dR }
         if(scrTurn==1){ [delLin, delCol] = [delCol, -delLin] }
 
         lplan0N = lplan0 + delLin ; cplan0N = cplan0 + delCol
@@ -1010,7 +1014,6 @@ function eventTrap() {
     }
     // -----------[INPUT]
 
-
     // --------- ZOOM    
     // ... sai de Zoom
     if(evento=='mousemove' && menuZoom==1){
@@ -1039,11 +1042,11 @@ function eventTrap() {
         fatZoomS    = imgZooOri.getAttribute("zoomfat")       ; fatZoom  = Number(fatZoomS)
 
         divZooId = zooParam
-        divCursor.style.opacity = 0.4
-        divCursor.style.borderRadius = '0%'
-        divCursor.style.borderWidth  = '0px' 
-        divCursor.style.zIndex  = '60' 
-        divOri.style.cursor = 'none'
+        divCursor.style.opacity         = 0.4
+        divCursor.style.borderRadius    = '0%'
+        divCursor.style.borderWidth     = '0px' 
+        divCursor.style.zIndex          = '60' 
+        divOri.style.cursor             = 'none'
 
         if(zooParam=='local')   { divZooId = 'Zoom' }
         if(zooParam=='self')    { divZooId = divOriId }
@@ -1060,14 +1063,19 @@ function eventTrap() {
         
         // posição absoluta de divOri em relação à Window
         leftAbs = divOri.getBoundingClientRect().left   ;   topAbs = divOri.getBoundingClientRect().top
+
         // scale de divOri (transform)
-        wIni = divOri.offsetWidth     ;   wfin = divOri.getBoundingClientRect().width
-        scaleOriX = divOri.getBoundingClientRect().width / divOri.offsetWidth
+        scaleOriX = divOri.getBoundingClientRect().width  / divOri.offsetWidth
         scaleOriY = divOri.getBoundingClientRect().height / divOri.offsetHeight
+        if(scrTurn==1){ 
+            scaleOriX = divOri.getBoundingClientRect().width  / divOri.offsetHeight
+            scaleOriY = divOri.getBoundingClientRect().height / divOri.offsetWidth
+        }
 
         // posição relativa de Img em divOri
         leftImO = imgZooOri.offsetLeft                  ;   topImO = imgZooOri.offsetTop
-
+        
+        // ...
         divOri.appendChild(divCursor)
         imgZoom.src = imgZooOri.src
         el(divZooId).appendChild( imgZoom )
@@ -1082,7 +1090,7 @@ function eventTrap() {
             el(divZooId).style.zIndex           = '2'
             el(divZooId).style.overflow         = 'hidden'
 
-            tDivOri  = parseInt(window.getComputedStyle(el(divOriId)).top)
+            tDivOri  = cssUnitToNr(window.getComputedStyle(el(divOriId)).top)
             lDivOri  = divOri.offsetLeft
             wZoom    = divOri.offsetWidth
             hZoom    = divOri.offsetHeight
@@ -1104,12 +1112,14 @@ function eventTrap() {
     if((evento=='mousemove' || evento=='click') && menuZoom==1){
         // . . . posicão do mouse sobre div Ori
         xMdivZ = xMw - leftAbs      ; yMdivZ = yMw - topAbs
-        xMdivZ = xMdivZ/scaleOriX   ; yMdivZ = yMdivZ/scaleOriY // corrige pos com escala de Ori (transform)
+        if(scrTurn==1){ xMdivZ = divOri.getBoundingClientRect().height - (yMw - topAbs) ; yMdivZ = xMw - leftAbs }
+
         // . . . posicão do mouse sobre imagem original
-        xMimg = xMdivZ - leftImO   ; yMimg = yMdivZ - topImO
+        xMdivZ = xMdivZ/scaleOriX   ; yMdivZ = yMdivZ/scaleOriY // corrige pos com escala de Ori (transform)
+        xMimg  = xMdivZ - leftImO   ; yMimg = yMdivZ - topImO
         
         // . . . posiciona cursor
-        if (zooParam!='self2') { 
+        if (zooParam!='self') { 
             xCur = xMdivZ - cursLado/2 ; yCur = yMdivZ - cursLado/2 
             divCursor.style.top  = yCur+'px'
             divCursor.style.left = xCur+'px'
@@ -1131,8 +1141,8 @@ function eventTrap() {
     // ...[move cursor Zoom]
     // ---------[ZOOM]
 
+
     // ---------------- Menus    
-    
     // ....... abre e recolhe    
     // . . .  recolhe Menu Pop  e Horizontal com click
     if (divMenuAti!='') {
