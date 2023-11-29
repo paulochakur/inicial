@@ -1016,7 +1016,7 @@ function eventTrap() {
 
     // --------- ZOOM    
     // ... sai de Zoom
-    if(evento=='mousemove' && menuZoom==1){
+    if((evento=='mousemove' || evento=='touchmove') && menuZoom==1){
         if(eleTa.parentElement!=divOri && eleTaId!="ZoomDivCur" && eleTa.parentElement.id!="ZoomDivCur"){
             if(divZooId=='Zoom'){ el(divZooId).style.top        = '-3000px'  ; el(divZooId).style.left      = '-3000px' }
             el('Corpo').appendChild( el('ZoomImg') )
@@ -1031,7 +1031,7 @@ function eventTrap() {
     // ...[sai de Zoom]
 
     // ... inicia Zoom
-    if((evento=='mousemove' || evento=='click') && eleTa.getAttribute('zoommenudiv')!=null && eleTa.getAttribute('zoommenudiv')!='' && eleTaTy=='IMG' && menuZoom==0){
+    if((evento=='mousemove' || evento=='touchmove' || evento=='click') && eleTa.getAttribute('zoommenudiv')!=null && eleTa.getAttribute('zoommenudiv')!='' && eleTaTy=='IMG' && menuZoom==0){
         imgZooOri   = eleTa                     ;   imgZooOriId   = eleTaId
         divOri      = imgZooOri.parentElement   ;   divOriId      = divOri.id
         divCursor   = el("ZoomDivCur")
@@ -1109,7 +1109,7 @@ function eventTrap() {
     // ...[inicia Zoom]
 
     // ... move cursor Zoom
-    if((evento=='mousemove' || evento=='click') && menuZoom==1){
+    if((evento=='mousemove' || evento=='touchmove' || evento=='click') && menuZoom==1){
         // . . . posicão do mouse sobre div Ori
         xMdivZ = xMw - leftAbs      ; yMdivZ = yMw - topAbs
         if(scrTurn==1){ xMdivZ = divOri.getBoundingClientRect().height - (yMw - topAbs) ; yMdivZ = xMw - leftAbs }
