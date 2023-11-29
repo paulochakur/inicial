@@ -668,11 +668,6 @@ function eventTrap() {
                                                       Ah = window.screen.availHeight  ; Aw = window.screen.availWidth
         // relativo a  page / body
         xMp = event.pageX   ; yMp = event.pageY     ; Ph = document.body.clientHeight ; Pw = document.body.clientWidth
-        if(scrTurn==10){ 
-            [xMe, yMe] = [yMe, xMe] ;
-            [xMw, yMw] = [yMw, xMw] ;
-            [xMs, yMs] = [yMs, xMs] 
-        }
     }
     // relativo a  document  - não inclui barras de scroll
     Dh  = document.documentElement.clientHeight ; Dw = document.documentElement.clientWidth
@@ -692,6 +687,8 @@ function eventTrap() {
 
     // Keys
     keyCode = event.keyCode         ; ctrK = event.ctrlKey
+
+    if (evento=='touchmove')  {  el('nomePrim-Txt').innerHTML = ' xMw:'+xMw  }
 
     // . . . Painel
     painelNome = ''
