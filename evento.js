@@ -96,10 +96,11 @@ var eleScrTop = 1
 
 // ... coordenadas
 var xMe  = 1    , yMe   = 1 , yMe   = 1 , yMe   = 1                             // relativas ao elemento
-var xMw  = 1    , yMw   = 1 , Wh    = 1 , Ww    = 1                             // relativas a  window
+var xMw  = 1    , yMw   = 1 , Ih    = 1 , Iw    = 1                             // relativas a  window
 var xMs  = 1    , yMs   = 1 , Sh    = 1 , Sw    = 1  , Ah    = 1 , Aw    = 1    // relativas a  screen
 var xMp  = 1    , yMp   = 1 , Ph    = 1 , Pw    = 1                             // relativas a  page
-var Dh   = 1    , Dw    = 1                                                     // relativas a  document
+var Dh   = 1    , Dw    = 1 , Oh    = 1 , Ow    = 1                             // relativas a  document
+var Oh   = 1    , Ow    = 1
 var xPs  = 1    , yPs   = 1                                                     // scroll de page
 
 var lastX = 0, lastY = 0, delX = 0, delY = 0 ; divSheetId = '' ; divSheetAtiId = ''
@@ -245,10 +246,18 @@ document.addEventListener('DOMMouseScroll', ev84) ; function ev85() { eventoA = 
 function iniSys(){
     evento = ''
 
-    // ---------- cria elementos de sistema
-    Wh = window.innerHeight         ; Ww = window.innerWidth
-    Ah = window.screen.availHeight  ; Aw = window.screen.availWidth
+    // Window
+    Ih  = window.innerHeight                    ; Iw  = window.innerWidth
+    Oh  = window.outerHeight                    ; Ow  = window.outerWidth        
+    Sh  = window.screen.height                  ; Sw  = window.screen.width                     // inclui task bar
+    Ah  = window.screen.availHeight             ; Aw  = window.screen.availWidth                // exculi task bar
+    Ph  = document.body.clientHeight            ; Pw  = document.body.clientWidth
+    xPs = Math.round(window.pageXOffset)        ; yPs = Math.round(window.pageYOffset)          //  page
+    Dh  = document.documentElement.clientHeight ; Dw  = document.documentElement.clientWidth    // relativo a  document  - não inclui barras de scroll
+
     if(Aw<1000){mobFlag = 1 }
+
+    // ---------- cria elementos de sistema
 
     // ... cria divs de Prevent Scroll
     para = document.createElement("div")
@@ -596,16 +605,10 @@ function iniSys(){
     if(proprHab==1) { el('console').style.zIndex = '99' }
 
     // ...... ajusta mob
-    Ih = window.innerHeight         ; Iw = window.innerWidth
-    Ah = window.screen.availHeight  ; Aw = window.screen.availWidth
-    Oh = window.outerHeight         ; Ow = window.outerWidth
-    if(Aw<1000){mobFlag = 1 }
-
     hF = cssUnitToNr(window.getComputedStyle(el('Fundo')).height)
     wF = cssUnitToNr(window.getComputedStyle(el('Fundo')).width)
-    //if (mobFlag==1 && wF>400){ hF = Aw/(Ah/wF) ; el('Fundo').style.height  =  (hF)+'px' }
     
-    fatX    =  Ih/wF ;    fatY     =  Aw/hF  ;  fatY = fatX
+    fatX    =  Ih/wF ;    fatY = fatX
     delV    = (wF-hF)/2 + (hF/2)*(1-fatY)
     delH    = (hF-wF)/2 + (wF/2)*(1-fatX)
 
@@ -651,10 +654,10 @@ function eventTrap() {
     if (eleFoClass==undefined){ eleFoClass = 'Und'}
 
     // . . . ele Geom
-    eleWget = cssUnitToNr(window.getComputedStyle(eleTa).width) ; eleTget = cssUnitToNr(window.getComputedStyle(eleTa).top) ; eleLget = parseInt(window.getComputedStyle(eleTa).left)
-    eleWrec = parseInt(eleTa.getBoundingClientRect().width)     ; eleTrec = parseInt(eleTa.getBoundingClientRect().top)     ; eleLrec = parseInt(eleTa.getBoundingClientRect().left)
-    eleWoff = eleTa.offsetWidth                                 ; eleToff = eleTa.offsetTop                                 ; eleLoff = eleTa.offsetLeft
-    eleWcli = eleTa.clientWidth                                 ; eleTcli = eleTa.clientTop                                 ; eleLcli = eleTa.clientLeft
+    eleWget = cssUnitToNr(window.getComputedStyle(eleTa).width) ; eleHget = cssUnitToNr(window.getComputedStyle(eleTa).height) ; eleTget = cssUnitToNr(window.getComputedStyle(eleTa).top) ; eleLget = parseInt(window.getComputedStyle(eleTa).left)
+    eleWrec = parseInt(eleTa.getBoundingClientRect().width)     ; eleHrec = parseInt(eleTa.getBoundingClientRect().height)     ; eleTrec = parseInt(eleTa.getBoundingClientRect().top)     ; eleLrec = parseInt(eleTa.getBoundingClientRect().left)
+    eleWoff = eleTa.offsetWidth                                 ; eleHoff = eleTa.offsetHeight                                 ; eleToff = eleTa.offsetTop                                 ; eleLoff = eleTa.offsetLeft
+    eleWcli = eleTa.clientWidth                                 ; eleHcli = eleTa.clientHeight                                 ; eleTcli = eleTa.clientTop                                 ; eleLcli = eleTa.clientLeft
     eleWscr = eleTa.scrollWidth                                 ; eleHscr = eleTa.scrollHeight
 
     // elementos de evento - On, Target, Foco
@@ -665,11 +668,6 @@ function eventTrap() {
     // --- Mouse Coords 
     //  Window  -  Não atuliza se evento=="keyup"
     if (evento!="keyup" && evento!="keydown" && evento!="keypress") {
-        // Window
-        Wh = window.innerHeight         ; Ww = window.innerWidth
-        Sh = window.screen.height       ; Sw = window.screen.width          // inclui task bar
-        Ah = window.screen.availHeight  ; Aw = window.screen.availWidth     // exculi task bar
-        Ph = document.body.clientHeight ; Pw = document.body.clientWidth
         
         // relativo a  window  - inclui scroll bars
         xMw = event.clientX ; yMw = event.clientY
@@ -684,14 +682,12 @@ function eventTrap() {
         if (evento=='touchstart') { lastX = event.touches[0].clientX                     ; lastY = event.touches[0].clientY }
         if (evento=='touchmove')  { delX  = parseInt(-event.touches[0].clientX + lastX ) ; delY  = parseInt(-event.touches[0].clientY + lastY) }
         if (evento=='touchmove' || evento=='touchstart')  {   
-            
-            
             xMw = parseInt(event.touches[0].clientX)    ; yMw = parseInt(event.touches[0].clientY)
             xMe = xMw - eleLrec                         ; yMe = yMw - eleTrec
             xMs = parseInt(event.touches[0].screenX)    ; yMs = parseInt(event.touches[0].screenY)
             xMp = parseInt(event.touches[0].pageX)      ; yMp = parseInt(event.touches[0].pageY)
 
-            el('nomePrim-Txt').innerHTML = ' Touch 000  xMw:'+xMw+'  xMe:'+xMe+' yMe:'+yMe 
+            el('nomePrim-Txt').innerHTML = ' Touch ###  xMw:'+xMw+'  Iw:'+Iw+' Ih:'+Ih 
         }
 
         // Wheel
@@ -699,8 +695,6 @@ function eventTrap() {
         xWh = event.deltaX              ; yWh  = event.deltaY
         xWi = window.screenX            ; yWi = window.screenY
 
-        // relativo a  document  - não inclui barras de scroll
-        Dh  = document.documentElement.clientHeight ; Dw = document.documentElement.clientWidth
 
     }
     // ---[Mouse Coords]
@@ -981,7 +975,7 @@ function eventTrap() {
         
         el("eventoDiv2").innerHTML              = evento
         el("mouseEleDiv2").innerHTML            = "xMe:"+xMe+" yMe:"+yMe
-        el("mouseWinDiv2").innerHTML            =  "xMw:"+xMw+" yMw:"+yMw+" Wh:"+Wh+" Ww:"+Ww
+        el("mouseWinDiv2").innerHTML            =  "xMw:"+xMw+" yMw:"+yMw+" Ih:"+Ih+" Iw:"+Iw
         el("mouseCscDiv2").innerHTML            = "xMs:"+xMs+" yMs:"+yMs+" Sh:"+Sh+" Sw:"+Sw
         el("mousePageDiv2").innerHTML           = "xMp:"+xMp+" yMp:"+yMp+" Ph:"+Ph+" Pw:"+Pw
 
