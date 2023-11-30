@@ -607,7 +607,7 @@ function iniSys(){
     delH    = (hF-wF)/2 + (wF/2)*(1-fatX)
 
     if (mobFlag==1 && wF>400){
-        el('Fundo').style.transform = "rotateZ(-90deg)"+" scaleX("+fatX*2+")"+" scaleY("+fatY+")"
+        el('Fundo').style.transform = "rotateZ(-90deg)"+" scaleX("+fatX+")"+" scaleY("+fatY+")"
         el('Fundo').style.left  = (-delV)+'px'
         el('Fundo').style.top   = (-delH)+'px'
         scrTurn = 1
@@ -688,7 +688,7 @@ function eventTrap() {
     // Keys
     keyCode = event.keyCode         ; ctrK = event.ctrlKey
 
-    if (evento=='touchmove')  {  el('nomePrim-Txt').innerHTML = ' Touch-- X:'+parseInt(event.touches[0].pageX)+'  Y:'+parseInt(event.touches[0].pageY) }
+    if (evento=='touchmove')  {  el('nomePrim-Txt').innerHTML = ' Touch-- X:'+parseInt(event.touches[0].pageX)+'  Y:'+parseInt(event.touches[0].pageY)+' Ww:'+Ww }
     //if (evento=='touchmove')  {  el('nomePrim-Txt').innerHTML = ' Touch##:' }
 
     // . . . Painel
