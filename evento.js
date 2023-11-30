@@ -651,13 +651,11 @@ function eventTrap() {
     if (eleFoClass==undefined){ eleFoClass = 'Und'}
 
     // . . . ele Geom
-    try{
-        eleWget = cssUnitToNr(window.getComputedStyle(eleTa).width) ; eleTget = cssUnitToNr(window.getComputedStyle(eleTa).top) ; eleLget = parseInt(window.getComputedStyle(eleTa).left)
-        eleWrec = eleTa.getBoundingClientRect().width               ; eleTrec = eleTa.getBoundingClientRect().top               ; eleLrec = eleTa.getBoundingClientRect().left
-        eleWoff = eleTa.offsetWidth                                 ; eleToff = eleTa.offsetTop                                 ; eleLoff = eleTa.offsetLeft
-        eleWcli = eleTa.clientWidth                                 ; eleTcli = eleTa.clientTop                                 ; eleLcli = eleTa.clientLeft
-        eleWscr = eleTa.scrollWidth                                 ; eleHscr = eleTa.scrollHeight
-    }catch{}
+    eleWget = cssUnitToNr(window.getComputedStyle(eleTa).width) ; eleTget = cssUnitToNr(window.getComputedStyle(eleTa).top) ; eleLget = parseInt(window.getComputedStyle(eleTa).left)
+    eleWrec = eleTa.getBoundingClientRect().width               ; eleTrec = eleTa.getBoundingClientRect().top               ; eleLrec = eleTa.getBoundingClientRect().left
+    eleWoff = eleTa.offsetWidth                                 ; eleToff = eleTa.offsetTop                                 ; eleLoff = eleTa.offsetLeft
+    eleWcli = eleTa.clientWidth                                 ; eleTcli = eleTa.clientTop                                 ; eleLcli = eleTa.clientLeft
+    eleWscr = eleTa.scrollWidth                                 ; eleHscr = eleTa.scrollHeight
 
     // elementos de evento - On, Target, Foco
     // if (evento!="focusout"){ eleTa  = event.target} // ?????
