@@ -652,7 +652,7 @@ function eventTrap() {
 
     // . . . ele Geom
     eleWget = cssUnitToNr(window.getComputedStyle(eleTa).width) ; eleTget = cssUnitToNr(window.getComputedStyle(eleTa).top) ; eleLget = parseInt(window.getComputedStyle(eleTa).left)
-    eleWrec = eleTa.getBoundingClientRect().width               ; eleTrec = eleTa.getBoundingClientRect().top               ; eleLrec = eleTa.getBoundingClientRect().left
+    eleWrec = parseInt(eleTa.getBoundingClientRect().width)     ; eleTrec = parseInt(eleTa.getBoundingClientRect().top)     ; eleLrec = parseInt(eleTa.getBoundingClientRect().left)
     eleWoff = eleTa.offsetWidth                                 ; eleToff = eleTa.offsetTop                                 ; eleLoff = eleTa.offsetLeft
     eleWcli = eleTa.clientWidth                                 ; eleTcli = eleTa.clientTop                                 ; eleLcli = eleTa.clientLeft
     eleWscr = eleTa.scrollWidth                                 ; eleHscr = eleTa.scrollHeight
@@ -671,10 +671,10 @@ function eventTrap() {
         Ah = window.screen.availHeight  ; Aw = window.screen.availWidth     // exculi task bar
         Ph = document.body.clientHeight ; Pw = document.body.clientWidth
         
-        // relativo ao elemento On
-        xMe = event.offsetX ; yMe = event.offsetY
         // relativo a  window  - inclui scroll bars
         xMw = event.clientX ; yMw = event.clientY
+        // relativo ao elemento On
+        xMe = event.offsetX ; yMe = event.offsetY
         // relativo a  screen - inclui task bar
         xMs = event.screenX ; yMs = event.screenY
         // relativo a  page / body
@@ -685,12 +685,13 @@ function eventTrap() {
         if (evento=='touchmove')  { delX  = parseInt(-event.touches[0].clientX + lastX ) ; delY  = parseInt(-event.touches[0].clientY + lastY) }
         if (evento=='touchmove' || evento=='touchstart')  {   
             
-            //xMe = parseInt(event.touches[0].offsetX)    ; yMe = parseInt(event.touches[0].offsetY)
+            
             xMw = parseInt(event.touches[0].clientX)    ; yMw = parseInt(event.touches[0].clientY)
+            xMe = xMw - eleLrec                         ; yMe = yMw - eleTrec
             xMs = parseInt(event.touches[0].screenX)    ; yMs = parseInt(event.touches[0].screenY)
             xMp = parseInt(event.touches[0].pageX)      ; yMp = parseInt(event.touches[0].pageY)
 
-            el('nomePrim-Txt').innerHTML = ' Touch ++++++  xMw:'+xMw+'  eleTaId:'+eleTaId+' eleLrec:'+eleLrec 
+            el('nomePrim-Txt').innerHTML = ' Touch 000  xMw:'+xMw+'  xMe:'+xMe+' yMe:'+yMe 
         }
 
         // Wheel
