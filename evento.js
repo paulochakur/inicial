@@ -675,11 +675,12 @@ function eventTrap() {
         if (evento=='touchmove')  { delX  = parseInt(-event.touches[0].clientX + lastX ) ; delY  = parseInt(-event.touches[0].clientY + lastY) }
         if (evento=='touchmove' || evento=='touchstart')  {   
             
-            xMe = parseInt(event.touches[0].offsetX)    ; yMe = parseInt(event.touches[0].offsetY)
-            xMw = parseInt(event.touches[0].clientX)    ; yMw = parseInt(event.touches[0].clientY)            
+            //xMe = parseInt(event.touches[0].offsetX)    ; yMe = parseInt(event.touches[0].offsetY)
+            xMw = parseInt(event.touches[0].clientX)    ; yMw = parseInt(event.touches[0].clientY)
+            xMs = parseInt(event.touches[0].screenX)    ; yMs = parseInt(event.touches[0].screenY)
             xMp = parseInt(event.touches[0].pageX)      ; yMp = parseInt(event.touches[0].pageY)
 
-            el('nomePrim-Txt').innerHTML = ' Touch::  xMw:'+xMw+'  xMe:'+xMe+' yMe:'+yMe 
+            el('nomePrim-Txt').innerHTML = ' Touch@@  xMw:'+xMw+'  xMs:'+xMs 
         }
 
         // Wheel
