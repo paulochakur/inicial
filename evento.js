@@ -642,10 +642,6 @@ function eventTrap() {
     eleTaId    = eleTa.id      ;   eleTaClass  = eleTa.className   ;   eleTaTy     = eleTa.tagName ;   taStyle = getComputedStyle(eleTa)    ;   taPar = eleTa.parentElement
     // Focus  Element
     eleFoId    = eleFo.id      ;   eleFoClass  = eleFo.className   ;   eleFoTy     = eleFo.tagName ;   foStyle = getComputedStyle(eleFo)    ;   foPar = eleFo.parentElement
-    // Movimento - deltas
-    if (evento=='touchstart') { lastX = event.touches[0].clientX                     ; lastY = event.touches[0].clientY }
-    if (evento=='touchmove')  { delX  = parseInt(-event.touches[0].clientX + lastX ) ; delY  = parseInt(-event.touches[0].clientY + lastY) }
-    if (evento=='wheel')      { delX  = event.deltaX                                 ; delY  = event.deltaY }
 
     if (eleOnClass==undefined){ eleOnClass = 'Und'}
     if (eleTaClass==undefined){ eleTaClass = 'Und'}
@@ -656,21 +652,46 @@ function eventTrap() {
     
     // .  .  .[tipo INPUT]
 
-    // --- Mouse Coords / Window  -  Não atuliza se evento=="keyup"
+    // --- Mouse Coords 
+    //  Window  -  Não atuliza se evento=="keyup"
     if (evento!="keyup" && evento!="keydown" && evento!="keypress") {
+        // Window
+        Wh = window.innerHeight         ; Ww = window.innerWidth
+        Sh = window.screen.height       ; Sw = window.screen.width          // inclui task bar
+        Ah = window.screen.availHeight  ; Aw = window.screen.availWidth     // exculi task bar
+        Ph = document.body.clientHeight ; Pw = document.body.clientWidth
+        
         // relativo ao elemento On
         xMe = event.offsetX ; yMe = event.offsetY
         // relativo a  window  - inclui scroll bars
-        xMw = event.clientX ; yMw = event.clientY   ; Wh = window.innerHeight         ; Ww = window.innerWidth
+        xMw = event.clientX ; yMw = event.clientY
         // relativo a  screen - inclui task bar
-        xMs = event.screenX ; yMs = event.screenY   ; Sh = window.screen.height       ; Sw = window.screen.width
-        // available  screen - exculi task bar
-                                                      Ah = window.screen.availHeight  ; Aw = window.screen.availWidth
+        xMs = event.screenX ; yMs = event.screenY
         // relativo a  page / body
-        xMp = event.pageX   ; yMp = event.pageY     ; Ph = document.body.clientHeight ; Pw = document.body.clientWidth
+        xMp = event.pageX   ; yMp = event.pageY
+
+        // Movimento - X, Y e deltas
+        if (evento=='touchstart') { lastX = event.touches[0].clientX                     ; lastY = event.touches[0].clientY }
+        if (evento=='touchmove')  { delX  = parseInt(-event.touches[0].clientX + lastX ) ; delY  = parseInt(-event.touches[0].clientY + lastY) }
+        if (evento=='touchmove' || evento=='touchstart')  {   
+            
+            xMe = parseInt(event.touches[0].offsetX)    ; yMe = parseInt(event.touches[0].offsetY)
+            xMw = parseInt(event.touches[0].clientX)    ; yMw = parseInt(event.touches[0].clientY)            
+            xMp = parseInt(event.touches[0].pageX)      ; yMp = parseInt(event.touches[0].pageY)
+
+            el('nomePrim-Txt').innerHTML = ' Touch::  xMw:'+xMw+'  xMe:'+xMe+' yMe:'+yMe 
+        }
+
+        // Wheel
+        if (evento=='wheel')      { delX  = event.deltaX                                 ; delY  = event.deltaY }
+        xWh = event.deltaX              ; yWh  = event.deltaY
+        xWi = window.screenX            ; yWi = window.screenY
+
+        // relativo a  document  - não inclui barras de scroll
+        Dh  = document.documentElement.clientHeight ; Dw = document.documentElement.clientWidth
+
     }
-    // relativo a  document  - não inclui barras de scroll
-    Dh  = document.documentElement.clientHeight ; Dw = document.documentElement.clientWidth
+    // ---[Mouse Coords]
 
     // Scroll 
     //  elemento
@@ -681,19 +702,8 @@ function eventTrap() {
     xPs = Math.round(window.pageXOffset)        ; yPs = Math.round(window.pageYOffset)
     
 
-    // Wheel
-    xWh = event.deltaX              ; yWh  = event.deltaY
-    xWi = window.screenX            ; yWi = window.screenY
-
     // Keys
     keyCode = event.keyCode         ; ctrK = event.ctrlKey
-
-    if (evento=='touchmove')  {  
-        
-        xMw = parseInt(event.touches[0].pageX) ; yMw = parseInt(event.touches[0].pageY) ; 
-        el('nomePrim-Txt').innerHTML = ' Touch::  xMw:'+xMw+'  yMw:'+yMw+' Ww:'+Ww 
-    }
-
 
     // . . . Painel
     painelNome = ''
