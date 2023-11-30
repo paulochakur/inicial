@@ -688,7 +688,7 @@ function eventTrap() {
     // Keys
     keyCode = event.keyCode         ; ctrK = event.ctrlKey
 
-    if (evento=='touchmove')  {  el('nomePrim-Txt').innerHTML = ' Touch.clientX:'+event.Touch.clientX  }
+    if (evento=='touchmove')  {  el('nomePrim-Txt').innerHTML = ' Touch:'+event.touches[0].clientX  }
 
     // . . . Painel
     painelNome = ''
