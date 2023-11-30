@@ -42,7 +42,7 @@
 
 //  -------------- Variáveis Globais -------------
 //var module = require('fs')
-var mobFlag = 0 , scrTurn = 0, divSheetId = '' , divSheetAtiId = ''
+var mobFlag = 0 , scrTurn = 0, divSheetId = '' , divSheetAtiId = '', fatX = 1, fatY = 1
 var ctx = 0, dictCoods = {}, verScr = 0
 var linPrint = 0
 
@@ -607,7 +607,7 @@ function iniSys(){
     delH    = (hF-wF)/2 + (wF/2)*(1-fatX)
 
     if (mobFlag==1 && wF>400){
-        el('Fundo').style.transform = "rotateZ(-90deg)"+" scaleX("+fatX+")"+" scaleY("+fatY+")"
+        el('Fundo').style.transform = "rotateZ(-90deg)"+" scaleX("+fatX*2+")"+" scaleY("+fatY+")"
         el('Fundo').style.left  = (-delV)+'px'
         el('Fundo').style.top   = (-delH)+'px'
         scrTurn = 1
