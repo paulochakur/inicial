@@ -77,7 +77,8 @@
             /*  ----------- FORMATAÇÃO REMOTA  ---------------------------------  */
             /*  FORMAT OBJS  */
             #Fundo{position: fixed; left: 0.0px; top: 0.0px; width: 1400.0px; height: 850.0px; box-sizing: content-box; margin: 0px; padding: 0.0px; cursor: crosshair; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); border-color: black; border-radius: 0.0px; border-width: 0.0px; border-style: groove; background-color: rgb(215, 235, 211); color: light gray;  }
-                #alteCapa{position: absolute; left: 574.0px; top: 62.0px; width: 103.0px; height: 222.0px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); overflow: hidden; border-color: rgb(35, 72, 220); border-width: 1.0px; border-style: solid; background-color: rgb(215, 235, 211);  }
+                #checkIncl{position: absolute; left: 615.0px; top: 45.0px; width: 29.0px; height: 29.0px; box-sizing: content-box; margin: 0px; padding: 0px; border-color: black; border-width: 0px; border-style: solid; outline-style: solid; outline-width: 2.0px; outline-offset: 3.0px; outline-color: rgb(255, 128, 64); background-color: rgb(255, 255, 0); color: rgb(64, 0, 128);  }
+                #alteCapa{position: absolute; left: 525.0px; top: 390.0px; width: 103.0px; height: 222.0px; box-sizing: content-box; margin: 0px; padding: 0px; -webkit-box-reflect: 0px  linear-gradient(0deg, rgba(0,0,0,)); overflow: hidden; border-color: rgb(35, 72, 220); border-width: 1.0px; border-style: solid; background-color: rgb(215, 235, 211);  }
                     #peqAlte{position: absolute; left: 14px; top: 19px; width: 100px; height: 50px; box-sizing: content-box; margin: 0px; padding: 0px; border-color: black; border-width: 0px; border-style: solid; background-color: rgb(255, 255, 0);  }
                 #divBranca{position: absolute; left: 724.0px; top: 8.0px; width: 632.0px; height: 606.0px; box-sizing: content-box; margin: 0px; padding: 0px; overflow: scroll; border-color: black; border-width: 0px; border-style: solid; background-color: rgb(255, 255, 255);  }
 #divBranca::-webkit-scrollbar { width: 1.0px; height: 1.0px }  
@@ -107,6 +108,7 @@
     <!--  -------------- Define Elementos  -------------  -->
     <body id="Corpo" nomeProj="Tio"  deslX="0" deslY="0">
         <div id="Fundo" iw=416 >
+            <input id="checkIncl" iw=434  type="checkbox" readonly onclick="return false" checked>
             <div id="alteCapa" iw=432  nLar=0 nCar=0 hPar=0 vPar=0 scroll="hidden">
                 <img id="peqAlte" iw=433  src="Tio/Imagens/CSS/Motim.JPG">
             </div> <!-- [alteCapa]   -->
@@ -351,13 +353,13 @@
             // ******** GERAL DE EVENTOS
             if(evento=='keydown' && eleOnId=='input-686' && keyCode==13) {
                 num     = parseInt(el('input-686').value)
-                mostraNr(num)
+                mostraNr(num-corN)
                 // ... preenche painel
-                preenchePainel(cellCurr=num, painelNome='divGeral', centra=1, nCelPaiF=nLinPai0, porLInha=1)
+                preenchePainel(cellCurr=num-corN, painelNome='divGeral', centra=1, nCelPaiF=nLinPai0, porLInha=1)
             }
             if(evento=='click' && eleTaClass=='seqCapas') {
                 num     = parseInt(el('input-686').value) + (eleTa.getAttribute('jarray')-2)
-                mostraNr(num)
+                mostraNr(num-corN)
             }
             
             // . . .click em painel
@@ -404,11 +406,13 @@
             // . . . mostraNr(num)
             nLinPai0 = ListPlan[arqPainel][0][0]
             if (num<=nLinPai0 && num>0){
-                el('input-686').value = num
-                tpNS    = String(num).padStart(4, '0')
+                inclu = ListPlan[arqPainel][num][4]
+                tpNS    = String(num+corN).padStart(2, '0')
+                el('input-686').value = tpNS
+                if(inclu!=''){ el('checkIncl').checked = true  }
+                if(inclu==''){ el('checkIncl').checked = false }
                 capaS = dirS + ListPlan[arqPainel][num][1]
                 primS = dirS + ListPlan[arqPainel][num][2]
-                pequS = 'Tio/Tio_Patinhas/Capas_MK_bpm//br_mk_0171a_001.jpeg'
                 fomatImg(imgId='img-418', imgSrc=capaS,  x='0', y='0', w='0', h='0', fitS='fitH', faEscX = 1, faEscY = 1, adjDiv=1)
                 fomatImg(imgId='img-424', imgSrc=primS,  x='0', y='0', w='0', h='0', fitS='fitH', faEscX = 1, faEscY = 1, adjDiv=1)
 
