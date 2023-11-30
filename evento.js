@@ -688,8 +688,12 @@ function eventTrap() {
     // Keys
     keyCode = event.keyCode         ; ctrK = event.ctrlKey
 
-    if (evento=='touchmove')  {  el('nomePrim-Txt').innerHTML = ' Touch-- X:'+parseInt(event.touches[0].pageX)+'  Y:'+parseInt(event.touches[0].pageY)+' Ww:'+Ww }
-    //if (evento=='touchmove')  {  el('nomePrim-Txt').innerHTML = ' Touch##:' }
+    if (evento=='touchmove')  {  
+        
+        xMw = parseInt(event.touches[0].pageX) ; yMw = parseInt(event.touches[0].pageY) ; 
+        el('nomePrim-Txt').innerHTML = ' Touch::  xMw:'+xMw+'  yMw:'+yMw+' Ww:'+Ww 
+    }
+
 
     // . . . Painel
     painelNome = ''
