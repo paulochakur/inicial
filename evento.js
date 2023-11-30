@@ -691,7 +691,7 @@ function eventTrap() {
             xMs = parseInt(event.touches[0].screenX)    ; yMs = parseInt(event.touches[0].screenY)
             xMp = parseInt(event.touches[0].pageX)      ; yMp = parseInt(event.touches[0].pageY)
 
-            el('nomePrim-Txt').innerHTML = ' Touch# #  xMw:'+xMw+'  eleTrec:'+eleTrec 
+            el('nomePrim-Txt').innerHTML = ' Touch ----  xMw:'+xMw+'  eleTaId:'+eleTaId 
         }
 
         // Wheel
