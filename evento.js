@@ -87,6 +87,8 @@ var eleFo  = '@' ; var eleFoId  = 'F' ; var eleFoTy     = 1 ; var foStyle    = 1
 var eleTaA = 1   ; var eleTaIdA = 'T' ; var eleTaTyA    = 1 ; var taStyleA   = 1 ; var eleTaClassA  = 1
 var eleFoA = '@' ; var eleFoIdA = 'F' ; var eleFoTyA    = 1 ; var foStyleA   = 1 ; var eleFoClassA  = 1
 
+var eleWget = 0 ; eleTget = 0; eleWrec = 0; eleTrec = 0; eleWoff = 0; eleToff = 0; eleWcli = 0; eleTcli = 0; eleWscr = 0; eleTscr = 0
+
 var foco = '' , entraInp = ''
 var eleTaIdAnt = 0
 var eleScrTop = 1
@@ -647,6 +649,15 @@ function eventTrap() {
     if (eleTaClass==undefined){ eleTaClass = 'Und'}
     if (eleFoClass==undefined){ eleFoClass = 'Und'}
 
+    // . . . ele Geom
+    try{
+        eleWget = cssUnitToNr(window.getComputedStyle(eleTa).width) ; eleTget = cssUnitToNr(window.getComputedStyle(eleTa).top)  ; eleLget = parseInt(window.getComputedStyle(el(ele)).left)
+        eleWrec = eleTa.getBoundingClientRect().width               ; eleTrec = eleTa.getBoundingClientRect().top                 ; eleLrec = ele.getBoundingClientRect().left
+        eleWoff = eleTa.offsetWidth                                 ; eleToff = eleTa.offsetTop
+        eleWcli = eleTa.clientWidth                                 ; eleTcli = eleTa.clientWidth
+        eleWscr = eleTa.scrollWidth                                 ; eleTscr = eleTa.scrollWidth
+    }catch{}
+
     // elementos de evento - On, Target, Foco
     // if (evento!="focusout"){ eleTa  = event.target} // ?????
     
@@ -680,7 +691,7 @@ function eventTrap() {
             xMs = parseInt(event.touches[0].screenX)    ; yMs = parseInt(event.touches[0].screenY)
             xMp = parseInt(event.touches[0].pageX)      ; yMp = parseInt(event.touches[0].pageY)
 
-            el('nomePrim-Txt').innerHTML = ' Touch@@  xMw:'+xMw+'  xMs:'+xMs 
+            el('nomePrim-Txt').innerHTML = ' Touch# #  xMw:'+xMw+'  eleTrec:'+eleTrec 
         }
 
         // Wheel
