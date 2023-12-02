@@ -1390,17 +1390,16 @@ function dataConv(dataS){                       // data brasileira para JS padr√
     dataSa = dataS
     dataS  = dataS.toLowerCase()
     
-    dataS  = dataS.replace( RegExp("dia", 'g'),  " ")
-    dataS  = dataS.replace( RegExp(",", 'g'),  " ")
-    dataS  = dataS.replace( RegExp("-", 'g'),  " ")
-    dataS  = dataS.replace( RegExp("/", 'g') , " ")
-    dataS  = dataS.replace( RegExp("de ",'g') , " ")
-    dataS  = dataS.replace( RegExp("  ",'g') , " ")
-    dataS  = dataS.replace( RegExp("  ",'g') , " ")
-    dataS  = dataS.replace( RegExp("  ",'g') , " ")
-    dataS  = dataS.replace( RegExp("  ",'g') , " ")
-    dataS  = dataS.replace( RegExp("  ",'g') , " ")
-
+    dataS  = dataS.replaceAll( "dia", " ")
+    dataS  = dataS.replaceAll( ",",   " ")
+    dataS  = dataS.replaceAll( "-",   " ")
+    dataS  = dataS.replaceAll( "/",   " ")
+    dataS  = dataS.replaceAll( "de ", " ")
+    dataS  = dataS.replace( "  ",  " ")
+    dataS  = dataS.replace( "  ",  " ")
+    dataS  = dataS.replace( "  ",  " ")
+    dataS  = dataS.replace( "  ",  " ")
+    dataS  = dataS.replace( "  ",  " ")
         
     // . . . data bras. tipo "25/12/1968"
     inMes = dataS.indexOf(" ") ; fiMes  = dataS.indexOf(" ", inMes+1)

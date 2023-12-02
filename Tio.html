@@ -262,7 +262,7 @@
         // ------- Trap de Array
         function ContentCellArr(divArrId, iC, jC, kCell) {
             // . . . 
-            if(divArrId=='divGeral2'){
+            if(divArrId=='divGeral'){
                 nLinPai0 = ListPlan[arqPainel][0][0]  
                 dirS     = ListPlan[arqPainel][0][1]
                 num  = kCell
@@ -292,7 +292,7 @@
                 num = 50
                 mostraNr(num)
                 // ... preenche painel                
-                //preenchePainel(cellCurr=num, painelNome='divGeral', centra=1, nCelPaiF=nLinPai0, porLInha=1)
+                preenchePainel(cellCurr=num, painelNome='divGeral', centra=1, nCelPaiF=nLinPai0, porLInha=1)
                 // ...[preenche painel]
             }
             // .......
@@ -349,7 +349,7 @@
                 num     = parseInt(el('input-686').value)
                 mostraNr(num-corN)
                 // ... preenche painel
-                //preenchePainel(cellCurr=num-corN, painelNome='divGeral', centra=1, nCelPaiF=nLinPai0, porLInha=1)
+                preenchePainel(cellCurr=num-corN, painelNome='divGeral', centra=1, nCelPaiF=nLinPai0, porLInha=1)
             }
             
             // . . . click em capas rodapé
@@ -381,8 +381,8 @@
 
                 mostraNr(num)
                 // ... preenche painel        
-                //Painel['divGeral']['novoPainel'] = 1        
-                //preenchePainel(cellCurr=num, painelNome='divGeral', centra=1, nCelPaiF=nLinPai0, porLInha=1)
+                Painel['divGeral']['novoPainel'] = 1        
+                preenchePainel(cellCurr=num, painelNome='divGeral', centra=1, nCelPaiF=nLinPai0, porLInha=1)
             }
 
 
