@@ -1433,7 +1433,7 @@ function dataConv(dataS){                       // data brasileira para JS padr√
     dataS  = dataS.replace("out",     "oct")
     dataS  = dataS.replace("dez",     "dec")
     // ------------
-
+    //dataS  = 'Mon Jan 01 1968'
     dateJS = new Date(dataS)
 
     // ....
