@@ -1401,14 +1401,16 @@ function dataConv(dataS){                       // data brasileira para JS padrÃ
     dataS  = dataS.replace( RegExp("  ",'g') , " ")
     dataS  = dataS.replace( RegExp("  ",'g') , " ")
 
-    inMes = dataS.indexOf(" ") ; fiMes  = dataS.indexOf(" ", inMes+1)
-    mes = parseInt(  dataS.substring(inMes+1, fiMes) )
-    
+        
     // . . . data bras. tipo "25/12/1968"
-    if(mes>1 && mes<13) { 
+    inMes = dataS.indexOf(" ") ; fiMes  = dataS.indexOf(" ", inMes+1)
+    mes = 88
+    if(inMes>0 && fiMes>inMes){ mes = dataS.substring(inMes+1, fiMes) }
+    if(mes>0 && mes<13) { 
         mo = Months[mes-1]
         dataS = dataS.substring(0, inMes) + ' ' + mo + dataS.substring(fiMes)
     }
+    // . . .[data bras. tipo "25/12/1968"]
 
     // ------------
     dataS  = dataS.replace("janeiro",   "jan")

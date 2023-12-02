@@ -288,7 +288,6 @@
                 // . . . preenche atributos de Painel
                 nLinPai0 = ListPlan[arqPainel][0][0]
                 dirS     = ListPlan[arqPainel][0][1]
-                print(' dirS:'+dirS)
                 
                 num = 50
                 mostraNr(num)
@@ -312,8 +311,8 @@
             loadDadosJS("div-417", arqDados='CapasTP.js')
             loadDadosJS("div-418", arqDados='CapasMK.js')
 
-            arqPainel = 'div-418'
-            arqParale = 'div-417'            
+            arqPainel = 'div-417'
+            arqParale = 'div-418'            
         }
         // ----[Início Local]
 
@@ -352,6 +351,8 @@
                 // ... preenche painel
                 //preenchePainel(cellCurr=num-corN, painelNome='divGeral', centra=1, nCelPaiF=nLinPai0, porLInha=1)
             }
+            
+            // . . . click em capas rodapé
             if(evento=='click' && eleTaClass=='seqCapas') {
                 num     = parseInt(el('input-686').value) + (eleTa.getAttribute('jarray')-2)
                 mostraNr(num-corN)
@@ -378,21 +379,17 @@
                 corN = 0
                 if(arqPainel=='div-418')  { corN = 129 }
 
-                nLinPai0 = ListPlan[arqPainel][0][0]
-                dirS     = ListPlan[arqPainel][0][1]
                 mostraNr(num)
                 // ... preenche painel        
-                Painel['divGeral']['novoPainel'] = 1        
+                //Painel['divGeral']['novoPainel'] = 1        
                 //preenchePainel(cellCurr=num, painelNome='divGeral', centra=1, nCelPaiF=nLinPai0, porLInha=1)
             }
 
 
             // . . . 
 
-            // ********[GERAL DE EVENTOS]
+        // ********[GERAL DE EVENTOS]
 
-
-        
         // ......
         } // . . . [trapEvent()]
         //  --------------[Trap de Eventos] -------------
@@ -400,6 +397,7 @@
         function mostraNr(num){
             // . . . mostraNr(num)
             nLinPai0 = ListPlan[arqPainel][0][0]
+            dirS     = ListPlan[arqPainel][0][1]
             if (num<=nLinPai0 && num>0){
                 inclu = ListPlan[arqPainel][num][4]
                 tpNS    = String(num+corN).padStart(2, '0')
@@ -414,10 +412,11 @@
                 el('nomePrim-Txt').innerHTML    = ListPlan[arqPainel][num][3]
                 el('data-Txt').innerHTML        = ListPlan[arqPainel][num][5]
 
+                // . . . rodapé
                 for (iC=1 ; iC<=3 ; iC++){
                     nRoda = num+iC-2
                     if(nRoda>0 && nRoda<=nLinPai0){ 
-                        capaS = ListPlan[arqPainel][0][1] + ListPlan[arqPainel][num+iC-2][1]
+                        capaS = dirS + ListPlan[arqPainel][num+iC-2][1]
                         capaId = el('capaPequena',1,iC).id
                         fomatImg(imgId=capaId, imgSrc=capaS, x='0', y='0', w='0', h='0', fitS='fitW', faEscX = 1, faEscY = 1, adjDiv=1)
                     }
@@ -429,12 +428,8 @@
                     dataAlte = dataConv( ListPlan[arqParale][numAlte][5] )
                     if( (dataAlte-dataPinc)>=0 ) { break }
                 }
-
-                //numAlte = 42
-                //capaS = ListPlan[arqParale][0][1] + ListPlan[arqParale][numAlte][1]
-
+                capaS = ListPlan[arqParale][0][1] + ListPlan[arqParale][numAlte][1]
                 fomatImg(imgId='peqAlte', imgSrc=capaS,  x='0', y='0', w='0', h='0', fitS='fitH', faEscX = 1, faEscY = 1, adjDiv=1)
-
             }
             // . . .[mostra número]
         }
