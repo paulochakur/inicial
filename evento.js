@@ -1435,7 +1435,6 @@ function DataConv(dataS, brAm=''){
     dataS  = dataS.replace("dez",     "dec")
 
     // ------------
-    print('III dataS:'+dataS)    
         
     // . . . data bras. tipo "25 12 1968"
     inMes = dataS.indexOf(" ") ; fiMes  = dataS.indexOf(" ", inMes+1)
