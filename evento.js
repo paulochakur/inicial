@@ -1383,12 +1383,23 @@ function cssUnitToNr(cssUnS){
 
 
 // ..... Converte data
-function dataConv(dataS){                       // data brasileira para JS padrão new Date
+function DataConv(dataS, brAm=''){                       
+    // Data brasileira ou americana para JDN
+    //   Brasileira: brAm='' ; Americana: brAm='A'
+    //   Julian Day Number  -  https://en.wikipedia.org/wiki/Julian_day
+    //   JDN = 0 assigned to the day starting at noon on Monday, January 1, 4713 BC
+    //   JDN = 367 × Y - (7 × (Y + 5001 + (M - 9)/7))/4 + (275 × M)/9 + D + 1729777
+    // Fomratos de entrada:
+    //   "02/02/1961" ; "02-02-1961" ; "02/fev/61"; "2 de fevereiro de 1961"; "fevereiro-1961"
+    //   "february 02 of 1961"
+    // Saída:
+    //   DataConv = { 'JDN':nnnnn , 'dd':d , 'mm':m , 'yy':y}
+    DataDict = {}
     msPerDay = 1000 * 60 * 60 * 24
-    Months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
+    Months   = ['', 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
 
     dataSa = dataS
-    dataS  = dataS.toLowerCase()
+    dataS  = dataS.toLowerCase() ; dataS = dataS.trim()
     
     dataS  = dataS.replaceAll( "dia", " ")
     dataS  = dataS.replaceAll( ",",   " ")
@@ -1400,16 +1411,6 @@ function dataConv(dataS){                       // data brasileira para JS padr�
     dataS  = dataS.replace( "  ",  " ")
     dataS  = dataS.replace( "  ",  " ")
     dataS  = dataS.replace( "  ",  " ")
-        
-    // . . . data bras. tipo "25/12/1968"
-    inMes = dataS.indexOf(" ") ; fiMes  = dataS.indexOf(" ", inMes+1)
-    mes = 88
-    if(inMes>0 && fiMes>inMes){ mes = dataS.substring(inMes+1, fiMes) }
-    if(mes>0 && mes<13) { 
-        mo = Months[mes-1]
-        dataS = dataS.substring(0, inMes) + ' ' + mo + dataS.substring(fiMes)
-    }
-    // . . .[data bras. tipo "25/12/1968"]
 
     // ------------
     dataS  = dataS.replace("janeiro",   "jan")
@@ -1432,12 +1433,47 @@ function dataConv(dataS){                       // data brasileira para JS padr�
     dataS  = dataS.replace("set",     "sep")
     dataS  = dataS.replace("out",     "oct")
     dataS  = dataS.replace("dez",     "dec")
+
     // ------------
+    print('III dataS:'+dataS)    
+        
+    // . . . data bras. tipo "25 12 1968"
+    inMes = dataS.indexOf(" ") ; fiMes  = dataS.indexOf(" ", inMes+1)
+    // . . . data sem dia ("fevereiro-61")
+    if(inMes>-1 && fiMes==-1){ dataS = "1 "+dataS ; inMes = dataS.indexOf(" ") ; fiMes  = dataS.indexOf(" ", inMes+1) }
+    
+    dia = 77 ; mes = 88 ; ano = 0
+    if(inMes>0)                 { diaS = dataS.substring(0, inMes+1).trim()      }
+    if(inMes>0 && fiMes>inMes)  { mesS = dataS.substring(inMes+1, fiMes).trim()  }
+    if(fiMes>inMes)             { anoS = dataS.substring(fiMes+1).trim()         }
+
+    diaN = parseInt(diaS)
+
+    // . . . corrige ano de dois dígitos
+    if(anoS.length<4){ 
+        if(anoS.length==1)   { anoS = '0'+anoS}
+        if(parseInt(anoS)>29){ anoS = "19"+anoS }
+        if(parseInt(anoS)<30){ anoS = "20"+anoS }
+    }
+    anoN = parseInt(anoS)
+
+    // . . . corrige mês
+    iM = Months.indexOf(mesS)
+    if(iM>0) { mesN = iM}
+    if(iM<0) { mesN = parseInt(mesS) ; mesS = Months[mesN] }
+    
+    // . . .[data bras. tipo "25/12/1968"]
+    
+    JDN = 367 * anoN - parseInt(parseInt(7 * (anoN + 5001 + (mesN - 9)/7))/4) + parseInt((275 * mesN)/9) + diaN + 1729777
+
+    DataDict['dd']  = diaN ; DataDict['mm']  = mesN ; DataDict['yy']  = anoN
+    DataDict['mS']  = mesS ; DataDict['JDN'] = JDN
+
     //dataS  = 'Mon Jan 01 1968'
-    dateJS = new Date(dataS)
+    //dateJS = new Date(dataS)
 
     // ....
-    return dateJS 
+    return DataDict 
 }
 // .....[Converte data]
 
