@@ -679,23 +679,29 @@ function eventTrap() {
         xMp = event.pageX   ; yMp = event.pageY
 
         // Movimento - X, Y e deltas
-        if (evento=='touchmove' && lastX!=0) { delX  = lastX - parseInt(event.touches[0].screenX ) ; delY  = lastY - parseInt(event.touches[0].screenY) }
-        if (evento=='touchstart')            { lastX = parseInt(event.touches[0].screenX)          ; lastY = parseInt(event.touches[0].screenY) ; delX =0 ; delY = 0}
-        if (evento=='touchend')              { lastX = 0                                           ; lastY = 0 ; delX =0 ; delY = 0}
         if (evento=='touchmove' || evento=='touchstart')  {   
             xMw = parseInt(event.touches[0].clientX)    ; yMw = parseInt(event.touches[0].clientY)
             xMe = xMw - eleLrec                         ; yMe = yMw - eleTrec
             xMs = parseInt(event.touches[0].screenX)    ; yMs = parseInt(event.touches[0].screenY)
             xMp = parseInt(event.touches[0].pageX)      ; yMp = parseInt(event.touches[0].pageY)
 
-            if(scrTurn==1){ 
-                [xMs, yMs]      = [yMs, xMs]        ;
-                [delX, delY]    = [delY, delX]      ;
-                [lastX, lastY]  = [lastY, lastX]
-            }
+            if(scrTurn==1){ [xMs, yMs]      = [yMs, xMs] }
 
-            el('nomePrim-Txt').innerHTML = ' Touch ::::::  delY:'+delY+' lastY:'+lastY
         }
+        if (evento=='touchmove' && lastX!=0) { 
+            delX  = lastX - xMs ; delY  = lastY - yMs
+
+            el('nomePrim-Txt').innerHTML = ' Touch *****  delY:'+delY+' lastY:'+lastY
+
+            //if(scrTurn==0){ delX  = lastX - parseInt(event.touches[0].screenX ) ; delY  = lastY - parseInt(event.touches[0].screenY) }
+            //if(scrTurn==1){ delX  = lastX - parseInt(event.touches[0].screenY ) ; delY  = lastY - parseInt(event.touches[0].screenX) }
+        }
+        if (evento=='touchstart') { 
+            lastX = xMs          ; lastY = yMs ; delX =0 ; delY = 0
+            //if(scrTurn==0){ lastX = parseInt(event.touches[0].screenX)          ; lastY = parseInt(event.touches[0].screenY) ; delX =0 ; delY = 0 }
+            //if(scrTurn==1){ lastX = parseInt(event.touches[0].screenY)          ; lastY = parseInt(event.touches[0].screenX) ; delX =0 ; delY = 0 }
+        }
+        if (evento=='touchend')              { lastX = 0                                           ; lastY = 0 ; delX =0 ; delY = 0}
 
         // Wheel
         if (evento=='wheel')      { delX  = event.deltaX                                 ; delY  = event.deltaY }
