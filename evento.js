@@ -861,11 +861,16 @@ function eventTrap() {
                 eleCell = el(painelNome, iPaiCurr, jPaiCurr)
                 yCell = parseInt(window.getComputedStyle(eleCell).top) ; xCell = parseInt(window.getComputedStyle(eleCell).left)
                 
-                if (yCell<scrTop+50 && delY>0)                         { iPaiCurr++ ; rePrint = 1 ; roda = 0 }
-                if (yCell>scrTop+(nlWind*altLin-altLin)-50  && delY<0) { iPaiCurr-- ; rePrint = 1 ; roda = 0 }
+                print(' delY:'+delY+' scrTop:'+scrTop)
 
-                if (xCell<scrLef+50 && delX>0)                         { jPaiCurr++ ; rePrint = 1 ; roda = 0 }
-                if (xCell>scrLef+(ncWind*larCol-larCol)-50 && delX<0)  { jPaiCurr-- ; rePrint = 1 ; roda = 0 }
+                if (delY> 50) { iPaiCurr++ ; rePrint = 1 ; roda = 1 }
+                if (delY<-50) { iPaiCurr-- ; rePrint = 1 ; roda = 1 }
+
+                //if (yCell<scrTop                        +0  && delY>0) { iPaiCurr++ ; rePrint = 1 ; roda = 1 }
+                //if (yCell>scrTop+(nlWind*altLin-altLin) -0  && delY<0) { iPaiCurr-- ; rePrint = 1 ; roda = 1 }
+
+                if (xCell<scrLef                        +50 && delX>0)  { jPaiCurr++ ; rePrint = 1 ; roda = 0 }
+                if (xCell>scrLef+(ncWind*larCol-larCol) -50 && delX<0)  { jPaiCurr-- ; rePrint = 1 ; roda = 0 }
             }
             // . . .[wheel]
 
