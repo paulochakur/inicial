@@ -688,7 +688,7 @@ function eventTrap() {
             xMs = parseInt(event.touches[0].screenX)    ; yMs = parseInt(event.touches[0].screenY)
             xMp = parseInt(event.touches[0].pageX)      ; yMp = parseInt(event.touches[0].pageY)
 
-            el('nomePrim-Txt').innerHTML = ' Touch ---------  delY:'+delY 
+            el('nomePrim-Txt').innerHTML = ' Touch ***  delY:'+delY 
         }
 
         // Wheel
@@ -843,7 +843,7 @@ function eventTrap() {
             iArray      = parseInt(eleTa.getAttribute('iArray'))    ; jArray     = parseInt(eleTa.getAttribute('jArray'))
             if( evento=='click')  { 
                 iPaiCurr =  iArray ; jPaiCurr =  jArray
-                rePrint = 1 ; roda = 1
+                rePrint = 1 ; roda = 0
             }
             
             // . . . flechas
