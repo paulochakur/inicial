@@ -688,7 +688,7 @@ function eventTrap() {
             xMs = parseInt(event.touches[0].screenX)    ; yMs = parseInt(event.touches[0].screenY)
             xMp = parseInt(event.touches[0].pageX)      ; yMp = parseInt(event.touches[0].pageY)
 
-            el('nomePrim-Txt').innerHTML = ' Touch ***  delY:'+delY 
+            el('nomePrim-Txt').innerHTML = ' Touch ...........  delY:'+delY 
         }
 
         // Wheel
@@ -860,7 +860,7 @@ function eventTrap() {
             // . . . wheel
             print(' delY:'+delY+' scrTop:'+scrTop)
             if((evento=='wheel' || evento=='touchmove')){
-                if((evento=='touchmove')){  delY = delY*40 ; delX = delX*40 }
+                if((evento=='touchmove')){  delY = delY*51 ; delX = delX*51 }
                 eleCell = el(painelNome, iPaiCurr, jPaiCurr)
                 yCell = parseInt(window.getComputedStyle(eleCell).top) ; xCell = parseInt(window.getComputedStyle(eleCell).left)
                 
