@@ -681,13 +681,14 @@ function eventTrap() {
         // Movimento - X, Y e deltas
         if (evento=='touchmove' && lastX!=0) { delX  = parseInt(-event.touches[0].clientX + lastX ) ; delY  = parseInt(-event.touches[0].clientY + lastY) }
         if (evento=='touchstart')            { lastX = event.touches[0].clientX                     ; lastY = event.touches[0].clientY ; delX =0 ; delY = 0}
+        if (evento=='touchend')              { lastX = 0                                            ; lastY = 0 ; delX =0 ; delY = 0}
         if (evento=='touchmove' || evento=='touchstart')  {   
             xMw = parseInt(event.touches[0].clientX)    ; yMw = parseInt(event.touches[0].clientY)
             xMe = xMw - eleLrec                         ; yMe = yMw - eleTrec
             xMs = parseInt(event.touches[0].screenX)    ; yMs = parseInt(event.touches[0].screenY)
             xMp = parseInt(event.touches[0].pageX)      ; yMp = parseInt(event.touches[0].pageY)
 
-            el('nomePrim-Txt').innerHTML = ' Touch %%%%%  delY:'+delY 
+            el('nomePrim-Txt').innerHTML = ' Touch ---------  delY:'+delY 
         }
 
         // Wheel
