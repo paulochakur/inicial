@@ -684,24 +684,13 @@ function eventTrap() {
             xMe = xMw - eleLrec                         ; yMe = yMw - eleTrec
             xMs = parseInt(event.touches[0].screenX)    ; yMs = parseInt(event.touches[0].screenY)
             xMp = parseInt(event.touches[0].pageX)      ; yMp = parseInt(event.touches[0].pageY)
-
-            if(scrTurn==1){ [xMs, yMs]      = [yMs, xMs] }
-
+            if(scrTurn==1){ [xMs, yMs] = [yMs, xMs] ; [xMp, yMp] = [yMp, xMp] }
         }
-        if (evento=='touchmove' && lastX!=0) { 
-            delX  = lastX - xMs ; delY  = lastY - yMs
-
-            el('nomePrim-Txt').innerHTML = ' Touch *****  delY:'+delY+' lastY:'+lastY
-
-            //if(scrTurn==0){ delX  = lastX - parseInt(event.touches[0].screenX ) ; delY  = lastY - parseInt(event.touches[0].screenY) }
-            //if(scrTurn==1){ delX  = lastX - parseInt(event.touches[0].screenY ) ; delY  = lastY - parseInt(event.touches[0].screenX) }
+        if (evento=='touchmove' && lastX!=0)    { delX  = lastX - xMs ; delY  = lastY - yMs
+            el('nomePrim-Txt').innerHTML = ' Touch ||||||||  delY:'+delY+' lastY:'+lastY
         }
-        if (evento=='touchstart') { 
-            lastX = xMs          ; lastY = yMs ; delX =0 ; delY = 0
-            //if(scrTurn==0){ lastX = parseInt(event.touches[0].screenX)          ; lastY = parseInt(event.touches[0].screenY) ; delX =0 ; delY = 0 }
-            //if(scrTurn==1){ lastX = parseInt(event.touches[0].screenY)          ; lastY = parseInt(event.touches[0].screenX) ; delX =0 ; delY = 0 }
-        }
-        if (evento=='touchend')              { lastX = 0                                           ; lastY = 0 ; delX =0 ; delY = 0}
+        if (evento=='touchstart')               { lastX = xMs          ; lastY = yMs ; delX =0 ; delY = 0 }
+        if (evento=='touchend')                 { lastX = 0            ; lastY = 0   ; delX =0 ; delY = 0}
 
         // Wheel
         if (evento=='wheel')      { delX  = event.deltaX                                 ; delY  = event.deltaY }
@@ -855,7 +844,7 @@ function eventTrap() {
             iArray      = parseInt(eleTa.getAttribute('iArray'))    ; jArray     = parseInt(eleTa.getAttribute('jArray'))
             if( evento=='click')  { 
                 iPaiCurr =  iArray ; jPaiCurr =  jArray
-                rePrint = 1 ; roda = 0
+                rePrint = 0 ; roda = 0
             }
             
             // . . . flechas
@@ -870,7 +859,6 @@ function eventTrap() {
             // . . .[flechas]
 
             // . . . wheel
-            print(' delY:'+delY+' scrTop:'+scrTop)
             if((evento=='wheel' || evento=='touchmove')){
                 if((evento=='touchmove')){  delY = delY*51 ; delX = delX*51 }
                 eleCell = el(painelNome, iPaiCurr, jPaiCurr)
@@ -910,10 +898,15 @@ function eventTrap() {
                     cellCurr = (jPaiCurr-1)*nLar + iPaiCurr
                     if(cellCurr>nCelPai){ cellCurr = nCelPai ;  jPaiCurr = Math.ceil(cellCurr/nLar)    ; iPaiCurr = cellCurr-(jPaiCurr-1)*nLar }
                 }
-
                 Painel[painelNome]['cellCurr'] = cellCurr    ; Painel[painelNome]['iPaiCurr'] = iPaiCurr   ; Painel[painelNome]['jPaiCurr'] = jPaiCurr
                 preenchePainel( cellCurr=cellCurr, painelNome=painelNome, centra=roda, nCelPai=1, porLInha=1) 
             }
+
+            Painel[painelNome]['cellCurr'] = cellCurr    ; Painel[painelNome]['iPaiCurr'] = iPaiCurr   ; Painel[painelNome]['jPaiCurr'] = jPaiCurr
+            // .... põe e tira cursor
+            celEl = el(painelNome, iPaiCurr, jPaiCurr) ; celEl .style.outlineWidth = "1px"
+            if(celElA!='' && celElA!=celEl)            { celElA.style.outlineWidth = "0px" }
+            celElA = celEl    
         }
 
         // . . .
@@ -3346,15 +3339,12 @@ function preenchePainel(cellCurr=0, painelNome='', centra=0, nCelPai=0, porLInha
 
     // . . . tira e põe cursor
     try{
-        celEl = el(painelNome, iPaiCurr, jPaiCurr) ; celEl.style.outlineWidth = "1px"
-        if(celElA!='' && celElA!=celEl) { 
-            celElA.style.outlineWidth = "0px"
-            scaleDiv(divId=celElA.id, fitS='', faEscX = 1, faEscY = 1, desl='') 
-        }
-        scaleDiv(divId=celEl.id, fitS='', faEscX = 1.05, faEscY = '', desl='')
-
+        /*
+        celEl = el(painelNome, iPaiCurr, jPaiCurr) ; celEl .style.outlineWidth = "1px"
+        if(celElA!='' && celElA!=celEl)            { celElA.style.outlineWidth = "0px" }
         celElA = celEl
-    }catch{}
+        */
+    }catch{print('@@@@@@@@@@@@@@@@@@@')}
 
 
 
