@@ -688,7 +688,13 @@ function eventTrap() {
             xMs = parseInt(event.touches[0].screenX)    ; yMs = parseInt(event.touches[0].screenY)
             xMp = parseInt(event.touches[0].pageX)      ; yMp = parseInt(event.touches[0].pageY)
 
-            el('nomePrim-Txt').innerHTML = ' Touch ------  delY:'+delY+' lastY:'+lastY
+            if(scrTurn==1){ 
+                [xMs, yMs]      = [yMs, xMs]        ;
+                [delX, delY]    = [delY, delX]      ;
+                [lastX, lastY]  = [lastY, lastX]
+            }
+
+            el('nomePrim-Txt').innerHTML = ' Touch ::::::  delY:'+delY+' lastY:'+lastY
         }
 
         // Wheel
