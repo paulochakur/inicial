@@ -686,18 +686,14 @@ function eventTrap() {
             xMp = parseInt(event.touches[0].pageX)      ; yMp = parseInt(event.touches[0].pageY)
             if(scrTurn==1){ [xMs, yMs] = [yMs, xMs] ; [xMp, yMp] = [yMp, xMp] }
         }
-        if (evento=='touchmove' && lastX!=0)    { delX  = lastX - xMs ; delY  = lastY - yMs
-            el('nomePrim-Txt').innerHTML = ' Touch ||||||||  delY:'+delY+' lastY:'+lastY
-        }
+        if (evento=='touchmove' && lastX!=0)    { delX  = lastX - xMs ; delY  = lastY - yMs }
         if (evento=='touchstart')               { lastX = xMs          ; lastY = yMs ; delX =0 ; delY = 0 }
         if (evento=='touchend')                 { lastX = 0            ; lastY = 0   ; delX =0 ; delY = 0}
 
+        if (evento=='touchmove' && lastX!=0)    { el('nomePrim-Txt').innerHTML = ' Touch ||||||||  delY:'+delY+' lastY:'+lastY}
+
         // Wheel
         if (evento=='wheel')      { delX  = event.deltaX                                 ; delY  = event.deltaY }
-        xWh = event.deltaX              ; yWh  = event.deltaY
-        xWi = window.screenX            ; yWi = window.screenY
-
-
     }
     // ---[Mouse Coords]
 
@@ -709,7 +705,6 @@ function eventTrap() {
     //  page
     xPs = Math.round(window.pageXOffset)        ; yPs = Math.round(window.pageYOffset)
     
-
     // Keys
     keyCode = event.keyCode         ; ctrK = event.ctrlKey
 
@@ -823,6 +818,7 @@ function eventTrap() {
             if(evento=='keydown' && (keyCode>36 && keyCode<41)){ event.preventDefault() }
 
             // ... parâmetros de Painel
+            'divPainelId'
             divPaId  = Painel[painelNome]['divPainelId'] ; porLInha  = Painel[painelNome]['porLInha']
             altLin   = Painel[painelNome]['altLin']      ; larCol    = Painel[painelNome]['larCol']
             nLinPai  = Painel[painelNome]['nLinPai']     ; nColPai     = Painel[painelNome]['nColPai']
@@ -835,6 +831,7 @@ function eventTrap() {
             iTop     = Painel[painelNome]['iTop']        ; jLef      = Painel[painelNome]['jLeft']
             cellCurr = Painel[painelNome]['cellCurr']    ; iPaiCurr  = Painel[painelNome]['iPaiCurr']    ; jPaiCurr  = Painel[painelNome]['jPaiCurr']
             iTDisp   = Painel[painelNome]['iTDisp']      ; jLDisp    = Painel[painelNome]['jLDisp']
+            xTopAtu  = Painel[painelNome]['xTopAtu']
             
             scrTop   = el(divPaId).scrollTop             ; scrLef   = el(divPaId).scrollLeft
 
@@ -860,18 +857,20 @@ function eventTrap() {
 
             // . . . wheel
             if((evento=='wheel' || evento=='touchmove')){
-                if((evento=='touchmove')){  delY = delY*51 ; delX = delX*51 }
-                eleCell = el(painelNome, iPaiCurr, jPaiCurr)
-                yCell = parseInt(window.getComputedStyle(eleCell).top) ; xCell = parseInt(window.getComputedStyle(eleCell).left)
-                
-                if (delY> 50) { iPaiCurr++ ; rePrint = 1 ; roda = 1 }
-                if (delY<-50) { iPaiCurr-- ; rePrint = 1 ; roda = 1 }
 
-                //if (yCell<scrTop                        +0  && delY>0) { iPaiCurr++ ; rePrint = 1 ; roda = 1 }
-                //if (yCell>scrTop+(nlWind*altLin-altLin) -0  && delY<0) { iPaiCurr-- ; rePrint = 1 ; roda = 1 }
+                print('  iPaiCurr:'+iPaiCurr+'  iTDisp:'+iTDisp)
 
-                if (xCell<scrLef                        +50 && delX>0)  { jPaiCurr++ ; rePrint = 1 ; roda = 0 }
-                if (xCell>scrLef+(ncWind*larCol-larCol) -50 && delX<0)  { jPaiCurr-- ; rePrint = 1 ; roda = 0 }
+                elTop = el(painelNome, iTDisp, jLDisp) ; elFim = el(painelNome, iTDisp+nlWind-1, jLDisp+ncWind-1)
+
+                hWin = parseInt(window.getComputedStyle(el(divPaId)).height) ; wWin = parseInt(window.getComputedStyle(el(divPaId)).width)
+                yTop = parseInt(window.getComputedStyle(elTop).top)          ; yfim = parseInt(window.getComputedStyle(elFim).top)  + altLin
+                xTop = parseInt(window.getComputedStyle(elTop).left)         ; xfim = parseInt(window.getComputedStyle(elFim).left) + larCol
+
+                if (yTop<scrTop         -(altLin*0.55)  && delY>0) { iPaiCurr = iTDisp+3 ; rePrint = 1 ; roda = 1 }
+                if (yfim>scrTop+hWin    +(altLin*0.55)  && delY<0) { iPaiCurr = iTDisp-1 ; rePrint = 1 ; roda = 1 }
+
+                if (xTop<scrLef         -(larCol*0.75) && delX>0)  { jPaiCurr++ ; rePrint = 1 ; roda = 1 }
+                if (xfim>scrLef+wWin    +(larCol*0.75) && delX<0)  { jPaiCurr-- ; rePrint = 1 ; roda = 1 }
             }
             // . . .[wheel]
 
@@ -3168,7 +3167,7 @@ function preenchePainel(cellCurr=0, painelNome='', centra=0, nCelPai=0, porLInha
         nlWind  = Math.floor(altWind/altLin)                       ; ncWind  = Math.floor(larWind/larCol)
         slackL  = Math.floor( (nLar-nlWind)/2 )                    ; slackC  = Math.floor( (nCar-ncWind)/2 )
         
-        iTDisp  = 0  ;  jLDisp = 0 ; iPaiCurr = 0 ; jPaiCurr = 0
+        iTDisp  = 1  ;  jLDisp = 1 ; iPaiCurr = 0 ; jPaiCurr = 0
 
         if(nCelPai==0)  { nCelPai = nLar*nCar }
         if(porLInha==0) { nLinPai = nLar                       ;   nColPai = Math.ceil(nCelPai/nLar) }
@@ -3306,9 +3305,10 @@ function preenchePainel(cellCurr=0, painelNome='', centra=0, nCelPai=0, porLInha
 
         // .... Reposiciona Painel
         for(iPai=iPaiIni ; iPai<=iPaiFin ; iPai++){ ;   for(jPai=jPaiIni ; jPai<=jPaiFin ; jPai++){
-            oriCell = el(divArrId,iPai,jPai) ; oriKcell = parseInt(oriCell.getAttribute('kcelarray'))
-            topCell  = tOri + (iPai-iPaiIni)*(hOri+vPar)
-            leftCell = lOri + (jPai-jPaiIni)*(wOri+hPar)
+            oriCell  = el(divArrId,iPai,jPai)
+            oriKcell = parseInt(oriCell.getAttribute('kcelarray'))
+            topCell  = tOri + (iPai-iPaiIni) * altLin
+            leftCell = lOri + (jPai-jPaiIni) * larCol
             // . . . expulsa maiores que máximo
             if(oriKcell>nCelPai){ leftCell = -1000 }
 
@@ -3325,7 +3325,7 @@ function preenchePainel(cellCurr=0, painelNome='', centra=0, nCelPai=0, porLInha
     // . . . atualiza Array e Painel
     Array[divArrId]['topLin']       = iTopPai   ;   Array[divArrId]['lefCol']       = jTopPai
 
-    xTopAtu = tOri + (iTopPai-1)*(hOri+vPar)    ;   yLefAtu = lOri + (jTopPai-1)*(wOri+hPar)
+    xTopAtu = tOri + (iTopPai-1)*altLin    ;   yLefAtu = lOri + (jTopPai-1)*larCol
     
     Painel[painelNome]['porLInha']  = porLInha
     Painel[painelNome]['xTopAtu']   = xTopAtu   ;   Painel[painelNome]['yLefAtu']   = yLefAtu
@@ -3335,7 +3335,12 @@ function preenchePainel(cellCurr=0, painelNome='', centra=0, nCelPai=0, porLInha
     Painel[painelNome]['cellCurr']  = cellCurr
 
     // scroll div parent
-    if(centra!=0){ el(parDivId).scrollTop = (iTDisp-iPaiIni)*(hOri+vPar) ; el(parDivId).scrollLeft = (jLDisp-jPaiIni)*(wOri+hPar) }
+    scrTa = el(parDivId).scrollTop  ; scrLa = el(parDivId).scrollLeft
+    scrTc = (iTDisp-iPaiIni)*altLin           ; scrLc = slackC*(wOri+hPar)
+
+    desv =  Math.abs(scrTa-scrTc)
+
+    if(centra!=0 && desv>altLin*0.5){ el(parDivId).scrollTop = scrTc ; el(parDivId).scrollLeft = scrLc }
 
     // . . . tira e põe cursor
     try{
