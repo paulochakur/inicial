@@ -900,8 +900,8 @@ function eventTrap() {
                 Painel[painelNome]['cellCurr'] = cellCurr    ; Painel[painelNome]['iPaiCurr'] = iPaiCurr   ; Painel[painelNome]['jPaiCurr'] = jPaiCurr
                 preenchePainel( cellCurr=cellCurr, painelNome=painelNome, centra=roda, nCelPai=1, porLInha=1) 
             }
-
             Painel[painelNome]['cellCurr'] = cellCurr    ; Painel[painelNome]['iPaiCurr'] = iPaiCurr   ; Painel[painelNome]['jPaiCurr'] = jPaiCurr
+            
             // .... põe e tira cursor
             celEl = el(painelNome, iPaiCurr, jPaiCurr) ; celEl .style.outlineWidth = "1px"
             if(celElA!='' && celElA!=celEl)            { celElA.style.outlineWidth = "0px" }
@@ -3341,6 +3341,11 @@ function preenchePainel(cellCurr=0, painelNome='', centra=0, nCelPai=0, porLInha
     desv =  Math.abs(scrTa-scrTc)
 
     if(centra!=0 && desv>altLin*0.5){ el(parDivId).scrollTop = scrTc ; el(parDivId).scrollLeft = scrLc }
+
+    // .... põe e tira cursor
+    celEl = el(painelNome, iPaiCurr, jPaiCurr) ; celEl .style.outlineWidth = "1px"
+    if(celElA!='' && celElA!=celEl)            { celElA.style.outlineWidth = "0px" }
+    celElA = celEl    
 
     // . . . tira e põe cursor
     try{
