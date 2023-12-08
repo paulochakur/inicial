@@ -502,6 +502,7 @@ function iniSys(){
             nCar = parseInt(divE.getAttribute("nCar")) ; if (nCar==null){ nCar = 0 }
             hPar = parseInt(divE.getAttribute("hPar")) ; if (hPar==null){ hPar = 0 }
             vPar = parseInt(divE.getAttribute("vPar")) ; if (vPar==null){ vPar = 0 }
+            liCo = divE.getAttribute("liCo")
             
             styles = window.getComputedStyle(divE)
             lOri    = parseInt(styles.left)   ; tOri    = parseInt(styles.top)
@@ -514,7 +515,7 @@ function iniSys(){
                 // . . . preenche atributos de Array
                 divE.className  = divId
                 Array[divId]    = { 'nLar':nLar , 'nCar':nCar , 'hPar':hPar , 'vPar':vPar , 'topLin': 1 , 'lefCol': 1 ,
-                                    'lOri':lOri , 'tOri':tOri , 'wOri':wOri , 'hOri':hOri ,
+                                    'lOri':lOri , 'tOri':tOri , 'wOri':wOri , 'hOri':hOri , 'liCo': liCo,
                                     'parDivId': divE.parentElement.id
                                   }
 
@@ -809,16 +810,13 @@ function eventTrap() {
 
     // ---------- scroll de Painel
     if( (((evento=='wheel' || evento=='touchmove') || evento=='click') || (evento=='keydown' && (keyCode>36 && keyCode<41) ))){
-
         pai = 1 ; try{ divPaId  = Painel[painelNome]['divPainelId'] } catch{ pai = 0 }
-
         if(pai==1){
             rePrint = 0 ; roda = 0
             // setas - preventdefault
             if(evento=='keydown' && (keyCode>36 && keyCode<41)){ event.preventDefault() }
 
             // ... parâmetros de Painel
-            'divPainelId'
             divPaId  = Painel[painelNome]['divPainelId'] ; porLInha  = Painel[painelNome]['porLInha']
             altLin   = Painel[painelNome]['altLin']      ; larCol    = Painel[painelNome]['larCol']
             nLinPai  = Painel[painelNome]['nLinPai']     ; nColPai     = Painel[painelNome]['nColPai']
@@ -857,20 +855,18 @@ function eventTrap() {
 
             // . . . wheel
             if((evento=='wheel' || evento=='touchmove')){
-
-                print('  iPaiCurr:'+iPaiCurr+'  iTDisp:'+iTDisp)
-
                 elTop = el(painelNome, iTDisp, jLDisp) ; elFim = el(painelNome, iTDisp+nlWind-1, jLDisp+ncWind-1)
 
                 hWin = parseInt(window.getComputedStyle(el(divPaId)).height) ; wWin = parseInt(window.getComputedStyle(el(divPaId)).width)
                 yTop = parseInt(window.getComputedStyle(elTop).top)          ; yfim = parseInt(window.getComputedStyle(elFim).top)  + altLin
                 xTop = parseInt(window.getComputedStyle(elTop).left)         ; xfim = parseInt(window.getComputedStyle(elFim).left) + larCol
 
-                if (yTop<scrTop         -(altLin*0.55)  && delY>0) { iPaiCurr = iTDisp+3 ; rePrint = 1 ; roda = 1 }
-                if (yfim>scrTop+hWin    +(altLin*0.55)  && delY<0) { iPaiCurr = iTDisp-1 ; rePrint = 1 ; roda = 1 }
-
-                if (xTop<scrLef         -(larCol*0.75) && delX>0)  { jPaiCurr++ ; rePrint = 1 ; roda = 1 }
-                if (xfim>scrLef+wWin    +(larCol*0.75) && delX<0)  { jPaiCurr-- ; rePrint = 1 ; roda = 1 }
+                if (yTop<scrTop         -(altLin*0.75) && delY>0 && porLInha==1) { iPaiCurr = iTDisp+nlWind   ; rePrint = 1 ; roda = 1 }
+                if (yfim>scrTop+hWin    +(altLin*0.75) && delY<0 && porLInha==1) { iPaiCurr = iTDisp-1        ; rePrint = 1 ; roda = 1}
+                
+                print('  xTop:'+(xTop)+' :'+(scrLef+lOri+larCol) )
+                if (xTop<scrLef         -(larCol*0.75) && delX>0 && porLInha==0) { jPaiCurr = jLDisp+ncWind   ; rePrint = 1 ; roda = 1 }
+                if (xfim>scrLef+wWin    +(larCol*0.75) && delX<0 && porLInha==0) { jPaiCurr = jLDisp-1        ; rePrint = 1 ; roda = 1 }
             }
             // . . .[wheel]
 
@@ -898,7 +894,7 @@ function eventTrap() {
                     if(cellCurr>nCelPai){ cellCurr = nCelPai ;  jPaiCurr = Math.ceil(cellCurr/nLar)    ; iPaiCurr = cellCurr-(jPaiCurr-1)*nLar }
                 }
                 Painel[painelNome]['cellCurr'] = cellCurr    ; Painel[painelNome]['iPaiCurr'] = iPaiCurr   ; Painel[painelNome]['jPaiCurr'] = jPaiCurr
-                preenchePainel( cellCurr=cellCurr, painelNome=painelNome, centra=roda, nCelPai=1, porLInha=1) 
+                preenchePainel( cellCurr=cellCurr, painelNome=painelNome, centra=roda, nCelPai=1) 
             }
             Painel[painelNome]['cellCurr'] = cellCurr    ; Painel[painelNome]['iPaiCurr'] = iPaiCurr   ; Painel[painelNome]['jPaiCurr'] = jPaiCurr
             
@@ -3162,10 +3158,12 @@ function preenchePainel(cellCurr=0, painelNome='', centra=0, nCelPai=0, porLInha
     // ..... cria Painel, se inexistente painelNome = arrayClass = divArrId
     try{ a = Painel[painelNome]['novoPainel'] ; novoPainel = a } catch{ novoPainel = 1}    
     if(novoPainel==1){        
+        porLInha = 1    ;   if(dictArray['liCo']=='Coluna'){ porLInha = 0}
         parDiv  = el(parDivId) ; parDiv.className = painelNome
-        altWind = parseInt(window.getComputedStyle(parDiv).height) ; larWind = parseInt(window.getComputedStyle(parDiv).width)
-        nlWind  = Math.floor(altWind/altLin)                       ; ncWind  = Math.floor(larWind/larCol)
-        slackL  = Math.floor( (nLar-nlWind)/2 )                    ; slackC  = Math.floor( (nCar-ncWind)/2 )
+        altWind = parseInt(window.getComputedStyle(parDiv).height)  ; larWind = parseInt(window.getComputedStyle(parDiv).width)
+        nlWind  = Math.floor(altWind/altLin)                        ; ncWind  = Math.floor(larWind/larCol)
+        if(nLar<nlWind){ nlWind = nLar }                            ; if(nCar<ncWind){ ncWind = nCar }        
+        slackL  = Math.floor( (nLar-nlWind)/2 )                     ; slackC  = Math.floor( (nCar-ncWind)/2 )
         
         iTDisp  = 1  ;  jLDisp = 1 ; iPaiCurr = 0 ; jPaiCurr = 0
 
@@ -3327,7 +3325,6 @@ function preenchePainel(cellCurr=0, painelNome='', centra=0, nCelPai=0, porLInha
 
     xTopAtu = tOri + (iTopPai-1)*altLin    ;   yLefAtu = lOri + (jTopPai-1)*larCol
     
-    Painel[painelNome]['porLInha']  = porLInha
     Painel[painelNome]['xTopAtu']   = xTopAtu   ;   Painel[painelNome]['yLefAtu']   = yLefAtu
     Painel[painelNome]['iTop']      = iTopPai   ;   Painel[painelNome]['jLeft']     = jTopPai
     Painel[painelNome]['iTDisp']    = iTDisp    ;   Painel[painelNome]['jLDisp']    = jLDisp
@@ -3335,30 +3332,17 @@ function preenchePainel(cellCurr=0, painelNome='', centra=0, nCelPai=0, porLInha
     Painel[painelNome]['cellCurr']  = cellCurr
 
     // scroll div parent
-    scrTa = el(parDivId).scrollTop  ; scrLa = el(parDivId).scrollLeft
-    scrTc = (iTDisp-iPaiIni)*altLin           ; scrLc = slackC*(wOri+hPar)
+    scrTa = el(parDivId).scrollTop      ; scrLa = el(parDivId).scrollLeft
+    scrTc = (iTDisp-iPaiIni)*altLin     ; scrLc = (jLDisp-jPaiIni)*larCol
+    desvV =  Math.abs(scrTa-scrTc)      ; desvH =  Math.abs(scrLa-scrLc)
 
-    desv =  Math.abs(scrTa-scrTc)
-
-    if(centra!=0 && desv>altLin*0.5){ el(parDivId).scrollTop = scrTc ; el(parDivId).scrollLeft = scrLc }
+    if(centra!=0 &&  (desvV>altLin*0.75 && porLInha==1)){ el(parDivId).scrollTop  = scrTc }
+    if(centra!=0 &&  (desvH>larCol*0.75 && porLInha==0)){ el(parDivId).scrollLeft = scrLc }
 
     // .... põe e tira cursor
     celEl = el(painelNome, iPaiCurr, jPaiCurr) ; celEl .style.outlineWidth = "1px"
     if(celElA!='' && celElA!=celEl)            { celElA.style.outlineWidth = "0px" }
     celElA = celEl    
-
-    // . . . tira e põe cursor
-    try{
-        /*
-        celEl = el(painelNome, iPaiCurr, jPaiCurr) ; celEl .style.outlineWidth = "1px"
-        if(celElA!='' && celElA!=celEl)            { celElA.style.outlineWidth = "0px" }
-        celElA = celEl
-        */
-    }catch{print('@@@@@@@@@@@@@@@@@@@')}
-
-
-
-
     // ....
 }    
 // -----[Preenche Pag de Painel]
