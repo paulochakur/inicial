@@ -689,7 +689,7 @@ function eventTrap() {
         if (evento=='touchstart')               { lastX = xMs          ; lastY = yMs ; delX =0 ; delY = 0 }
         if (evento=='touchend')                 { lastX = 0            ; lastY = 0   ; delX =0 ; delY = 0}
 
-        if (evento=='touchmove' && lastX!=0)    { el('nomePrim-Txt').innerHTML = ' Touch ||||||||  delY:'+delY+' lastY:'+lastY}
+        if (evento=='touchmove' && lastX!=0)    { el('ConsAma-Txt').innerHTML = ' delY: '+delY}
 
         // Wheel
         if (evento=='wheel')      { delX  = event.deltaX                                 ; delY  = event.deltaY }
@@ -782,7 +782,7 @@ function eventTrap() {
         downPla = 1
     }    
     // .....[prevent default de scroll]
-
+    //el('ConsAma-Txt').innerHTML = ' delY: '+delY
     if( (evento=='wheel' || evento=='touchmove') && eleFoClass.includes("-Pla") && scrollHab==1){
         nomeSheet   = eleFoClass
         nLinPla     = Cells[divSheetId][0][0]['nLinPla'] ; nColPla   = Cells[divSheetId][0][0]['nColPla']
@@ -797,7 +797,6 @@ function eventTrap() {
         //if(evento=='touchmove' && Math.abs(delY)<20) { delLin = 0 }
         //if(evento=='touchmove' && Math.abs(delX)<20) { delCol = 0 }
 
-        el('ConsAma-Txt').innerHTML = ' delY: '+delY+'  delLin:'+delLin
 
         if(scrTurn==1){ [delLin, delCol] = [delCol, -delLin] }
         // .....[deltas de wheel]
