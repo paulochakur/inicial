@@ -797,6 +797,8 @@ function eventTrap() {
         //if(evento=='touchmove' && Math.abs(delY)<20) { delLin = 0 }
         //if(evento=='touchmove' && Math.abs(delX)<20) { delCol = 0 }
 
+        el('ConsAma-Txt').innerHTML = ' delY: '+delY+'  delLin:'+delLin
+
         if(scrTurn==1){ [delLin, delCol] = [delCol, -delLin] }
         // .....[deltas de wheel]
         lplan0A = lplan0          ; cplan0A = cplan0
