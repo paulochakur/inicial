@@ -685,11 +685,11 @@ function eventTrap() {
             xMp = parseInt(event.touches[0].pageX)      ; yMp = parseInt(event.touches[0].pageY)
             if(scrTurn==1){ [xMs, yMs] = [yMs, xMs] ; [xMp, yMp] = [yMp, xMp] }
         }
-        if (evento=='touchmove' && lastX!=0)    { delX  = lastX - xMs ; delY  = lastY - yMs }
+        if (evento=='touchmove' && lastX!=0)    { delX  = lastX - xMs  ; delY  = lastY - yMs }
         if (evento=='touchstart')               { lastX = xMs          ; lastY = yMs ; delX =0 ; delY = 0 }
         if (evento=='touchend')                 { lastX = 0            ; lastY = 0   ; delX =0 ; delY = 0}
 
-        if (evento=='touchmove' && lastX!=0)    { el('ConsAma-Txt').innerHTML = ' delY: '+delY}
+        //if (evento=='touchmove' && lastX!=0)    { el('ConsAma-Txt').innerHTML = ' delY: '+delY}
 
         // Wheel
         if (evento=='wheel')      { delX  = event.deltaX                                 ; delY  = event.deltaY }
@@ -792,12 +792,13 @@ function eventTrap() {
         
         // ..... deltas de wheel
         delLin = 0 ; delCol = 0
+        scrTop   = el('divPrevScr').scrollTop
+
         if (delY!=0){ delLin = (Math.abs(delY)/delY) }
         if (delX!=0){ delCol = (Math.abs(delX)/delX) }
-        //if(evento=='touchmove' && Math.abs(delY)<20) { delLin = 0 }
-        //if(evento=='touchmove' && Math.abs(delX)<20) { delCol = 0 }
-
-
+        if(evento=='touchmove' && Math.abs(delY)<20) { delLin = 0 }
+        if(evento=='touchmove' && Math.abs(delX)<20) { delCol = 0 }
+        el('ConsAma-Txt').innerHTML = ' delY: '+delY+'  delLin:'+delLin
         if(scrTurn==1){ [delLin, delCol] = [delCol, -delLin] }
         // .....[deltas de wheel]
         lplan0A = lplan0          ; cplan0A = cplan0
