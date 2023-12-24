@@ -798,8 +798,10 @@ function eventTrap() {
         if (delX!=0){ delCol = (Math.abs(delX)/delX) }
         if(evento=='touchmove' && Math.abs(delY)<20) { delLin = 0 }
         if(evento=='touchmove' && Math.abs(delX)<20) { delCol = 0 }
-        el('ConsAma-Txt').innerHTML = ' delY: '+delY+'  delLin:'+delLin
         if(scrTurn==1){ [delLin, delCol] = [delCol, -delLin] }
+
+        el('ConsAma-Txt').innerHTML = ' delY: '+delY+'  delLin:'+delLin+'  scrTurn:'+scrTurn
+
         // .....[deltas de wheel]
         lplan0A = lplan0          ; cplan0A = cplan0
         lplan0N = lplan0 + delLin ; cplan0N = cplan0 + delCol
