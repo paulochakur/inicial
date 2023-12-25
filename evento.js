@@ -807,7 +807,7 @@ function eventTrap() {
             if(Math.abs(delX)>20) { delCol = parseInt(delX/40) }
         }
 
-        el('ConsAma-Txt').innerHTML = ' delY: '+delY+'::'+delX+' delLin:'+delLin+'  scrTurn:'+scrTurn
+        el('ConsAma-Txt').innerHTML = ' delY: '+delY+'=='+delX+' delLin:'+delLin
 
         // .....[deltas de wheel]
         lplan0A = lplan0          ; cplan0A = cplan0
