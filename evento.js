@@ -794,11 +794,18 @@ function eventTrap() {
         delLin = 0 ; delCol = 0
         if(scrTurn==1){ delX = -delX }
 
-        if (delY!=0){ delLin = (Math.abs(delY)/delY) }
-        if (delX!=0){ delCol = (Math.abs(delX)/delX) }
-        if(evento=='touchmove' && Math.abs(delY)<20) { delLin = 0 }
-        if(evento=='touchmove' && Math.abs(delX)<20) { delCol = 0 }
-        //if(scrTurn==1){ [delLin, delCol] = [delCol, -delLin] }
+        // ... wheel
+        if(evento=='wheel'){
+            if (delY>0){ delLin = 1}    ;   if (delY<0){ delLin = -1}
+            if (delX>0){ delCol = 1}    ;   if (delX<0){ delCol = -1}            
+        }
+
+        // ... touchmove
+        if(evento=='touchmove'){
+            delLin = 0 ; delCol = 0
+            if(Math.abs(delY)>20) { delLin = parseInt(delY/20) }
+            if(Math.abs(delX)>20) { delCol = parseInt(delX/40) }
+        }
 
         el('ConsAma-Txt').innerHTML = ' delY: '+delY+'::'+delX+' delLin:'+delLin+'  scrTurn:'+scrTurn
 
