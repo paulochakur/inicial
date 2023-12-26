@@ -2924,7 +2924,9 @@ function poeFoco(divSheetId, iElN, jElN){
     // . . .[retira Cursor anterior]
 
     // . . . põe cursor
-    prox.style.zIndex = '5'
+    mergedCols  = Cells[divSheetId][iElNf][jElN]['mergedCols']
+    mergedLins  = Cells[divSheetId][iElNf][jElN]['mergedLins']
+    if(mergedCols==1 && mergedLins==1){ prox.style.zIndex = '5' }
     if (cursor!='outline')  { prox.style.borderColor = cursor ; prox.style.borderWidth = '2px'; prox.style.outlineWidth      = "0px" }
     if (cursor=='outline')  { prox.style.outlineWidth      = "1px" }
     curAnt = prox
