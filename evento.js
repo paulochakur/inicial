@@ -606,8 +606,7 @@ function iniSys(){
     // ...... ajusta mob
     hF = cssUnitToNr(window.getComputedStyle(el('Fundo')).height)
     wF = cssUnitToNr(window.getComputedStyle(el('Fundo')).width)
-    if(mobFlag==1 && el('Fundo').getAttribute('screenTurn')=='true') { scrTurn = 1 }
-    print(' ::'+el('Fundo').getAttribute('screenTurn'))
+    if(mobFlag==0 && el('Fundo').getAttribute('screenTurn')=='true') { scrTurn = 1 }
     
     fatX    =  Ih/wF ;    fatY = fatX
     delV    = (wF-hF)/2 + (hF/2)*(1-fatY)
@@ -618,6 +617,8 @@ function iniSys(){
         el('Fundo').style.left  = (-delV)+'px'
         el('Fundo').style.top   = (-delH)+'px'
     }
+
+    print(' ::'+el('Fundo').getAttribute('screenTurn')+' scrTurn:'+scrTurn)
     // ......[ajusta mob]
 
     document.activeElement.blur()
@@ -805,7 +806,7 @@ function eventTrap() {
         // ... touchmove
         if(evento=='touchmove'){ delLin = parseInt(delY/10)  ;   delCol = parseInt(delX/20) }
 
-        el('ConsAma-Txt').innerHTML = ' delY: '+delY+'=='+delX+' delLin:'+delLin+' +++++'
+        el('ConsAma-Txt').innerHTML = ' ::'+el('Fundo').getAttribute('screenTurn')+' scrTurn:'+scrTurn
 
         // .....[deltas de wheel]
         lplan0A = lplan0          ; cplan0A = cplan0
@@ -887,7 +888,7 @@ function eventTrap() {
                 if (-(scrLef-scrLdis) > (larCol*0.75) && delX<0 && porLInha==0) { jPaiCurr = jLDisp-1        ; rePrint = 1 ; roda = 1 }
             }
             // . . .[wheel]
-
+            el('ConsAma-Txt').innerHTML = ' ::'+el('Fundo').getAttribute('screenTurn')+' scrTurn:'+scrTurn
             // ...............
             if(rePrint==1){
 
