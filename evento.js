@@ -527,7 +527,7 @@ function iniSys(){
                         Descen = el(oriId).querySelectorAll('*')
                         for (iCh = 0; iCh<=Descen.length-1; iCh++){ Descen[iCh].className = el(oriId).className}
 
-                        clonaEle (oriId, idApp)
+                        clonaEle(oriId, idApp)
                         // ... redefine posição
                         elCel = el(divId+idApp)
                         elCel.style.left = (lOri+ (jArr-0)*(wOri+hPar))+'px'   
@@ -612,25 +612,23 @@ function iniSys(){
     if(mobFlag==1 && screenTurn=='true')  { scrTurn = 1 }
     if(mobFlag==1 && scrFitWAtt!='false') { scrFitW = 1 }
 
-
     rotF = 0 ; fatX = 1 ; fatY = 1 ; delV = 0 ; delH = 0
     
     if (scrTurn==1){ 
         rotF    = -90
         if(scrFitW!='false'){ fatX    =  Ih/wF ;    fatY = fatX }
-        delV    = (wF-hF)/2 + (hF/2)*(1-fatY)
-        delH    = (hF-wF)/2 + (wF/2)*(1-fatX)
+        delH    = (wF-hF)/2 + (hF/2)*(1-fatY)
+        delV    = (hF-wF)/2 + (wF/2)*(1-fatX)
     }
     if (scrTurn==0){ 
         if(scrFitW!='false'){ fatX    =  Iw/wF ;    fatY = fatX }
-        delH    = (hF/2)*(1-fatY)
-        delV    = (wF/2)*(1-fatX)
+        delV    = (hF/2)*(1-fatY)
+        delH    = (wF/2)*(1-fatX)
     }
 
-
     el('Fundo').style.transform = "rotateZ("+rotF+"deg)"+" scaleX("+fatX+")"+" scaleY("+fatY+")"
-    el('Fundo').style.left  = (-delV)+'px'
-    el('Fundo').style.top   = (-delH)+'px'
+    el('Fundo').style.left  = (-delH)+'px'
+    el('Fundo').style.top   = (-delV)+'px'
     // ......[ajusta mob]
 
     document.activeElement.blur()
@@ -732,6 +730,7 @@ function eventTrap() {
 
     // ..... atualiza Jiboia
     if(keyCode==88){ atuJib() }  // ctr X
+    if(evento=='click'){ atuJib() }
 
     // .... inibe menu do browser em rightClick
     if(evento=='contextmenu'){ evento = 'rightclick' ; event.preventDefault() }
@@ -1658,6 +1657,7 @@ function clonaUniE(oriId, idApp, cloneChild){
 
     // ... clona Attr
     for (i=0; i<Att.length; i++){ if(Att[i].name!='id'){ para.setAttribute(Att[i].name, Att[i].value) } }
+    para.removeAttribute('iw')
     // ... clona CSS
     for (iSt in styles){ stN = styles[iSt] ; if (stN!=undefined && stN!=''){ para.style[iSt] = stN } }
     // -----[function clonaUniE(oriIdU, idApp, parCloneId)]
@@ -1691,9 +1691,7 @@ function atuJib(){
     corC='rgb('+verScr+','+0+','+0+')' ; ctx.fillStyle = corC ; ctx.fillRect(49       , 0, 1, 1)  // verScr
     corC='rgb('+0     +','+0+','+0+')' ; ctx.fillStyle = corC ; ctx.fillRect(50       , 0, 1, 1)  // nD
     corC='rgb('+0     +','+0+','+0+')' ; ctx.fillStyle = corC ; ctx.fillRect(150      , 0, 1, 1)  // nS
-    
     for (iD=0; iD<=nDivs-1; iD++){
-        
         divId = Ldivs[iD] ; div = el(divId)
         try{ iw = div.getAttribute("iw") }catch{ iw = 0 }
         if (iw==null){ iw = 0 }
@@ -1714,23 +1712,24 @@ function atuJib(){
             // . . .[iWAba; iAbaAti]
 
             // . . . deslocamentos de top e left de 50 a 111 ( 20 elementos )
+            delXj = 0 ; delYj = 0
             tOri = dictCoods[iw][0]     ; lOri = dictCoods[iw][1]
             novoX = parseInt(window.getComputedStyle(div).left) ; novoY = parseInt(window.getComputedStyle(div).top)
-            delX = lOri - novoX ; delY = tOri - novoY
-            if (delX!=0 || delY!=0){
+            delXj = lOri - novoX ; delYj = tOri - novoY
+            if (delXj!=0 || delYj!=0){
                 nD = nD + 1
                 corC='rgb('+nD+','+0+','+0+')' ; ctx.fillStyle = corC ; ctx.fillRect(50       , 0, 1, 1)  // nD
                 x1 = parseInt(iw/255)   ; x2 = parseInt(iw   - x1*255)    ; corC='rgb('+x1+','+x2+','+0+')'
                     ctx.fillStyle = corC                ; ctx.fillRect(nD*3+48  , 0, 1, 1)  // iw            
-                x1 = parseInt(delX/255) ; x2 = parseInt(delX - x1*255)    ; corC='rgb('+x1+','+x2+','+0+')'
-                    ctx.fillStyle = corC                ; ctx.fillRect(nD*3+48+1, 0, 1, 1)  // delX
-                x1 = parseInt(delY/255) ; x2 = parseInt(delY - x1*255)    ; corC='rgb('+x1+','+x2+','+0+')'
-                    ctx.fillStyle = corC                ; ctx.fillRect(nD*3+48+2, 0, 1, 1)  // delY
+                x1 = parseInt(delXj/255) ; x2 = parseInt(delXj - x1*255)    ; corC='rgb('+x1+','+x2+','+0+')'
+                    ctx.fillStyle = corC                ; ctx.fillRect(nD*3+48+1, 0, 1, 1)  // delXj
+                x1 = parseInt(delYj/255) ; x2 = parseInt(delYj - x1*255)    ; corC='rgb('+x1+','+x2+','+0+')'
+                    ctx.fillStyle = corC                ; ctx.fillRect(nD*3+48+2, 0, 1, 1)  // delYj
             }
             // . . .[deslocamentos de top e left de 50 a 111 ( 20 elementos )]
 
             // . . . deslocamentos de scroll de ele            
-            scr = div.getAttribute("scroll")
+            scr  = div.getAttribute("scroll")
             scrX = div.scrollLeft    ; scrY = div.scrollTop
             if (scrX!=0 || scrY!=0){
                 nS = nS + 1
@@ -1738,12 +1737,12 @@ function atuJib(){
                 x1 = parseInt(iw/255)   ; x2 = parseInt(iw   - x1*255)    ; corC='rgb('+x1+','+x2+','+0+')'
                     ctx.fillStyle = corC                ; ctx.fillRect(nS*3+148  , 0, 1, 1)  // iw            
                 x1 = parseInt(scrX/255) ; x2 = parseInt(scrX - x1*255)    ; corC='rgb('+x1+','+x2+','+0+')'
-                    ctx.fillStyle = corC                ; ctx.fillRect(nS*3+148+1, 0, 1, 1)  // delX
+                    ctx.fillStyle = corC                ; ctx.fillRect(nS*3+148+1, 0, 1, 1)  // scrX
                 x1 = parseInt(scrY/255) ; x2 = parseInt(scrY - x1*255)    ; corC='rgb('+x1+','+x2+','+0+')'
-                    ctx.fillStyle = corC                ; ctx.fillRect(nS*3+148+2, 0, 1, 1)  // delY
+                    ctx.fillStyle = corC                ; ctx.fillRect(nS*3+148+2, 0, 1, 1)  // scrY
             }
             // . . .[deslocamentos de scroll de ele]
-            
+           
         }
     }
     // . . .[desl de Scroll e parâmetros de Aba]
