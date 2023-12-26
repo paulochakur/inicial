@@ -606,7 +606,7 @@ function iniSys(){
     // ...... ajusta mob
     hF = cssUnitToNr(window.getComputedStyle(el('Fundo')).height)
     wF = cssUnitToNr(window.getComputedStyle(el('Fundo')).width)
-    if(mobFlag==0 && el('Fundo').getAttribute('screenTurn')=='true') { scrTurn = 1 }
+    if(mobFlag==1 && el('Fundo').getAttribute('screenTurn')=='true') { scrTurn = 1 }
     
     fatX    =  Ih/wF ;    fatY = fatX
     delV    = (wF-hF)/2 + (hF/2)*(1-fatY)
@@ -618,7 +618,7 @@ function iniSys(){
         el('Fundo').style.top   = (-delH)+'px'
     }
 
-    print(' ::'+el('Fundo').getAttribute('screenTurn')+' scrTurn:'+scrTurn)
+    //print(' ::'+el('Fundo').getAttribute('screenTurn')+' scrTurn:'+scrTurn+'   mobFlag:'+mobFlag)
     // ......[ajusta mob]
 
     document.activeElement.blur()
