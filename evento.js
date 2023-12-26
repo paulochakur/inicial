@@ -427,13 +427,6 @@ function iniSys(){
 
                 dictCoods[iw] = [tDiv, lDiv]
                 // . . . aplica xl e yt - somente deskTop, em desenvovimento
-                /*
-                if (yt!=null  && mobFlag==0){ el(divId).style.top  = (tDiv-yt)+'px' }
-                if (xl!=null  && mobFlag==0){ el(divId).style.left = (lDiv-xl)+'px' }
-                if (scY!=null && mobFlag==0){ el(divId).scrollTop  = scY }
-                if (scX!=null && mobFlag==0){ el(divId).scrollLeft = scX }
-                */
-
                 if (yt!=null  ){ el(divId).style.top  = (tDiv-yt)+'px' }
                 if (xl!=null  ){ el(divId).style.left = (lDiv-xl)+'px' }
                 if (scY!=null ){ el(divId).scrollTop  = scY }
@@ -613,16 +606,17 @@ function iniSys(){
     // ...... ajusta mob
     hF = cssUnitToNr(window.getComputedStyle(el('Fundo')).height)
     wF = cssUnitToNr(window.getComputedStyle(el('Fundo')).width)
+    if(mobFlag==1 && el('Fundo').getAttribute('screenTurn')=='true') { scrTurn = 1 }
+    print(' ::'+el('Fundo').getAttribute('screenTurn'))
     
     fatX    =  Ih/wF ;    fatY = fatX
     delV    = (wF-hF)/2 + (hF/2)*(1-fatY)
     delH    = (hF-wF)/2 + (wF/2)*(1-fatX)
 
-    if (mobFlag==1 && wF>400){
+    if (scrTurn==1){
         el('Fundo').style.transform = "rotateZ(-90deg)"+" scaleX("+fatX+")"+" scaleY("+fatY+")"
         el('Fundo').style.left  = (-delV)+'px'
         el('Fundo').style.top   = (-delH)+'px'
-        scrTurn = 1
     }
     // ......[ajusta mob]
 
@@ -751,7 +745,7 @@ function eventTrap() {
 
     // ---------- Scroll de página e panilha
     // ..... prevent default de scroll
-    wheelPrevOn   = ( (onPar.getAttribute('wheelPrev')) || (eleOn.getAttribute('wheelPrev')) )
+    wheelPrevOn   = ( (onPar.getAttribute('wheelPrev')=='true') || (eleOn.getAttribute('wheelPrev')=='true') )
     if( !(wheelPrevOn) && scrollHab==1){
         scrollHab = 0
         el("divPrevMov").style.top  = '-2000.0px'
@@ -762,10 +756,10 @@ function eventTrap() {
     }
     if(wheelPrevOn && scrollHab==0){
         scrollHab = 1   ;   divPrevScr = el('divPrevScr')
-        if(onPar.getAttribute('wheelPrev')) { divSheet  = onPar }
-        if(eleOn.getAttribute('wheelPrev')) { divSheet  = eleOn }
-        divSheetId = divSheet.id ; parDiv = divSheet.parentElement
-        
+        if(onPar.getAttribute('wheelPrev')=='true') { divSheet  = onPar }
+        if(eleOn.getAttribute('wheelPrev')=='true') { divSheet  = eleOn }
+        divSheetId = divSheet.id ; parDiv = divSheet.parentElement      
+
         // . . . geometria de divPrevScr
         parDiv.appendChild(divPrevScr)
         divPrevScr.style.top    = parseInt(window.getComputedStyle(divSheet).top)    +'px'
