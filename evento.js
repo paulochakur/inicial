@@ -631,9 +631,10 @@ function eventTrap() {
     // elementos de evento - On, Target, Foco
     eleTa  = event.target
     eleFo  = document.activeElement
-    if (eleOn=='O')          { eleOn  = eleFo }
-    if (evento=="mousemove") { eleOn  = eleTa }
-    if(evento=='click' && eleTa!=eleOn) { eleTa = eleFo } // "click through"
+    if (eleOn=='O')                         { eleOn  = eleFo }
+    if (evento=="mousemove")                { eleOn  = eleTa }
+    if (evento.includes("touch"))           { eleOn  = eleTa }
+    if (evento=='click' && eleTa!=eleOn)    { eleTa  = eleFo } // "click through"
     // . .
 
     // . . . anteriores
@@ -782,6 +783,7 @@ function eventTrap() {
         downPla = 1
     }    
     // .....[prevent default de scroll]
+
     //el('ConsAma-Txt').innerHTML = ' delY: '+delY
     if( (evento=='wheel' || evento=='touchmove') && eleFoClass.includes("-Pla") && scrollHab==1){
         nomeSheet   = eleFoClass
@@ -801,13 +803,9 @@ function eventTrap() {
         }
 
         // ... touchmove
-        if(evento=='touchmove'){
-            delLin = 0 ; delCol = 0
-            if(Math.abs(delY)>20) { delLin = parseInt(delY/20) }
-            if(Math.abs(delX)>20) { delCol = parseInt(delX/40) }
-        }
+        if(evento=='touchmove'){ delLin = parseInt(delY/10)  ;   delCol = parseInt(delX/20) }
 
-        el('ConsAma-Txt').innerHTML = ' delY: '+delY+'=='+delX+' delLin:'+delLin
+        el('ConsAma-Txt').innerHTML = ' delY: '+delY+'=='+delX+' delLin:'+delLin+' ::::'
 
         // .....[deltas de wheel]
         lplan0A = lplan0          ; cplan0A = cplan0
