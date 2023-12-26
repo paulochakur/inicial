@@ -427,10 +427,17 @@ function iniSys(){
 
                 dictCoods[iw] = [tDiv, lDiv]
                 // . . . aplica xl e yt - somente deskTop, em desenvovimento
+                /*
                 if (yt!=null  && mobFlag==0){ el(divId).style.top  = (tDiv-yt)+'px' }
                 if (xl!=null  && mobFlag==0){ el(divId).style.left = (lDiv-xl)+'px' }
                 if (scY!=null && mobFlag==0){ el(divId).scrollTop  = scY }
                 if (scX!=null && mobFlag==0){ el(divId).scrollLeft = scX }
+                */
+
+                if (yt!=null  ){ el(divId).style.top  = (tDiv-yt)+'px' }
+                if (xl!=null  ){ el(divId).style.left = (lDiv-xl)+'px' }
+                if (scY!=null ){ el(divId).scrollTop  = scY }
+                if (scX!=null ){ el(divId).scrollLeft = scX }
 
                 // . . . somente mob
                 if (scrDiv=='roll' && mobFlag==1){ el(divId).style.overflow = 'scroll' }
@@ -784,7 +791,6 @@ function eventTrap() {
     }    
     // .....[prevent default de scroll]
 
-    //el('ConsAma-Txt').innerHTML = ' delY: '+delY
     if( (evento=='wheel' || evento=='touchmove') && eleFoClass.includes("-Pla") && scrollHab==1){
         nomeSheet   = eleFoClass
         nLinPla     = Cells[divSheetId][0][0]['nLinPla'] ; nColPla   = Cells[divSheetId][0][0]['nColPla']
@@ -805,7 +811,7 @@ function eventTrap() {
         // ... touchmove
         if(evento=='touchmove'){ delLin = parseInt(delY/10)  ;   delCol = parseInt(delX/20) }
 
-        el('ConsAma-Txt').innerHTML = ' delY: '+delY+'=='+delX+' delLin:'+delLin+' ::::'
+        el('ConsAma-Txt').innerHTML = ' delY: '+delY+'=='+delX+' delLin:'+delLin+' +++++'
 
         // .....[deltas de wheel]
         lplan0A = lplan0          ; cplan0A = cplan0
