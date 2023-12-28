@@ -610,7 +610,7 @@ function iniSys(){
 
     if(mobFlag==1 && screenTurn=='true')  { scrTurn = 1 }
     if(mobFlag==1 && scrFitWAtt!='false') { scrFitW = 1 }
-
+    scrTurn = 1 ; mobFlag = 1
     rotF = 0 ; fatX = 1 ; fatY = 1 ; delV = 0 ; delH = 0
     if (scrTurn==1){ 
         rotF    = -90
@@ -627,7 +627,7 @@ function iniSys(){
     el('Fundo').style.transform = "rotateZ("+rotF+"deg)"+" scaleX("+fatX+")"+" scaleY("+fatY+")"
     el('Fundo').style.left      = (-delH)+'px'
     el('Fundo').style.top       = (-delV)+'px'
-    el('Fundo').style.height    = (hF-50)+'px'
+    el('Fundo').style.height    = (hF)+'px'
     el('Fundo').style.width     = (wF)+'px'
 
     // ......[ajusta mob]
