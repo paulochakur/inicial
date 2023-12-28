@@ -611,7 +611,7 @@ function iniSys(){
     
     if(mobFlag==1 && screenTurn=='true')  { scrTurn = 1 }
     if(mobFlag==1 && scrFitWAtt!='false') { scrFitW = 1 }
-    //scrFitW = 1 ; scrTurn = 1
+
     print('  screenTurn:'+screenTurn+' scrTurn:'+scrTurn+' mobFlag:'+mobFlag)
     if (scrTurn==1){ 
         rotF    = -90
@@ -630,7 +630,7 @@ function iniSys(){
     el('Fundo').style.top       = (-delV)+'px'
     el('Fundo').style.height    = (hF)+'px'
     el('Fundo').style.width     = (wF)+'px'
-    if(mobFlag==1){ el('Fundo').style.backgroundColor = 'red' }
+    //if(mobFlag==1){ el('Fundo').style.backgroundColor = 'red' }
     // ......[ajusta mob]
 
     document.activeElement.blur()
