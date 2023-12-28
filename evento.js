@@ -607,19 +607,19 @@ function iniSys(){
     wF = cssUnitToNr(window.getComputedStyle(el('Fundo')).width)
     screenTurn  = el('Fundo').getAttribute('screenTurn')
     scrFitWAtt  = el('Fundo').getAttribute('scrFitW')
+    rotF = 0 ; fatX = 1 ; fatY = 1 ; delV = 0 ; delH = 0 ; scrFitW = 0
 
     if(mobFlag==1 && screenTurn=='true')  { scrTurn = 1 }
     if(mobFlag==1 && scrFitWAtt!='false') { scrFitW = 1 }
-
-    rotF = 0 ; fatX = 1 ; fatY = 1 ; delV = 0 ; delH = 0
+    scrFitW = 1 ; scrTurn = 0
     if (scrTurn==1){ 
         rotF    = -90
-        if(mobFlag==1 && scrFitWAtt!='false'){ fatX    =  Ih/wF ;    fatY = fatX ; hF = Iw/fatX}
+        if(scrFitW==1){ fatX    =  Ih/wF ;    fatY = fatX ; hF = Iw/fatX}
         delH    = (wF-hF)/2 + (hF/2)*(1-fatY)
         delV    = (hF-wF)/2 + (wF/2)*(1-fatX)
     }
     if (scrTurn==0){ 
-        if(mobFlag==1 && scrFitWAtt!='false'){ fatX    =  Iw/wF ;    fatY = fatX ; hF = Ih/fatX}
+        if(scrFitW==1){ fatX    =  Iw/wF ;    fatY = fatX ; hF = Ih/fatX}
         delV    = (hF/2)*(1-fatY)
         delH    = (wF/2)*(1-fatX)
     }
