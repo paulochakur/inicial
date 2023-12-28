@@ -608,10 +608,10 @@ function iniSys(){
     screenTurn  = el('Fundo').getAttribute('screenTurn')
     scrFitWAtt  = el('Fundo').getAttribute('scrFitW')
     rotF = 0 ; fatX = 1 ; fatY = 1 ; delV = 0 ; delH = 0 ; scrFitW = 0
-
+    print('  screenTurn:'+screenTurn)
     if(mobFlag==1 && screenTurn=='true')  { scrTurn = 1 }
     if(mobFlag==1 && scrFitWAtt!='false') { scrFitW = 1 }
-    //scrFitW = 1 ; scrTurn = 0
+    scrFitW = 1 ; scrTurn = 1
     if (scrTurn==1){ 
         rotF    = -90
         if(scrFitW==1){ fatX    =  Ih/wF ;    fatY = fatX ; hF = Iw/fatX}
