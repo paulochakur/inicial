@@ -611,7 +611,7 @@ function iniSys(){
 
     if(mobFlag==1 && screenTurn=='true')  { scrTurn = 1 }
     if(mobFlag==1 && scrFitWAtt!='false') { scrFitW = 1 }
-    scrFitW = 1 ; scrTurn = 0
+    //scrFitW = 1 ; scrTurn = 0
     if (scrTurn==1){ 
         rotF    = -90
         if(scrFitW==1){ fatX    =  Ih/wF ;    fatY = fatX ; hF = Iw/fatX}
