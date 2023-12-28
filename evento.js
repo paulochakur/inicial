@@ -595,13 +595,13 @@ function iniSys(){
 
     iniLoc()
     atuJib()
-
+    print('11111')
     // ... situação inicial de Console
     if(hab==0)      { el('console').style.left = '-3000px'      ; el('proprBox').style.left = '-3000px'}
     if(hab==1)      { el('console').style.left = leftCon+'px'   ; el('proprBox').style.left = leftCon+'px'}
     if(proprHab==0) { el('console').style.zIndex = '101' }
     if(proprHab==1) { el('console').style.zIndex = '99' }
-
+    print('222222')
     // ...... ajusta mob
     hF = cssUnitToNr(window.getComputedStyle(el('Fundo')).height)
     wF = cssUnitToNr(window.getComputedStyle(el('Fundo')).width)
@@ -612,22 +612,24 @@ function iniSys(){
     if(mobFlag==1 && scrFitWAtt!='false') { scrFitW = 1 }
 
     rotF = 0 ; fatX = 1 ; fatY = 1 ; delV = 0 ; delH = 0
-    
     if (scrTurn==1){ 
         rotF    = -90
-        if(scrFitW!='false'){ fatX    =  Ih/wF ;    fatY = fatX }
+        if(scrFitWAtt!='false'){ fatX    =  Ih/wF ;    fatY = fatX ; hF = Iw/fatX}
         delH    = (wF-hF)/2 + (hF/2)*(1-fatY)
         delV    = (hF-wF)/2 + (wF/2)*(1-fatX)
     }
     if (scrTurn==0){ 
-        if(scrFitW!='false'){ fatX    =  Iw/wF ;    fatY = fatX }
+        if(scrFitWAtt!='false'){ fatX    =  Iw/wF ;    fatY = fatX }
         delV    = (hF/2)*(1-fatY)
         delH    = (wF/2)*(1-fatX)
     }
 
     el('Fundo').style.transform = "rotateZ("+rotF+"deg)"+" scaleX("+fatX+")"+" scaleY("+fatY+")"
-    el('Fundo').style.left  = (-delH)+'px'
-    el('Fundo').style.top   = (-delV)+'px'
+    el('Fundo').style.left      = (-delH)+'px'
+    el('Fundo').style.top       = (-delV)+'px'
+    el('Fundo').style.height    = (hF)+'px'
+    el('Fundo').style.width     = (wF)+'px'
+
     // ......[ajusta mob]
 
     document.activeElement.blur()

@@ -197,13 +197,13 @@
             //      i=2 ; j=3 ; elId    = divSheetId+'-Pla:('+i+','+j+')'
 
             // ...............
-           // . . . input de Plan
-           inpAntClass = inpAnt.className  ;   if(inpAntClass==undefined){ inpAntClass='' }
-           inpCurClass = inpCur.className  ;   if(inpCurClass==undefined){ inpCurClass='' }
-           divSheetSc = ''
-           iElSel=0; jElSel=0; iElSelA=0; jElSelA=0
-     
-           if (inpCurClass.includes("-Pla") ) {
+            // . . . input de Plan
+            inpAntClass = inpAnt.className  ;   if(inpAntClass==undefined){ inpAntClass='' }
+            inpCurClass = inpCur.className  ;   if(inpCurClass==undefined){ inpCurClass='' }
+            divSheetSc = ''
+            iElSel=0; jElSel=0; iElSelA=0; jElSelA=0
+
+            if (inpCurClass.includes("-Pla") ) {
                 divSheetSc  = inpCur.getAttribute('divSheetId')
                 iSheetSel   = Number(inpCur.getAttribute('iSheet'))  ; jSheetSel = Number(inpCur.getAttribute('jSheet'))
                 iElSel      = Number(inpCur.getAttribute('iElN'))    ; jElSel    = Number(inpCur.getAttribute('jElN'))
@@ -303,7 +303,7 @@
             // ..........
 
             // -------- inicia com console
-            leftCon = 10 ;  hab=0 ; proprHab = 0
+            leftCon = 800 ;  hab=1 ; proprHab = 0
             // --------[inicia com console]
 
             loadDadosJS("div-417", arqDados='CapasTP.js')
