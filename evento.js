@@ -595,13 +595,13 @@ function iniSys(){
 
     iniLoc()
     atuJib()
-    print('11111')
+
     // ... situação inicial de Console
     if(hab==0)      { el('console').style.left = '-3000px'      ; el('proprBox').style.left = '-3000px'}
     if(hab==1)      { el('console').style.left = leftCon+'px'   ; el('proprBox').style.left = leftCon+'px'}
     if(proprHab==0) { el('console').style.zIndex = '101' }
     if(proprHab==1) { el('console').style.zIndex = '99' }
-    print('222222')
+
     // ...... ajusta mob
     hF = cssUnitToNr(window.getComputedStyle(el('Fundo')).height)
     wF = cssUnitToNr(window.getComputedStyle(el('Fundo')).width)
@@ -610,7 +610,7 @@ function iniSys(){
 
     if(mobFlag==1 && screenTurn=='true')  { scrTurn = 1 }
     if(mobFlag==1 && scrFitWAtt!='false') { scrFitW = 1 }
-    scrTurn = 1 ; mobFlag = 1
+
     rotF = 0 ; fatX = 1 ; fatY = 1 ; delV = 0 ; delH = 0
     if (scrTurn==1){ 
         rotF    = -90
