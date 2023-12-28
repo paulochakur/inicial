@@ -453,7 +453,7 @@ function iniSys(){
             hAba    = parseInt(window.getComputedStyle(el(divId)).height)
             tAba    = parseInt(window.getComputedStyle(el(divId)).top)
             lAba    = parseInt(window.getComputedStyle(el(divId)).left)
-            paraAba[divAbaId] = [ tAba, lAba, wAba, hAba, 1]
+            paraAba[divAbaId] = [ tAba, lAba, wAba, hAba, 1 ]
         }
     }
     // . . .[parâmetros de Aba 1]
@@ -589,7 +589,6 @@ function iniSys(){
     // ....
     // -------- finaliza rotina inicial
 
-    
     // . . . scroll inicial
     deslX = el('Corpo').getAttribute("deslX") ; deslY = el('Corpo').getAttribute("deslY")
     window.scrollTo(deslX,deslY)
@@ -790,6 +789,7 @@ function eventTrap() {
         eleTa.focus()
         el('divPrevScr').style.pointerEvents="auto"
         downPla = 0
+        print(' atravessa')
     }
     if(eleOnId=="divPrevMov" && evento=='mousedown' && eleTaId=="divPrevMov") {
         el('divPrevScr').style.pointerEvents="none"
@@ -1388,6 +1388,7 @@ function eventTrap() {
     }
     // ----------------[Movimento em Sheet]
 
+
     // ------------------
     // ... eventTrap()
     trapEvent() // executa traps específicos do projeto em .html
@@ -1406,7 +1407,7 @@ function cssUnitToNr(cssUnS){
     // ....
     return numUnit
 }
-
+// .....[cssUnitToNr]
 
 
 // ..... Converte data
@@ -1487,7 +1488,6 @@ function DataConv(dataS, brAm=''){
     iM = Months.indexOf(mesS)
     if(iM>0) { mesN = iM}
     if(iM<0) { mesN = parseInt(mesS) ; mesS = Months[mesN] }
-    
     // . . .[data bras. tipo "25/12/1968"]
     
     JDN = 367 * anoN - parseInt(parseInt(7 * (anoN + 5001 + (mesN - 9)/7))/4) + parseInt((275 * mesN)/9) + diaN + 1729777
@@ -1499,7 +1499,7 @@ function DataConv(dataS, brAm=''){
     //dateJS = new Date(dataS)
 
     // ....
-    return DataDict 
+    return DataDict //  { 'JDN':nnnnn , 'dd':d , 'mm':m , 'yy':y}
 }
 // .....[Converte data]
 
@@ -1519,7 +1519,6 @@ function scaleDiv(divId='', fitS='', faEscX = '', faEscY = '', desl=''){
         if(fitS=='fitW'){ faEscX = wPar/wDiv ; faEscY = faEscX }
         if(fitS=='fitH'){ faEscY = hPar/hDiv ; faEscX = faEscY }
     }
-
 
     x0 = cssUnitToNr(window.getComputedStyle(divE).left)  ; y0 = cssUnitToNr(window.getComputedStyle(divE).top)
     w0 = cssUnitToNr(window.getComputedStyle(divE).width) ; h0 = cssUnitToNr(window.getComputedStyle(divE).height)
@@ -1623,8 +1622,8 @@ function clonaEle(oriId, idApp){
 
     // . . . clone Children
     //Chil = el(oriId).children
-    Descen = el(oriId).querySelectorAll('*')
-    nCh = Descen.length
+    Descen  = el(oriId).querySelectorAll('*')
+    nCh     = Descen.length
     parCloneId = oriId+idApp
     for (iCh = 0; iCh<=nCh-1; iCh++){
         oriIdC = Descen[iCh].id
@@ -2879,18 +2878,6 @@ function focoCell(divSheetId){    // iElN, jElN
 
     // ------------  Scroll de plan
     if (scro>0){ preencheSheet(lplanIni=0, cplanIni=0, divSheetId, prTotal=0) ; toques = 0 }
-        
-        // .......[SelectionChange de Scroll]
-        //inpAnt = elAnt; inpAntId = inpAnt.id; inpCur = ''; inpCurId = 'lost';   finValueInputA = inpAnt.value
-        //entraInp = 'Lost'; SelectionChange()
-        
-        // .... preenche de Scrooll Plan
-        
-        // ....[preenche de Scrooll Plan]
-
-        //inpCur = prox; inpCurId = inpCur.id;                                    iniValueInput  = inpCur.value
-        //entraInp = 'Got' ; SelectionChange()
-    // ------------ [Scroll de plan]
 
     poeFoco(divSheetId, iElN, jElN)
     
@@ -3144,10 +3131,7 @@ function preencheSheet(lplanIni=0, cplanIni=0, divSheetId, prTotal=0){
         cell.setAttribute('iSheet', i)  ; cell.setAttribute('jSheet', j)
 
         // ... expulsa fora dos limites
-
         iC = Number(cell.getAttribute('iElN'))
-
-        // ...
         if(iC==-1){ cell.style.top  = '-3000px' }        
     }}
     // . . . .[devolve nomes para Subs não utilizados - define 'iSheet']

@@ -179,10 +179,9 @@
 
         */
 
-        var corrTam = 2
         // . toggles
-        var togg    = -1 , togMar = -1 , p = 0 , iCar = 1 , dirS = '', celElA = ''
-        var arqPainel = ''   ,   arqParale = '' , numAlte = 20, corN = 0
+        var togg        = -1 , togMar    = -1 , p = 0        , iCar = 1 , dirS = '', celElA = ''
+        var arqPainel   = '' , arqParale = '' , numAlte = 20 , corN = 0
 
         // ------- Trap de Planilha
         
@@ -238,7 +237,6 @@
             }
             // ....[Got Focus]
 
-
             // ........
             return
         }         
@@ -247,10 +245,11 @@
 
         // . . . valor em printCell
         function planValorTrap(divSheetId, iC, jC) {
+            lplan0      = Cells[divSheetId][0][0]['lplan0']         ; cplan0    = Cells[divSheetId][0][0]['cplan0']
             lFrz     = Cells[divSheetId][0][0]['lFrz'] ; cFrz      = Cells[divSheetId][0][0]['cFrz']
             lin = iC-lFrz+1 ; col = jC-cFrz+1 // coords de ListPlan
+            iSheet   = iC  ; jSheet = jC ; if(iC>=lFrz){iSheet = iC - lplan0 + 1} ; if(jC>=lFrz){jSheet = jC - cplan0 + 1}
             // . . . 
-
 
             // ........
             return valor
@@ -299,7 +298,6 @@
         }
         // -------[Trap de Load Arquivo]
 
-
         // ---- Início Local
         function iniLoc(){
             // ..........
@@ -320,29 +318,6 @@
 
         //  -------------- Trap de Eventos -------------
         function trapEvent() {
-
-            //try{ el('divPaiNum-Txt_16:1').addEventListener("DOMAttrModified", change) ;  function change() { print(' ************** CHANGE') } } catch{}
-            //try{ print(' ************** CHANGE'+el('divPaiNum-Txt_16:1').innerHTML)  } catch{}
-
-            // ... segunda rodada
-            if (corrTam==1){
-                corrTam = 3
-                // ..
-                
-                // ..
-                
-            }
-            // ...[segunda rodada]
-
-            // ... primeira rodada
-            if (corrTam==2){
-                corrTam = 0
-                // ..
-                
-                corrTam = 1
-                // ..
-            }
-            // ...[primeira rodada]
 
             // ******** GERAL DE EVENTOS
 
