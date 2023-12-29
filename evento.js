@@ -642,14 +642,25 @@ function iniSys(){
 //  -------------- Trap de Eventos  -------------
 function eventTrap() {
     // ---- Parâmetros de EVENTO
+
     // elementos de evento - On, Target, Foco
     eleTa  = event.target
     eleFo  = document.activeElement
-    if (eleOn=='O')                         { eleOn  = eleFo }
-    if (evento=="mousemove")                { eleOn  = eleTa }
-    if (evento.includes("touch"))           { eleOn  = eleTa }
-    if (evento=='click' && eleTa!=eleOn)    { eleTa  = eleFo } // "click through"
+
+    if (evento=="mousemove" || evento.includes("touch"))    { eleOn  = eleTa }
+
+    if(evento=="click"  || evento=="mouseover"|| evento=="mouseout")                      { eleTa = eleTaA}
+    if((evento=="keyup" || evento=="keydown"  || evento=="keypress") && eleFo.id=='Corpo'){ eleTa = eleTaA} // evita Ta = 'Corpo'
+    if((evento=="keyup" || evento=="keydown"  || evento=="keypress") && eleFo.id!='Corpo'){ eleTa = eleFo } // evita Ta = 'Corpo'
+    
+    eT = eleTa.getAttribute('subPrev')
+    if((evento=='mousemove' || evento=='touchmove') && eT!=null)                          { eleTa = el(eT)} // ele "through"
     // . .
+    /*
+    print('')
+    print(' evento:'+evento+'  :'+event.target.id)
+    print(' eleOn:'+eleOn.id+'  eleTa:'+eleTa.id)
+    */
 
     // . . . anteriores
     foco=''
@@ -667,7 +678,7 @@ function eventTrap() {
     if (eleTaClass==undefined){ eleTaClass = 'Und'}
     if (eleFoClass==undefined){ eleFoClass = 'Und'}
 
-    // . . . ele Geom
+    // . . . eleTa Geom
     eleWget = cssUnitToNr(window.getComputedStyle(eleTa).width) ; eleHget = cssUnitToNr(window.getComputedStyle(eleTa).height) ; eleTget = cssUnitToNr(window.getComputedStyle(eleTa).top) ; eleLget = parseInt(window.getComputedStyle(eleTa).left)
     eleWrec = parseInt(eleTa.getBoundingClientRect().width)     ; eleHrec = parseInt(eleTa.getBoundingClientRect().height)     ; eleTrec = parseInt(eleTa.getBoundingClientRect().top)     ; eleLrec = parseInt(eleTa.getBoundingClientRect().left)
     eleWoff = eleTa.offsetWidth                                 ; eleHoff = eleTa.offsetHeight                                 ; eleToff = eleTa.offsetTop                                 ; eleLoff = eleTa.offsetLeft
@@ -677,8 +688,6 @@ function eventTrap() {
     // elementos de evento - On, Target, Foco
     // if (evento!="focusout"){ eleTa  = event.target} // ?????
     
-    // .  .  .[tipo INPUT]
-
     // --- Mouse Coords 
     //  Window  -  Não atuliza se evento=="keyup"
     if (evento!="keyup" && evento!="keydown" && evento!="keypress") {
@@ -703,8 +712,6 @@ function eventTrap() {
         if (evento=='touchmove' && lastX!=0)    { delX  = lastX - xMs  ; delY  = lastY - yMs }
         if (evento=='touchstart')               { lastX = xMs          ; lastY = yMs ; delX =0 ; delY = 0 }
         if (evento=='touchend')                 { lastX = 0            ; lastY = 0   ; delX =0 ; delY = 0}
-
-        //if (evento=='touchmove' && lastX!=0)    { el('ConsAma-Txt').innerHTML = ' delY: '+delY}
 
         // Wheel
         if (evento=='wheel')      { delX  = event.deltaX                                 ; delY  = event.deltaY }
@@ -757,9 +764,9 @@ function eventTrap() {
 
     // **************************************
 
-    // ---------- Scroll de página e panilha
     // ..... prevent default de scroll
     wheelPrevOn   = ( (onPar.getAttribute('wheelPrev')=='true') || (eleOn.getAttribute('wheelPrev')=='true') )
+    // . . . sai de Prev
     if( !(wheelPrevOn) && scrollHab==1){
         scrollHab = 0
         el("divPrevMov").style.top  = '-2000.0px'
@@ -767,12 +774,17 @@ function eventTrap() {
     
         el('divPrevScr').style.top  = '-10000px'
         el('divPrevScr').style.left = '-10000px'
+
+        el('divPrevMov').removeAttribute('subPrev')
     }
+    // . . . entra em Prev
     if(wheelPrevOn && scrollHab==0){
         scrollHab = 1   ;   divPrevScr = el('divPrevScr')
         if(onPar.getAttribute('wheelPrev')=='true') { divSheet  = onPar }
         if(eleOn.getAttribute('wheelPrev')=='true') { divSheet  = eleOn }
-        divSheetId = divSheet.id ; parDiv = divSheet.parentElement      
+        divSheetId = divSheet.id ; parDiv = divSheet.parentElement
+
+        el('divPrevMov').setAttribute('subPrev', divSheetId)
 
         // . . . geometria de divPrevScr
         parDiv.appendChild(divPrevScr)
@@ -785,6 +797,8 @@ function eventTrap() {
         divPrevScr.scrollTop  = 5000 ; divPrevScr.scrollLeft = 5000
         divPrevScr.style.pointerEvents="auto"
     }
+    // . . .[entra em Prev]
+
     // . . . reposiciona Prevent Scroll
     if(scrollHab==1){ divPrevScr.scrollTop  = 5000  ;   divPrevScr.scrollLeft = 5000 }
 
@@ -792,7 +806,6 @@ function eventTrap() {
         eleTa.focus()
         el('divPrevScr').style.pointerEvents="auto"
         downPla = 0
-        print(' atravessa')
     }
     if(eleOnId=="divPrevMov" && evento=='mousedown' && eleTaId=="divPrevMov") {
         el('divPrevScr').style.pointerEvents="none"
@@ -800,6 +813,7 @@ function eventTrap() {
     }    
     // .....[prevent default de scroll]
 
+    // ..... wheel de Pla
     if( (evento=='wheel' || evento=='touchmove') && eleFoClass.includes("-Pla") && scrollHab==1){
         nomeSheet   = eleFoClass
         nLinPla     = Cells[divSheetId][0][0]['nLinPla'] ; nColPla   = Cells[divSheetId][0][0]['nColPla']
@@ -838,7 +852,7 @@ function eventTrap() {
         el('divPrevScr').scrollTop  = 5000
         el('divPrevScr').scrollLeft = 5000
     }
-    // ----------[Scroll de página e panilha]
+    // .....[wheel de Pla]
 
     // ---------- scroll de Painel
     if( (((evento=='wheel' || evento=='touchmove') || evento=='click') || (evento=='keydown' && (keyCode>36 && keyCode<41) ))){
@@ -1300,13 +1314,13 @@ function eventTrap() {
     
     // ---------------- Movimento em Sheet
     if (eleTaClass.includes("-Pla")) {
-        if (blocTrap==0 && (evento=="keydown" || (evento=="click" && Number(eleTa.getAttribute('iElN'))>0) || evento=='input')  ){
+        if (blocTrap==0 && (evento=="keydown" || (evento=="click" && Number(eleFo.getAttribute('iElN'))>0) || evento=='input')  ){
 
             scro = 0 ; keyCodeF = 100
             if (evento=="click") { keyCodeF = 1 }
 
-            iElN    = Number(eleTa.getAttribute('iElN'))    ; jElN   = Number(eleTa.getAttribute('jElN'))
-            elAnt   = eleTa
+            iElN    = Number(eleFo.getAttribute('iElN'))    ; jElN   = Number(eleFo.getAttribute('jElN'))
+            elAnt   = eleFo
 
             // .... inibe scroll com flechas
             readO = eleFo.getAttribute('readonly')
