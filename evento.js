@@ -143,6 +143,8 @@ dictMt["primeira"] = dictJs
 
 //  --------------[Variáveis Globais] -------------
 
+// ---------------
+//const fs = require('fs')
 
 //  --------------Listener de Eventos -------------
 Leventos = ["abort", "afterprint", "animationend", "animationiteration", "animationstart", "beforeprint", "beforeunload", "blur", "canplay", "canplaythrough", "change", "click", "contextmenu", "copy", "cut", "dblclick", "drag", "dragend", "dragenter", "dragleave", "dragover", "dragstart", "drop", "durationchange", "ended", "error", "focus", "focusin", "focusout", "fullscreenchange", "fullscreenerror", "hashchange", "input", "invalid", "keydown", "keypress", "keyup", "load", "loadeddata", "loadedmetadata", "loadstart", "message", "mousedown", "mouseenter", "mouseleave", "mousemove", "mouseover", "mouseout", "mouseup", "mousewheel", "offline", "online", "open", "pagehide", "pageshow", "paste", "pause", "play", "playing", "popstate", "progress", "ratechange", "resize", "reset", "scroll", "search", "seeked", "seeking", "select", "show", "stalled", "storage", "submit", "suspend", "timeupdate", "toggle", "touchcancel", "touchend", "touchmove", "touchstart", "transitionend", "unload", "volumechange", "waiting", "wheel"]
@@ -433,7 +435,7 @@ function iniSys(){
                 if (scX!=null ){ el(divId).scrollLeft = scX }
 
                 // . . . somente mob
-                if (scrDiv=='roll' && mobFlag==1){ el(divId).style.overflow = 'scroll' }
+                if (scrDiv=='roll'){ el(divId).style.overflow = 'scroll' }
             }
         }catch{}
     }
@@ -654,7 +656,7 @@ function eventTrap() {
     if((evento=="keyup" || evento=="keydown"  || evento=="keypress") && eleFo.id!='Corpo'){ eleTa = eleFo } // evita Ta = 'Corpo'
     
     eT = eleTa.getAttribute('subPrev')
-    if((evento=='mousemove' || evento=='touchmove') && eT!=null)                          { eleTa = el(eT)} // ele "through"
+    if((evento=='mousemove' || evento=='touchmove' || evento=='wheel') && eT!=null)                          { eleTa = el(eT)} // ele "through"
     // . .
     /*
     print('')
@@ -786,6 +788,7 @@ function eventTrap() {
 
         el('divPrevMov').setAttribute('subPrev', divSheetId)
 
+
         // . . . geometria de divPrevScr
         parDiv.appendChild(divPrevScr)
         divPrevScr.style.top    = parseInt(window.getComputedStyle(divSheet).top)    +'px'
@@ -800,7 +803,11 @@ function eventTrap() {
     // . . .[entra em Prev]
 
     // . . . reposiciona Prevent Scroll
-    if(scrollHab==1){ divPrevScr.scrollTop  = 5000  ;   divPrevScr.scrollLeft = 5000 }
+    if(scrollHab==1 && (evento=='wheel' || evento=='touchmove')){ 
+        baixo = el('divPrevMov').getAttribute('subPrev')  ; scrll = el(baixo).getAttribute('scroll')
+        if(scrll=='roll'){ el(baixo).scrollTop = el(baixo).scrollTop + delY ; el(baixo).scrollLeft = el(baixo).scrollLeft + delX }
+        divPrevScr.scrollTop  = 5000  ;   divPrevScr.scrollLeft = 5000
+    }
 
     if(eleOnId=="divPrevMov" && evento=='mouseup' && downPla==1) { 
         eleTa.focus()
