@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch</title>
+</head>
+<body>
+
+    <button id="Bott">Teste</button>
+
+    <h1 id="cabe1"></h1>
+    <h1 id="cabe2"></h1>
+    <h1 id="cabe3"></h1>
+
+    <img id="figura" src="https://paulochakur.github.io/inicial/Tio/Tio_Patinhas/Capas_MK_bpm/br_mk_0171a_001.jpeg">
+
+
+<script>
+
+    
+    document.getElementById('Bott').addEventListener('mousedown', testeFetch)
+
+
+    resp = testeFetch()
+    document.getElementById('cabe3').innerHTML = resp
+    
+    async function testeFetch(){
+        response    = await fetch("https://paulochakur.github.io/inicial/ArqFetch.ttt")
+                            .then( data => { return data.json() } )
+
+        retorno     = await response.primeiro[3]
+        
+        console.log(retorno)
+        console.log(response)
+        
+        
+        document.getElementById('cabe2').innerHTML = ' :: '+ retorno
+
+        return retorno
+    }
+
+
+
+
+</script>
+
+
+
+
+</body>
+</html>

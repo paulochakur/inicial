@@ -1,0 +1,7 @@
+{
+
+	"primeiro" : ["lista1", "lista2", "lista3"],
+	"segundo"  : {"dict1":"D1", "dict2":"D2" },
+	"terceiro" : "Três"
+
+}
