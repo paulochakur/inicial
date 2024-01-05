@@ -512,7 +512,6 @@ function iniSys(){
 
             // . . . se div definida como array
             if ((nLar*nCar)>1){        
-                divPainelId = divE.parentElement.id         
                 // . . . preenche atributos de Array
                 divE.className  = divId
                 Array[divId]    = { 'nLar':nLar , 'nCar':nCar , 'hPar':hPar , 'vPar':vPar , 'topLin': 1 , 'lefCol': 1 ,
@@ -1774,6 +1773,14 @@ function atuJib(){
         return
 }
 // ...[escreve para Jiboia]
+
+// --- beep
+function beep(){
+    try{ el('beep').remove()}catch{}
+    para = document.createElement("AUDIO")  ; el('Corpo').appendChild(para) ; para.id     = "beep"
+    para.src = 'https://media.geeksforgeeks.org/wp-content/uploads/20190531135120/beep.mp3'
+    para.play()
+}
 
 // ---- print em console
 function print(strPrint){ linPrint ++; eventoAc = '<br> '+(linPrint)+' '+strPrint +eventoAc ; el("console").innerHTML = eventoAc ; return }
