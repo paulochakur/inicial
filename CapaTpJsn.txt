@@ -81,6 +81,6 @@
 	["79", "br_tp_0079a_001.jpeg", "Z - Minha Heran&#231;a, Meu Tormento_E1_79.jpeg", "Minha Heran&#231;a, Meu Tormento", "", "fevereiro-72"], 
 	["80", "br_tp_0080a_001.jpeg", "Z - O Tesouro de Ali Bab&#225;_E1_80.jpeg", "O Tesouro de Ali Bab&#225;", "x", "mar&#231;o-72"], 
 	["81", "br_tp_0081a_001.jpeg", "Z - A Grande Aspira&#231;&#227;o_E1_81.jpeg", "A Grande Aspira&#231;&#227;o", "", "abril-72"], 
-	["82", "br_tp_0082a_001.jpeg", "Z - O Marujo Mareado_E1_82.jpeg", "O Marujo Mareado", "", "maio-72", ]
+	["82", "br_tp_0082a_001.jpeg", "Z - O Marujo Mareado_E1_82.jpeg", "O Marujo Mareado", "", "maio-72"]
 
 ]
