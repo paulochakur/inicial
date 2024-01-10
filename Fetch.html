@@ -8,39 +8,121 @@
 </head>
 <body>
 
-    <button id="Bott">Teste</button>
+    <button id="Bott">Fetch</button>
 
-    <h1 id="cabe1"></h1>
-    <h1 id="cabe2"></h1>
-    <h1 id="cabe3"></h1>
+    <h2 id="cabe1"></h2>
+    <h2 id="cabe2"></h2>
+    <h2 id="cabe3"></h2>
+    <h2 id="cabe4"></h2>
 
-    <img id="figura" src="https://paulochakur.github.io/inicial/Tio/Tio_Patinhas/Capas_MK_bpm/br_mk_0171a_001.jpeg">
+    <img id="figura" src="">
+
+    <iframe id="viewPortI"></iframe>
 
 
 <script>
+    var fetchFlag = 0, retorno = '', erroFetch = 'NULL'
 
+    link            = document.createElement('a')
+    link.href       = "https://paulochakur.github.io/inicial/index/Imagens/CSS/English Phonetics 1.pdf"           // URL do servidor para download
+    link.download   = 'nome-do-arquivo' // Nome do arquivo a ser baixado
+    //link.click()
+    link.remove()
+
+
+
+
+            iframeShow = document.getElementById('viewPortI')
+            iframeShow.type  = 'application/pdf'
+            //iframeShow.style = 'position: absolute; left: 330px; top: 0px; width: 366px; height: 617px; box-sizing: content-box; margin: 0px; padding: 0px; overflow: scroll; border-color: red; border-width: 3.0px; border-style: solid; z-index: 1000;   '
+
+
+
+    cabe1  = document.getElementById('cabe1')
+    cabe2  = document.getElementById('cabe2')
+    cabe3  = document.getElementById('cabe3')
+    cabe4  = document.getElementById('cabe4')
+    figura = document.getElementById('figura')
+
+    const eventFetch = new Event('fetch')
+
+    document.addEventListener('fetch', x => { 
+        //if(fetchFlag==1){ cabe3.innerHTML = ' Retorno da function: '+retorno.segundo["dict2"] }
+        if(fetchFlag==1){ cabe3.innerHTML = ' Retorno da function: '+retorno }
+        if(fetchFlag==2){ figura.src = retorno }
+        if(fetchFlag==3){ cabe1.innerHTML = ' Cabe1: '+retorno }
+        if(fetchFlag==4){ iframeShow.src  =  retorno }
+        
+
+        //if(fetchFlag==5) { figura.src  = retorno['image'] }                                   // rickandmorty
+        //if(fetchFlag==5) { cabe3.innerHTML = ' Retorno da function: '+ retorno.primeiro[2] }    // ArqFetch.ttt
+        
+        if(fetchFlag==5) { cabe3.innerHTML = ' Retorno da function: '+ retorno.primeiro[1] }    // http://127.0.0.1:3333/cadastro
+        if(fetchFlag==-5){ cabe3.innerHTML = ' Retorno com Erro: '+ retorno }
+    })
+
+    //resp = testeFetch("http://127.0.0.1:3333/cadastro", retFlag=5, tipF='json')
+    resp = testeFetch("https://paulochakur.github.io/inicial/ArqFetch.ttt", retFlag=5, tipF='json')
+        .then( res => {cabe4.innerHTML = ' Retorno da function 22: '+ res.primeiro[1]+' :'+fetchFlag} )
+
+    //resp = testeFetch("https://reqres.in/api/users/", retFlag=5, tipF='json')
+    //resp = testeFetch("https://rickandmortyapi.com/api/character/210", retFlag=5, tipF='json')
+
+    //resp = testeFetch("https://paulochakur.github.io/inicial/Tio/Tio_Patinhas/Capas_MK_bpm/br_mk_0139a_001.jpeg", retFlag=2, tipF='url')
+    //resp = testeFetch("https://paulochakur.github.io/inicial/Texto.txt", retFlag=3, tipF='txt')
+    //resp = testeFetch("https://paulochakur.github.io/inicial/index/Imagens/CSS/English Phonetics 1.pdf", retFlag=4, tipF='url')
     
-    document.getElementById('Bott').addEventListener('mousedown', testeFetch)
+    // .... função de fetch
+    async function testeFetch(fetchUrlS, retFlag, tipF){
+        erroFetch = 'NULL'
+        if(tipF=='json'){
+            response    = await fetch(fetchUrlS, {
+                                    method:'GET',
+                                    /*
+                                    headers:{
+                                        'Accept':'application/json',
+                                        'Content-Type':'application/json'
+                                    },
 
+                                    body: JSON.stringify({
+                                        'username':'PPPPP',
+                                        'email':'aaa@bbb',
+                                        'password':'YYYYY'
+                                    }),
+                                    */                                    
 
-    resp = testeFetch()
-    document.getElementById('cabe3').innerHTML = resp
-    
-    async function testeFetch(){
-        response    = await fetch("https://paulochakur.github.io/inicial/ArqFetch.ttt")
-                            .then( data => { return data.json() } )
+                                })
 
-        retorno     = await response.primeiro[3]
+                                .then( data     => {
+                                    console.log('=='+data.status)
+                                    if(!data.ok){ erroFetch = data.status; retorno = erroFetch ; retFunc = retorno ; fetchFlag = -retFlag ; document.dispatchEvent(eventFetch) }
+                                    return data.json()
+                                })
+                                .then( response => { 
+                                    retFunc = response ; retorno = response ; fetchFlag = retFlag ; document.dispatchEvent(eventFetch)
+                                })
+                                .catch( erroF   => {
+                                    retorno = "CATCH "+data.status ; retFunc = retorno; fetchFlag = -retFlag ; document.dispatchEvent(eventFetch)
+                                })
+                                        
+                                return await retFunc
+        }   
         
-        console.log(retorno)
-        console.log(response)
+        if(tipF=='url'){
+            response    = await fetch(fetchUrlS)
+                                .then( data     => data.blob() )
+                                .then( response => { retorno = URL.createObjectURL(response) ; fetchFlag = retFlag ; document.dispatchEvent(eventFetch)})
+        }
         
+        if(tipF=='txt'){
+            response    = await fetch(fetchUrlS)
+                                .then( data     => data.text() )
+                                .then( response => { retorno = response ; fetchFlag = retFlag ; document.dispatchEvent(eventFetch)})
+        }
         
-        document.getElementById('cabe2').innerHTML = ' :: '+ retorno
 
-        return retorno
     }
-
+    // ....[função de fetch]
 
 
 

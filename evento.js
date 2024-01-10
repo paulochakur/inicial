@@ -143,8 +143,11 @@ dictMt["primeira"] = dictJs
 
 //  --------------[Variáveis Globais] -------------
 
-// ---------------
-//const fs = require('fs')
+// --------- evento fetch
+const eventFetch = new Event('fetch')
+//document.addEventListener('fetch', x => {})
+//document.dispatchEvent(eventFetch)
+
 
 //  --------------Listener de Eventos -------------
 Leventos = ["abort", "afterprint", "animationend", "animationiteration", "animationstart", "beforeprint", "beforeunload", "blur", "canplay", "canplaythrough", "change", "click", "contextmenu", "copy", "cut", "dblclick", "drag", "dragend", "dragenter", "dragleave", "dragover", "dragstart", "drop", "durationchange", "ended", "error", "focus", "focusin", "focusout", "fullscreenchange", "fullscreenerror", "hashchange", "input", "invalid", "keydown", "keypress", "keyup", "load", "loadeddata", "loadedmetadata", "loadstart", "message", "mousedown", "mouseenter", "mouseleave", "mousemove", "mouseover", "mouseout", "mouseup", "mousewheel", "offline", "online", "open", "pagehide", "pageshow", "paste", "pause", "play", "playing", "popstate", "progress", "ratechange", "resize", "reset", "scroll", "search", "seeked", "seeking", "select", "show", "stalled", "storage", "submit", "suspend", "timeupdate", "toggle", "touchcancel", "touchend", "touchmove", "touchstart", "transitionend", "unload", "volumechange", "waiting", "wheel"]
@@ -654,8 +657,9 @@ function eventTrap() {
     if((evento=="keyup" || evento=="keydown"  || evento=="keypress") && eleFo.id=='Corpo'){ eleTa = eleTaA} // evita Ta = 'Corpo'
     if((evento=="keyup" || evento=="keydown"  || evento=="keypress") && eleFo.id!='Corpo'){ eleTa = eleFo } // evita Ta = 'Corpo'
     
-    eT = eleTa.getAttribute('subPrev')
-    if((evento=='mousemove' || evento=='touchmove' || evento=='wheel') && eT!=null)                          { eleTa = el(eT)} // ele "through"
+    
+    try{ eT = eleTa.getAttribute('subPrev') }catch{ eT = null }
+    if((evento=='mousemove' || evento=='touchmove' || evento=='wheel') && eT!=null) { eleTa = el(eT)} // ele "through"
     // . .
     /*
     print('')
@@ -743,7 +747,7 @@ function eventTrap() {
     if(evento=='click'){ atuJib() }
 
     // .... inibe menu do browser em rightClick
-    if(evento=='contextmenu'){ evento = 'rightclick' ; event.preventDefault() }
+    //if(evento=='contextmenu'){ evento = 'rightclick' ; event.preventDefault() }
 
     // ..... último'focusin'
     if(evento=='focusin')                    { lastIn = eleTa }
@@ -766,7 +770,7 @@ function eventTrap() {
     // **************************************
 
     // ..... prevent default de scroll
-    wheelPrevOn   = ( (onPar.getAttribute('wheelPrev')=='true') || (eleOn.getAttribute('wheelPrev')=='true') )
+    try{ wheelPrevOn   = ( (onPar.getAttribute('wheelPrev')=='true') || (eleOn.getAttribute('wheelPrev')=='true') ) }catch{ wheelPrevOn = false}
     // . . . sai de Prev
     if( !(wheelPrevOn) && scrollHab==1){
         scrollHab = 0
@@ -1021,11 +1025,12 @@ function eventTrap() {
     // . . . preenche quadro
     if (eleOnId!='O' && eleOnId!=undefined && proprHab==1) {
         onBg = onStyle.backgroundColor
+        try{ parId = eleOn.parentElement.id }catch{ parId = 'NULL'}
 
         el("eleon2").innerHTML                  = eleOnId                
         el("eleon2").style.backgroundColor      = onBg
         el("tipoDiv2").innerHTML                = eleOnTy                        //+" "+eleOn.scrollTop
-        el("parentDiv2").innerHTML              = eleOn.parentElement.id         //+" "+window.pageYOffset
+        el("parentDiv2").innerHTML              = parId         //+" "+window.pageYOffset
         el("classDiv2").innerHTML               = eleOn.className                + ' : '+ eleOn.getAttribute('class')                   //+" "+window.screenY
         el("eleTarDiv2").innerHTML              = eleTaId
         el("focusDiv2").innerHTML               = eleFoId
