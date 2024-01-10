@@ -673,23 +673,24 @@ function eventTrap() {
     if (eleTaA!=eleTa) { eleTaA = eleTa  ;   eleTaIdA = eleTaId  ;  eleTaClassA = eleTaClass  ;   eleTaTyA = eleTaTy }
 
     // On     Element
-    eleOnId    = eleOn.id      ;   eleOnClass  = eleOn.className   ;   eleOnTy     = eleOn.tagName ;   onStyle = getComputedStyle(eleOn)    ;   onPar = eleOn.parentElement
+    eleOnId    = eleOn.id      ;   eleOnClass  = eleOn.className   ;   eleOnTy     = eleOn.tagName ;   onPar = eleOn.parentElement ;   try{ onStyle = getComputedStyle(eleOn) ; onEle = 1 }catch{ onEle = 0 }
     // Target Element
-    eleTaId    = eleTa.id      ;   eleTaClass  = eleTa.className   ;   eleTaTy     = eleTa.tagName ;   taStyle = getComputedStyle(eleTa)    ;   taPar = eleTa.parentElement
+    eleTaId    = eleTa.id      ;   eleTaClass  = eleTa.className   ;   eleTaTy     = eleTa.tagName ;   taPar = eleTa.parentElement ;   try{ taStyle = getComputedStyle(eleTa) ; taEle = 1 }catch{ taEle = 0 }
     // Focus  Element
-    eleFoId    = eleFo.id      ;   eleFoClass  = eleFo.className   ;   eleFoTy     = eleFo.tagName ;   foStyle = getComputedStyle(eleFo)    ;   foPar = eleFo.parentElement
+    eleFoId    = eleFo.id      ;   eleFoClass  = eleFo.className   ;   eleFoTy     = eleFo.tagName ;   foPar = eleFo.parentElement ;   try{ foStyle = getComputedStyle(eleFo) ; foEle = 1 }catch{ foEle = 0 }
 
     if (eleOnClass==undefined){ eleOnClass = 'Und'}
     if (eleTaClass==undefined){ eleTaClass = 'Und'}
     if (eleFoClass==undefined){ eleFoClass = 'Und'}
 
     // . . . eleTa Geom
-    eleWget = cssUnitToNr(window.getComputedStyle(eleTa).width) ; eleHget = cssUnitToNr(window.getComputedStyle(eleTa).height) ; eleTget = cssUnitToNr(window.getComputedStyle(eleTa).top) ; eleLget = parseInt(window.getComputedStyle(eleTa).left)
-    eleWrec = parseInt(eleTa.getBoundingClientRect().width)     ; eleHrec = parseInt(eleTa.getBoundingClientRect().height)     ; eleTrec = parseInt(eleTa.getBoundingClientRect().top)     ; eleLrec = parseInt(eleTa.getBoundingClientRect().left)
-    eleWoff = eleTa.offsetWidth                                 ; eleHoff = eleTa.offsetHeight                                 ; eleToff = eleTa.offsetTop                                 ; eleLoff = eleTa.offsetLeft
-    eleWcli = eleTa.clientWidth                                 ; eleHcli = eleTa.clientHeight                                 ; eleTcli = eleTa.clientTop                                 ; eleLcli = eleTa.clientLeft
-    eleWscr = eleTa.scrollWidth                                 ; eleHscr = eleTa.scrollHeight
-
+    if(taEle==1){
+        eleWget = cssUnitToNr(window.getComputedStyle(eleTa).width) ; eleHget = cssUnitToNr(window.getComputedStyle(eleTa).height) ; eleTget = cssUnitToNr(window.getComputedStyle(eleTa).top) ; eleLget = parseInt(window.getComputedStyle(eleTa).left)
+        eleWrec = parseInt(eleTa.getBoundingClientRect().width)     ; eleHrec = parseInt(eleTa.getBoundingClientRect().height)     ; eleTrec = parseInt(eleTa.getBoundingClientRect().top)     ; eleLrec = parseInt(eleTa.getBoundingClientRect().left)
+        eleWoff = eleTa.offsetWidth                                 ; eleHoff = eleTa.offsetHeight                                 ; eleToff = eleTa.offsetTop                                 ; eleLoff = eleTa.offsetLeft
+        eleWcli = eleTa.clientWidth                                 ; eleHcli = eleTa.clientHeight                                 ; eleTcli = eleTa.clientTop                                 ; eleLcli = eleTa.clientLeft
+        eleWscr = eleTa.scrollWidth                                 ; eleHscr = eleTa.scrollHeight
+    }
     // elementos de evento - On, Target, Foco
     // if (evento!="focusout"){ eleTa  = event.target} // ?????
     
@@ -1592,8 +1593,8 @@ function fomatImg(imgId='', imgSrc='', x='', y='', w='', h='', fitS='', faEscX =
 // . . . formata e não carrega
 function formIm(imgId,  x='0', y='0', w='0', h='0', fitS, faEscX, faEscY, adjDiv){
     // ***** depois de carregar Img
-    
-    if(el(imgId).complete==true){
+    try{ comple = el(imgId).complete }catch{ comple = false}
+    if(comple==true){
         eleImg = el(imgId) ; divImg = eleImg.parentElement ; divImgId = divImg.id
         wDS = (window.getComputedStyle(divImg).width)
         hDS = (window.getComputedStyle(divImg).height)
@@ -2554,7 +2555,7 @@ function loadDadosJS(divSheetId, arqDados=''){
     // ........ Load arquivo de dados JS
     scriptEle1 = document.createElement("script")        ; el('Corpo').appendChild(scriptEle1)
     scriptEle1.setAttribute("type", "text/javascript")   ; scriptEle1.setAttribute("async", true)
-    scriptEle1.setAttribute("src", nomeProjS+"/ArquvosJs/"+arqDados)
+    scriptEle1.setAttribute("src", "ArquvosJs/"+arqDados)
     LoadedJS[divSheetId] = 0
 
     if (nLoad==1) { scriptEle1.addEventListener("load", loa1) ;  function loa1() { divLoadId = divSheetId; loadListener(divLoadId) } }
@@ -3486,7 +3487,7 @@ function preenchePainel(cellCurr=0, painelNome='', centra=0, nCelPai=0, porLInha
 
     if(centra!=0 &&  (desvV>altLin*0.75 && porLInha==1)){ el(parDivId).scrollTop  = scrTc ; scrTdis = scrTc }
     if(centra!=0 &&  (desvH>larCol*0.75 && porLInha==0)){ el(parDivId).scrollLeft = scrLc ; scrLdis = scrLc  }
-
+    try{ a=scrTdis }catch{ scrTdis = 0 ; scrLdis = 0 }
     // . . . atualiza Array e Painel
     Array[divArrId]['topLin']       = iTopPai   ;   Array[divArrId]['lefCol']       = jTopPai
   
